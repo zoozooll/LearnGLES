@@ -9,7 +9,5 @@ public class NativeLibHelper {
 
     public static native void nativeSurfaceChanged(int width, int height);
 
-    public static native void nativeSurfaceDestroyed();
-
-    public static native void nativeSurfaceRedrawNeeded();
+    public static native void nativeDraw();
 }

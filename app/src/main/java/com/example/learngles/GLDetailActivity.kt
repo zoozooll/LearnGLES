@@ -1,13 +1,17 @@
 package com.example.learngles
 
+import android.opengl.GLSurfaceView.RENDERMODE_WHEN_DIRTY
+import android.opengl.GLSurfaceView.Renderer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.SurfaceHolder
 import com.example.learngles.databinding.ActivityGldetailBinding
+import javax.microedition.khronos.egl.EGLConfig
+import javax.microedition.khronos.opengles.GL10
 
 
-class GLDetailActivity : AppCompatActivity(), SurfaceHolder.Callback2 {
+class GLDetailActivity : AppCompatActivity(), Renderer {
 
     private lateinit var binding: ActivityGldetailBinding
     private lateinit var surfaceHolder: SurfaceHolder
@@ -19,24 +23,25 @@ class GLDetailActivity : AppCompatActivity(), SurfaceHolder.Callback2 {
         setContentView(binding.root)
         val tutorialArg = intent.getStringExtra(MainActivity.KEY_TUTORIAL_TITLE)
         Log.i("GLDetailActivity", "tutorialArg $tutorialArg")
-
-        surfaceHolder = binding.surfaceSupportorView.holder
-        surfaceHolder.addCallback(this);
+        binding.surfaceSupportedView.apply {
+            preserveEGLContextOnPause = true
+            setEGLContextClientVersion(3)
+            setRenderer(this@GLDetailActivity)
+            renderMode = RENDERMODE_WHEN_DIRTY
+        }
     }
 
-    override fun surfaceCreated(holder: SurfaceHolder) {
+    override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
         NativeLibHelper.nativeSurfaceCreate()
     }
 
-    override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
+    override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
         NativeLibHelper.nativeSurfaceChanged(width, height)
     }
 
-    override fun surfaceDestroyed(holder: SurfaceHolder) {
-        NativeLibHelper.nativeSurfaceDestroyed()
+    override fun onDrawFrame(gl: GL10?) {
+        NativeLibHelper.nativeDraw()
     }
 
-    override fun surfaceRedrawNeeded(holder: SurfaceHolder) {
-        NativeLibHelper.nativeSurfaceRedrawNeeded()
-    }
+
 }
