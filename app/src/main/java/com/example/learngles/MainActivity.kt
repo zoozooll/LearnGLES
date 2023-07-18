@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        NativeLibHelper.setupNativeAsset(assets)
         binding.root.layoutManager = LinearLayoutManager(this@MainActivity)
         listAdapter = ContactsAdapter()
         binding.root.adapter = listAdapter

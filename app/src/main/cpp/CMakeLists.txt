@@ -4,6 +4,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -funwind-tables")
 
 project("nativegl")
 
+include_directories(".")
+
 # Add glm library
 add_subdirectory("../thirdparty/glm" ${CMAKE_CURRENT_BINARY_DIR}/glm)
 include_directories("${glm_SOURCE_DIR}")
@@ -21,7 +23,7 @@ add_subdirectory(${ASSIMP_SRC} ${CMAKE_CURRENT_BINARY_DIR}/assimp)
 
 file(GLOB nativegl_SRC
         "./*.cpp"
-        "./engine/*.cpp")
+        "./getting_started/*.cpp")
 
 add_library(nativegl SHARED ${nativegl_SRC})
 
