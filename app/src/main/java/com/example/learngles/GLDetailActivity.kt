@@ -18,14 +18,14 @@ import javax.microedition.khronos.opengles.GL10
 class GLDetailActivity : AppCompatActivity(), Renderer {
 
     private lateinit var binding: ActivityGldetailBinding
-    private lateinit var surfaceHolder: SurfaceHolder
+    private lateinit var tutorialArg: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityGldetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val tutorialArg = intent.getStringExtra(MainActivity.KEY_TUTORIAL_TITLE)
+        tutorialArg = intent.getStringExtra(MainActivity.KEY_TUTORIAL_TITLE) ?: ""
         Log.i("GLDetailActivity", "tutorialArg $tutorialArg")
         binding.surfaceSupportedView.apply {
             preserveEGLContextOnPause = true
@@ -65,7 +65,7 @@ class GLDetailActivity : AppCompatActivity(), Renderer {
     }
 
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
-        NativeLibHelper.nativeSurfaceCreate()
+        NativeLibHelper.nativeSurfaceCreate(tutorialArg)
     }
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
