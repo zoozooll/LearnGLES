@@ -1,0 +1,14 @@
+//
+// Created by zoozo on 7/19/2023.
+//
+
+#ifndef LEARNGLES_SHADERSEXERCISE3SCENE_H
+#define LEARNGLES_SHADERSEXERCISE3SCENE_H
+
+
+class ShadersExercise3Scene {
+
+};
+
+
+#endif //LEARNGLES_SHADERSEXERCISE3SCENE_H

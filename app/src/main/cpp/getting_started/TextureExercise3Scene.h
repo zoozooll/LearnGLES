@@ -1,0 +1,14 @@
+//
+// Created by zoozo on 7/19/2023.
+//
+
+#ifndef LEARNGLES_TEXTUREEXERCISE3SCENE_H
+#define LEARNGLES_TEXTUREEXERCISE3SCENE_H
+
+
+class TextureExercise3Scene {
+
+};
+
+
+#endif //LEARNGLES_TEXTUREEXERCISE3SCENE_H
