@@ -5,7 +5,7 @@
 #ifndef NATIVE3DENGINE_ASSETHELPER_H
 #define NATIVE3DENGINE_ASSETHELPER_H
 
-
+#include <cstdio>
 
 bool loadDataFromAsset(const char * const assetPath, char** buffer, size_t* size);
 
