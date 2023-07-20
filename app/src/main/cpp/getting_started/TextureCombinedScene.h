@@ -5,9 +5,24 @@
 #ifndef LEARNGLES_TEXTURECOMBINEDSCENE_H
 #define LEARNGLES_TEXTURECOMBINEDSCENE_H
 
+#include "Scene.h"
 
-class TextureCombinedScene {
+class Shader;
 
+class TextureCombinedScene : public Scene {
+public:
+    void init() override;
+
+    void resize(int i, int i1) override;
+
+    void draw() override;
+
+    void destroy() override;
+
+private:
+    Shader *ourShader = nullptr;
+    unsigned int VBO, VAO, EBO;
+    unsigned int texture1, texture2;
 };
 
 

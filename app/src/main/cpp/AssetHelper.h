@@ -7,7 +7,7 @@
 
 #include <cstdio>
 
-bool loadDataFromAsset(const char * const assetPath, char** buffer, size_t* size);
+void LoadDataFromAsset(const char *const assetPath, void **buffer, size_t *size);
 
 
 #endif //NATIVE3DENGINE_ASSETHELPER_H

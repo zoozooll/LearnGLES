@@ -43,14 +43,6 @@ inline Scene* GenSceneByName(const char *tutorial) {
 
     } else if (!strcmp(tutorial, "texture_combined")) {
 
-    } else if (!strcmp(tutorial, "texture_exercise1")) {
-
-    } else if (!strcmp(tutorial, "texture_exercise2")) {
-
-    } else if (!strcmp(tutorial, "texture_exercise3")) {
-
-    } else if (!strcmp(tutorial, "texture_exercise4")) {
-
     } else if (!strcmp(tutorial, "transformations")) {
 
     } else if (!strcmp(tutorial, "transformations_exercise1")) {
