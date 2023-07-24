@@ -8,7 +8,7 @@
 
 #include "logutil.h"
 
-static const char *vertexShaderSource ="#version 330 core\n"
+static const char *vertexShaderSource ="#version 320 es\n"
                                 "layout (location = 0) in vec3 aPos;\n"
                                 "layout (location = 1) in vec3 aColor;\n"
                                 "out vec3 ourColor;\n"
@@ -18,7 +18,7 @@ static const char *vertexShaderSource ="#version 330 core\n"
                                 "   ourColor = aColor;\n"
                                 "}\0";
 
-static const char *fragmentShaderSource = "#version 330 core\n"
+static const char *fragmentShaderSource = "#version 320 es\n"
                                    "out vec4 FragColor;\n"
                                    "in vec3 ourColor;\n"
                                    "void main()\n"
