@@ -60,7 +60,7 @@ class GLDetailActivity : AppCompatActivity(), Renderer {
                 }
             })
             setRenderer(this@GLDetailActivity)
-            renderMode = RENDERMODE_WHEN_DIRTY
+            renderMode = RENDERMODE_CONTINUOUSLY
         }
     }
 
