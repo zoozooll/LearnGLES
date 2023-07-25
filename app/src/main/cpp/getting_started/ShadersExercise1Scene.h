@@ -7,6 +7,8 @@
 
 #include "Scene.h"
 
+class Shader;
+
 class ShadersExercise1Scene : public Scene {
 public:
     void init() override;
@@ -16,6 +18,10 @@ public:
     void draw() override;
 
     void destroy() override;
+
+private:
+    Shader* ourShader;
+    unsigned int VAO;
 };
 
 

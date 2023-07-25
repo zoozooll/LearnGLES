@@ -9,7 +9,7 @@
 class Scene {
 public:
     virtual void init() = 0;
-    virtual void resize(int, int) = 0;
+    virtual void resize(int width, int height) = 0;
     virtual void draw() = 0;
     virtual void destroy() = 0;
 };

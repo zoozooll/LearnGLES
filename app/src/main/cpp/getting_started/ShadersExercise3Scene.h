@@ -5,9 +5,22 @@
 #ifndef LEARNGLES_SHADERSEXERCISE3SCENE_H
 #define LEARNGLES_SHADERSEXERCISE3SCENE_H
 
+#include "Scene.h"
 
-class ShadersExercise3Scene {
+class Shader;
 
+class ShadersExercise3Scene : public Scene {
+public:
+    void init() override;
+
+    void resize(int i, int i1) override;
+
+    void draw() override;
+
+    void destroy() override;
+private:
+    Shader* ourShader;
+    unsigned int VAO;
 };
 
 

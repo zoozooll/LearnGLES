@@ -12,7 +12,7 @@
 void TextureCombinedScene::init() {
 // build and compile our shader zprogram
     // ------------------------------------
-    ourShader = new Shader("4.2.texture.vs", "4.2.texture.fs");
+    ourShader = new Shader("4.2.texture.vert", "4.2.texture.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
