@@ -79,7 +79,7 @@ void TextureCombinedScene::init() {
     }
     else
     {
-        LOGE("TexturesScene","Failed to load texture");
+        LOGE("TexturesScene","Failed to load texture: textures/container.jpg");
     }
     stbi_image_free(data);
     // texture 2

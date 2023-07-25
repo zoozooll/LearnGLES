@@ -13,6 +13,6 @@ void LoadDataFromAsset(const char *const assetPath, void **buffer, size_t *size)
     AAsset* file = AAssetManager_open(mgr, assetPath, AASSET_MODE_BUFFER);
     *size = AAsset_getLength(file);
     *buffer = malloc(*size);
-    AAsset_read(file, buffer, *size);
+    AAsset_read(file, *buffer, *size);
     AAsset_close(file);
 }

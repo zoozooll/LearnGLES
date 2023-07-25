@@ -15,6 +15,7 @@ static const char *vertexShaderSource = "#version 320 es\n"
                                  "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
                                  "}\0";
 static const char *fragmentShaderSource = "#version 320 es\n"
+                                          "precision mediump float;\n"
                                    "out vec4 FragColor;\n"
                                    "void main()\n"
                                    "{\n"

@@ -19,6 +19,7 @@ static const char *vertexShaderSource ="#version 320 es\n"
                                 "}\0";
 
 static const char *fragmentShaderSource = "#version 320 es\n"
+                                          "precision mediump float;\n"
                                    "out vec4 FragColor;\n"
                                    "in vec3 ourColor;\n"
                                    "void main()\n"

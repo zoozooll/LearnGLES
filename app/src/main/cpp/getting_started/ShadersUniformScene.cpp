@@ -17,6 +17,7 @@ static const char *vertexShaderSource ="#version 320 es\n"
                                 "}\0";
 
 static const char *fragmentShaderSource = "#version 320 es\n"
+                                          "precision mediump float;\n"
                                    "out vec4 FragColor;\n"
                                    "uniform vec4 ourColor;\n"
                                    "void main()\n"
@@ -92,7 +93,7 @@ void ShadersUniformScene::init() {
 
     // bind the VAO (it was already bound, but just to demonstrate): seeing as we only have a single VAO we can
     // just bind it beforehand before rendering the respective triangle; this is another approach.
-    glBindVertexArray(VAO);
+    glBindVertexArray(0);
 
     glDeleteBuffers(1, &VBO);
 }
@@ -109,7 +110,7 @@ void ShadersUniformScene::draw() {
 
     // be sure to activate the shader before any calls to glUniform
     glUseProgram(shaderProgram);
-
+    glBindVertexArray(VAO);
     // update shader uniform
     float greenValue = 0.f / 2.0f + 0.5f;
     int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");

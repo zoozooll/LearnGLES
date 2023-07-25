@@ -4,13 +4,18 @@
 
 #include "TransformationsScene.h"
 
+#include <GLES3/gl32.h>
+#include <glm/glm.hpp>
+#include <glm/ext.hpp>
+
 #include "Shader.h"
 #include "stb_image.h"
+#include "TimeUtil.h"
 
 void TransformationsScene::init() {
 // build and compile our shader zprogram
     // ------------------------------------
-    Shader ourShader("5.1.transform.vs", "5.1.transform.fs");
+    ourShader = new Shader("5.1.transform.vert", "5.1.transform.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -25,7 +30,7 @@ void TransformationsScene::init() {
             0, 1, 3, // first triangle
             1, 2, 3  // second triangle
     };
-    unsigned int VBO, VAO, EBO;
+
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
@@ -48,7 +53,7 @@ void TransformationsScene::init() {
 
     // load and create a texture
     // -------------------------
-    unsigned int texture1, texture2;
+
     // texture 1
     // ---------
     glGenTextures(1, &texture1);
@@ -60,9 +65,12 @@ void TransformationsScene::init() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
+    unsigned char *file_data;
+    size_t file_size;
+    LoadDataFromAsset("textures/container.jpg", reinterpret_cast<void **>(&file_data), &file_size);
+    unsigned char *data;
     int width, height, nrChannels;
-    stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-    unsigned char *data = stbi_load(FileSystem::getPath("resources/textures/container.jpg").c_str(), &width, &height, &nrChannels, 0);
+    data = stbi_load_from_memory(file_data, file_size, &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -70,7 +78,7 @@ void TransformationsScene::init() {
     }
     else
     {
-        std::cout << "Failed to load texture" << std::endl;
+        LOGE("TexturesScene","Failed to load texture: textures/container.jpg");
     }
     stbi_image_free(data);
     // texture 2
@@ -84,7 +92,8 @@ void TransformationsScene::init() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
-    data = stbi_load(FileSystem::getPath("textures/awesomeface.png").c_str(), &width, &height, &nrChannels, 0);
+    LoadDataFromAsset("textures/awesomeface.png", reinterpret_cast<void **>(&file_data), &file_size);
+    data = stbi_load_from_memory(file_data, file_size, &width, &height, &nrChannels, 0);
     if (data)
     {
         // note that the awesomeface.png has transparency and thus an alpha channel, so make sure to tell OpenGL the data type is of GL_RGBA
@@ -93,25 +102,50 @@ void TransformationsScene::init() {
     }
     else
     {
-        std::cout << "Failed to load texture" << std::endl;
+        LOGE("TexturesScene","Failed to load texture: textures/awesomeface.png");
     }
     stbi_image_free(data);
 
     // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
     // -------------------------------------------------------------------------------------------
-    ourShader.use();
-    ourShader.setInt("texture1", 0);
-    ourShader.setInt("texture2", 1);
+    ourShader->use();
+    ourShader->setInt("texture1", 0);
+    ourShader->setInt("texture2", 1);
 }
 
 void TransformationsScene::resize(int width, int height) {
-
+    glViewport(0, 0, width, height);
 }
 
 void TransformationsScene::draw() {
+// render
+    // ------
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
 
+    // bind textures on corresponding texture units
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture1);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+
+    // create transformations
+    glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+    transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
+    transform = glm::rotate(transform, (float)GetTimestampMilliSeconds(), glm::vec3(0.0f, 0.0f, 1.0f));
+
+    // get matrix's uniform location and set matrix
+    ourShader->use();
+    unsigned int transformLoc = glGetUniformLocation(ourShader->ID, "transform");
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+
+    // render container
+    glBindVertexArray(VAO);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
 void TransformationsScene::destroy() {
-
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &EBO);
 }

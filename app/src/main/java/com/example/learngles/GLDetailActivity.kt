@@ -1,6 +1,7 @@
 package com.example.learngles
 
 import android.opengl.GLSurfaceView
+import android.opengl.GLSurfaceView.RENDERMODE_CONTINUOUSLY
 import android.opengl.GLSurfaceView.RENDERMODE_WHEN_DIRTY
 import android.opengl.GLSurfaceView.Renderer
 import android.os.Bundle

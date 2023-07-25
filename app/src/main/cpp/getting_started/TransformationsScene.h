@@ -18,6 +18,11 @@ public:
     void draw() override;
 
     void destroy() override;
+
+private:
+    unsigned int texture1, texture2;
+    Shader *ourShader = nullptr;
+    unsigned int VBO, VAO, EBO;
 };
 
 

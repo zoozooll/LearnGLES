@@ -15,6 +15,7 @@ static const char *vertexShaderSource = "#version 320 es\n"
                                  "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
                                  "}\0";
 static const char *fragmentShaderSource = "#version 320 es\n"
+                                          "precision mediump float;\n"
                                    "out vec4 FragColor;\n"
                                    "void main()\n"
                                    "{\n"
@@ -74,7 +75,7 @@ void HelloTriangleExercise2Scene::init() {
             0.9f, -0.5f, 0.0f,  // right
             0.45f, 0.5f, 0.0f   // top
     };
-    unsigned int VBOs[2], VAOs[2];
+
     glGenVertexArrays(2, VAOs); // we can also generate multiple VAOs or buffers at the same time
     glGenBuffers(2, VBOs);
     // first triangle setup

@@ -15,6 +15,7 @@ static const char *vertexShaderSource = "#version 320 es\n"
                                  "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
                                  "}\0";
 static const char *fragmentShaderSource = "#version 320 es\n"
+                                          "precision mediump float;\n"
                                    "out vec4 FragColor;\n"
                                    "void main()\n"
                                    "{\n"
@@ -49,7 +50,7 @@ void HelloTriangleIndexedScene::init() {
         LOGE("HelloTriangleIndexedScene", "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED: %s", infoLog);
     }
     // link shaders
-    unsigned int shaderProgram = glCreateProgram();
+    shaderProgram = glCreateProgram();
     glAttachShader(shaderProgram, vertexShader);
     glAttachShader(shaderProgram, fragmentShader);
     glLinkProgram(shaderProgram);
