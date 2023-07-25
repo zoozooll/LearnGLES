@@ -7,7 +7,7 @@
 
 #include "Scene.h"
 
-class HelloTriangleExercise2Scene : Scene {
+class HelloTriangleExercise2Scene : public Scene {
 public:
     void init() override;
 
