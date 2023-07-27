@@ -24,6 +24,8 @@
 #include "getting_started/TexturesScene.h"
 #include "getting_started/TextureCombinedScene.h"
 #include "getting_started/TransformationsScene.h"
+#include "getting_started/TextureExercise1Scene.h"
+#include "getting_started/TextureExerciseScene.h"
 
 inline Scene* GenSceneByName(const char *tutorial) {
     if (!strcmp(tutorial, "hello_window")) {
@@ -59,9 +61,9 @@ inline Scene* GenSceneByName(const char *tutorial) {
     } else if (!strcmp(tutorial, "transformations")) {
         return new TransformationsScene;
     } else if (!strcmp(tutorial, "transformations_exercise1")) {
-
+        return new TextureExercise1Scene;
     } else if (!strcmp(tutorial, "transformations_exercise2")) {
-
+        return new TextureExercise2Scene;
     } else if (!strcmp(tutorial, "coordinate_systems")) {
 
     } else if (!strcmp(tutorial, "coordinate_systems_depth")) {
