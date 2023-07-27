@@ -63,10 +63,13 @@ void TextureExercise2Scene::init() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
-    int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-    // The FileSystem::getPath(...) is part of the GitHub repository so we can find files on any IDE/platform; replace it with your own image path.
-    unsigned char *data = stbi_load(FileSystem::getPath("resources/textures/container.jpg").c_str(), &width, &height, &nrChannels, 0);
+    unsigned char *file_data;
+    size_t file_size;
+    LoadDataFromAsset("textures/container.jpg", reinterpret_cast<void **>(&file_data), &file_size);
+    unsigned char *data;
+    int width, height, nrChannels;
+    data = stbi_load_from_memory(file_data, file_size, &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -74,7 +77,7 @@ void TextureExercise2Scene::init() {
     }
     else
     {
-        std::cout << "Failed to load texture" << std::endl;
+        LOGE("TexturesScene","Failed to load texture: textures/container.jpg");
     }
     stbi_image_free(data);
     // texture 2
@@ -88,7 +91,8 @@ void TextureExercise2Scene::init() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
-    data = stbi_load(FileSystem::getPath("resources/textures/awesomeface.png").c_str(), &width, &height, &nrChannels, 0);
+    LoadDataFromAsset("textures/awesomeface.png", reinterpret_cast<void **>(&file_data), &file_size);
+    data = stbi_load_from_memory(file_data, file_size, &width, &height, &nrChannels, 0);
     if (data)
     {
         // note that the awesomeface.png has transparency and thus an alpha channel, so make sure to tell OpenGL the data type is of GL_RGBA
@@ -97,17 +101,17 @@ void TextureExercise2Scene::init() {
     }
     else
     {
-        std::cout << "Failed to load texture" << std::endl;
+        LOGE("TexturesScene","Failed to load texture: textures/awesomeface.png");
     }
     stbi_image_free(data);
 
     // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
     // -------------------------------------------------------------------------------------------
-    ourShader.use(); // don't forget to activate/use the shader before setting uniforms!
+    ourShader->use(); // don't forget to activate/use the shader before setting uniforms!
     // either set it manually like so:
-    glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0);
+    glUniform1i(glGetUniformLocation(ourShader->ID, "texture1"), 0);
     // or set it via the texture class
-    ourShader.setInt("texture2", 1);
+    ourShader->setInt("texture2", 1);
 }
 
 void TextureExercise2Scene::resize(int width, int height) {

@@ -93,12 +93,8 @@ void TextureExercise1Scene::init() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
-//    data = stbi_load(FileSystem::getPath("resources/textures/awesomeface.png").c_str(), &width, &height, &nrChannels, 0);
-//    unsigned char *file_data;
-//    size_t file_size;
+
     LoadDataFromAsset("textures/awesomeface.png", reinterpret_cast<void **>(&file_data), &file_size);
-//    unsigned char *data;
-//    int width, height, nrChannels;
     data = stbi_load_from_memory(file_data, file_size, &width, &height, &nrChannels, 0);
     if (data)
     {
