@@ -28,6 +28,8 @@
 #include "getting_started/TextureExercise2Scene.h"
 #include "getting_started/TextureExercise3Scene.h"
 #include "getting_started/TextureExercise4Scene.h"
+#include "getting_started/TransformationsExercise1Scene.h"
+#include "getting_started/TransformationsExercise2Scene.h"
 
 inline Scene* GenSceneByName(const char *tutorial) {
     if (!strcmp(tutorial, "hello_window")) {
@@ -71,7 +73,9 @@ inline Scene* GenSceneByName(const char *tutorial) {
     } else if (!strcmp(tutorial, "texture_exercise4")) {
         return new TextureExercise4Scene;
     } else if (!strcmp(tutorial, "transformations_exercise1")) {
+        return new TransformationsExercise1Scene;
     } else if (!strcmp(tutorial, "transformations_exercise2")) {
+        return new TransformationsExercise2Scene;
     } else if (!strcmp(tutorial, "coordinate_systems")) {
 
     } else if (!strcmp(tutorial, "coordinate_systems_depth")) {
