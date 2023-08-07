@@ -3,6 +3,13 @@
 //
 
 #include "Model.h"
+#include <android/asset_manager_jni.h>
+#include <assimp/port/AndroidJNI/AndroidJNIIOSystem.h>
+
+#include "logutil.h"
+
+extern char *g_internalPath;
+extern AAssetManager* mgr;
 
 // constructor, expects a filepath to a 3D model.
 Model::Model(string const &path, bool gamma) : gammaCorrection(gamma)
@@ -22,11 +29,14 @@ void Model::loadModel(string const &path)
 {
     // read file via ASSIMP
     Assimp::Importer importer;
+    Assimp::AndroidJNIIOSystem ioSystem(g_internalPath, mgr);
+    importer.SetIOHandler(&ioSystem);
+
     const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
     // check for errors
     if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) // if is Not Zero
     {
-        cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << endl;
+        LOGE("Model", "ERROR::ASSIMP:: %s", importer.GetErrorString());
         return;
     }
     // retrieve the directory path of the filepath

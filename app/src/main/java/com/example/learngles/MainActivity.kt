@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         NativeLibHelper.setupNativeAsset(assets)
+        NativeLibHelper.setupInternalPath(filesDir.path)
         binding.root.layoutManager = LinearLayoutManager(this@MainActivity)
         listAdapter = ContactsAdapter()
         binding.root.adapter = listAdapter

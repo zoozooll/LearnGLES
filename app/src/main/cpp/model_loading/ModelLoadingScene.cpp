@@ -12,6 +12,9 @@
 #include "Shader.h"
 #include "Model.h"
 
+static int SCR_WIDTH;
+static int SCR_HEIGHT;
+
 void ModelLoadingScene::init() {
     // tell stb_image.h to flip loaded texture's on the y-axis (before loading model).
     stbi_set_flip_vertically_on_load(true);
@@ -26,11 +29,13 @@ void ModelLoadingScene::init() {
 
     // load models
     // -----------
-    ourModel = new Model(FileSystem::getPath("resources/objects/backpack/backpack.obj"));
+    ourModel = new Model("objects/backpack/backpack.obj");
 }
 
 void ModelLoadingScene::resize(int width, int height) {
     glViewport(0, 0, width, height);
+    SCR_WIDTH = width;
+    SCR_HEIGHT = height;
 }
 
 void ModelLoadingScene::draw() {

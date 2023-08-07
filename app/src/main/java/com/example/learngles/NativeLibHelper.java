@@ -16,4 +16,6 @@ public class NativeLibHelper {
     public static native void nativeDestroy();
 
     public static native void setupNativeAsset(AssetManager am);
+
+    public static native void setupInternalPath(String path);
 }

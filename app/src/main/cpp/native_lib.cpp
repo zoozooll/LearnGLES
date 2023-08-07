@@ -2,6 +2,7 @@
 
 #include <GLES3/gl32.h>
 #include <android/asset_manager_jni.h>
+#include <cstdlib>
 
 #include "glerror.h"
 #include "SceneHelper.h"
@@ -11,6 +12,8 @@
 // Created by Aaron Lee on 2023/07/12.
 //
 AAssetManager* mgr = nullptr;
+
+char *g_internalPath = nullptr;
 
 static Scene *g_scene = nullptr;
 
@@ -52,4 +55,15 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_learngles_NativeLibHelper_setupNativeAsset(JNIEnv *env, jclass clazz, jobject am) {
     mgr = AAssetManager_fromJava(env, am);
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_learngles_NativeLibHelper_setupInternalPath(JNIEnv *env, jclass clazz,
+                                                             jstring path) {
+    jboolean is_copy;
+    auto length = env->GetStringUTFLength(path);
+    auto path_chars = env->GetStringUTFChars(path, &is_copy);
+    g_internalPath = static_cast<char *>(malloc(length + 1));
+    memcpy(g_internalPath, path_chars, length + 1);
+    env->ReleaseStringUTFChars(path, path_chars);
 }
