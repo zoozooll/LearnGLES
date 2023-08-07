@@ -52,7 +52,7 @@ object DataSet {
         "multiple_lights" ,
         "multiple_lights_exercise1" ,
         "3.model_loading" ,
-        "model_loadinng" ,
+        "model_loading" ,
         "4.advanced_opengl" ,
         "depth_testing" ,
         "depth_testing_view" ,
