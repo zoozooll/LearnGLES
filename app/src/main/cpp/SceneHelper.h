@@ -30,6 +30,8 @@
 #include "getting_started/TextureExercise4Scene.h"
 #include "getting_started/TransformationsExercise1Scene.h"
 #include "getting_started/TransformationsExercise2Scene.h"
+#include "model_loading/ModelLoadingScene.h"
+#include "advanced_lighting/AdvancedLightingScene.h"
 
 inline Scene* GenSceneByName(const char *tutorial) {
     if (!strcmp(tutorial, "hello_window")) {
@@ -96,6 +98,10 @@ inline Scene* GenSceneByName(const char *tutorial) {
 
     } else if (!strcmp(tutorial, "camera_exercise2")) {
 
+    } else if (!strcmp(tutorial, "model_loading")) {
+        return new ModelLoadingScene;
+    } else if (!strcmp(tutorial, "advanced_lighting")) {
+        return new AdvancedLightingScene;
     }
     return nullptr;
 }
