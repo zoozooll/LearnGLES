@@ -10,6 +10,7 @@
 
 #include "Shader.h"
 #include "logutil.h"
+#include "glerror.h"
 
 static unsigned int loadTexture(char const * path);
 
@@ -74,6 +75,8 @@ void AdvancedLightingScene::resize(int width, int height) {
 }
 
 void AdvancedLightingScene::draw() {
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 // draw objects
     shader->use();
     glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
@@ -89,12 +92,15 @@ void AdvancedLightingScene::draw() {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, floorTexture);
     glDrawArrays(GL_TRIANGLES, 0, 6);
-
-    LOGI("AdvancedLightingScene", "Light Mode: %s", blinn ? "Blinn-Phong" : "Phong");
+    check_gl_error();
+//    LOGI("AdvancedLightingScene", "Light Mode: %s", blinn ? "Blinn-Phong" : "Phong");
 }
 
 void AdvancedLightingScene::destroy() {
-
+    delete shader;
+    glDeleteTextures(1, &floorTexture);
+    glDeleteVertexArrays(1, &planeVAO);
+    glDeleteBuffers(1, &planeVBO);
 }
 
 unsigned int loadTexture(char const * path)

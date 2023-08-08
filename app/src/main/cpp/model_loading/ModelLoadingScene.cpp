@@ -11,6 +11,7 @@
 
 #include "Shader.h"
 #include "Model.h"
+#include "glerror.h"
 
 static int SCR_WIDTH;
 static int SCR_HEIGHT;
@@ -25,7 +26,7 @@ void ModelLoadingScene::init() {
 
     // build and compile shaders
     // -------------------------
-    ourShader = new Shader("1.model_loading.vs", "1.model_loading.fs");
+    ourShader = new Shader("1.model_loading.vert", "1.model_loading.frag");
 
     // load models
     // -----------
@@ -59,6 +60,7 @@ void ModelLoadingScene::draw() {
     model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
     ourShader->setMat4("model", model);
     ourModel->Draw(*ourShader);
+    check_gl_error();
 }
 
 void ModelLoadingScene::destroy() {

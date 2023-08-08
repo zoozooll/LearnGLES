@@ -29,8 +29,8 @@ void Model::loadModel(string const &path)
 {
     // read file via ASSIMP
     Assimp::Importer importer;
-    Assimp::AndroidJNIIOSystem ioSystem(g_internalPath, mgr);
-    importer.SetIOHandler(&ioSystem);
+    Assimp::AndroidJNIIOSystem *ioSystem = new Assimp::AndroidJNIIOSystem (g_internalPath, mgr);
+    importer.SetIOHandler(ioSystem);
 
     const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
     // check for errors
@@ -190,8 +190,12 @@ unsigned int TextureFromFile(const char *path, const string &directory, bool gam
     unsigned int textureID;
     glGenTextures(1, &textureID);
 
+    unsigned char *file_data;
+    size_t file_size;
+    LoadDataFromAsset(filename.c_str(), reinterpret_cast<void **>(&file_data), &file_size);
+    unsigned char *data;
     int width, height, nrComponents;
-    unsigned char *data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
+    data = stbi_load_from_memory(file_data, file_size, &width, &height, &nrComponents, 0);
     if (data)
     {
         GLenum format;
