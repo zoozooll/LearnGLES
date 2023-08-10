@@ -30,6 +30,9 @@
 #include "getting_started/TextureExercise4Scene.h"
 #include "getting_started/TransformationsExercise1Scene.h"
 #include "getting_started/TransformationsExercise2Scene.h"
+#include "getting_started/CoordinateSystemScene.h"
+#include "getting_started/CoordinateSystemDepthScene.h"
+#include "getting_started/CoordinateSystemMultipleScene.h"
 #include "model_loading/ModelLoadingScene.h"
 #include "advanced_lighting/AdvancedLightingScene.h"
 
@@ -79,11 +82,11 @@ inline Scene* GenSceneByName(const char *tutorial) {
     } else if (!strcmp(tutorial, "transformations_exercise2")) {
         return new TransformationsExercise2Scene;
     } else if (!strcmp(tutorial, "coordinate_systems")) {
-
+        return new CoordinateSystemScene;
     } else if (!strcmp(tutorial, "coordinate_systems_depth")) {
-
+        return new CoordinateSystemDepthScene;
     } else if (!strcmp(tutorial, "coordinate_systems_multiple")) {
-
+        return new CoordinateSystemMultipleScene;
     } else if (!strcmp(tutorial, "coordinate_systems_exercise")) {
 
     } else if (!strcmp(tutorial, "camera_circle")) {

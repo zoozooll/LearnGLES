@@ -11,7 +11,7 @@ class HelloWindowScene : public Scene {
 public:
     void init() override;
 
-    void resize(int i, int i1) override;
+    void resize(int width, int height) override;
 
     void draw() override;
 
