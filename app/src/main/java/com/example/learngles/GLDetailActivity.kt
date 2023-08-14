@@ -1,5 +1,7 @@
 package com.example.learngles
 
+import android.annotation.SuppressLint
+import android.graphics.PointF
 import android.opengl.GLSurfaceView
 import android.opengl.GLSurfaceView.RENDERMODE_CONTINUOUSLY
 import android.opengl.GLSurfaceView.RENDERMODE_WHEN_DIRTY
@@ -16,6 +18,8 @@ import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.egl.EGLContext
 import javax.microedition.khronos.egl.EGLDisplay
 import javax.microedition.khronos.opengles.GL10
+import kotlin.math.atan2
+import kotlin.math.sqrt
 
 
 class GLDetailActivity : AppCompatActivity(), Renderer {
@@ -23,6 +27,12 @@ class GLDetailActivity : AppCompatActivity(), Renderer {
     private lateinit var binding: ActivityGldetailBinding
     private lateinit var tutorialArg: String
 
+    private lateinit var gestureListener: GestureDetector
+
+    private var lastPoint: PointF = PointF(-Float.MAX_VALUE, -Float.MAX_VALUE)
+    private var lastPoint1: PointF = PointF(-Float.MAX_VALUE, -Float.MAX_VALUE)
+
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -65,12 +75,9 @@ class GLDetailActivity : AppCompatActivity(), Renderer {
             setRenderer(this@GLDetailActivity)
             renderMode = RENDERMODE_CONTINUOUSLY
         }
-        val gestureDetector = GestureDetector(this, object: GestureDetector.SimpleOnGestureListener() {
-            private var lastScrollX: Float = -Float.MAX_VALUE
-            private var lastScrollY: Float = -Float.MAX_VALUE
 
-            private var lastScrollX1: Float = -Float.MAX_VALUE
-            private var lastScrollY1: Float = -Float.MAX_VALUE
+        gestureListener = GestureDetector(this, object: GestureDetector.SimpleOnGestureListener() {
+
 
             override fun onDown(e: MotionEvent): Boolean {
 //                Log.i(TAG, "onDown")
@@ -82,7 +89,7 @@ class GLDetailActivity : AppCompatActivity(), Renderer {
             }
 
             override fun onSingleTapUp(e: MotionEvent): Boolean {
-//                Log.i(TAG, "onSingleTapUp");
+//                Log.i(TAG, "onSingleTapUp")
                 return false
             }
 
@@ -92,27 +99,28 @@ class GLDetailActivity : AppCompatActivity(), Renderer {
                 distanceX: Float,
                 distanceY: Float
             ): Boolean {
-//                Log.i(TAG, "onScroll e1: (${e1.x}, ${e1.y}) e2: (${e2.x}, ${e2.y}) ${e2.pointerCount}")
+//                Log.i(TAG, "onScroll e1: (${e1.x}, ${e1.y}) e2: (${e2.x}, ${e2.y}) ${e2.action}")
                 if (e2.pointerCount == 1) {
-                    if (lastScrollX >= 0 && lastScrollY >= 0) {
-                        onSingleMove(lastScrollX, lastScrollY, e2.x, e2.y)
+                    if (lastPoint.x >= 0 && lastPoint.y >= 0) {
+                        onSingleMove(lastPoint, PointF(e2.x, e2.y))
                     }
-                    lastScrollX = e2.x
-                    lastScrollY = e2.y
+                    lastPoint.set(e2.x, e2.y)
                 } else if (e2.pointerCount == 2) {
-                    if (lastScrollX >= 0 && lastScrollY >= 0 && lastScrollX1 >= 0 && lastScrollY1 >= 0)
-                        onTwoFingerMove(lastScrollX, lastScrollY, lastScrollX1, lastScrollY1,
-                            e2.getX(0), e2.getY(0), e2.getX(1), e2.getY(1))
-                    lastScrollX = e2.getX(0)
-                    lastScrollY = e2.getY(0)
-                    lastScrollX1 = e2.getX(1)
-                    lastScrollY1 = e2.getY(1)
+                    if (lastPoint.x >= 0 && lastPoint.y >= 0 && lastPoint1.x >= 0 && lastPoint1.y >= 0) {
+                        onTwoFingerMove(lastPoint, lastPoint1,
+                            PointF(e2.getX(0), e2.getY(0)),
+                            PointF(e2.getX(1), e2.getY(1)),
+                            PointF(e1.getX(0), e1.getY(0)),
+                            PointF(e1.getX(1), e1.getY(1)))
+                    }
+                    lastPoint.set(e2.getX(0), e2.getY(0))
+                    lastPoint1.set(e2.getX(1), e2.getY(1))
                 }
                 return true
             }
 
             override fun onLongPress(e: MotionEvent) {
-                onLongPress(e.x, e.y)
+                onLongPress(PointF(e.x, e.y))
 //                Log.i(TAG, "onLongPress")
             }
 
@@ -128,13 +136,13 @@ class GLDetailActivity : AppCompatActivity(), Renderer {
 
             override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
 //                Log.i(TAG, "onSingleTapConfirmed")
-                onSingleClick(e.x, e.y)
+                onSingleClick(PointF(e.x, e.y))
                 return false
             }
 
             override fun onDoubleTap(e: MotionEvent): Boolean {
 //                Log.i(TAG, "onDoubleTap")
-                onDoubleClick(e.x, e.y)
+                onDoubleClick(PointF(e.x, e.y))
                 return true
             }
 
@@ -146,32 +154,67 @@ class GLDetailActivity : AppCompatActivity(), Renderer {
         })
         binding.surfaceSupportedView.setOnTouchListener { v, event ->
 //            Log.i(TAG, "onTouch ${event.action}: ${event.pointerCount}")
-            gestureDetector.onTouchEvent(event)
+            when (event.action) {
+                MotionEvent.ACTION_UP -> {
+                    lastPoint.set(-Float.MAX_VALUE, -Float.MAX_VALUE)
+                    lastPoint1.set(-Float.MAX_VALUE, -Float.MAX_VALUE)
+                }
+                MotionEvent.ACTION_POINTER_DOWN -> {
+
+                }
+            }
+            gestureListener.onTouchEvent(event)
         }
     }
 
-    fun onSingleClick(x: Float, y: Float) {
-        Log.i(TAG, "onSingleClick")
+    fun onSingleClick(point: PointF) {
+//        Log.i(TAG, "onSingleClick")
     }
 
-    fun onDoubleClick(x: Float, y: Float) {
-        Log.i(TAG, "onDoubleClick")
+    fun onDoubleClick(point: PointF) {
+//        Log.i(TAG, "onDoubleClick")
     }
 
-    fun onLongPress(x: Float, y: Float) {
-        Log.i(TAG, "onLongPress")
+    fun onLongPress(point: PointF) {
+//        Log.i(TAG, "onLongPress")
     }
 
-    fun onSingleMove(startX: Float, startY: Float, endX: Float, endY: Float) {
-        Log.i(TAG, "onSingleMove")
+    fun onSingleMove(start: PointF, end: PointF) {
+        val dis = PointF(end.x - start.x, end.y - start.y)
+        Log.i(TAG, "onSingleMove: $dis")
         binding.surfaceSupportedView.queueEvent {
-
+            NativeLibHelper.onSingleTouch(dis.x, dis.y)
+            binding.surfaceSupportedView.requestRender()
         }
     }
 
-    fun onTwoFingerMove(startX0: Float, startY0: Float, startX1: Float, startY1: Float,
-                        endX0: Float, endY0: Float, endX1: Float, endY1: Float) {
-        Log.i(TAG, "onTwoFingerMove")
+    fun onTwoFingerMove(start: PointF, start1: PointF, end: PointF, end1: PointF, down: PointF, down1: PointF) {
+//        Log.i(TAG, "onTwoFingerMove point0: ($startX0, $startY0) -> ($endX0, $endY0) " +
+//                "point1: ($startX1, $startY1) -> ($endX1, $endY1)")
+        val distance = sqrt ((end1.x - end.x) * (end1.x - end.x) + (end1.y - end.y) * (end1.y - end.y))
+        val prevDistance = sqrt ((start1.x - start.x) * (start1.x - start.x) + (start1.y - start.y) * (start1.y - start.y))
+        val centerPoint = PointF((end.x + end1.x) * .5f, (end.y + end1.y) * .5f)
+        val prevCenter = PointF((start.x + start1.x) * .5f, (start.y + start1.y) * .5f)
+        val vectorPoint0 = PointF(start1.x - start.x, start1.y - start.y)
+        val vectorPoint1 = PointF(end1.x - end.x, end1.y - end.y)
+        val rs_a = vectorPoint1.y * vectorPoint0.x - vectorPoint1.x * vectorPoint0.y
+        val rs_b = vectorPoint0.x * vectorPoint1.x + vectorPoint0.y * vectorPoint1.y
+        val angle = -atan2(rs_a, rs_b)
+        Log.i(TAG, "onTwoFingerMove angle: $angle")
+        //
+        if (prevDistance >= 0) {
+            binding.surfaceSupportedView.queueEvent {
+                NativeLibHelper.onZooming(prevDistance, distance)
+                NativeLibHelper.onMoving(prevCenter.x, prevCenter.y, centerPoint.x, centerPoint.y)
+                NativeLibHelper.onTwoFingersRotating(angle)
+                binding.surfaceSupportedView.requestRender()
+            }
+        }
+
+//        binding.glView.queueEvent {
+//            renderer.onMoving(prevCenterX, prevCenterY, centerPointX, centerPointY)
+//            binding.glView.requestRender()
+//        }
     }
 
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
