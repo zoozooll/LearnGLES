@@ -205,16 +205,12 @@ class GLDetailActivity : AppCompatActivity(), Renderer {
         if (prevDistance >= 0) {
             binding.surfaceSupportedView.queueEvent {
                 NativeLibHelper.onZooming(prevDistance, distance)
-                NativeLibHelper.onMoving(prevCenter.x, prevCenter.y, centerPoint.x, centerPoint.y)
                 NativeLibHelper.onTwoFingersRotating(angle)
+                NativeLibHelper.onMoving(prevCenter.x, prevCenter.y, centerPoint.x, centerPoint.y)
                 binding.surfaceSupportedView.requestRender()
             }
         }
 
-//        binding.glView.queueEvent {
-//            renderer.onMoving(prevCenterX, prevCenterY, centerPointX, centerPointY)
-//            binding.glView.requestRender()
-//        }
     }
 
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {

@@ -67,3 +67,27 @@ Java_com_example_learngles_NativeLibHelper_setupInternalPath(JNIEnv *env, jclass
     memcpy(g_internalPath, path_chars, length + 1);
     env->ReleaseStringUTFChars(path, path_chars);
 }
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_learngles_NativeLibHelper_onSingleTouch(JNIEnv *env, jclass clazz, jfloat x,
+                                                         jfloat y) {
+    // TODO: implement onSingleTouch()
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_learngles_NativeLibHelper_onZooming(JNIEnv *env, jclass clazz,
+                                                     jfloat prev_distance, jfloat distance) {
+    // TODO: implement onZooming()
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_learngles_NativeLibHelper_onTwoFingersRotating(JNIEnv *env, jclass clazz,
+                                                                jfloat angle) {
+    // TODO: implement onTwoFingersRotating()
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_learngles_NativeLibHelper_onMoving(JNIEnv *env, jclass clazz, jfloat x, jfloat y,
+                                                    jfloat x1, jfloat y1) {
+    // TODO: implement onMoving()
+}

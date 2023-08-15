@@ -18,4 +18,12 @@ public class NativeLibHelper {
     public static native void setupNativeAsset(AssetManager am);
 
     public static native void setupInternalPath(String path);
+
+    public static native void onSingleTouch(float x, float y);
+
+    public static native void onZooming(float prevDistance, float distance);
+
+    public static native void onTwoFingersRotating(float angle);
+
+    public static native void onMoving(float x, float y, float x1, float y1);
 }

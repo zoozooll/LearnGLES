@@ -39,6 +39,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---------------------------------------------------------------------------
 */
 #include <assimp/scene.h>
+#include "Scene.h"
+
 
 aiNode::aiNode() :
         mName(""),
@@ -133,3 +135,4 @@ void aiNode::addChildren(unsigned int numChildren, aiNode **children) {
         mNumChildren = numChildren;
     }
 }
+
