@@ -71,23 +71,55 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_learngles_NativeLibHelper_onSingleTouch(JNIEnv *env, jclass clazz, jfloat x,
                                                          jfloat y) {
-    // TODO: implement onSingleTouch()
+    if (g_scene) {
+        g_scene->yawPitch(glm::vec2(x,y));
+    }
 }
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_learngles_NativeLibHelper_onZooming(JNIEnv *env, jclass clazz,
                                                      jfloat prev_distance, jfloat distance) {
-    // TODO: implement onZooming()
+    if (g_scene && prev_distance != 0.f and distance != 0.f) {
+        g_scene->scale(distance);
+    }
 }
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_learngles_NativeLibHelper_onTwoFingersRotating(JNIEnv *env, jclass clazz,
                                                                 jfloat angle) {
-    // TODO: implement onTwoFingersRotating()
+    if (g_scene) {
+        g_scene->roll(angle);
+    }
 }
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_learngles_NativeLibHelper_onMoving(JNIEnv *env, jclass clazz, jfloat x, jfloat y,
                                                     jfloat x1, jfloat y1) {
-    // TODO: implement onMoving()
+    if (g_scene) {
+        g_scene->move({x, y}, {x1, y1});
+    }
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_learngles_NativeLibHelper_onSingleClick(JNIEnv *env, jclass clazz, jfloat x,
+                                                         jfloat y) {
+    if (g_scene) {
+        g_scene->onSingleClick({x, y});
+    }
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_learngles_NativeLibHelper_onDoubleClick(JNIEnv *env, jclass clazz, jfloat x,
+                                                         jfloat y) {
+    if (g_scene) {
+        g_scene->onDoubleClick({x, y});
+    }
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_learngles_NativeLibHelper_onLongPress(JNIEnv *env, jclass clazz, jfloat x,
+                                                       jfloat y) {
+    if (g_scene) {
+        g_scene->onLongPress({x, y});
+    }
 }

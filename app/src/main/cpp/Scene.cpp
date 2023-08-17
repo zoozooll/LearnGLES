@@ -18,3 +18,15 @@ void Scene::yawPitch(const glm::vec2 &director) {
 void Scene::roll(const float &angle) {
 
 }
+
+void Scene::onSingleClick(const glm::vec2 point) {
+
+}
+
+void Scene::onDoubleClick(const glm::vec2 point) {
+
+}
+
+void Scene::onLongPress(const glm::vec2 point) {
+
+}

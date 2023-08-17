@@ -169,14 +169,23 @@ class GLDetailActivity : AppCompatActivity(), Renderer {
 
     fun onSingleClick(point: PointF) {
 //        Log.i(TAG, "onSingleClick")
+        binding.surfaceSupportedView.queueEvent {
+            NativeLibHelper.onSingleClick(point.x, point.y)
+        }
     }
 
     fun onDoubleClick(point: PointF) {
 //        Log.i(TAG, "onDoubleClick")
+        binding.surfaceSupportedView.queueEvent {
+            NativeLibHelper.onDoubleClick(point.x, point.y)
+        }
     }
 
     fun onLongPress(point: PointF) {
 //        Log.i(TAG, "onLongPress")
+        binding.surfaceSupportedView.queueEvent {
+            NativeLibHelper.onLongPress(point.x, point.y)
+        }
     }
 
     fun onSingleMove(start: PointF, end: PointF) {

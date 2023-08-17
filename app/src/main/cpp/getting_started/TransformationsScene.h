@@ -19,10 +19,19 @@ public:
 
     void destroy() override;
 
+    void move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) override;
+
+    void scale(const float &scale) override;
+
+    void yawPitch(const glm::vec2 &director) override;
+
+    void roll(const float &angle) override;
+
 private:
     unsigned int texture1, texture2;
     Shader *ourShader = nullptr;
     unsigned int VBO, VAO, EBO;
+    glm::mat4 transform = glm::mat4(1.0f);
 };
 
 

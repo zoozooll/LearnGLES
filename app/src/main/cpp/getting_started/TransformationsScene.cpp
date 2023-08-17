@@ -111,6 +111,7 @@ void TransformationsScene::init() {
     ourShader->use();
     ourShader->setInt("texture1", 0);
     ourShader->setInt("texture2", 1);
+    transform = glm::mat4 (1.f);
 }
 
 void TransformationsScene::resize(int width, int height) {
@@ -130,7 +131,7 @@ void TransformationsScene::draw() {
     glBindTexture(GL_TEXTURE_2D, texture2);
 
     // create transformations
-    glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+
     transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
     transform = glm::rotate(transform, (float)GetTimestampMilliSeconds() * 0.001f, glm::vec3(0.0f, 0.0f, 1.0f));
 
@@ -148,4 +149,31 @@ void TransformationsScene::destroy() {
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
+}
+
+
+void TransformationsScene::move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) {
+    glm::mat4 l_matrix(1.0f);
+    l_matrix = glm::translate(l_matrix, glm::vec3((end_pivot - start_pivot) * 0.01f, 0.f));
+    transform = l_matrix * transform;
+}
+
+void TransformationsScene::scale(const float &scale) {
+    glm::mat4 l_matrix(1.0f);
+    l_matrix = glm::scale(l_matrix, glm::vec3(scale, scale, scale));
+    transform = l_matrix * transform;
+}
+
+void TransformationsScene::yawPitch(const glm::vec2 &director) {
+    glm::mat4 l_matrix(1.0f);
+    glm::vec2 perpendicular = glm::normalize(glm::vec2(-director.y, director.x));
+    auto angle = glm::length(director) * 0.5f / M_PI;
+    l_matrix = glm::rotate(l_matrix, angle, glm::vec3(perpendicular, 0.f) );
+    transform = l_matrix * transform;
+}
+
+void TransformationsScene::roll(const float &angle) {
+    glm::mat4 l_matrix(1.0f);
+    l_matrix = glm::rotate(transform, angle, glm::vec3(0.f, 0.f, 1.f));
+    transform = l_matrix * transform;
 }

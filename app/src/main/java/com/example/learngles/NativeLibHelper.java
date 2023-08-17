@@ -26,4 +26,10 @@ public class NativeLibHelper {
     public static native void onTwoFingersRotating(float angle);
 
     public static native void onMoving(float x, float y, float x1, float y1);
+
+    public static native void onSingleClick(float x, float y);
+
+    public static native void onDoubleClick(float x, float y);
+
+    public static native void onLongPress(float x, float y);
 }
