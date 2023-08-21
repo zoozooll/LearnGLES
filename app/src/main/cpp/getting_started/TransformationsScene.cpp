@@ -132,8 +132,8 @@ void TransformationsScene::draw() {
 
     // create transformations
 
-    transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
-    transform = glm::rotate(transform, (float)GetTimestampMilliSeconds() * 0.001f, glm::vec3(0.0f, 0.0f, 1.0f));
+//    transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
+//    transform = glm::rotate(transform, (float)GetTimestampMilliSeconds() * 0.001f, glm::vec3(0.0f, 0.0f, 1.0f));
 
     // get matrix's uniform location and set matrix
     ourShader->use();
@@ -168,7 +168,7 @@ void TransformationsScene::yawPitch(const glm::vec2 &director) {
     glm::mat4 l_matrix(1.0f);
     glm::vec2 perpendicular = glm::normalize(glm::vec2(-director.y, director.x));
     auto angle = glm::length(director) * 0.5f / M_PI;
-    l_matrix = glm::rotate(l_matrix, angle, glm::vec3(perpendicular, 0.f) );
+    l_matrix = glm::rotate(l_matrix, float(angle), glm::vec3(perpendicular, 0.f) );
     transform = l_matrix * transform;
 }
 

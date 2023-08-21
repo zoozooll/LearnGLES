@@ -179,9 +179,9 @@ void CoordinateSystemDepthScene::draw() {
     glm::mat4 model         = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
     glm::mat4 view          = glm::mat4(1.0f);
     glm::mat4 projection    = glm::mat4(1.0f);
-    model = glm::rotate(model, (float)GetTimestampMilliSeconds(), glm::vec3(0.5f, 1.0f, 0.0f));
-    view  = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-    projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+//    model = glm::rotate(model, (float)GetTimestampMilliSeconds(), glm::vec3(0.5f, 1.0f, 0.0f));
+//    view  = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+//    projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
     // retrieve the matrix uniform locations
     unsigned int modelLoc = glGetUniformLocation(ourShader->ID, "model");
     unsigned int viewLoc  = glGetUniformLocation(ourShader->ID, "view");
@@ -201,4 +201,30 @@ void CoordinateSystemDepthScene::destroy() {
     glDeleteTextures(1, &texture1);
     glDeleteTextures(1, &texture2);
     delete ourShader;
+}
+
+void CoordinateSystemDepthScene::move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) {
+    glm::mat4 l_matrix(1.0f);
+    l_matrix = glm::translate(l_matrix, glm::vec3((end_pivot - start_pivot) * 0.01f, 0.f));
+    model = l_matrix * model;
+}
+
+void CoordinateSystemDepthScene::scale(const float &scale) {
+    glm::mat4 l_matrix(1.0f);
+    l_matrix = glm::scale(l_matrix, glm::vec3(scale, scale, scale));
+    model = l_matrix * model;
+}
+
+void CoordinateSystemDepthScene::yawPitch(const glm::vec2 &director) {
+    glm::mat4 l_matrix(1.0f);
+    glm::vec2 perpendicular = glm::normalize(glm::vec2(-director.y, director.x));
+    auto angle = glm::length(director) * 0.5f / M_PI;
+    l_matrix = glm::rotate(l_matrix, float(angle), glm::vec3(perpendicular, 0.f) );
+    model = l_matrix * model;
+}
+
+void CoordinateSystemDepthScene::roll(const float &angle) {
+    glm::mat4 l_matrix(1.0f);
+    l_matrix = glm::rotate(model, angle, glm::vec3(0.f, 0.f, 1.f));
+    model = l_matrix * model;
 }
