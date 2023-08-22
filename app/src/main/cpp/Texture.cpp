@@ -3,6 +3,10 @@
 //
 
 #include "Texture.h"
+#include <GLES3/gl32.h>
+#include <stb_image.h>
+#include "AssetHelper.h"
+#include "logutil.h"
 
 unsigned int loadTexture(char const * path)
 {

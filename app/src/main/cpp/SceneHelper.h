@@ -33,6 +33,8 @@
 #include "getting_started/CoordinateSystemScene.h"
 #include "getting_started/CoordinateSystemDepthScene.h"
 #include "getting_started/CoordinateSystemMultipleScene.h"
+#include "getting_started/CoordinateSystemExercise3Scene.h"
+#include "getting_started/CameraScene.h"
 #include "model_loading/ModelLoadingScene.h"
 #include "advanced_lighting/AdvancedLightingScene.h"
 
@@ -88,7 +90,7 @@ inline Scene* GenSceneByName(const char *tutorial) {
     } else if (!strcmp(tutorial, "coordinate_systems_multiple")) {
         return new CoordinateSystemMultipleScene;
     } else if (!strcmp(tutorial, "coordinate_systems_exercise")) {
-
+//        return new CoordinateSystemExercise3Scene;
     } else if (!strcmp(tutorial, "camera_circle")) {
 
     } else if (!strcmp(tutorial, "camera_keyboard_dt")) {
@@ -96,7 +98,7 @@ inline Scene* GenSceneByName(const char *tutorial) {
     } else if (!strcmp(tutorial, "camera_mouse_zoom")) {
 
     } else if (!strcmp(tutorial, "camera_class")) {
-
+        return new CameraScene;
     } else if (!strcmp(tutorial, "camera_exercise1")) {
 
     } else if (!strcmp(tutorial, "camera_exercise2")) {

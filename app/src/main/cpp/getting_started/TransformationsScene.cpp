@@ -11,6 +11,7 @@
 #include "Shader.h"
 #include "stb_image.h"
 #include "TimeUtil.h"
+#include "glm/gtx/string_cast.hpp"
 
 void TransformationsScene::init() {
 // build and compile our shader zprogram

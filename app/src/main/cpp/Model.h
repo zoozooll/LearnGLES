@@ -55,8 +55,4 @@ private:
     vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, string typeName);
 };
 
-
-
-
-
 #endif //LEARNGLES_MODEL_H
