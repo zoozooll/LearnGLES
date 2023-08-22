@@ -69,57 +69,41 @@ Java_com_example_learngles_NativeLibHelper_setupInternalPath(JNIEnv *env, jclass
 }
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_learngles_NativeLibHelper_onSingleTouch(JNIEnv *env, jclass clazz, jfloat x,
-                                                         jfloat y) {
-    if (g_scene) {
-        g_scene->yawPitch(glm::vec2(x,y));
-    }
-}
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_example_learngles_NativeLibHelper_onZooming(JNIEnv *env, jclass clazz,
-                                                     jfloat prev_distance, jfloat distance) {
-    if (g_scene && prev_distance != 0.f and distance != 0.f) {
-        g_scene->scale(distance);
-    }
-}
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_example_learngles_NativeLibHelper_onTwoFingersRotating(JNIEnv *env, jclass clazz,
-                                                                jfloat angle) {
-    if (g_scene) {
-        g_scene->roll(angle);
-    }
-}
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_example_learngles_NativeLibHelper_onMoving(JNIEnv *env, jclass clazz, jfloat x, jfloat y,
-                                                    jfloat x1, jfloat y1) {
-    if (g_scene) {
-        g_scene->move({x, y}, {x1, y1});
-    }
-}
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_example_learngles_NativeLibHelper_onSingleClick(JNIEnv *env, jclass clazz, jfloat x,
-                                                         jfloat y) {
-    if (g_scene) {
-        g_scene->onSingleClick({x, y});
-    }
-}
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_example_learngles_NativeLibHelper_onDoubleClick(JNIEnv *env, jclass clazz, jfloat x,
-                                                         jfloat y) {
-    if (g_scene) {
-        g_scene->onDoubleClick({x, y});
-    }
-}
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_example_learngles_NativeLibHelper_onLongPress(JNIEnv *env, jclass clazz, jfloat x,
+Java_com_mouselee_object3ddemo2_Renderer_onSingleTouch(JNIEnv *, jobject , jfloat x,
                                                        jfloat y) {
-    if (g_scene) {
-        g_scene->onLongPress({x, y});
+//    LOGI("TRANSFORM", "onSingleTouch (%f, %f)", x, y);
+    glm::vec2 director(x, y);
+    if (m_ModelObject)
+        m_ModelObject->yawPitch(director);
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_mouselee_object3ddemo2_Renderer_onZooming(JNIEnv *, jobject , jfloat start_distance,
+                                                   jfloat end_distance) {
+    if (m_ModelObject && start_distance != 0.f && end_distance != 0.f) {
+        auto scale = end_distance / start_distance;
+        m_ModelObject->scale(scale);
     }
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_mouselee_object3ddemo2_Renderer_onMoving(JNIEnv *, jobject , jfloat start_center_x,
+                                                  jfloat start_center_y, jfloat end_center_x,
+                                                  jfloat end_center_y) {
+    LOGI("TRANSFORM", "onMoving (%f, %f) --> (%f, %f)", start_center_x, start_center_y, end_center_x, end_center_y);
+    if (m_ModelObject) {
+        glm::vec2 start_center(start_center_x, -start_center_y);
+        glm::vec2 end_center(end_center_x, -end_center_y);
+        m_ModelObject->move(start_center, end_center);
+    }
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_mouselee_object3ddemo2_Renderer_onTwoFingersRotating(JNIEnv *env, jobject thiz,
+    jfloat angle) {
+    LOGI("TRANSFORM", "onTwoFingersRotating %f", angle);
+    if (m_ModelObject)
+        m_ModelObject->roll(angle);
+
 }
