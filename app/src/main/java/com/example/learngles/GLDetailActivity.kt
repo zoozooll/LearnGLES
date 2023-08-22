@@ -189,7 +189,7 @@ class GLDetailActivity : AppCompatActivity(), Renderer {
     }
 
     fun onSingleMove(start: PointF, end: PointF) {
-        val dis = PointF(end.x - start.x, end.y - start.y)
+        val dis = PointF(end.x - start.x, start.y - end.y) // Y direct is opposite in opengl and on screen
         Log.i(TAG, "onSingleMove: $dis")
         binding.surfaceSupportedView.queueEvent {
             NativeLibHelper.onSingleTouch(dis.x, dis.y)
