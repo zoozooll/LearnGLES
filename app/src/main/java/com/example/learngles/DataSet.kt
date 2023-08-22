@@ -80,7 +80,7 @@ object DataSet {
         "shadow_mapping_base" ,
         "shadow_mapping" ,
         "point_shadows" ,
-        "pointt_shadow_soft" ,
+        "point_shadow_soft" ,
         "csm" ,
         "normal_mapping" ,
         "parallax_mapping" ,

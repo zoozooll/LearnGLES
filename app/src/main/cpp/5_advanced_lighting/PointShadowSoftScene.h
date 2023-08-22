@@ -1,0 +1,14 @@
+//
+// Created by huion on 2023/8/22.
+//
+
+#ifndef LEARNGLES_POINTSHADOWSOFTSCENE_H
+#define LEARNGLES_POINTSHADOWSOFTSCENE_H
+
+
+class PointShadowSoftScene {
+
+};
+
+
+#endif //LEARNGLES_POINTSHADOWSOFTSCENE_H

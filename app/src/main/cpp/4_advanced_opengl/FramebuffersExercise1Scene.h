@@ -1,0 +1,14 @@
+//
+// Created by huion on 2023/8/22.
+//
+
+#ifndef LEARNGLES_FRAMEBUFFERSEXERCISE1SCENE_H
+#define LEARNGLES_FRAMEBUFFERSEXERCISE1SCENE_H
+
+
+class FramebuffersExercise1Scene {
+
+};
+
+
+#endif //LEARNGLES_FRAMEBUFFERSEXERCISE1SCENE_H

@@ -1,0 +1,14 @@
+//
+// Created by huion on 2023/8/22.
+//
+
+#ifndef LEARNGLES_LIGHTINGMAPSSPECULARMAPSCENE_H
+#define LEARNGLES_LIGHTINGMAPSSPECULARMAPSCENE_H
+
+
+class LightingMapsSpecularMapScene {
+
+};
+
+
+#endif //LEARNGLES_LIGHTINGMAPSSPECULARMAPSCENE_H

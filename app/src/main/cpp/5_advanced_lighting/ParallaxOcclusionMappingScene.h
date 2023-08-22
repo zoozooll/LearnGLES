@@ -1,0 +1,14 @@
+//
+// Created by huion on 2023/8/22.
+//
+
+#ifndef LEARNGLES_PARALLAXOCCLUSIONMAPPINGSCENE_H
+#define LEARNGLES_PARALLAXOCCLUSIONMAPPINGSCENE_H
+
+
+class ParallaxOcclusionMappingScene {
+
+};
+
+
+#endif //LEARNGLES_PARALLAXOCCLUSIONMAPPINGSCENE_H

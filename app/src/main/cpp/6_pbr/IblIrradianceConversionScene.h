@@ -1,0 +1,14 @@
+//
+// Created by huion on 2023/8/22.
+//
+
+#ifndef LEARNGLES_IBLIRRADIANCECONVERSIONSCENE_H
+#define LEARNGLES_IBLIRRADIANCECONVERSIONSCENE_H
+
+
+class IblIrradianceConversionScene {
+
+};
+
+
+#endif //LEARNGLES_IBLIRRADIANCECONVERSIONSCENE_H

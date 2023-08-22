@@ -23,9 +23,15 @@ add_subdirectory(${ASSIMP_SRC} ${CMAKE_CURRENT_BINARY_DIR}/assimp)
 
 file(GLOB nativegl_SRC
         "./*.cpp"
-        "./getting_started/*.cpp"
-        "./model_loading/*.cpp"
-        "./advanced_lighting/*.cpp")
+        "./1_getting_started/*.cpp"
+        "./2_lighting/*.cpp"
+        "./3_model_loading/*.cpp"
+        "./4_advanced_opengl/*.cpp"
+        "./5_advanced_lighting/*.cpp"
+        "./6_pbr/*.cpp"
+        "./7_in_practice/*.cpp"
+        "./8_guest/*.cpp"
+        )
 
 add_library(nativegl SHARED ${nativegl_SRC})
 

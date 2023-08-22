@@ -1,0 +1,14 @@
+//
+// Created by huion on 2023/8/22.
+//
+
+#ifndef LEARNGLES_LIGHTINGCASTERSPOINTSCENE_H
+#define LEARNGLES_LIGHTINGCASTERSPOINTSCENE_H
+
+
+class LightingCastersPointScene {
+
+};
+
+
+#endif //LEARNGLES_LIGHTINGCASTERSPOINTSCENE_H

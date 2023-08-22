@@ -1,0 +1,14 @@
+//
+// Created by huion on 2023/8/22.
+//
+
+#ifndef LEARNGLES_PHYSICALLYBASEDBLOOMSCENE_H
+#define LEARNGLES_PHYSICALLYBASEDBLOOMSCENE_H
+
+
+class PhysicallyBasedBloomScene {
+
+};
+
+
+#endif //LEARNGLES_PHYSICALLYBASEDBLOOMSCENE_H

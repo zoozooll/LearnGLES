@@ -1,0 +1,14 @@
+//
+// Created by huion on 2023/8/22.
+//
+
+#ifndef LEARNGLES_STEEPPARALLAXMAPPINGSCENE_H
+#define LEARNGLES_STEEPPARALLAXMAPPINGSCENE_H
+
+
+class SteepParallaxMappingScene {
+
+};
+
+
+#endif //LEARNGLES_STEEPPARALLAXMAPPINGSCENE_H

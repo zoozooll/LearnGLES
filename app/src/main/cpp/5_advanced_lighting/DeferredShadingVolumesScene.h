@@ -1,0 +1,14 @@
+//
+// Created by huion on 2023/8/22.
+//
+
+#ifndef LEARNGLES_DEFERREDSHADINGVOLUMESSCENE_H
+#define LEARNGLES_DEFERREDSHADINGVOLUMESSCENE_H
+
+
+class DeferredShadingVolumesScene {
+
+};
+
+
+#endif //LEARNGLES_DEFERREDSHADINGVOLUMESSCENE_H

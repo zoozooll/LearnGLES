@@ -1,0 +1,14 @@
+//
+// Created by huion on 2023/8/22.
+//
+
+#ifndef LEARNGLES_LIGHTINGMAPSEXERCISE4SCENE_H
+#define LEARNGLES_LIGHTINGMAPSEXERCISE4SCENE_H
+
+
+class LightingMapsExercise4Scene {
+
+};
+
+
+#endif //LEARNGLES_LIGHTINGMAPSEXERCISE4SCENE_H

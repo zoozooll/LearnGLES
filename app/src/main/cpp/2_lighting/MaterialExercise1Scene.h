@@ -1,0 +1,14 @@
+//
+// Created by huion on 2023/8/22.
+//
+
+#ifndef LEARNGLES_MATERIALEXERCISE1SCENE_H
+#define LEARNGLES_MATERIALEXERCISE1SCENE_H
+
+
+class MaterialExercise1Scene {
+
+};
+
+
+#endif //LEARNGLES_MATERIALEXERCISE1SCENE_H

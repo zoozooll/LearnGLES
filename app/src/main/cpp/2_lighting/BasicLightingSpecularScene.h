@@ -1,0 +1,14 @@
+//
+// Created by huion on 2023/8/22.
+//
+
+#ifndef LEARNGLES_BASICLIGHTINGSPECULARSCENE_H
+#define LEARNGLES_BASICLIGHTINGSPECULARSCENE_H
+
+
+class BasicLightingSpecularScene {
+
+};
+
+
+#endif //LEARNGLES_BASICLIGHTINGSPECULARSCENE_H

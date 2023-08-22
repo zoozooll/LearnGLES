@@ -1,0 +1,14 @@
+//
+// Created by huion on 2023/8/22.
+//
+
+#ifndef LEARNGLES_ASTEROIDINSTANCEDSCENE_H
+#define LEARNGLES_ASTEROIDINSTANCEDSCENE_H
+
+
+class AsteroidInstancedScene {
+
+};
+
+
+#endif //LEARNGLES_ASTEROIDINSTANCEDSCENE_H

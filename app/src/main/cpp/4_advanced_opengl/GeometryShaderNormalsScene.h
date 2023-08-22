@@ -1,0 +1,14 @@
+//
+// Created by huion on 2023/8/22.
+//
+
+#ifndef LEARNGLES_GEOMETRYSHADERNORMALSSCENE_H
+#define LEARNGLES_GEOMETRYSHADERNORMALSSCENE_H
+
+
+class GeometryShaderNormalsScene {
+
+};
+
+
+#endif //LEARNGLES_GEOMETRYSHADERNORMALSSCENE_H

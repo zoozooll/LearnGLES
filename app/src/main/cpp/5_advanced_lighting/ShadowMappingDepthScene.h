@@ -1,0 +1,14 @@
+//
+// Created by huion on 2023/8/22.
+//
+
+#ifndef LEARNGLES_SHADOWMAPPINGDEPTHSCENE_H
+#define LEARNGLES_SHADOWMAPPINGDEPTHSCENE_H
+
+
+class ShadowMappingDepthScene {
+
+};
+
+
+#endif //LEARNGLES_SHADOWMAPPINGDEPTHSCENE_H

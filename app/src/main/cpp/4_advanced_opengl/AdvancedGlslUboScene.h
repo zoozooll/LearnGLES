@@ -1,0 +1,14 @@
+//
+// Created by huion on 2023/8/22.
+//
+
+#ifndef LEARNGLES_ADVANCEDGLSLUBOSCENE_H
+#define LEARNGLES_ADVANCEDGLSLUBOSCENE_H
+
+
+class AdvancedGlslUboScene {
+
+};
+
+
+#endif //LEARNGLES_ADVANCEDGLSLUBOSCENE_H

@@ -1,0 +1,14 @@
+//
+// Created by huion on 2023/8/22.
+//
+
+#ifndef LEARNGLES_ANTIALIASINGOFFSCREENSCENE_H
+#define LEARNGLES_ANTIALIASINGOFFSCREENSCENE_H
+
+
+class AntiAliasingOffscreenScene {
+
+};
+
+
+#endif //LEARNGLES_ANTIALIASINGOFFSCREENSCENE_H

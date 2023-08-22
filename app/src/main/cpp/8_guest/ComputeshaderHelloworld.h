@@ -1,0 +1,14 @@
+//
+// Created by huion on 2023/8/22.
+//
+
+#ifndef LEARNGLES_COMPUTESHADERHELLOWORLD_H
+#define LEARNGLES_COMPUTESHADERHELLOWORLD_H
+
+
+class ComputeshaderHelloworld {
+
+};
+
+
+#endif //LEARNGLES_COMPUTESHADERHELLOWORLD_H
