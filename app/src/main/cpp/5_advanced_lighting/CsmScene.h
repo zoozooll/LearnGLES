@@ -2,7 +2,7 @@
 // Created by huion on 2023/8/22.
 //
 
-#ifndef LEARNGLES_GUESTCSMSCENE_H
+#ifndef LEARNGLES_CSMSCENE_H
 #define LEARNGLES_CSMSCENE_H
 
 #include "Scene.h"
@@ -18,4 +18,4 @@ public:
 };
 
 
-#endif //LEARNGLES_GUESTCSMSCENE_H
+#endif //LEARNGLES_CSMSCENE_H

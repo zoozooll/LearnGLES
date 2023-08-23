@@ -11,3 +11,11 @@ void LightingCastersDirectionalScene::init() {
 void LightingCastersDirectionalScene::resize(int width, int height) {
 
 }
+
+void LightingCastersDirectionalScene::draw() {
+
+}
+
+void LightingCastersDirectionalScene::destroy() {
+
+}
