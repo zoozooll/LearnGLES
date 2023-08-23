@@ -3,3 +3,18 @@
 //
 
 #include "AdvancedGlslUboScene.h"
+void AdvancedGlslUboScene::init() {
+
+}
+
+void AdvancedGlslUboScene::resize(int width, int height) {
+
+}
+
+void AdvancedGlslUboScene::draw() {
+
+}
+
+void AdvancedGlslUboScene::destroy() {
+
+}

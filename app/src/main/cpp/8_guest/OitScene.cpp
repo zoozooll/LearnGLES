@@ -3,3 +3,18 @@
 //
 
 #include "OitScene.h"
+void OitScene::init() {
+
+}
+
+void OitScene::resize(int width, int height) {
+
+}
+
+void OitScene::draw() {
+
+}
+
+void OitScene::destroy() {
+
+}

@@ -3,3 +3,18 @@
 //
 
 #include "BloomScene.h"
+void BloomScene::init() {
+
+}
+
+void BloomScene::resize(int width, int height) {
+
+}
+
+void BloomScene::draw() {
+
+}
+
+void BloomScene::destroy() {
+
+}

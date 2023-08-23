@@ -3,3 +3,18 @@
 //
 
 #include "AsteroidInstancedScene.h"
+void AsteroidInstancedScene::init() {
+
+}
+
+void AsteroidInstancedScene::resize(int width, int height) {
+
+}
+
+void AsteroidInstancedScene::draw() {
+
+}
+
+void AsteroidInstancedScene::destroy() {
+
+}

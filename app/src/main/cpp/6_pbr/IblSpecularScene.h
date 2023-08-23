@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_IBLSPECULARSCENE_H
 #define LEARNGLES_IBLSPECULARSCENE_H
 
+#include "Scene.h"
+class IblSpecularScene : public Scene {
+public:
+    void init() override;
 
-class IblSpecularScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

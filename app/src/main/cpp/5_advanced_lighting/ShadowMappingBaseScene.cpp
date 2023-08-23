@@ -3,3 +3,18 @@
 //
 
 #include "ShadowMappingBaseScene.h"
+void ShadowMappingBaseScene::init() {
+
+}
+
+void ShadowMappingBaseScene::resize(int width, int height) {
+
+}
+
+void ShadowMappingBaseScene::draw() {
+
+}
+
+void ShadowMappingBaseScene::destroy() {
+
+}

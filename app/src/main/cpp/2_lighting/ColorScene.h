@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_COLORSCENE_H
 #define LEARNGLES_COLORSCENE_H
 
+#include "Scene.h"
+class ColorScene : public Scene {
+public:
+    void init() override;
 
-class ColorScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

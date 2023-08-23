@@ -3,3 +3,18 @@
 //
 
 #include "GeometryShaderNormalsScene.h"
+void GeometryShaderNormalsScene::init() {
+
+}
+
+void GeometryShaderNormalsScene::resize(int width, int height) {
+
+}
+
+void GeometryShaderNormalsScene::draw() {
+
+}
+
+void GeometryShaderNormalsScene::destroy() {
+
+}

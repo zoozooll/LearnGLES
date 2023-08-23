@@ -3,3 +3,18 @@
 //
 
 #include "BlenderSortScene.h"
+void BlenderSortScene::init() {
+
+}
+
+void BlenderSortScene::resize(int width, int height) {
+
+}
+
+void BlenderSortScene::draw() {
+
+}
+
+void BlenderSortScene::destroy() {
+
+}

@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_GAMMACORRECTIONSCENE_H
 #define LEARNGLES_GAMMACORRECTIONSCENE_H
 
+#include "Scene.h"
+class GammaCorrectionScene : public Scene {
+public:
+    void init() override;
 
-class GammaCorrectionScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

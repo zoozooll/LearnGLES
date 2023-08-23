@@ -3,3 +3,18 @@
 //
 
 #include "CsmScene.h"
+void CsmScene::init() {
+
+}
+
+void CsmScene::resize(int width, int height) {
+
+}
+
+void CsmScene::draw() {
+
+}
+
+void CsmScene::destroy() {
+
+}

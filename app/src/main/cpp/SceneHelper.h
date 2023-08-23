@@ -34,9 +34,74 @@
 #include "1_getting_started/CoordinateSystemDepthScene.h"
 #include "1_getting_started/CoordinateSystemMultipleScene.h"
 #include "1_getting_started/CoordinateSystemExercise3Scene.h"
-#include "1_getting_started/CameraScene.h"G
+#include "1_getting_started/CameraScene.h"
 #include "3_model_loading/ModelLoadingScene.h"
 #include "5_advanced_lighting/AdvancedLightingScene.h"
+#include "2_lighting/ColorScene.h"
+#include "2_lighting/BasicLightingDiffuseScene.h"
+#include "2_lighting/BasicLightingSpecularScene.h"
+#include "2_lighting/MaterialScene.h"
+#include "2_lighting/MaterialExercise1Scene.h"
+#include "2_lighting/LightingMapsDiffuseMapScene.h"
+#include "2_lighting/LightingMapsSpecularMapScene.h"
+#include "2_lighting/LightingMapsExercise4Scene.h"
+#include "2_lighting/LightingCastersDirectionalScene.h"
+#include "2_lighting/LightingCastersPointScene.h"
+#include "2_lighting/LightingCastersSpotScene.h"
+#include "2_lighting/LightingCastersSpotSoftScene.h"
+#include "2_lighting/MultipleLightsScene.h"
+#include "4_advanced_opengl/DepthTestingScene.h"
+#include "4_advanced_opengl/StencilTestingScene.h"
+#include "4_advanced_opengl/BlenderSortScene.h"
+#include "4_advanced_opengl/BlendingDiscardScene.h"
+#include "4_advanced_opengl/FrameBuffersScene.h"
+#include "4_advanced_opengl/FramebuffersExercise1Scene.h"
+#include "4_advanced_opengl/CubemapSkyboxScene.h"
+#include "4_advanced_opengl/CubemapsEnvironmentMappingScene.h"
+#include "4_advanced_opengl/AdvancedGlslUboScene.h"
+#include "4_advanced_opengl/FaceCullingScene.h"
+#include "4_advanced_opengl/GeometryShaderHousesScene.h"
+#include "4_advanced_opengl/GeometryShaderExplodingScene.h"
+#include "4_advanced_opengl/GeometryShaderNormalsScene.h"
+#include "4_advanced_opengl/InstancingQuadsScene.h"
+#include "4_advanced_opengl/AsteroidsScene.h"
+#include "4_advanced_opengl/AsteroidInstancedScene.h"
+#include "4_advanced_opengl/AntiAliasingOffscreenScene.h"
+#include "4_advanced_opengl/AntiAliasingMsaaScene.h"
+#include "5_advanced_lighting/GammaCorrectionScene.h"
+#include "5_advanced_lighting/ShadowMappingDepthScene.h"
+#include "5_advanced_lighting/ShadowMappingBaseScene.h"
+#include "5_advanced_lighting/ShadowMappingScene.h"
+#include "5_advanced_lighting/PointShadowsScene.h"
+#include "5_advanced_lighting/PointShadowSoftScene.h"
+#include "5_advanced_lighting/CsmScene.h"
+#include "5_advanced_lighting/NormalMappingScene.h"
+#include "5_advanced_lighting/ParallaxMappingScene.h"
+#include "5_advanced_lighting/SteepParallaxMappingScene.h"
+#include "5_advanced_lighting/ParallaxOcclusionMappingScene.h"
+#include "5_advanced_lighting/HdrScene.h"
+#include "5_advanced_lighting/BloomScene.h"
+#include "5_advanced_lighting/DeferredShadingScene.h"
+#include "5_advanced_lighting/DeferredShadingVolumesScene.h"
+#include "5_advanced_lighting/SsaoScene.h"
+#include "6_pbr/LightingScene.h"
+#include "6_pbr/LightingTexturedScene.h"
+#include "6_pbr/IblIrradianceConversionScene.h"
+#include "6_pbr/IblIrradianceScene.h"
+#include "6_pbr/IblSpecularScene.h"
+#include "6_pbr/IblSpecularTexturedScene.h"
+#include "7_in_practice/DebuggingScene.h"
+#include "7_in_practice/TextRenderingScene.h"
+#include "7_in_practice/Game2dScene.h"
+#include "8_guest/OitScene.h"
+#include "8_guest/SkeletalAnimationScene.h"
+#include "8_guest/SceneExercise.h"
+#include "8_guest/GuestCsmScene.h"
+#include "8_guest/TessellationScene.h"
+#include "8_guest/DsaScene.h"
+#include "8_guest/ComputeshaderHelloworld.h"
+#include "8_guest/PhysicallyBasedBloomScene.h"
+
 
 inline Scene* GenSceneByName(const char *tutorial) {
     if (!strcmp(tutorial, "hello_window")) {
@@ -107,6 +172,107 @@ inline Scene* GenSceneByName(const char *tutorial) {
         return new ModelLoadingScene;
     } else if (!strcmp(tutorial, "advanced_lighting")) {
         return new AdvancedLightingScene;
+    } else if (!strcmp(tutorial, "colors" )) {
+        return new ColorScene;
+    } else if (!strcmp(tutorial, "basic_lighting_diffuse" )) {
+        return new BasicLightingDiffuseScene;
+    } else if (!strcmp(tutorial, "basic_lighting_specular" )) {
+        return new BasicLightingSpecularScene;
+    } else if (!strcmp(tutorial, "basic_lighting_exercise1" )) {
+    } else if (!strcmp(tutorial, "basic_lighting_exercise2" )) {
+    } else if (!strcmp(tutorial, "basic_lighting_exercise3" )) {
+    } else if (!strcmp(tutorial, "materials" )) {
+        return new MaterialScene;
+    } else if (!strcmp(tutorial, "materials_exercise1" )) {
+        return new MaterialExercise1Scene;
+    } else if (!strcmp(tutorial, "lighting_maps_diffuse_map" )) {
+        return new LightingMapsDiffuseMapScene;
+    } else if (!strcmp(tutorial, "lighting_maps_specular_map")) {
+        return new LightingMapsSpecularMapScene;
+    } else if (!strcmp(tutorial, "lighting_maps_exercise2" )) {
+        return new LightingMapsExercise4Scene;
+    } else if (!strcmp(tutorial, "lighting_maps_exercise3" )) {
+    } else if (!strcmp(tutorial, "light_casters_directional" )) {
+        return new LightingCastersDirectionalScene;
+    } else if (!strcmp(tutorial, "light_casters_point" )) {
+        return new LightingCastersPointScene;
+    } else if (!strcmp(tutorial, "light_casters_spot" )) {
+        return new LightingCastersSpotScene;
+    } else if (!strcmp(tutorial, "light_casters_spot_soft" )) {
+        return new LightingCastersSpotSoftScene;
+    } else if (!strcmp(tutorial, "multiple_lights" )) {
+        return new MultipleLightsScene;
+    } else if (!strcmp(tutorial, "multiple_lights_exercise1" )) {
+
+    } else if (!strcmp(tutorial, "advanced_lighting")) {
+        return new AdvancedLightingScene;
+    } else if (!strcmp(tutorial, "gamma_correction")) {
+        return new GammaCorrectionScene;
+    } else if (!strcmp(tutorial, "shadow_mapping_depth")) {
+        return new ShadowMappingDepthScene;
+    } else if (!strcmp(tutorial, "shadow_mapping_base")) {
+        return new ShadowMappingBaseScene;
+    } else if (!strcmp(tutorial, "shadow_mapping")) {
+        return new ShadowMappingScene;
+    } else if (!strcmp(tutorial, "point_shadows")) {
+        return new PointShadowsScene;
+    } else if (!strcmp(tutorial, "point_shadow_soft")) {
+        return new PointShadowSoftScene;
+    } else if (!strcmp(tutorial, "csm")) {
+        return new CsmScene;
+    } else if (!strcmp(tutorial, "normal_mapping")) {
+        return new NormalMappingScene;
+    } else if (!strcmp(tutorial, "parallax_mapping")) {
+        return new ParallaxMappingScene;
+    } else if (!strcmp(tutorial, "steep_parallax_mapping")) {
+        return new SteepParallaxMappingScene;
+    } else if (!strcmp(tutorial, "parallax_occlusion_mapping")) {
+        return new ParallaxOcclusionMappingScene;
+    } else if (!strcmp(tutorial, "hdr")) {
+        return new HdrScene;
+    } else if (!strcmp(tutorial, "bloom")) {
+        return new BloomScene;
+    } else if (!strcmp(tutorial, "deferred_shading")) {
+        return new DeferredShadingScene;
+    } else if (!strcmp(tutorial, "deferred_shading_volumes")) {
+        return new DeferredShadingVolumesScene;
+    } else if (!strcmp(tutorial, "ssao")) {
+        return new SsaoScene;
+    } else if (!strcmp(tutorial, "lighting" )) {
+        return new LightingScene;
+    } else if (!strcmp(tutorial, "lighting_textured" )) {
+        return new LightingTexturedScene;
+    } else if (!strcmp(tutorial, "ibl_irradiance_conversion" )) {
+        return new IblIrradianceConversionScene;
+    } else if (!strcmp(tutorial, "ibl_irradiance" )) {
+        return new IblIrradianceScene;
+    } else if (!strcmp(tutorial, "ibl_specular" )) {
+        return new IblSpecularScene;
+    } else if (!strcmp(tutorial, "ibl_specular_textured" )) {
+        return new IblSpecularTexturedScene;
+    } else if (!strcmp(tutorial, "debugging" )) {
+        return new DebuggingScene;
+    } else if (!strcmp(tutorial, "text_rendering" )) {
+        return new TextRenderingScene;
+    } else if (!strcmp(tutorial, "2d_game" )) {
+        return new Game2dScene;
+    } else if (!strcmp(tutorial, "oit" )) {
+        return new OitScene;
+    } else if (!strcmp(tutorial, "skeletal_animation" )) {
+        return new SkeletalAnimationScene;
+    } else if (!strcmp(tutorial, "scene" )) {
+        return new SceneExercise;
+    } else if (!strcmp(tutorial, "csm" )) {
+        return new CsmScene;
+    } else if (!strcmp(tutorial, "tessellation" )) {
+        return new TessellationScene;
+    } else if (!strcmp(tutorial, "dsa" )) {
+        return new DsaScene;
+    } else if (!strcmp(tutorial, "computeshader_helloworld" )) {
+        return new ComputeshaderHelloworld;
+    } else if (!strcmp(tutorial, "physically_based_bloom")) {
+        return new PhysicallyBasedBloomScene;
+
     }
     return nullptr;
 }

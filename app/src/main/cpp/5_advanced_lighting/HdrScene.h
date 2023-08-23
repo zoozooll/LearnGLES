@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_HDRSCENE_H
 #define LEARNGLES_HDRSCENE_H
 
+#include "Scene.h"
+class HdrScene : public Scene {
+public:
+    void init() override;
 
-class HdrScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

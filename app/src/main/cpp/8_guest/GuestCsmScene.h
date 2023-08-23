@@ -2,11 +2,11 @@
 // Created by huion on 2023/8/22.
 //
 
-#ifndef LEARNGLES_IBLSPECULARTEXTUREDSCENE_H
-#define LEARNGLES_IBLSPECULARTEXTUREDSCENE_H
+#ifndef LEARNGLES_GUESTCSMSCENE_H
+#define LEARNGLES_GUESTCSMSCENE_H
 
 #include "Scene.h"
-class IblSpecularTexturedScene : public Scene {
+class GuestCsmScene  : public Scene {
 public:
     void init() override;
 
@@ -18,4 +18,4 @@ public:
 };
 
 
-#endif //LEARNGLES_IBLSPECULARTEXTUREDSCENE_H
+#endif //LEARNGLES_GUESTCSMSCENE_H

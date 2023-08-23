@@ -3,3 +3,18 @@
 //
 
 #include "MultipleLightsScene.h"
+void MultipleLightsScene::init() {
+
+}
+
+void MultipleLightsScene::resize(int width, int height) {
+
+}
+
+void MultipleLightsScene::draw() {
+
+}
+
+void MultipleLightsScene::destroy() {
+
+}

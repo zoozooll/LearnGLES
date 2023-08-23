@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_STENCILTESTINGSCENE_H
 #define LEARNGLES_STENCILTESTINGSCENE_H
 
+#include "Scene.h"
+class StencilTestingScene : public Scene {
+public:
+    void init() override;
 
-class StencilTestingScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

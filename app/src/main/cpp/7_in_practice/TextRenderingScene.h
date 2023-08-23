@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_TEXTRENDERINGSCENE_H
 #define LEARNGLES_TEXTRENDERINGSCENE_H
 
+#include "Scene.h"
+class TextRenderingScene : public Scene {
+public:
+    void init() override;
 
-class TextRenderingScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

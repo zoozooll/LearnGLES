@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_MATERIALSCENE_H
 #define LEARNGLES_MATERIALSCENE_H
 
+#include "Scene.h"
+class MaterialScene : public Scene {
+public:
+    void init() override;
 
-class MaterialScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

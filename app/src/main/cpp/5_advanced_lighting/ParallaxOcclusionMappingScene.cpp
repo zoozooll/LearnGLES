@@ -3,3 +3,18 @@
 //
 
 #include "ParallaxOcclusionMappingScene.h"
+void ParallaxOcclusionMappingScene::init() {
+
+}
+
+void ParallaxOcclusionMappingScene::resize(int width, int height) {
+
+}
+
+void ParallaxOcclusionMappingScene::draw() {
+
+}
+
+void ParallaxOcclusionMappingScene::destroy() {
+
+}

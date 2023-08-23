@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_PARALLAXOCCLUSIONMAPPINGSCENE_H
 #define LEARNGLES_PARALLAXOCCLUSIONMAPPINGSCENE_H
 
+#include "Scene.h"
+class ParallaxOcclusionMappingScene : public Scene {
+public:
+    void init() override;
 
-class ParallaxOcclusionMappingScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

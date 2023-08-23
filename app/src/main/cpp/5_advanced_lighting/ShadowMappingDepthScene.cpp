@@ -3,3 +3,18 @@
 //
 
 #include "ShadowMappingDepthScene.h"
+void ShadowMappingDepthScene::init() {
+
+}
+
+void ShadowMappingDepthScene::resize(int width, int height) {
+
+}
+
+void ShadowMappingDepthScene::draw() {
+
+}
+
+void ShadowMappingDepthScene::destroy() {
+
+}

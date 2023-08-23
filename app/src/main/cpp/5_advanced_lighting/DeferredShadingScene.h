@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_DEFERREDSHADINGSCENE_H
 #define LEARNGLES_DEFERREDSHADINGSCENE_H
 
+#include "Scene.h"
+class DeferredShadingScene : public Scene {
+public:
+    void init() override;
 
-class DeferredShadingScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

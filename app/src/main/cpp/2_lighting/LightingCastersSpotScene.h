@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_LIGHTINGCASTERSSPOTSCENE_H
 #define LEARNGLES_LIGHTINGCASTERSSPOTSCENE_H
 
+#include "Scene.h"
+class LightingCastersSpotScene : public Scene {
+public:
+    void init() override;
 
-class LightingCastersSpotScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

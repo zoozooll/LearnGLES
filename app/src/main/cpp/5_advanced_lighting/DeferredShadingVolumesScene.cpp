@@ -3,3 +3,18 @@
 //
 
 #include "DeferredShadingVolumesScene.h"
+void DeferredShadingVolumesScene::init() {
+
+}
+
+void DeferredShadingVolumesScene::resize(int width, int height) {
+
+}
+
+void DeferredShadingVolumesScene::draw() {
+
+}
+
+void DeferredShadingVolumesScene::destroy() {
+
+}

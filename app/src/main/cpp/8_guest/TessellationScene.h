@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_TESSELLATIONSCENE_H
 #define LEARNGLES_TESSELLATIONSCENE_H
 
+#include "Scene.h"
+class TessellationScene : public Scene {
+public:
+    void init() override;
 
-class TessellationScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

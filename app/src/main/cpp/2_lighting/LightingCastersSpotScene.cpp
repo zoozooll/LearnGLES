@@ -3,3 +3,19 @@
 //
 
 #include "LightingCastersSpotScene.h"
+
+void LightingCastersSpotScene::init() {
+
+}
+
+void LightingCastersSpotScene::resize(int width, int height) {
+
+}
+
+void LightingCastersSpotScene::draw() {
+
+}
+
+void LightingCastersSpotScene::destroy() {
+
+}

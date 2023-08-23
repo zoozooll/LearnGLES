@@ -3,3 +3,18 @@
 //
 
 #include "LightingTexturedScene.h"
+void LightingTexturedScene::init() {
+
+}
+
+void LightingTexturedScene::resize(int width, int height) {
+
+}
+
+void LightingTexturedScene::draw() {
+
+}
+
+void LightingTexturedScene::destroy() {
+
+}

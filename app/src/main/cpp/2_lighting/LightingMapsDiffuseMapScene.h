@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_LIGHTINGMAPSDIFFUSEMAPSCENE_H
 #define LEARNGLES_LIGHTINGMAPSDIFFUSEMAPSCENE_H
 
+#include "Scene.h"
+class LightingMapsDiffuseMapScene : public Scene {
+public:
+    void init() override;
 
-class LightingMapsDiffuseMapScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

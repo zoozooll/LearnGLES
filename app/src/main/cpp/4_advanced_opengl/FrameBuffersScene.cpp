@@ -3,3 +3,18 @@
 //
 
 #include "FrameBuffersScene.h"
+void FrameBuffersScene::init() {
+
+}
+
+void FrameBuffersScene::resize(int width, int height) {
+
+}
+
+void FrameBuffersScene::draw() {
+
+}
+
+void FrameBuffersScene::destroy() {
+
+}

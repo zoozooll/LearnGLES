@@ -3,3 +3,19 @@
 //
 
 #include "LightingCastersSpotSoftScene.h"
+
+void LightingCastersSpotSoftScene::init() {
+
+}
+
+void LightingCastersSpotSoftScene::resize(int width, int height) {
+
+}
+
+void LightingCastersSpotSoftScene::draw() {
+
+}
+
+void LightingCastersSpotSoftScene::destroy() {
+
+}

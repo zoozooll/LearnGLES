@@ -3,3 +3,19 @@
 //
 
 #include "NormalMappingScene.h"
+
+void NormalMappingScene::init() {
+
+}
+
+void NormalMappingScene::resize(int width, int height) {
+
+}
+
+void NormalMappingScene::draw() {
+
+}
+
+void NormalMappingScene::destroy() {
+
+}

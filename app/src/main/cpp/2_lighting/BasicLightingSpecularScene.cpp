@@ -3,3 +3,19 @@
 //
 
 #include "BasicLightingSpecularScene.h"
+
+void BasicLightingSpecularScene::init() {
+
+}
+
+void BasicLightingSpecularScene::resize(int width, int height) {
+
+}
+
+void BasicLightingSpecularScene::draw() {
+
+}
+
+void BasicLightingSpecularScene::destroy() {
+
+}

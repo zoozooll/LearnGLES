@@ -3,3 +3,18 @@
 //
 
 #include "AntiAliasingMsaaScene.h"
+void AntiAliasingMsaaScene::init() {
+
+}
+
+void AntiAliasingMsaaScene::resize(int width, int height) {
+
+}
+
+void AntiAliasingMsaaScene::draw() {
+
+}
+
+void AntiAliasingMsaaScene::destroy() {
+
+}

@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_ANTIALIASINGMSAASCENE_H
 #define LEARNGLES_ANTIALIASINGMSAASCENE_H
 
+#include "Scene.h"
+class AntiAliasingMsaaScene : public Scene {
+public:
+    void init() override;
 
-class AntiAliasingMsaaScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

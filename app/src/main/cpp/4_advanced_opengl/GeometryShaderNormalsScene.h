@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_GEOMETRYSHADERNORMALSSCENE_H
 #define LEARNGLES_GEOMETRYSHADERNORMALSSCENE_H
 
+#include "Scene.h"
+class GeometryShaderNormalsScene : public Scene {
+public:
+    void init() override;
 
-class GeometryShaderNormalsScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

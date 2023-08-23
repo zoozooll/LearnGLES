@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_DEPTHTESTINGSCENE_H
 #define LEARNGLES_DEPTHTESTINGSCENE_H
 
+#include "Scene.h"
+class DepthTestingScene : public Scene {
+public:
+    void init() override;
 
-class DepthTestingScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

@@ -3,3 +3,18 @@
 //
 
 #include "DebuggingScene.h"
+void DebuggingScene::init() {
+
+}
+
+void DebuggingScene::resize(int width, int height) {
+
+}
+
+void DebuggingScene::draw() {
+
+}
+
+void DebuggingScene::destroy() {
+
+}

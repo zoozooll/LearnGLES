@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_SKELETALANIMATIONSCENE_H
 #define LEARNGLES_SKELETALANIMATIONSCENE_H
 
+#include "Scene.h"
+class SkeletalAnimationScene : public Scene {
+public:
+    void init() override;
 
-class SkeletalAnimationScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

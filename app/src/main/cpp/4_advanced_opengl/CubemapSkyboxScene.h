@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_CUBEMAPSKYBOXSCENE_H
 #define LEARNGLES_CUBEMAPSKYBOXSCENE_H
 
+#include "Scene.h"
+class CubemapSkyboxScene : public Scene {
+public:
+    void init() override;
 
-class CubemapSkyboxScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

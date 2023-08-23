@@ -3,3 +3,19 @@
 //
 
 #include "BasicLightingDiffuseScene.h"
+
+void BasicLightingDiffuseScene::init() {
+
+}
+
+void BasicLightingDiffuseScene::resize(int width, int height) {
+
+}
+
+void BasicLightingDiffuseScene::draw() {
+
+}
+
+void BasicLightingDiffuseScene::destroy() {
+
+}

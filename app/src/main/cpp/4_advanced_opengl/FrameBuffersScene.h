@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_FRAMEBUFFERSSCENE_H
 #define LEARNGLES_FRAMEBUFFERSSCENE_H
 
+#include "Scene.h"
+class FrameBuffersScene : public Scene {
+public:
+    void init() override;
 
-class FrameBuffersScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

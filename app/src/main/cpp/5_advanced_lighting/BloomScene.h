@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_BLOOMSCENE_H
 #define LEARNGLES_BLOOMSCENE_H
 
+#include "Scene.h"
+class BloomScene : public Scene {
+public:
+    void init() override;
 
-class BloomScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_POINTSHADOWSOFTSCENE_H
 #define LEARNGLES_POINTSHADOWSOFTSCENE_H
 
+#include "Scene.h"
+class PointShadowSoftScene : public Scene {
+public:
+    void init() override;
 
-class PointShadowSoftScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

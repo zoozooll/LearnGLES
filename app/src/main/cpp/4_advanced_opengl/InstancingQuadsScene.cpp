@@ -3,3 +3,18 @@
 //
 
 #include "InstancingQuadsScene.h"
+void InstancingQuadsScene::init() {
+
+}
+
+void InstancingQuadsScene::resize(int width, int height) {
+
+}
+
+void InstancingQuadsScene::draw() {
+
+}
+
+void InstancingQuadsScene::destroy() {
+
+}

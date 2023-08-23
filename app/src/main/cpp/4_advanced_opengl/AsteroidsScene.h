@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_ASTEROIDSSCENE_H
 #define LEARNGLES_ASTEROIDSSCENE_H
 
+#include "Scene.h"
+class AsteroidsScene : public Scene {
+public:
+    void init() override;
 
-class AsteroidsScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_LIGHTINGSCENE_H
 #define LEARNGLES_LIGHTINGSCENE_H
 
+#include "Scene.h"
+class LightingScene : public Scene {
+public:
+    void init() override;
 
-class LightingScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

@@ -3,3 +3,18 @@
 //
 
 #include "IblSpecularTexturedScene.h"
+void IblSpecularTexturedScene::init() {
+
+}
+
+void IblSpecularTexturedScene::resize(int width, int height) {
+
+}
+
+void IblSpecularTexturedScene::draw() {
+
+}
+
+void IblSpecularTexturedScene::destroy() {
+
+}

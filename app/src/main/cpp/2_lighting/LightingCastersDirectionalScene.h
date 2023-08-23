@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_LIGHTINGCASTERSDIRECTIONALSCENE_H
 #define LEARNGLES_LIGHTINGCASTERSDIRECTIONALSCENE_H
 
+#include "Scene.h"
+class LightingCastersDirectionalScene : public Scene {
+public:
+    void init() override;
 
-class LightingCastersDirectionalScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

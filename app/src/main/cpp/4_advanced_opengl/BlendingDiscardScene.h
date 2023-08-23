@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_BLENDINGDISCARDSCENE_H
 #define LEARNGLES_BLENDINGDISCARDSCENE_H
 
+#include "Scene.h"
+class BlendingDiscardScene : public Scene {
+public:
+    void init() override;
 
-class BlendingDiscardScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

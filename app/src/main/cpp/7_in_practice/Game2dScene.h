@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_GAME2DSCENE_H
 #define LEARNGLES_GAME2DSCENE_H
 
+#include "Scene.h"
+class Game2dScene : public Scene {
+public:
+    void init() override;
 
-class Game2dScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

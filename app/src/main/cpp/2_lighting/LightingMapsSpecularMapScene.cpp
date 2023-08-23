@@ -3,3 +3,18 @@
 //
 
 #include "LightingMapsSpecularMapScene.h"
+void LightingMapsSpecularMapScene::init() {
+
+}
+
+void LightingMapsSpecularMapScene::resize(int width, int height) {
+
+}
+
+void LightingMapsSpecularMapScene::draw() {
+
+}
+
+void LightingMapsSpecularMapScene::destroy() {
+
+}

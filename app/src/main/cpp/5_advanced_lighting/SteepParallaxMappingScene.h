@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_STEEPPARALLAXMAPPINGSCENE_H
 #define LEARNGLES_STEEPPARALLAXMAPPINGSCENE_H
 
+#include "Scene.h"
+class SteepParallaxMappingScene : public Scene {
+public:
+    void init() override;
 
-class SteepParallaxMappingScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

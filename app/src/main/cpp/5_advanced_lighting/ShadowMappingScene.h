@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_SHADOWMAPPINGSCENE_H
 #define LEARNGLES_SHADOWMAPPINGSCENE_H
 
+#include "Scene.h"
+class ShadowMappingScene : public Scene {
+public:
+    void init() override;
 
-class ShadowMappingScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

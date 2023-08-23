@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_ADVANCEDGLSLUBOSCENE_H
 #define LEARNGLES_ADVANCEDGLSLUBOSCENE_H
 
+#include "Scene.h"
+class AdvancedGlslUboScene : public Scene {
+public:
+    void init() override;
 
-class AdvancedGlslUboScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

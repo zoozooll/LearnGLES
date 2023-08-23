@@ -3,3 +3,18 @@
 //
 
 #include "IblSpecularScene.h"
+void IblSpecularScene::init() {
+
+}
+
+void IblSpecularScene::resize(int width, int height) {
+
+}
+
+void IblSpecularScene::draw() {
+
+}
+
+void IblSpecularScene::destroy() {
+
+}

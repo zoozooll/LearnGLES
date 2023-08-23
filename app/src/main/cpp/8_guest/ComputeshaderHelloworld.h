@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_COMPUTESHADERHELLOWORLD_H
 #define LEARNGLES_COMPUTESHADERHELLOWORLD_H
 
+#include "Scene.h"
+class ComputeshaderHelloworld : public Scene {
+public:
+    void init() override;
 
-class ComputeshaderHelloworld {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

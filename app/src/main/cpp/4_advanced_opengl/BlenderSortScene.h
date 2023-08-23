@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_BLENDERSORTSCENE_H
 #define LEARNGLES_BLENDERSORTSCENE_H
 
+#include "Scene.h"
+class BlenderSortScene : public Scene {
+public:
+    void init() override;
 
-class BlenderSortScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

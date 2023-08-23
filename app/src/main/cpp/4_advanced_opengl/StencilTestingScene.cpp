@@ -3,3 +3,18 @@
 //
 
 #include "StencilTestingScene.h"
+void StencilTestingScene::init() {
+
+}
+
+void StencilTestingScene::resize(int width, int height) {
+
+}
+
+void StencilTestingScene::draw() {
+
+}
+
+void StencilTestingScene::destroy() {
+
+}

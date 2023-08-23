@@ -3,3 +3,18 @@
 //
 
 #include "DepthTestingScene.h"
+void DepthTestingScene::init() {
+
+}
+
+void DepthTestingScene::resize(int width, int height) {
+
+}
+
+void DepthTestingScene::draw() {
+
+}
+
+void DepthTestingScene::destroy() {
+
+}

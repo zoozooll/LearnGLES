@@ -3,3 +3,18 @@
 //
 
 #include "TextRenderingScene.h"
+void TextRenderingScene::init() {
+
+}
+
+void TextRenderingScene::resize(int width, int height) {
+
+}
+
+void TextRenderingScene::draw() {
+
+}
+
+void TextRenderingScene::destroy() {
+
+}

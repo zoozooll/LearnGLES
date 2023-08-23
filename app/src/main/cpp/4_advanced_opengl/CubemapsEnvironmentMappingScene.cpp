@@ -3,3 +3,18 @@
 //
 
 #include "CubemapsEnvironmentMappingScene.h"
+void CubemapsEnvironmentMappingScene::init() {
+
+}
+
+void CubemapsEnvironmentMappingScene::resize(int width, int height) {
+
+}
+
+void CubemapsEnvironmentMappingScene::draw() {
+
+}
+
+void CubemapsEnvironmentMappingScene::destroy() {
+
+}

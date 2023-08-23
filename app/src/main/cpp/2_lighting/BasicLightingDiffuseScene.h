@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_BASICLIGHTINGDIFFUSESCENE_H
 #define LEARNGLES_BASICLIGHTINGDIFFUSESCENE_H
 
+#include "Scene.h"
+class BasicLightingDiffuseScene : public Scene {
+public:
+    void init() override;
 
-class BasicLightingDiffuseScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

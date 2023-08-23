@@ -3,3 +3,18 @@
 //
 
 #include "ParallaxMappingScene.h"
+void ParallaxMappingScene::init() {
+
+}
+
+void ParallaxMappingScene::resize(int width, int height) {
+
+}
+
+void ParallaxMappingScene::draw() {
+
+}
+
+void ParallaxMappingScene::destroy() {
+
+}

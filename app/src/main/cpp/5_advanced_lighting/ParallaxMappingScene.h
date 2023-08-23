@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_PARALLAXMAPPINGSCENE_H
 #define LEARNGLES_PARALLAXMAPPINGSCENE_H
 
+#include "Scene.h"
+class ParallaxMappingScene : public Scene {
+public:
+    void init() override;
 
-class ParallaxMappingScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

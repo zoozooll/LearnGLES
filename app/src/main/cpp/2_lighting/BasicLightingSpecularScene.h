@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_BASICLIGHTINGSPECULARSCENE_H
 #define LEARNGLES_BASICLIGHTINGSPECULARSCENE_H
 
+#include "Scene.h"
+class BasicLightingSpecularScene : public Scene {
+public:
+    void init() override;
 
-class BasicLightingSpecularScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

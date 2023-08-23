@@ -3,3 +3,19 @@
 //
 
 #include "GammaCorrectionScene.h"
+
+void GammaCorrectionScene::init() {
+
+}
+
+void GammaCorrectionScene::resize(int width, int height) {
+
+}
+
+void GammaCorrectionScene::draw() {
+
+}
+
+void GammaCorrectionScene::destroy() {
+
+}

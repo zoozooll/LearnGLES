@@ -3,3 +3,18 @@
 //
 
 #include "IblIrradianceConversionScene.h"
+void IblIrradianceConversionScene::init() {
+
+}
+
+void IblIrradianceConversionScene::resize(int width, int height) {
+
+}
+
+void IblIrradianceConversionScene::draw() {
+
+}
+
+void IblIrradianceConversionScene::destroy() {
+
+}

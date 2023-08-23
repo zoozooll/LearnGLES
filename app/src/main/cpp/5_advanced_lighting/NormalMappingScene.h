@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_NORMALMAPPINGSCENE_H
 #define LEARNGLES_NORMALMAPPINGSCENE_H
 
+#include "Scene.h"
+class NormalMappingScene : public Scene {
+public:
+    void init() override;
 
-class NormalMappingScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

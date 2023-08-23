@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_INSTANCINGQUADSSCENE_H
 #define LEARNGLES_INSTANCINGQUADSSCENE_H
 
+#include "Scene.h"
+class InstancingQuadsScene : public Scene {
+public:
+    void init() override;
 
-class InstancingQuadsScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

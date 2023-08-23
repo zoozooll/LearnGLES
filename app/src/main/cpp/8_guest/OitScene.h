@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_OITSCENE_H
 #define LEARNGLES_OITSCENE_H
 
+#include "Scene.h"
+class OitScene : public Scene {
+public:
+    void init() override;
 
-class OitScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 

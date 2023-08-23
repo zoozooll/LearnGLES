@@ -3,3 +3,18 @@
 //
 
 #include "MaterialScene.h"
+void MaterialScene::init() {
+
+}
+
+void MaterialScene::resize(int width, int height) {
+
+}
+
+void MaterialScene::draw() {
+
+}
+
+void MaterialScene::destroy() {
+
+}

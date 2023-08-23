@@ -5,9 +5,16 @@
 #ifndef LEARNGLES_IBLIRRADIANCECONVERSIONSCENE_H
 #define LEARNGLES_IBLIRRADIANCECONVERSIONSCENE_H
 
+#include "Scene.h"
+class IblIrradianceConversionScene : public Scene {
+public:
+    void init() override;
 
-class IblIrradianceConversionScene {
+    void resize(int width, int height) override;
 
+    void draw() override;
+
+    void destroy() override;
 };
 
 
