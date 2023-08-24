@@ -163,3 +163,31 @@ void CameraScene::destroy() {
     glDeleteTextures(1, &texture1);
     glDeleteTextures(1, &texture2);
 }
+
+void CameraScene::move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) {
+    camera.ProcessMove(glm::vec3((end_pivot - start_pivot) * glm::vec2(0.001f, -0.001f), 0.f));
+}
+
+void CameraScene::scale(const float &scale) {
+    float zoom = 0.f;
+    if (scale > 1.02f) {
+        zoom = 1.f;
+    } else if (scale < 0.98f) {
+        zoom = -1.f;
+    }
+    camera.ProcessMouseScroll(zoom);
+}
+
+void CameraScene::yawPitch(const glm::vec2 &director) {
+    camera.ProcessMouseMovement(director.x, director.y);
+}
+
+void CameraScene::roll(const float &angle) {
+}
+
+void CameraScene::onDoubleClick(const glm::vec2 point) {
+    camera.Position = glm::vec3(0.0f, 0.0f, 3.0f);
+    camera.WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
+    camera.Yaw = YAW;
+    camera.Pitch = PITCH;
+}
