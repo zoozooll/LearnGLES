@@ -18,7 +18,7 @@ static int SCR_HEIGHT = 0;
 void CoordinateSystemScene::init() {
 // build and compile our shader zprogram
     // ------------------------------------
-    ourShader = new Shader("6.1.coordinate_systems.vert", "6.1.coordinate_systems.frag");
+    ourShader = new Shader("1/6.1.coordinate_systems.vert", "1/6.1.coordinate_systems.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

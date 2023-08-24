@@ -15,7 +15,7 @@
 void TransformationsExercise2Scene::init() {
 // build and compile our shader zprogram
     // ------------------------------------
-    ourShader = new Shader("5.1.transform.vert", "5.1.transform.frag");
+    ourShader = new Shader("1/5.1.transform.vert", "1/5.1.transform.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -118,7 +118,7 @@ void TransformationsExercise2Scene::resize(int width, int height) {
 }
 
 void TransformationsExercise2Scene::draw() {
-// render
+    // render
     // ------
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);

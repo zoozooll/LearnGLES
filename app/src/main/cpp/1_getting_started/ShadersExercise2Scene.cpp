@@ -11,7 +11,7 @@
 void ShadersExercise2Scene::init() {
 // build and compile our shader program
     // ------------------------------------
-    ourShader = new Shader("3.5.shader.vert", "3.5.shader.frag"); // you can name your shader files however you like
+    ourShader = new Shader("1/3.5.shader.vert", "1/3.5.shader.frag"); // you can name your shader files however you like
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

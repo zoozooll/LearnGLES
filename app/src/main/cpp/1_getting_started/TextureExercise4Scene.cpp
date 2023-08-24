@@ -12,7 +12,7 @@
 void TextureExercise4Scene::init() {
     // build and compile our shader zprogram
     // ------------------------------------
-    ourShader = new Shader("4.6.texture.vert", "4.6.texture.frag");
+    ourShader = new Shader("1/4.6.texture.vert", "1/4.6.texture.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

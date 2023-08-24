@@ -26,7 +26,7 @@ void ModelLoadingScene::init() {
 
     // build and compile shaders
     // -------------------------
-    ourShader = new Shader("1.model_loading.vert", "1.model_loading.frag");
+    ourShader = new Shader("3/1.model_loading.vert", "3/1.model_loading.frag");
 
     // load models
     // -----------

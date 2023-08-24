@@ -10,7 +10,7 @@
 void ShadersExercise3Scene::init() {
 // build and compile our shader program
     // ------------------------------------
-    ourShader = new Shader("3.6.shader.vert", "3.6.shader.frag"); // you can name your shader files however you like
+    ourShader = new Shader("1/3.6.shader.vert", "1/3.6.shader.frag"); // you can name your shader files however you like
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

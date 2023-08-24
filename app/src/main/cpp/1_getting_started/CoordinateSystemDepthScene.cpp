@@ -23,7 +23,7 @@ void CoordinateSystemDepthScene::init() {
 
     // build and compile our shader zprogram
     // ------------------------------------
-    ourShader = new Shader("6.2.coordinate_systems.vert", "6.2.coordinate_systems.frag");
+    ourShader = new Shader("1/6.2.coordinate_systems.vert", "1/6.2.coordinate_systems.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

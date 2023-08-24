@@ -15,8 +15,8 @@
 static unsigned int loadTexture(char const * path);
 
 
-unsigned int SCR_WIDTH = 0;
-unsigned int SCR_HEIGHT = 0;
+static unsigned int SCR_WIDTH = 0;
+static unsigned int SCR_HEIGHT = 0;
 bool blinn = false;
 bool blinnKeyPressed = false;
 
@@ -29,7 +29,7 @@ void AdvancedLightingScene::init() {
 
     // build and compile shaders
     // -------------------------
-    shader = new Shader("1.advanced_lighting.vert", "1.advanced_lighting.frag");
+    shader = new Shader("5/1.advanced_lighting.vert", "5/1.advanced_lighting.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

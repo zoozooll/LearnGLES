@@ -33,7 +33,7 @@ void CameraScene::init() {
 
     // build and compile our shader zprogram
     // ------------------------------------
-    ourShader = new Shader("6.3.coordinate_systems.vert", "6.3.coordinate_systems.frag");
+    ourShader = new Shader("1/6.3.coordinate_systems.vert", "1/6.3.coordinate_systems.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
