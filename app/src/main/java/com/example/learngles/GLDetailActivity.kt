@@ -171,6 +171,7 @@ class GLDetailActivity : AppCompatActivity(), Renderer {
 //        Log.i(TAG, "onSingleClick")
         binding.surfaceSupportedView.queueEvent {
             NativeLibHelper.onSingleClick(point.x, point.y)
+            binding.surfaceSupportedView.requestRender()
         }
     }
 
@@ -178,6 +179,7 @@ class GLDetailActivity : AppCompatActivity(), Renderer {
 //        Log.i(TAG, "onDoubleClick")
         binding.surfaceSupportedView.queueEvent {
             NativeLibHelper.onDoubleClick(point.x, point.y)
+            binding.surfaceSupportedView.requestRender()
         }
     }
 
@@ -185,6 +187,7 @@ class GLDetailActivity : AppCompatActivity(), Renderer {
 //        Log.i(TAG, "onLongPress")
         binding.surfaceSupportedView.queueEvent {
             NativeLibHelper.onLongPress(point.x, point.y)
+            binding.surfaceSupportedView.requestRender()
         }
     }
 

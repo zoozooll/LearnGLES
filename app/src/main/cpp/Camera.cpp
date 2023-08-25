@@ -88,8 +88,10 @@ void Camera::ProcessMouseScroll(float yoffset)
         Zoom = 1.0f;
     if (Zoom > 75.0f)
         Zoom = 75.0f;
+    updateCameraVectors();
 }
 
 void Camera::ProcessMove(glm::vec3 moving) {
     Position += moving;
+    updateCameraVectors();
 }

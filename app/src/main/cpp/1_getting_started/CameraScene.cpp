@@ -190,4 +190,5 @@ void CameraScene::onDoubleClick(const glm::vec2 point) {
     camera.WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
     camera.Yaw = YAW;
     camera.Pitch = PITCH;
+    camera.Zoom = ZOOM;
 }
