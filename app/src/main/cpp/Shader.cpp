@@ -10,23 +10,27 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 {
     // 1. retrieve the vertex/fragment source code from filePath
     char* vShaderCode;
-    char * fShaderCode;
     int vSize;
-    LoadDataFromAsset(vertexPath, reinterpret_cast<void **>(&vShaderCode),
-                      reinterpret_cast<size_t *>(&vSize));
+    LoadStringFromAsset(vertexPath, &vShaderCode, &vSize);
+//    std::string vString(vShaderCode, vSize);
+//    auto vertexString = vString.data();
+
+    char * fShaderCode;
     int fSize;
-    LoadDataFromAsset(fragmentPath, reinterpret_cast<void **>(&fShaderCode),
-                      reinterpret_cast<size_t *>(&fSize));
+    LoadStringFromAsset(fragmentPath, &fShaderCode, &fSize);
+//    std::string fString(fShaderCode, fSize);
+//    auto fragmentString = fString.data();
+
     // 2. compile shaders
     unsigned int vertex, fragment;
     // vertex shader
     vertex = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertex, 1, &vShaderCode, &vSize);
+    glShaderSource(vertex, 1, &vShaderCode, nullptr);
     glCompileShader(vertex);
     checkCompileErrors(vertex, "VERTEX");
     // fragment Shader
     fragment = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragment, 1, &fShaderCode, &fSize);
+    glShaderSource(fragment, 1, &fShaderCode, nullptr);
     glCompileShader(fragment);
     checkCompileErrors(fragment, "FRAGMENT");
     // shader Program

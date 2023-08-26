@@ -23,3 +23,18 @@ bool LoadDataFromAsset(const char *const assetPath, void **buffer, size_t *size)
     }
     return true;
 }
+
+bool LoadStringFromAsset(const char *const assetPath, char **buffer, int *size) {
+    AAsset* file = AAssetManager_open(mgr, assetPath, AASSET_MODE_BUFFER);
+    if (!file) {
+        return false;
+    }
+    *size = static_cast<int>(AAsset_getLength(file));
+    *buffer = static_cast<char *>(calloc(*size + 1, sizeof(char)));
+    auto rs = AAsset_read(file, *buffer, *size);
+    AAsset_close(file);
+    if (rs < 0) {
+        return false;
+    }
+    return true;
+}

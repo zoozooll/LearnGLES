@@ -105,13 +105,11 @@ class GLDetailActivity : AppCompatActivity(), Renderer {
                         onSingleMove(lastPoint, PointF(e2.x, e2.y))
                     }
                     lastPoint.set(e2.x, e2.y)
-                } else if (e2.pointerCount == 2) {
+                } else if (e2.pointerCount == 2 ) {
                     if (lastPoint.x >= 0 && lastPoint.y >= 0 && lastPoint1.x >= 0 && lastPoint1.y >= 0) {
                         onTwoFingerMove(lastPoint, lastPoint1,
                             PointF(e2.getX(0), e2.getY(0)),
-                            PointF(e2.getX(1), e2.getY(1)),
-                            PointF(e1.getX(0), e1.getY(0)),
-                            PointF(e1.getX(1), e1.getY(1)))
+                            PointF(e2.getX(1), e2.getY(1)))
                     }
                     lastPoint.set(e2.getX(0), e2.getY(0))
                     lastPoint1.set(e2.getX(1), e2.getY(1))
@@ -200,7 +198,7 @@ class GLDetailActivity : AppCompatActivity(), Renderer {
         }
     }
 
-    fun onTwoFingerMove(start: PointF, start1: PointF, end: PointF, end1: PointF, down: PointF, down1: PointF) {
+    fun onTwoFingerMove(start: PointF, start1: PointF, end: PointF, end1: PointF) {
 //        Log.i(TAG, "onTwoFingerMove point0: ($startX0, $startY0) -> ($endX0, $endY0) " +
 //                "point1: ($startX1, $startY1) -> ($endX1, $endY1)")
         val distance = sqrt ((end1.x - end.x) * (end1.x - end.x) + (end1.y - end.y) * (end1.y - end.y))
