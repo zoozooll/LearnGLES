@@ -51,6 +51,7 @@
 #include "2_lighting/LightingCastersSpotSoftScene.h"
 #include "2_lighting/MultipleLightsScene.h"
 #include "4_advanced_opengl/DepthTestingScene.h"
+#include "4_advanced_opengl/DepthTestingViewScene.h"
 #include "4_advanced_opengl/StencilTestingScene.h"
 #include "4_advanced_opengl/BlenderSortScene.h"
 #include "4_advanced_opengl/BlendingDiscardScene.h"
@@ -101,7 +102,6 @@
 #include "8_guest/DsaScene.h"
 #include "8_guest/ComputeshaderHelloworld.h"
 #include "8_guest/PhysicallyBasedBloomScene.h"
-
 
 inline Scene* GenSceneByName(const char *tutorial) {
     if (!strcmp(tutorial, "hello_window")) {
@@ -203,7 +203,44 @@ inline Scene* GenSceneByName(const char *tutorial) {
     } else if (!strcmp(tutorial, "multiple_lights" )) {
         return new MultipleLightsScene;
     } else if (!strcmp(tutorial, "multiple_lights_exercise1" )) {
-
+    } else if (!strcmp(tutorial, "depth_testing")) {
+        return new DepthTestingScene();
+    } else if (!strcmp(tutorial, "depth_testing_view")) {
+        return new DepthTestingViewScene();
+    } else if (!strcmp(tutorial, "stencil_testing")) {
+        return new StencilTestingScene();
+    } else if (!strcmp(tutorial, "blending_discard")) {
+        return new BlendingDiscardScene();
+    } else if (!strcmp(tutorial, "blending_sort")) {
+        return new BlenderSortScene();
+    } else if (!strcmp(tutorial, "face_culling_exercise1")) {
+        return new FaceCullingScene;
+    } else if (!strcmp(tutorial, "framebuffers")) {
+        return new FrameBuffersScene;
+    } else if (!strcmp(tutorial, "framebuffers_exercise1")) {
+        return new FramebuffersExercise1Scene;
+    } else if (!strcmp(tutorial, "cubemap_skybox")) {
+        return new CubemapSkyboxScene;
+    } else if (!strcmp(tutorial, "cubemap_environment_mapping" )) {
+        return new CubemapsEnvironmentMappingScene;
+    } else if (!strcmp(tutorial, "advanced_glsl_ubo")) {
+        return new AdvancedGlslUboScene;
+    } else if (!strcmp(tutorial, "geometry_shader_houses")) {
+        return new GeometryShaderHousesScene;
+    } else if (!strcmp(tutorial, "geometry_shader_exploding" )) {
+        return new GeometryShaderExplodingScene;
+    } else if (!strcmp(tutorial, "geometry_shader_normals")) {
+        return new GeometryShaderNormalsScene;
+    } else if (!strcmp(tutorial, "instancing_quads")) {
+        return new InstancingQuadsScene;
+    } else if (!strcmp(tutorial, "asteroids")) {
+        return new AsteroidsScene;
+    } else if (!strcmp(tutorial, "asteroids_instanced")) {
+        return new AsteroidInstancedScene;
+    } else if (!strcmp(tutorial, "anti_aliasing_msaa")) {
+        return new AntiAliasingMsaaScene;
+    } else if (!strcmp(tutorial, "anti_aliasing_offscreen")) {
+        return new AntiAliasingOffscreenScene;
     } else if (!strcmp(tutorial, "advanced_lighting")) {
         return new AdvancedLightingScene;
     } else if (!strcmp(tutorial, "gamma_correction")) {
