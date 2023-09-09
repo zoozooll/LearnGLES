@@ -6,6 +6,10 @@
 #define LEARNGLES_FRAMEBUFFERSEXERCISE1SCENE_H
 
 #include "Scene.h"
+
+class Shader;
+class Camera;
+
 class FramebuffersExercise1Scene : public Scene {
 public:
     void init() override;
@@ -15,6 +19,21 @@ public:
     void draw() override;
 
     void destroy() override;
+
+private:
+    unsigned int SCR_WIDTH = 0, SCR_HEIGHT = 0;
+
+    Shader *shader = nullptr;
+    Shader *screenShader = nullptr;
+    Camera *camera = nullptr;
+    unsigned int cubeVAO, cubeVBO;
+    unsigned int planeVAO, planeVBO;
+    unsigned int quadVAO, quadVBO;
+    unsigned int cubeTexture;
+    unsigned int floorTexture;
+    unsigned int framebuffer;
+    unsigned int rbo;
+    unsigned int textureColorbuffer;
 };
 
 
