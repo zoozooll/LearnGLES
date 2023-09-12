@@ -6,6 +6,10 @@
 #define LEARNGLES_BASICLIGHTINGDIFFUSESCENE_H
 
 #include "Scene.h"
+
+class Camera;
+class Shader;
+
 class BasicLightingDiffuseScene : public Scene {
 public:
     void init() override;
@@ -15,6 +19,15 @@ public:
     void draw() override;
 
     void destroy() override;
+private:
+    Shader *lightingShader = nullptr;
+    Shader *lightCubeShader = nullptr;
+    unsigned int SCR_WIDTH = 0;
+    unsigned int SCR_HEIGHT = 0;
+    unsigned int VBO, cubeVAO;
+    unsigned int lightCubeVAO;
+    glm::vec3 lightPos;
+    Camera *camera = nullptr;
 };
 
 
