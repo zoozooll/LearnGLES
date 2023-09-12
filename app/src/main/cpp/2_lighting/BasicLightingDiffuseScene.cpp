@@ -11,6 +11,9 @@
 #include "glm/gtx/string_cast.hpp"
 
 void BasicLightingDiffuseScene::init() {
+    camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+    lightPos = glm::vec3 (1.2f, 1.0f, 2.0f);
+
 // configure global opengl state
 // -----------------------------
     glEnable(GL_DEPTH_TEST);
@@ -100,8 +103,7 @@ void BasicLightingDiffuseScene::resize(int width, int height) {
 }
 
 void BasicLightingDiffuseScene::draw() {
-    camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
-    lightPos = glm::vec3 (1.2f, 1.0f, 2.0f);
+
 // render
 // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -148,4 +150,32 @@ void BasicLightingDiffuseScene::destroy() {
     delete lightingShader ;
     delete lightCubeShader;
     delete camera;
+}
+
+void BasicLightingDiffuseScene::move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) {
+    LOGI(__FILE_NAME__, "move %s -> %s", glm::to_string(start_pivot).c_str(), glm::to_string(end_pivot).c_str());
+    camera->ProcessMove(glm::vec3((end_pivot - start_pivot) * glm::vec2(0.001f, -0.001f), 0.f));
+}
+
+void BasicLightingDiffuseScene::scale(const float &scale) {
+    float zoom = 0.f;
+    if (scale > 1.02f) {
+        zoom = 1.f;
+    } else if (scale < 0.98f) {
+        zoom = -1.f;
+    }
+    camera->ProcessMouseScroll(zoom);
+}
+
+void BasicLightingDiffuseScene::yawPitch(const glm::vec2 &director) {
+    camera->ProcessMouseMovement(director.x, director.y);
+}
+
+void BasicLightingDiffuseScene::onDoubleClick(const glm::vec2 point) {
+    camera->Position = glm::vec3(0.0f, 0.0f, 3.0f);
+    camera->WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
+    camera->Yaw = YAW;
+    camera->Pitch = PITCH;
+    camera->Zoom = ZOOM;
+    camera->updateCameraVectors();
 }
