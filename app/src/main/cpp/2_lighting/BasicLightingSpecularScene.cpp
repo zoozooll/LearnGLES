@@ -20,7 +20,7 @@ void BasicLightingSpecularScene::init() {
 
 // build and compile our shader zprogram
 // ------------------------------------
-    lightingShader = new Shader("2/2.2.basic_lighting.vert", "2/2.2.basic_lighting.fs");
+    lightingShader = new Shader("2/2.2.basic_lighting.vert", "2/2.2.basic_lighting.frag");
     lightCubeShader = new Shader("2/light_cube.vert", "2/light_cube.frag");
 
 // set up vertex data (and buffer(s)) and configure vertex attributes
