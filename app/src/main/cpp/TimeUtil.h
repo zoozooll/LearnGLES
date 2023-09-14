@@ -9,12 +9,11 @@
 
 using namespace std::chrono;
 
-inline long long GetTimestampMilliSeconds() {
-    milliseconds ms = duration_cast< milliseconds >(
-            system_clock::now().time_since_epoch()
-    );
-    return ms.count();
-}
+void ResetTime();
+
+long long GetTimestampMilliSeconds();
+
+float GetEscapeSecs();
 
 
 #endif //LEARNGLES_TIMEUTIL_H
