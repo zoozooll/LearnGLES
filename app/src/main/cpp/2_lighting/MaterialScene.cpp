@@ -19,8 +19,8 @@ void MaterialScene::init() {
 
 // build and compile our shader zprogram
 // ------------------------------------
-    lightingShader  = new Shader ("3.1.materials.vert", "3.1.materials.frag");
-    lightCubeShader = new Shader ("3.1.light_cube.vert", "3.1.light_cube.frag");
+    lightingShader  = new Shader ("2/3.1.materials.vert", "2/3.1.materials.frag");
+    lightCubeShader = new Shader ("2/light_cube.vert", "2/light_cube.frag");
 
 // set up vertex data (and buffer(s)) and configure vertex attributes
 // ------------------------------------------------------------------
