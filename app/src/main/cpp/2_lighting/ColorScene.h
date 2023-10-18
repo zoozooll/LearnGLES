@@ -6,11 +6,12 @@
 #define LEARNGLES_COLORSCENE_H
 
 #include "Scene.h"
+#include "SceneTouchEvent.h"
 
 class Camera;
 class Shader;
 
-class ColorScene : public Scene {
+class ColorScene : public Scene, public SceneTouchEvent  {
 public:
     void init() override;
 

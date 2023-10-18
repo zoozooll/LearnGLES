@@ -1,16 +1,17 @@
 //
-// Created by zoozo on 8/9/2023.
+// Created by huion on 2023/10/18.
 //
 
-#ifndef LEARNGLES_COORDINATESYSTEMDEPTHSCENE_H
-#define LEARNGLES_COORDINATESYSTEMDEPTHSCENE_H
+#ifndef LEARNGLES_CAMERAEXERCISE1SCENE_H
+#define LEARNGLES_CAMERAEXERCISE1SCENE_H
 
 #include "Scene.h"
 #include "SceneTouchEvent.h"
+#include "Camera.h"
 
 class Shader;
 
-class CoordinateSystemDepthScene : public Scene, public SceneTouchEvent  {
+class CameraExercise1Scene : public Scene, public SceneTouchEvent {
 public:
     void init() override;
 
@@ -28,12 +29,14 @@ public:
 
     void roll(const float &angle) override;
 
+    void onDoubleClick(const glm::vec2 point) override;
+
 private:
-    unsigned int texture1 = 0, texture2 = 0;
-    unsigned int VAO = 0;
+    unsigned int texture1 = 0;
+    unsigned int VBO = 0, VAO = 0;
+    Camera camera = Camera(glm::vec3(0.0f, 0.0f, 3.0f));
     Shader *ourShader = nullptr;
-    glm::mat4 model = glm::mat4(1.0f);
 };
 
 
-#endif //LEARNGLES_COORDINATESYSTEMDEPTHSCENE_H
+#endif //LEARNGLES_CAMERAEXERCISE1SCENE_H

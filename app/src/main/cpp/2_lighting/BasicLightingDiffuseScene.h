@@ -6,11 +6,12 @@
 #define LEARNGLES_BASICLIGHTINGDIFFUSESCENE_H
 
 #include "Scene.h"
+#include "SceneTouchEvent.h"
 
 class Camera;
 class Shader;
 
-class BasicLightingDiffuseScene : public Scene {
+class BasicLightingDiffuseScene : public Scene, public SceneTouchEvent {
 public:
     void init() override;
 

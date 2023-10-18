@@ -10,24 +10,12 @@
 class Scene {
 public:
     virtual void init() = 0;
+
     virtual void resize(int width, int height) = 0;
+
     virtual void draw() = 0;
+
     virtual void destroy() = 0;
-
-    virtual void move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot);
-
-    virtual void scale(const float &scale);
-
-    virtual void yawPitch(const glm::vec2 &director);
-
-    virtual void roll(const float &angle);
-
-    virtual void onSingleClick(const glm:: vec2 point);
-
-    virtual void onDoubleClick(const glm:: vec2 point);
-
-    virtual void onLongPress(const glm:: vec2 point);
 };
-
 
 #endif //LEARNGLES_SCENE_H

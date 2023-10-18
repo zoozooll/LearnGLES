@@ -6,10 +6,11 @@
 #define LEARNGLES_COORDINATESYSTEMSCENE_H
 
 #include "Scene.h"
+#include "SceneTouchEvent.h"
 
 class Shader;
 
-class CoordinateSystemScene : public Scene {
+class CoordinateSystemScene : public Scene, public SceneTouchEvent {
 
 public:
     void init() override;

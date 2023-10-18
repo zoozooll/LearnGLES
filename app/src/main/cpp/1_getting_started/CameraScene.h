@@ -7,10 +7,11 @@
 
 #include "Scene.h"
 #include "Camera.h"
+#include "SceneTouchEvent.h"
 
 class Shader;
 
-class CameraScene : public Scene {
+class CameraScene : public Scene, public SceneTouchEvent{
 public:
     void init() override;
 

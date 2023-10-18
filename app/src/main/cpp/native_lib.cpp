@@ -7,6 +7,7 @@
 #include "glerror.h"
 #include "SceneHelper.h"
 #include "Scene.h"
+#include "SceneTouchEvent.h"
 #include "logutil.h"
 
 //
@@ -77,7 +78,10 @@ JNIEXPORT void JNICALL
 Java_com_example_learngles_NativeLibHelper_onSingleTouch(JNIEnv *env, jclass clazz, jfloat x,
                                                          jfloat y) {
     if (g_scene) {
-        g_scene->yawPitch(glm::vec2(x,y));
+        auto baseTouchEvent = dynamic_cast<SceneTouchEvent*>(g_scene);
+        if (baseTouchEvent) {
+            baseTouchEvent->yawPitch(glm::vec2(x,y));
+        }
     }
 }
 extern "C"
@@ -85,7 +89,10 @@ JNIEXPORT void JNICALL
 Java_com_example_learngles_NativeLibHelper_onZooming(JNIEnv *env, jclass clazz,
                                                      jfloat prev_distance, jfloat distance) {
     if (g_scene && prev_distance != 0.f and distance != 0.f) {
-        g_scene->scale(distance / prev_distance);
+        auto baseTouchEvent = dynamic_cast<SceneTouchEvent*>(g_scene);
+        if (baseTouchEvent) {
+            baseTouchEvent->scale(distance / prev_distance);
+        }
     }
 }
 extern "C"
@@ -93,7 +100,10 @@ JNIEXPORT void JNICALL
 Java_com_example_learngles_NativeLibHelper_onTwoFingersRotating(JNIEnv *env, jclass clazz,
                                                                 jfloat angle) {
     if (g_scene) {
-        g_scene->roll(angle);
+        auto baseTouchEvent = dynamic_cast<SceneTouchEvent*>(g_scene);
+        if (baseTouchEvent) {
+            baseTouchEvent->roll(angle);
+        }
     }
 }
 extern "C"
@@ -101,7 +111,10 @@ JNIEXPORT void JNICALL
 Java_com_example_learngles_NativeLibHelper_onMoving(JNIEnv *env, jclass clazz, jfloat x, jfloat y,
                                                     jfloat x1, jfloat y1) {
     if (g_scene) {
-        g_scene->move({x, y}, {x1, y1});
+        auto baseTouchEvent = dynamic_cast<SceneTouchEvent*>(g_scene);
+        if (baseTouchEvent) {
+            baseTouchEvent->move({x, y}, {x1, y1});
+        }
     }
 }
 extern "C"
@@ -109,7 +122,10 @@ JNIEXPORT void JNICALL
 Java_com_example_learngles_NativeLibHelper_onSingleClick(JNIEnv *env, jclass clazz, jfloat x,
                                                          jfloat y) {
     if (g_scene) {
-        g_scene->onSingleClick({x, y});
+        auto baseTouchEvent = dynamic_cast<SceneTouchEvent*>(g_scene);
+        if (baseTouchEvent) {
+            baseTouchEvent->onSingleClick({x, y});
+        }
     }
 }
 extern "C"
@@ -117,7 +133,10 @@ JNIEXPORT void JNICALL
 Java_com_example_learngles_NativeLibHelper_onDoubleClick(JNIEnv *env, jclass clazz, jfloat x,
                                                          jfloat y) {
     if (g_scene) {
-        g_scene->onDoubleClick({x, y});
+        auto baseTouchEvent = dynamic_cast<SceneTouchEvent*>(g_scene);
+        if (baseTouchEvent) {
+            baseTouchEvent->onDoubleClick({x, y});
+        }
     }
 }
 extern "C"
@@ -125,6 +144,9 @@ JNIEXPORT void JNICALL
 Java_com_example_learngles_NativeLibHelper_onLongPress(JNIEnv *env, jclass clazz, jfloat x,
                                                        jfloat y) {
     if (g_scene) {
-        g_scene->onLongPress({x, y});
+        auto baseTouchEvent = dynamic_cast<SceneTouchEvent*>(g_scene);
+        if (baseTouchEvent) {
+            baseTouchEvent->onLongPress({x, y});
+        }
     }
 }

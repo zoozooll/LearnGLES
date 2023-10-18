@@ -6,11 +6,12 @@
 #define LEARNGLES_BASICLIGHTINGSPECULARSCENE_H
 
 #include "Scene.h"
+#include "SceneTouchEvent.h"
 
 class Camera;
 class Shader;
 
-class BasicLightingSpecularScene : public Scene {
+class BasicLightingSpecularScene : public Scene, public SceneTouchEvent  {
 public:
     void init() override;
 

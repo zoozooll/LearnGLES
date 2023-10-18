@@ -9,11 +9,12 @@
 
 #include "Scene.h"
 #include "Camera.h"
+#include "SceneTouchEvent.h"
 
 class Shader;
 class Model;
 
-class ModelLoadingScene : public Scene {
+class ModelLoadingScene : public Scene, public SceneTouchEvent  {
 public:
     void init() override;
 

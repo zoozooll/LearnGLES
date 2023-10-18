@@ -6,10 +6,11 @@
 #define LEARNGLES_TRANSFORMATIONSSCENE_H
 
 #include "Scene.h"
+#include "SceneTouchEvent.h"
 
 class Shader;
 
-class TransformationsScene : public Scene {
+class TransformationsScene : public Scene, public SceneTouchEvent {
 public:
     void init() override;
 
