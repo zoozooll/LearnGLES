@@ -7,6 +7,7 @@
 #include "glerror.h"
 #include "SceneHelper.h"
 #include "Scene.h"
+#include "logutil.h"
 
 //
 // Created by Aaron Lee on 2023/07/12.
@@ -21,6 +22,7 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_learngles_NativeLibHelper_nativeSurfaceCreate(JNIEnv *env, jclass clazz,
                                                                jstring tutorial) {
+    LOGD(__FILE_NAME__, "SurfaceCreate");
     jboolean isCopy;
     auto tutorial_chars = env->GetStringUTFChars(tutorial, &isCopy);
     g_scene = GenSceneByName(tutorial_chars);
@@ -33,6 +35,8 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_learngles_NativeLibHelper_nativeSurfaceChanged(JNIEnv *env, jclass clazz,
                                                                 jint width, jint height) {
+
+    LOGD(__FILE_NAME__, "SurfaceChanged");
     if (g_scene) {
         g_scene->resize(width, height);
     }
@@ -47,6 +51,7 @@ Java_com_example_learngles_NativeLibHelper_nativeDraw(JNIEnv *env, jclass clazz)
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_learngles_NativeLibHelper_nativeDestroy(JNIEnv *env, jclass clazz) {
+    LOGD(__FILE_NAME__, "nativeDestroy");
     if (g_scene) {
         g_scene->destroy();
     }
