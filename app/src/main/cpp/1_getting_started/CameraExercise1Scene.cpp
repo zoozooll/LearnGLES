@@ -102,16 +102,17 @@ void CameraExercise1Scene::draw() {
 
     // camera/view transformation
     glm::mat4 view = camera.GetViewMatrix();
+    view = curCameraTranslate * view;
     ourShader->setMat4("view", view);
 
     // render boxes
     glBindVertexArray(VAO);
 
-        // calculate the model matrix for each object and pass it to shader before drawing
-        glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-        ourShader->setMat4("model", model);
+    // calculate the model matrix for each object and pass it to shader before drawing
+    glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+    ourShader->setMat4("model", model);
 
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
 
 }
 
@@ -121,31 +122,13 @@ void CameraExercise1Scene::destroy() {
     glDeleteTextures(1, &texture1);
 }
 
-void CameraExercise1Scene::move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) {
-    camera.ProcessMove(glm::vec3((end_pivot - start_pivot) * glm::vec2(0.001f, -0.001f), 0.f));
-}
-
-void CameraExercise1Scene::scale(const float &scale) {
-    float zoom = 0.f;
-    if (scale > 1.02f) {
-        zoom = 1.f;
-    } else if (scale < 0.98f) {
-        zoom = -1.f;
-    }
-    camera.ProcessMouseScroll(zoom);
-}
 
 void CameraExercise1Scene::yawPitch(const glm::vec2 &director) {
-    camera.ProcessMouseMovement(director.x, director.y);
-}
-
-void CameraExercise1Scene::roll(const float &angle) {
+    glm::mat4 l_translate(1.0f);
+    l_translate = glm::translate(l_translate, glm::vec3(director.x * 0.001f, director.y * 0.001f, 0.f));
+    curCameraTranslate = l_translate * curCameraTranslate;
 }
 
 void CameraExercise1Scene::onDoubleClick(const glm::vec2 point) {
-//    camera.Position = glm::vec3(0.0f, 0.0f, 3.0f);
-//    camera.WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
-//    camera.Yaw = YAW;
-//    camera.Pitch = PITCH;
-//    camera.Zoom = ZOOM;
+    curCameraTranslate = glm::mat4(1.f);
 }

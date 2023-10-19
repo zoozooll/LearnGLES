@@ -21,13 +21,7 @@ public:
 
     void destroy() override;
 
-    void move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) override;
-
-    void scale(const float &scale) override;
-
     void yawPitch(const glm::vec2 &director) override;
-
-    void roll(const float &angle) override;
 
     void onDoubleClick(const glm::vec2 point) override;
 
@@ -36,6 +30,7 @@ private:
     unsigned int VBO = 0, VAO = 0;
     Camera camera = Camera(glm::vec3(0.0f, 0.0f, 3.0f));
     Shader *ourShader = nullptr;
+    glm::mat4 curCameraTranslate = glm::mat4(1.0f);
 };
 
 
