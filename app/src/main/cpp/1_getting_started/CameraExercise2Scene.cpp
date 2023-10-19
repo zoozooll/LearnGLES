@@ -1,8 +1,8 @@
 //
-// Created by huion on 2023/10/18.
+// Created by huion on 2023/10/19.
 //
 
-#include "CameraExercise1Scene.h"
+#include "CameraExercise2Scene.h"
 
 #include <GLES3/gl32.h>
 #include <glm/glm.hpp>
@@ -13,10 +13,11 @@
 
 static int SCR_WIDTH = 0, SCR_HEIGHT = 0;
 
-void CameraExercise1Scene::init() {
+void CameraExercise2Scene::init() {
 // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
 
     // build and compile our shader zprogram
     // ------------------------------------
@@ -61,16 +62,19 @@ void CameraExercise1Scene::init() {
     // -------------------------------------------------------------------------------------------
     ourShader->use();
     ourShader->setInt("texture1", 0);
+
+    camera.setRadius(3.f);
+    camera.setLongitude(-90.f);
 }
 
-void CameraExercise1Scene::resize(int width, int height) {
+void CameraExercise2Scene::resize(int width, int height) {
     glViewport(0, 0, width, height);
     SCR_WIDTH = width;
     SCR_HEIGHT = height;
 }
 
-void CameraExercise1Scene::draw() {
-// render
+void CameraExercise2Scene::draw() {
+    // render
     // ------
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -83,12 +87,11 @@ void CameraExercise1Scene::draw() {
     ourShader->use();
 
     // pass projection matrix to shader (note that in this case it could change every frame)
-    glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    glm::mat4 projection = glm::perspective(glm::radians(45.f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
     ourShader->setMat4("projection", projection);
 
     // camera/view transformation
     glm::mat4 view = camera.GetViewMatrix();
-    view = curCameraTranslate * view;
     ourShader->setMat4("view", view);
 
     // render boxes
@@ -96,25 +99,29 @@ void CameraExercise1Scene::draw() {
 
     // calculate the model matrix for each object and pass it to shader before drawing
     glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+    vec3 billboardFrontWorld = vec3(0.f, 0.f, 1.f);
+    vec3 billboardPosition = vec3(0.f);
+    vec3 billboard_to_camera = glm::normalize(camera.getPosition() - billboardPosition);
+    vec3 pivot = glm::normalize(cross(billboardFrontWorld, billboard_to_camera));
+    float theta = acos(dot(billboardFrontWorld, billboard_to_camera));
+    rotate(model, theta, pivot);
     ourShader->setMat4("model", model);
 
     glDrawArrays(GL_TRIANGLES, 0, 6);
 
 }
 
-void CameraExercise1Scene::destroy() {
+void CameraExercise2Scene::destroy() {
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteTextures(1, &texture1);
 }
 
 
-void CameraExercise1Scene::yawPitch(const glm::vec2 &director) {
-    glm::mat4 l_translate(1.0f);
-    l_translate = glm::translate(l_translate, glm::vec3(director.x * 0.001f, director.y * 0.001f, 0.f));
-    curCameraTranslate = l_translate * curCameraTranslate;
+void CameraExercise2Scene::yawPitch(const glm::vec2 &director) {
+
 }
 
-void CameraExercise1Scene::onDoubleClick(const glm::vec2 point) {
-    curCameraTranslate = glm::mat4(1.f);
+void CameraExercise2Scene::onDoubleClick(const glm::vec2 point) {
+
 }

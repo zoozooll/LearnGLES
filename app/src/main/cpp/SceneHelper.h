@@ -103,6 +103,7 @@
 #include "8_guest/ComputeshaderHelloworld.h"
 #include "8_guest/PhysicallyBasedBloomScene.h"
 #include "1_getting_started/CameraExercise1Scene.h"
+#include "1_getting_started/CameraExercise2Scene.h"
 
 inline Scene* GenSceneByName(const char *tutorial) {
     if (!strcmp(tutorial, "hello_window")) {
@@ -168,7 +169,7 @@ inline Scene* GenSceneByName(const char *tutorial) {
     } else if (!strcmp(tutorial, "camera_exercise1")) {
         return new CameraExercise1Scene;
     } else if (!strcmp(tutorial, "camera_exercise2")) {
-
+        return new CameraExercise2Scene;
     } else if (!strcmp(tutorial, "model_loading")) {
         return new ModelLoadingScene;
     } else if (!strcmp(tutorial, "advanced_lighting")) {
