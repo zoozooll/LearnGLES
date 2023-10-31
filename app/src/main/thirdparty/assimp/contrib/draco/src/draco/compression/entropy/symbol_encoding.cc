@@ -237,7 +237,7 @@ bool EncodeTaggedSymbols(const uint32_t *symbols, int num_values,
   tag_encoder.EndEncoding(target_buffer);
   value_buffer.EndBitEncoding();
 
-  // Append the values to the end of the target buffer.
+  // Append the values to the end of the m_target buffer.
   target_buffer->Encode(value_buffer.data(), value_buffer.size());
   return true;
 }

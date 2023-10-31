@@ -246,7 +246,7 @@ inline Ref<Accessor> ExportData(Asset &a, std::string &meshName, Ref<Buffer> &bu
     Ref<BufferView> bv = a.bufferViews.Create(a.FindUniqueID(meshName, "view"));
     bv->buffer = buffer;
     bv->byteOffset = unsigned(offset);
-    bv->byteLength = length; //! The target that the WebGL buffer should be bound to.
+    bv->byteLength = length; //! The m_target that the WebGL buffer should be bound to.
     bv->target = target;
 
     // accessor
@@ -322,7 +322,7 @@ void glTFExporter::GetTexSampler(const aiMaterial* mat, glTF::TexProperty& prop)
     prop.texture->sampler->minFilter = SamplerMinFilter_Linear;
 }
 
-void glTFExporter::GetMatColorOrTex(const aiMaterial* mat, glTF::TexProperty& prop, 
+void glTFExporter::GetMatColorOrTex(const aiMaterial* mat, glTF::TexProperty& prop,
         const char* propName, int type, int idx, aiTextureType tt) {
     aiString tex;
     aiColor4D col;
@@ -370,9 +370,9 @@ void glTFExporter::GetMatColorOrTex(const aiMaterial* mat, glTF::TexProperty& pr
     }
 
     if (mat->Get(propName, type, idx, col) == AI_SUCCESS) {
-        prop.color[0] = col.r; 
+        prop.color[0] = col.r;
         prop.color[1] = col.g;
-        prop.color[2] = col.b; 
+        prop.color[2] = col.b;
         prop.color[3] = col.a;
     }
 }

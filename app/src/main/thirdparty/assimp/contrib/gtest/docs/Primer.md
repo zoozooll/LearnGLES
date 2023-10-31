@@ -38,7 +38,7 @@ and `GTEST_ROOT/include` in the header search path, where `GTEST_ROOT`
 is the Google Test root directory).
 
 Once you are able to compile the Google Test library, you should
-create a project or build target for your test program.  Make sure you
+create a project or build m_target for your test program.  Make sure you
 have `GTEST_ROOT/include` in the header search path so that the
 compiler can find `"gtest/gtest.h"` when compiling your test.  Set up
 your test project to link with the Google Test library (for example,

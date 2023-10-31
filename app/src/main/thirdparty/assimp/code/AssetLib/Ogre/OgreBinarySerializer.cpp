@@ -926,7 +926,7 @@ void OgreBinarySerializer::ReadSkeletonAnimationTrack(Skeleton * /*skeleton*/, A
     uint16_t boneId = Read<uint16_t>();
     Bone *bone = dest->parentSkeleton->BoneById(boneId);
     if (!bone) {
-        throw DeadlyImportError("Cannot read animation track, target bone ", boneId, " not in target Skeleton");
+        throw DeadlyImportError("Cannot read animation track, m_target bone ", boneId, " not in m_target Skeleton");
     }
 
     VertexAnimationTrack track;

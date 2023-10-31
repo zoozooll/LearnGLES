@@ -63,7 +63,7 @@
                 <instance_geometry url="#box-lib">
                     <bind_material>
                         <technique_common>
-                            <instance_material symbol="BlueSG" target="#Blue"/>
+                            <instance_material symbol="BlueSG" m_target="#Blue"/>
                         </technique_common>
                     </bind_material>
                 </instance_geometry>

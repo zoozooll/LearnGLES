@@ -298,7 +298,7 @@ void CBackgroundPainter::OnPreRender() {
         }
         return;
     }
-    // clear both the render target and the z-buffer
+    // clear both the render m_target and the z-buffer
     g_piDevice->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
             clrColor, 1.0f, 0);
 }

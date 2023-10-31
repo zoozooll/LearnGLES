@@ -203,7 +203,7 @@
     \def RAPIDJSON_ENDIAN
     \ingroup RAPIDJSON_CONFIG
 
-    GCC 4.6 provided macro for detecting endianness of the target machine. But other
+    GCC 4.6 provided macro for detecting endianness of the m_target machine. But other
     compilers may not have this. User can define RAPIDJSON_ENDIAN to either
     \ref RAPIDJSON_LITTLEENDIAN or \ref RAPIDJSON_BIGENDIAN.
 

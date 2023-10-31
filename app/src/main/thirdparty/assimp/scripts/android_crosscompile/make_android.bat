@@ -10,16 +10,16 @@ set COMMON_CXX_FLAGS=-DANDROID -fdata-sections -ffunction-sections -funwind-tabl
 set COMMON_C_FLAGS=-DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -fexceptions
 
 if %ANDROID_ABI% == armeabi-v7a (
-  set CXX_FLAGS="%COMMON_CXX_FLAGS% -march=armv7-a -mthumb --target=armv7-none-linux-androideabi%ANDROID_PLATFORM%"
-  set C_FLAGS="%COMMON_C_FLAGS% -march=armv7-a -mthumb --target=armv7-none-linux-androideabi%ANDROID_PLATFORM%"
+  set CXX_FLAGS="%COMMON_CXX_FLAGS% -march=armv7-a -mthumb --m_target=armv7-none-linux-androideabi%ANDROID_PLATFORM%"
+  set C_FLAGS="%COMMON_C_FLAGS% -march=armv7-a -mthumb --m_target=armv7-none-linux-androideabi%ANDROID_PLATFORM%"
 )
 if %ANDROID_ABI% == arm64-v8a (
-  set CXX_FLAGS="%COMMON_CXX_FLAGS% -march=armv8-a --target=aarch64-none-linux-android%ANDROID_PLATFORM%"
-  set C_FLAGS="%COMMON_C_FLAGS% -march=armv8-a --target=aarch64-none-linux-android%ANDROID_PLATFORM%"
+  set CXX_FLAGS="%COMMON_CXX_FLAGS% -march=armv8-a --m_target=aarch64-none-linux-android%ANDROID_PLATFORM%"
+  set C_FLAGS="%COMMON_C_FLAGS% -march=armv8-a --m_target=aarch64-none-linux-android%ANDROID_PLATFORM%"
 )
 if %ANDROID_ABI% == x86 (
-  set CXX_FLAGS="%COMMON_CXX_FLAGS% --target=i686-none-linux-android%ANDROID_PLATFORM%"
-  set C_FLAGS="%COMMON_C_FLAGS% --target=i686-none-linux-android%ANDROID_PLATFORM%"
+  set CXX_FLAGS="%COMMON_CXX_FLAGS% --m_target=i686-none-linux-android%ANDROID_PLATFORM%"
+  set C_FLAGS="%COMMON_C_FLAGS% --m_target=i686-none-linux-android%ANDROID_PLATFORM%"
 )
 if %ANDROID_ABI% == x86_64 (
   set CXX_FLAGS="%COMMON_CXX_FLAGS%"

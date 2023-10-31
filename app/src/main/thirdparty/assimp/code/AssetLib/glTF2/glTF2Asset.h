@@ -209,7 +209,7 @@ inline unsigned int ComponentTypeSize(ComponentType t) {
     }
 }
 
-//! Values for the BufferView::target field
+//! Values for the BufferView::m_target field
 enum BufferViewTarget {
     BufferViewTarget_NONE = 0,
     BufferViewTarget_ARRAY_BUFFER = 34962,
@@ -251,7 +251,7 @@ enum TextureFormat {
     TextureFormat_LUMINANCE_ALPHA = 6410
 };
 
-//! Values for the Texture::target field
+//! Values for the Texture::m_target field
 enum TextureTarget {
     TextureTarget_TEXTURE_2D = 3553
 };
@@ -540,7 +540,7 @@ struct BufferView : public Object {
     size_t byteLength; //! The length of the bufferView in bytes. (default: 0)
     unsigned int byteStride; //!< The stride, in bytes, between attributes referenced by this accessor. (default: 0)
 
-    BufferViewTarget target; //! The target that the WebGL buffer should be bound to.
+    BufferViewTarget target; //! The m_target that the WebGL buffer should be bound to.
 
     void Read(Value &obj, Asset &r);
     uint8_t *GetPointer(size_t accOffset);
@@ -830,7 +830,7 @@ struct Material : public Object {
 
     //extension: KHR_materials_ior
     Nullable<MaterialIOR> materialIOR;
-    
+
     //extension: KHR_materials_unlit
     bool unlit;
 
@@ -952,7 +952,7 @@ struct Texture : public Object {
     //TextureFormat format; //!< The texture's format. (default: TextureFormat_RGBA)
     //TextureFormat internalFormat; //!< The texture's internal format. (default: TextureFormat_RGBA)
 
-    //TextureTarget target; //!< The target that the WebGL texture should be bound to. (default: TextureTarget_TEXTURE_2D)
+    //TextureTarget m_target; //!< The m_target that the WebGL texture should be bound to. (default: TextureTarget_TEXTURE_2D)
     //TextureType type; //!< Texel datatype. (default: TextureType_UNSIGNED_BYTE)
 
     Texture() {}
@@ -1065,9 +1065,9 @@ struct AssetMetadata {
     std::string generator; //!< Tool that generated this glTF model.Useful for debugging.
 
     struct {
-        std::string api; //!< Specifies the target rendering API (default: "WebGL")
-        std::string version; //!< Specifies the target rendering API (default: "1.0.3")
-    } profile; //!< Specifies the target rendering API and version, e.g., WebGL 1.0.3. (default: {})
+        std::string api; //!< Specifies the m_target rendering API (default: "WebGL")
+        std::string version; //!< Specifies the m_target rendering API (default: "1.0.3")
+    } profile; //!< Specifies the m_target rendering API and version, e.g., WebGL 1.0.3. (default: {})
 
     std::string version; //!< The glTF format version
 
@@ -1109,13 +1109,13 @@ public:
         bool KHR_texture_basisu;
 
         Extensions() :
-                KHR_materials_pbrSpecularGlossiness(false), 
-                KHR_materials_unlit(false), 
-                KHR_lights_punctual(false), 
-                KHR_texture_transform(false), 
-                KHR_materials_sheen(false), 
-                KHR_materials_clearcoat(false), 
-                KHR_materials_transmission(false), 
+                KHR_materials_pbrSpecularGlossiness(false),
+                KHR_materials_unlit(false),
+                KHR_lights_punctual(false),
+                KHR_texture_transform(false),
+                KHR_materials_sheen(false),
+                KHR_materials_clearcoat(false),
+                KHR_materials_transmission(false),
                 KHR_materials_volume(false),
                 KHR_materials_ior(false),
                 KHR_draco_mesh_compression(false),

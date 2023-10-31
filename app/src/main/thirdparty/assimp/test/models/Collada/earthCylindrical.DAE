@@ -9899,8 +9899,8 @@
         <instance_geometry url="#Sphere01-lib">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Map__1-Material" target="#Map__1-Material"/>
-              <instance_material symbol="_01___Default" target="#_01___Default"/>
+              <instance_material symbol="Map__1-Material" m_target="#Map__1-Material"/>
+              <instance_material symbol="_01___Default" m_target="#_01___Default"/>
             </technique_common>
           </bind_material>
         </instance_geometry>

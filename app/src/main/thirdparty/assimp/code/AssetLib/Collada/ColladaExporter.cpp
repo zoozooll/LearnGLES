@@ -1391,7 +1391,7 @@ void ColladaExporter::WriteAnimationLibrary(size_t pIndex) {
 
         {
             // channels
-            mOutput << startstr << "<channel source=\"#" << XMLIDEncode(nodeAnim->mNodeName.data + std::string("_matrix-sampler")) << "\" target=\"" << XMLIDEncode(nodeAnim->mNodeName.data) << "/matrix\"/>" << endstr;
+            mOutput << startstr << "<channel source=\"#" << XMLIDEncode(nodeAnim->mNodeName.data + std::string("_matrix-sampler")) << "\" m_target=\"" << XMLIDEncode(nodeAnim->mNodeName.data) << "/matrix\"/>" << endstr;
         }
     }
 
@@ -1589,7 +1589,7 @@ void ColladaExporter::WriteNode(const aiNode *pNode) {
             PushTag();
             mOutput << startstr << "<technique_common>" << endstr;
             PushTag();
-            mOutput << startstr << "<instance_material symbol=\"defaultMaterial\" target=\"#" << GetObjectUniqueId(AiObjectType::Material, mesh->mMaterialIndex) << "\">" << endstr;
+            mOutput << startstr << "<instance_material symbol=\"defaultMaterial\" m_target=\"#" << GetObjectUniqueId(AiObjectType::Material, mesh->mMaterialIndex) << "\">" << endstr;
             PushTag();
             for (size_t aa = 0; aa < AI_MAX_NUMBER_OF_TEXTURECOORDS; ++aa) {
                 if (mesh->HasTextureCoords(static_cast<unsigned int>(aa)))

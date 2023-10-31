@@ -20,7 +20,7 @@ BUILD_SHARED_LIBS=OFF
 BUILD_TYPE=Release
 
 ################################################
-# 		 Minimum iOS deployment target version
+# 		 Minimum iOS deployment m_target version
 ################################################
 MIN_IOS_VERSION="10.0"
 

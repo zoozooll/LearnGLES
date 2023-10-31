@@ -60,13 +60,13 @@
             "buffer": "Box",
             "byteLength": 72,
             "byteOffset": 0,
-            "target": 34963
+            "m_target": 34963
         },
         "bufferView_30": {
             "buffer": "Box",
             "byteLength": 576,
             "byteOffset": 72,
-            "target": 34962
+            "m_target": 34962
         }
     },
     "buffers": {

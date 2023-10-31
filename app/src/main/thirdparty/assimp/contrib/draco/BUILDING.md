@@ -216,7 +216,7 @@ $ cmake ../ -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchains/i386-ios.cmake
 $ make
 ~~~~~~
 
-After building for each target the libraries can be merged into a single
+After building for each m_target the libraries can be merged into a single
 universal/fat library using lipo, and then used in iOS applications.
 
 
@@ -268,19 +268,19 @@ To add Draco to your project:
      include_directories("${CMAKE_BINARY_DIR}" /path/to/draco)
      ~~~~~
 
-  3. Add the library target "draco" to the `target_link_libraries()` call for
+  3. Add the library m_target "draco" to the `target_link_libraries()` call for
      your project's native-lib. The `target_link_libraries()` call for an
      empty activity native project looks like this after the addition of
      Draco:
 
      ~~~~~ cmake
-     target_link_libraries( # Specifies the target library.
+     target_link_libraries( # Specifies the m_target library.
                             native-lib
 
                             # Tells cmake this build depends on libdraco.
                             draco
 
-                            # Links the target library to the log library
+                            # Links the m_target library to the log library
                             # included in the NDK.
                             ${log-lib} )
 

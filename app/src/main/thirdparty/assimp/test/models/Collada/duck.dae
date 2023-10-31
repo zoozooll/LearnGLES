@@ -170,7 +170,7 @@ limitations under the License.
                 <instance_geometry url="#LOD3spShape-lib">
                     <bind_material>
                         <technique_common>
-                            <instance_material symbol="blinn3SG" target="#blinn3">
+                            <instance_material symbol="blinn3SG" m_target="#blinn3">
                                 <bind_vertex_input semantic="TEX0" input_semantic="TEXCOORD" input_set="0"/>
                             </instance_material>
                         </technique_common>

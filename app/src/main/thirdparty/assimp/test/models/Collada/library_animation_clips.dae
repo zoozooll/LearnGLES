@@ -223,7 +223,7 @@
 					<skeleton>#id-bone-3</skeleton>
 					<bind_material>
 						<technique_common>
-							<instance_material symbol="id-trimat-11" target="#id-material-9"/>
+							<instance_material symbol="id-trimat-11" m_target="#id-material-9"/>
 						</technique_common>
 					</bind_material>
 				</instance_controller>
@@ -262,7 +262,7 @@
 			<input semantic="OUTPUT" source="#id-anim-13-transform-output"/>
 			<input semantic="INTERPOLATION" source="#id-anim-13-interpolation-output"/>
 		</sampler>
-		<channel source="#id-anim-13-sampler" target="Armature/transform"/>
+		<channel source="#id-anim-13-sampler" m_target="Armature/transform"/>
 	</animation>
 	<animation id="id-anim-14">
 		<source id="id-anim-14-input">
@@ -294,7 +294,7 @@
 			<input semantic="OUTPUT" source="#id-anim-14-transform-output"/>
 			<input semantic="INTERPOLATION" source="#id-anim-14-interpolation-output"/>
 		</sampler>
-		<channel source="#id-anim-14-sampler" target="id-bone-7/transform"/>
+		<channel source="#id-anim-14-sampler" m_target="id-bone-7/transform"/>
 	</animation>
 	<animation id="id-anim-15">
 		<source id="id-anim-15-input">
@@ -326,7 +326,7 @@
 			<input semantic="OUTPUT" source="#id-anim-15-transform-output"/>
 			<input semantic="INTERPOLATION" source="#id-anim-15-interpolation-output"/>
 		</sampler>
-		<channel source="#id-anim-15-sampler" target="id-bone-4/transform"/>
+		<channel source="#id-anim-15-sampler" m_target="id-bone-4/transform"/>
 	</animation>
 	<animation id="id-anim-16">
 		<source id="id-anim-16-input">
@@ -358,7 +358,7 @@
 			<input semantic="OUTPUT" source="#id-anim-16-transform-output"/>
 			<input semantic="INTERPOLATION" source="#id-anim-16-interpolation-output"/>
 		</sampler>
-		<channel source="#id-anim-16-sampler" target="id-bone-5/transform"/>
+		<channel source="#id-anim-16-sampler" m_target="id-bone-5/transform"/>
 	</animation>
 	<animation id="id-anim-17">
 		<source id="id-anim-17-input">
@@ -390,7 +390,7 @@
 			<input semantic="OUTPUT" source="#id-anim-17-transform-output"/>
 			<input semantic="INTERPOLATION" source="#id-anim-17-interpolation-output"/>
 		</sampler>
-		<channel source="#id-anim-17-sampler" target="id-bone-6/transform"/>
+		<channel source="#id-anim-17-sampler" m_target="id-bone-6/transform"/>
 	</animation>
 	<animation id="id-anim-18">
 		<source id="id-anim-18-input">
@@ -422,7 +422,7 @@
 			<input semantic="OUTPUT" source="#id-anim-18-transform-output"/>
 			<input semantic="INTERPOLATION" source="#id-anim-18-interpolation-output"/>
 		</sampler>
-		<channel source="#id-anim-18-sampler" target="id-bone-3/transform"/>
+		<channel source="#id-anim-18-sampler" m_target="id-bone-3/transform"/>
 	</animation>
 	<animation id="id-anim-19">
 		<source id="id-anim-19-input">
@@ -454,7 +454,7 @@
 			<input semantic="OUTPUT" source="#id-anim-19-transform-output"/>
 			<input semantic="INTERPOLATION" source="#id-anim-19-interpolation-output"/>
 		</sampler>
-		<channel source="#id-anim-19-sampler" target="Armature/transform"/>
+		<channel source="#id-anim-19-sampler" m_target="Armature/transform"/>
 	</animation>
 	<animation id="id-anim-20">
 		<source id="id-anim-20-input">
@@ -486,7 +486,7 @@
 			<input semantic="OUTPUT" source="#id-anim-20-transform-output"/>
 			<input semantic="INTERPOLATION" source="#id-anim-20-interpolation-output"/>
 		</sampler>
-		<channel source="#id-anim-20-sampler" target="id-bone-7/transform"/>
+		<channel source="#id-anim-20-sampler" m_target="id-bone-7/transform"/>
 	</animation>
 	<animation id="id-anim-21">
 		<source id="id-anim-21-input">
@@ -518,7 +518,7 @@
 			<input semantic="OUTPUT" source="#id-anim-21-transform-output"/>
 			<input semantic="INTERPOLATION" source="#id-anim-21-interpolation-output"/>
 		</sampler>
-		<channel source="#id-anim-21-sampler" target="id-bone-4/transform"/>
+		<channel source="#id-anim-21-sampler" m_target="id-bone-4/transform"/>
 	</animation>
 	<animation id="id-anim-22">
 		<source id="id-anim-22-input">
@@ -550,7 +550,7 @@
 			<input semantic="OUTPUT" source="#id-anim-22-transform-output"/>
 			<input semantic="INTERPOLATION" source="#id-anim-22-interpolation-output"/>
 		</sampler>
-		<channel source="#id-anim-22-sampler" target="id-bone-5/transform"/>
+		<channel source="#id-anim-22-sampler" m_target="id-bone-5/transform"/>
 	</animation>
 	<animation id="id-anim-23">
 		<source id="id-anim-23-input">
@@ -582,7 +582,7 @@
 			<input semantic="OUTPUT" source="#id-anim-23-transform-output"/>
 			<input semantic="INTERPOLATION" source="#id-anim-23-interpolation-output"/>
 		</sampler>
-		<channel source="#id-anim-23-sampler" target="id-bone-6/transform"/>
+		<channel source="#id-anim-23-sampler" m_target="id-bone-6/transform"/>
 	</animation>
 	<animation id="id-anim-24">
 		<source id="id-anim-24-input">
@@ -614,7 +614,7 @@
 			<input semantic="OUTPUT" source="#id-anim-24-transform-output"/>
 			<input semantic="INTERPOLATION" source="#id-anim-24-interpolation-output"/>
 		</sampler>
-		<channel source="#id-anim-24-sampler" target="id-bone-3/transform"/>
+		<channel source="#id-anim-24-sampler" m_target="id-bone-3/transform"/>
 	</animation>
 </library_animations>
 <scene>

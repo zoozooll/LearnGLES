@@ -4420,7 +4420,7 @@ void UnitTestImpl::ConfigureStreamingOutput() {
       listeners()->Append(new StreamingListener(target.substr(0, pos),
                                                 target.substr(pos+1)));
     } else {
-      printf("WARNING: unrecognized streaming target \"%s\" ignored.\n",
+      printf("WARNING: unrecognized streaming m_target \"%s\" ignored.\n",
              target.c_str());
       fflush(stdout);
     }

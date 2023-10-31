@@ -105,9 +105,9 @@ enum aiLightSourceType {
  *  Assimp supports multiple sorts of light sources, including
  *  directional, point and spot lights. All of them are defined with just
  *  a single structure and distinguished by their parameters.
- *  Note - some file formats (such as 3DS, ASE) export a "target point" -
+ *  Note - some file formats (such as 3DS, ASE) export a "m_target point" -
  *  the point a spot light is looking at (it can even be animated). Assimp
- *  writes the target point as a sub-node of a spot-lights's main node,
+ *  writes the m_target point as a sub-node of a spot-lights's main node,
  *  called "<spotName>.Target". However, this is just additional information
  *  then, the transformation tracks of the main node make the
  *  spot light already point in the right direction.

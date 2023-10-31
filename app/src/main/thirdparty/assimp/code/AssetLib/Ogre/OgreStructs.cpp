@@ -1014,7 +1014,7 @@ VertexAnimationTrack::VertexAnimationTrack() :
 
 aiNodeAnim *VertexAnimationTrack::ConvertToAssimpAnimationNode(Skeleton *skeleton) {
     if (boneName.empty() || type != VAT_TRANSFORM) {
-        throw DeadlyImportError("VertexAnimationTrack::ConvertToAssimpAnimationNode: Cannot convert track that has no target bone name or is not type of VAT_TRANSFORM");
+        throw DeadlyImportError("VertexAnimationTrack::ConvertToAssimpAnimationNode: Cannot convert track that has no m_target bone name or is not type of VAT_TRANSFORM");
     }
 
     aiNodeAnim *nodeAnim = new aiNodeAnim();

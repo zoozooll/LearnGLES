@@ -1328,12 +1328,12 @@ STB_EXTERN void stb__arr_insertn_(void **p, int size, int loc, int n);
 #endif // STB_INCLUDE_STB_LIB_H
 
 #ifdef STB_LIB_IMPLEMENTATION
-void stb_arr_malloc(void **target, void *context)
+void stb_arr_malloc(void **m_target, void *context)
 {
    stb__arr *q = (stb__arr *) malloc(sizeof(*q));
    q->len = q->limit = 0;
    q->signature = stb_arr_signature;
-   *target = (void *) (q+1);
+   *m_target = (void *) (q+1);
 }
 
 static void * stb__arr_malloc(int size)

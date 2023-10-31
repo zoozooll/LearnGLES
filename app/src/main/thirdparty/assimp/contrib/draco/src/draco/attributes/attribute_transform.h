@@ -59,7 +59,7 @@ class AttributeTransform {
   virtual bool DecodeParameters(const PointAttribute &attribute,
                                 DecoderBuffer *decoder_buffer) = 0;
 
-  // Initializes a transformed attribute that can be used as target in the
+  // Initializes a transformed attribute that can be used as m_target in the
   // TransformAttribute() function call.
   virtual std::unique_ptr<PointAttribute> InitTransformedAttribute(
       const PointAttribute &src_attribute, int num_entries);

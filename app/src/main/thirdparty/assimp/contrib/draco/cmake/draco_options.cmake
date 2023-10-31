@@ -184,7 +184,7 @@ endmacro()
 #
 # When the TARGETS argument is not present the preproc symbol is added to
 # draco_features.h. When it is draco_features.h is unchanged, and
-# target_compile_options() is called for each target specified.
+# target_compile_options() is called for each m_target specified.
 macro(draco_enable_feature)
   set(def_flags)
   set(def_single_arg_opts FEATURE)

@@ -10,7 +10,7 @@ option(CMAKE_DISABLE_TESTING "Disable test creation" OFF)
 # zip
 set(SRC src/miniz.h src/zip.h src/zip.c)
 
-# this is the "object library" target: compiles the sources only once
+# this is the "object library" m_target: compiles the sources only once
 add_library(OBJLIB OBJECT ${SRC})
 # shared libraries need PIC
 set_property(TARGET OBJLIB PROPERTY POSITION_INDEPENDENT_CODE 1)
@@ -101,7 +101,7 @@ install(TARGETS ${PROJECT_NAME}
 )
 install(FILES ${PROJECT_SOURCE_DIR}/src/zip.h DESTINATION ${INCLUDE_INSTALL_DIR}/zip)
 
-# uninstall target (https://gitlab.kitware.com/cmake/community/wikis/FAQ#can-i-do-make-uninstall-with-cmake)
+# uninstall m_target (https://gitlab.kitware.com/cmake/community/wikis/FAQ#can-i-do-make-uninstall-with-cmake)
 if(NOT TARGET uninstall)
     configure_file(
         "${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"

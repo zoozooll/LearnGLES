@@ -184,7 +184,7 @@ macro(append_exe_linker_flag flag)
   endif()
 endmacro()
 
-# Adds $flag to the link flags for $target.
+# Adds $flag to the link flags for $m_target.
 function(append_link_flag_to_target target flags)
   unset(target_link_flags)
   get_target_property(target_link_flags ${target} LINK_FLAGS)

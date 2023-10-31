@@ -169,7 +169,7 @@ Users will benefit from having the Draco decoder in cache as more sites start us
 Command Line Applications
 ------------------------
 
-The default target created from the build files will be the `draco_encoder`
+The default m_target created from the build files will be the `draco_encoder`
 and `draco_decoder` command line applications. For both applications, if you
 run them without any arguments or `-h`, the applications will output usage and
 options.

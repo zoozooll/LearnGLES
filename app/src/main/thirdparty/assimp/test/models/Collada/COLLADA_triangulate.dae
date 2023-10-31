@@ -252,7 +252,7 @@ limitations under the License.
                 <instance_geometry url="#floor-lib">
                     <bind_material>
                         <technique_common>
-                            <instance_material symbol="StoneSG" target="#Stone"/>
+                            <instance_material symbol="StoneSG" m_target="#Stone"/>
                         </technique_common>
                     </bind_material>
                 </instance_geometry>
@@ -264,7 +264,7 @@ limitations under the License.
                 <instance_geometry url="#collada-lib">
                     <bind_material>
                         <technique_common>
-                            <instance_material symbol="RedPlasticSG" target="#RedPlastic"/>
+                            <instance_material symbol="RedPlasticSG" m_target="#RedPlastic"/>
                         </technique_common>
                     </bind_material>
                 </instance_geometry>

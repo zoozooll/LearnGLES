@@ -416,7 +416,7 @@ void Discreet3DSImporter::ParseChunk(const char *name, unsigned int num) {
         camera->mPosition.y = stream->GetF4();
         camera->mPosition.z = stream->GetF4();
 
-        // Then the camera target
+        // Then the camera m_target
         camera->mLookAt.x = stream->GetF4() - camera->mPosition.x;
         camera->mLookAt.y = stream->GetF4() - camera->mPosition.y;
         camera->mLookAt.z = stream->GetF4() - camera->mPosition.z;
@@ -627,7 +627,7 @@ void Discreet3DSImporter::ParseHierarchyChunk(uint16_t parent) {
                 ++cnt;
             std::string name = std::string(sz, cnt);
 
-            // Now find out whether we have this node already (target animation channels
+            // Now find out whether we have this node already (m_target animation channels
             // are stored with a separate object ID)
             D3DS::Node *pcNode = FindNode(mRootNode, name);
             int instanceNumber = 1;
@@ -709,7 +709,7 @@ void Discreet3DSImporter::ParseHierarchyChunk(uint16_t parent) {
         const unsigned int numFrames = stream->GetI4();
         bool sortKeys = false;
 
-        // This could also be meant as the target position for
+        // This could also be meant as the m_target position for
         // (targeted) lights and cameras
         std::vector<aiVectorKey> *l;
         if (Discreet3DS::CHUNK_TRACKCAMTGT == parent || Discreet3DS::CHUNK_TRACKLIGTGT == parent) {

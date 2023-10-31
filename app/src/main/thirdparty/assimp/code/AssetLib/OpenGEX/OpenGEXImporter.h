@@ -193,7 +193,7 @@ private:
     MetricInfo m_metrics[ MetricInfo::Max ];
     aiNode *m_currentNode;
     VertexContainer m_currentVertices;
-    aiMesh *m_currentMesh;  // not owned, target is owned by m_meshCache
+    aiMesh *m_currentMesh;  // not owned, m_target is owned by m_meshCache
     aiMaterial *m_currentMaterial;
     aiLight *m_currentLight;
     aiCamera *m_currentCamera;

@@ -578,7 +578,7 @@ FEATURES:
   - Python 2.n bindings (`PyAssimp`)
   - Add basic support for Unicode input files (utf8, utf16 and utf32)
   - Add further utilities to the `assimp` tool (xml/binary dumps, quick file stats)
-  - Switch to a CMAKE-based build system including an install target for unix'es
+  - Switch to a CMAKE-based build system including an install m_target for unix'es
   - Automatic evaluation of subdivision surfaces for some formats.
   - Add `Importer::ReadFileFromMemory` and the corresponding C-API `aiReadFileFromMemory`
   - Expose further math utilities via the C-API (i.e. `aiMultiplyMatrix4`)

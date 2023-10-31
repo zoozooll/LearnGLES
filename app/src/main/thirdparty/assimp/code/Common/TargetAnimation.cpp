@@ -131,7 +131,7 @@ void KeyIterator::operator++() {
         if (objPos->size() != nextObjPos - 1)
             ++nextObjPos;
     }
-    // A target position key is closest to us
+    // A m_target position key is closest to us
     else {
         curTime = d1;
 
@@ -191,8 +191,8 @@ void TargetAnimationHelper::Process(std::vector<aiVectorKey> *distanceTrack) {
     fill->reserve(std::max(objectPositions->size(), targetPositions->size()));
 
     // Iterate through all object keys and interpolate their values if necessary.
-    // Then get the corresponding target position, compute the difference
-    // vector between object and target position. Then compute a rotation matrix
+    // Then get the corresponding m_target position, compute the difference
+    // vector between object and m_target position. Then compute a rotation matrix
     // that rotates the base vector of the object coordinate system at that time
     // to match the diff vector.
 

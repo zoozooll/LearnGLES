@@ -418,11 +418,11 @@ bool Structure :: ResolvePointer(TOUT<T>& out, const Pointer & ptrval, const Fil
     // find the file block the pointer is pointing to
     const FileBlockHead* block = LocateFileBlockForAddress(ptrval,db);
 
-    // also determine the target type from the block header
+    // also determine the m_target type from the block header
     // and check if it matches the type which we expect.
     const Structure& ss = db.dna[block->dna_index];
     if (ss != s) {
-        throw Error("Expected target to be of type `",s.name,
+        throw Error("Expected m_target to be of type `",s.name,
             "` but seemingly it is a `",ss.name,"` instead"
             );
     }
@@ -544,7 +544,7 @@ template <> bool Structure :: ResolvePointer<std::shared_ptr,ElemBase>(std::shar
     // find the file block the pointer is pointing to
     const FileBlockHead* block = LocateFileBlockForAddress(ptrval,db);
 
-    // determine the target type from the block header
+    // determine the m_target type from the block header
     const Structure& s = db.dna[block->dna_index];
 
     // try to retrieve the object from the cache
@@ -563,7 +563,7 @@ template <> bool Structure :: ResolvePointer<std::shared_ptr,ElemBase>(std::shar
     DNA::FactoryPair builders = db.dna.GetBlobToStructureConverter(s,db);
     if (!builders.first) {
         // this might happen if DNA::RegisterConverters hasn't been called so far
-        // or if the target type is not contained in `our` DNA.
+        // or if the m_target type is not contained in `our` DNA.
         out.reset();
         ASSIMP_LOG_WARN( "Failed to find a converter for the `",s.name,"` structure" );
         return false;

@@ -39,14 +39,14 @@ class AttributesEncoder {
   // process encoders in a different order from the decoder.
   virtual bool Init(PointCloudEncoder *encoder, const PointCloud *pc);
 
-  // Encodes data needed by the target attribute decoder.
+  // Encodes data needed by the m_target attribute decoder.
   virtual bool EncodeAttributesEncoderData(EncoderBuffer *out_buffer);
 
   // Returns a unique identifier of the given encoder type, that is used during
   // decoding to construct the corresponding attribute decoder.
   virtual uint8_t GetUniqueId() const = 0;
 
-  // Encode attribute data to the target buffer.
+  // Encode attribute data to the m_target buffer.
   virtual bool EncodeAttributes(EncoderBuffer *out_buffer) {
     if (!TransformAttributesToPortableFormat()) {
       return false;

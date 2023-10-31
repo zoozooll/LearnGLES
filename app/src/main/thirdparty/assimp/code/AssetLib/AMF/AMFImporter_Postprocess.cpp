@@ -236,7 +236,7 @@ size_t AMFImporter::PostprocessHelper_GetTextureID_Or_Create(const std::string &
     size_t off_g = 0;
     size_t off_b = 0;
 
-    // Calculate size of the target array and rule how data will be copied.
+    // Calculate size of the m_target array and rule how data will be copied.
     if (!r.empty() && nullptr != src_texture[0]) {
         tex_size += src_texture[0]->Data.size();
         step++, off_g++, off_b++;
@@ -254,7 +254,7 @@ size_t AMFImporter::PostprocessHelper_GetTextureID_Or_Create(const std::string &
         step++;
     }
 
-    // Create target array.
+    // Create m_target array.
     converted_texture.Data = new uint8_t[tex_size];
     // And copy data
     auto CopyTextureData = [&](const std::string &pID, const size_t pOffset, const size_t pStep, const uint8_t pSrcTexNum) -> void {

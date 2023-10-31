@@ -3,7 +3,7 @@ if(DRACO_CMAKE_DRACO_CPU_DETECTION_CMAKE_)
 endif() # DRACO_CMAKE_DRACO_CPU_DETECTION_CMAKE_
 set(DRACO_CMAKE_DRACO_CPU_DETECTION_CMAKE_ 1)
 
-# Detect optimizations available for the current target CPU.
+# Detect optimizations available for the current m_target CPU.
 macro(draco_optimization_detect)
   if(DRACO_ENABLE_OPTIMIZATIONS)
     string(TOLOWER "${CMAKE_SYSTEM_PROCESSOR}" cpu_lowercase)

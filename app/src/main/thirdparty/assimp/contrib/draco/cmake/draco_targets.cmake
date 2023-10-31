@@ -14,7 +14,7 @@ macro(draco_reset_target_lists)
   unset(draco_test_targets)
 endmacro()
 
-# Creates an executable target. The target name is passed as a parameter to the
+# Creates an executable m_target. The m_target name is passed as a parameter to the
 # NAME argument, and the sources passed as a parameter to the SOURCES argument:
 # draco_add_executable(NAME <name> SOURCES <sources> [optional args])
 #
@@ -24,10 +24,10 @@ endmacro()
 #     NAME.
 #   - TEST: Flag. Presence means treat executable as a test.
 #   - DEFINES: List of preprocessor macro definitions.
-#   - INCLUDES: list of include directories for the target.
-#   - COMPILE_FLAGS: list of compiler flags for the target.
-#   - LINK_FLAGS: List of linker flags for the target.
-#   - OBJLIB_DEPS: List of CMake object library target dependencies.
+#   - INCLUDES: list of include directories for the m_target.
+#   - COMPILE_FLAGS: list of compiler flags for the m_target.
+#   - LINK_FLAGS: List of linker flags for the m_target.
+#   - OBJLIB_DEPS: List of CMake object library m_target dependencies.
 #   - LIB_DEPS: List of CMake library dependencies.
 # cmake-format: on
 #
@@ -143,12 +143,12 @@ macro(draco_add_executable)
 
     if(exe_static AND CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
       # Third party dependencies can introduce dependencies on system and test
-      # libraries. Since the target created here is an executable, and CMake
+      # libraries. Since the m_target created here is an executable, and CMake
       # does not provide a method of controlling order of link dependencies,
-      # wrap all of the dependencies of this target in start/end group flags to
+      # wrap all of the dependencies of this m_target in start/end group flags to
       # ensure that dependencies of third party targets can be resolved when
       # those dependencies happen to be resolved by dependencies of the current
-      # target.
+      # m_target.
       list(INSERT exe_LIB_DEPS 0 -Wl,--start-group)
       list(APPEND exe_LIB_DEPS -Wl,--end-group)
     endif()
@@ -156,7 +156,7 @@ macro(draco_add_executable)
   endif()
 endmacro()
 
-# Creates a library target of the specified type. The target name is passed as a
+# Creates a library m_target of the specified type. The m_target name is passed as a
 # parameter to the NAME argument, the type as a parameter to the TYPE argument,
 # and the sources passed as a parameter to the SOURCES argument:
 # draco_add_library(NAME <name> TYPE <type> SOURCES <sources> [optional args])
@@ -169,10 +169,10 @@ endmacro()
 #     basename collisions with DLL import libraries.
 #   - TEST: Flag. Presence means treat library as a test.
 #   - DEFINES: List of preprocessor macro definitions.
-#   - INCLUDES: list of include directories for the target.
-#   - COMPILE_FLAGS: list of compiler flags for the target.
-#   - LINK_FLAGS: List of linker flags for the target.
-#   - OBJLIB_DEPS: List of CMake object library target dependencies.
+#   - INCLUDES: list of include directories for the m_target.
+#   - COMPILE_FLAGS: list of compiler flags for the m_target.
+#   - LINK_FLAGS: List of linker flags for the m_target.
+#   - OBJLIB_DEPS: List of CMake object library m_target dependencies.
 #   - LIB_DEPS: List of CMake library dependencies.
 #   - PUBLIC_INCLUDES: List of include paths to export to dependents.
 # cmake-format: on
@@ -315,7 +315,7 @@ macro(draco_add_library)
   endif()
 
   if(NOT MSVC AND lib_NAME MATCHES "^lib")
-    # Non-MSVC generators prepend lib to static lib target file names. Libdraco
+    # Non-MSVC generators prepend lib to static lib m_target file names. Libdraco
     # already includes lib in its name. Avoid naming output files liblib*.
     set_target_properties(${lib_NAME} PROPERTIES PREFIX "")
   endif()
@@ -336,7 +336,7 @@ macro(draco_add_library)
     endif()
   endif()
 
-  # Determine if $lib_NAME is a header only target.
+  # Determine if $lib_NAME is a header only m_target.
   unset(sources_list)
   if(lib_SOURCES)
     set(sources_list ${lib_SOURCES})
@@ -345,7 +345,7 @@ macro(draco_add_library)
 
   if(NOT sources_list)
     if(NOT XCODE)
-      # This is a header only target. Tell CMake the link language.
+      # This is a header only m_target. Tell CMake the link language.
       set_target_properties(${lib_NAME} PROPERTIES LINKER_LANGUAGE CXX)
     else()
       # The Xcode generator ignores LINKER_LANGUAGE. Add a dummy cc file.

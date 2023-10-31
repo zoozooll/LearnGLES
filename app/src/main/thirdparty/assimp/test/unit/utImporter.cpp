@@ -248,7 +248,7 @@ TEST_F(ImporterTest, testExtensionCheck) {
 TEST_F(ImporterTest, testMultipleReads) {
     // see http://sourceforge.net/projects/assimp/forums/forum/817654/topic/3591099
     // Check whether reading and post-processing multiple times using
-    // the same objects is *generally* fine. This test doesn't target
+    // the same objects is *generally* fine. This test doesn't m_target
     // importers. Testing post-processing stability is the main point.
 
     const unsigned int flags =

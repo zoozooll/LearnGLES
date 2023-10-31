@@ -73,7 +73,7 @@ class GLDetailActivity : AppCompatActivity(), Renderer {
                 }
             })
             setRenderer(this@GLDetailActivity)
-            renderMode = RENDERMODE_CONTINUOUSLY
+            renderMode = RENDERMODE_WHEN_DIRTY
         }
 
         gestureListener = GestureDetector(this, object: GestureDetector.SimpleOnGestureListener() {

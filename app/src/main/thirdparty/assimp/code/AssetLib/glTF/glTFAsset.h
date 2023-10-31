@@ -199,7 +199,7 @@ inline unsigned int ComponentTypeSize(ComponentType t) {
     }
 }
 
-//! Values for the BufferView::target field
+//! Values for the BufferView::m_target field
 enum BufferViewTarget {
     BufferViewTarget_NONE = 0,
     BufferViewTarget_ARRAY_BUFFER = 34962,
@@ -238,7 +238,7 @@ enum TextureFormat {
     TextureFormat_LUMINANCE_ALPHA = 6410
 };
 
-//! Values for the Texture::target field
+//! Values for the Texture::m_target field
 enum TextureTarget {
     TextureTarget_TEXTURE_2D = 3553
 };
@@ -260,7 +260,7 @@ public:
         VEC4,
         MAT2,
         MAT3,
-        MAT4 
+        MAT4
     };
 
     inline static Value FromString(const char *str) {
@@ -288,8 +288,8 @@ private:
     };
 
     template <int N>
-    struct data { 
-        static const Info infos[NUM_VALUES]; 
+    struct data {
+        static const Info infos[NUM_VALUES];
     };
 };
 
@@ -297,11 +297,11 @@ private:
 template <int N>
 const AttribType::Info AttribType::data<N>::infos[AttribType::NUM_VALUES] = {
     { "SCALAR", 1 },
-    { "VEC2", 2 }, 
-    { "VEC3", 3 }, 
-    { "VEC4", 4 }, 
-    { "MAT2", 4 }, 
-    { "MAT3", 9 }, 
+    { "VEC2", 2 },
+    { "VEC3", 3 },
+    { "VEC4", 4 },
+    { "MAT2", 4 },
+    { "MAT3", 9 },
     { "MAT4", 16 }
 };
 
@@ -501,7 +501,7 @@ struct BufferView : public Object {
     size_t byteOffset; //! The offset into the buffer in bytes. (required)
     size_t byteLength; //! The length of the bufferView in bytes. (default: 0)
 
-    BufferViewTarget target; //! The target that the WebGL buffer should be bound to.
+    BufferViewTarget target; //! The m_target that the WebGL buffer should be bound to.
 
     void Read(Value &obj, Asset &r);
 };
@@ -894,9 +894,9 @@ struct AssetMetadata {
     bool premultipliedAlpha; //!< Specifies if the shaders were generated with premultiplied alpha. (default: false)
 
     struct {
-        std::string api; //!< Specifies the target rendering API (default: "WebGL")
-        std::string version; //!< Specifies the target rendering API (default: "1.0.3")
-    } profile; //!< Specifies the target rendering API and version, e.g., WebGL 1.0.3. (default: {})
+        std::string api; //!< Specifies the m_target rendering API (default: "WebGL")
+        std::string version; //!< Specifies the m_target rendering API (default: "1.0.3")
+    } profile; //!< Specifies the m_target rendering API and version, e.g., WebGL 1.0.3. (default: {})
 
     std::string version; //!< The glTF format version (should be 1.0)
 
@@ -969,16 +969,16 @@ public:
 
 public:
     Asset(IOSystem *io = 0) :
-            mIOSystem(io), 
-            asset(), 
-            accessors(*this, "accessors"), 
-            animations(*this, "animations"), 
-            buffers(*this, "buffers"), 
-            bufferViews(*this, "bufferViews"), 
-            cameras(*this, "cameras"), 
-            images(*this, "images"), 
-            materials(*this, "materials"), 
-            meshes(*this, "meshes"), 
+            mIOSystem(io),
+            asset(),
+            accessors(*this, "accessors"),
+            animations(*this, "animations"),
+            buffers(*this, "buffers"),
+            bufferViews(*this, "bufferViews"),
+            cameras(*this, "cameras"),
+            images(*this, "images"),
+            materials(*this, "materials"),
+            meshes(*this, "meshes"),
             nodes(*this, "nodes"),
             samplers(*this, "samplers"),
             scenes(*this, "scenes"),

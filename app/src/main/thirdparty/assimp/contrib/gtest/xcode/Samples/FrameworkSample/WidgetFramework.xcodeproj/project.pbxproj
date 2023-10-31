@@ -300,22 +300,22 @@
 /* Begin PBXTargetDependency section */
 		3B07BDF10E3F3FAE00647869 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8D07F2BC0486CC7A007CD1D0 /* WidgetFramework */;
+			m_target = 8D07F2BC0486CC7A007CD1D0 /* WidgetFramework */;
 			targetProxy = 3B07BDF00E3F3FAE00647869 /* PBXContainerItemProxy */;
 		};
 		4024D166113D7D3100C7059E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3B07BDE90E3F3F9E00647869 /* WidgetFrameworkTest */;
+			m_target = 3B07BDE90E3F3F9E00647869 /* WidgetFrameworkTest */;
 			targetProxy = 4024D165113D7D3100C7059E /* PBXContainerItemProxy */;
 		};
 		4024D1ED113D840900C7059E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8D07F2BC0486CC7A007CD1D0 /* WidgetFramework */;
+			m_target = 8D07F2BC0486CC7A007CD1D0 /* WidgetFramework */;
 			targetProxy = 4024D1EC113D840900C7059E /* PBXContainerItemProxy */;
 		};
 		4024D1EF113D840D00C7059E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 4024D162113D7D2400C7059E /* Test */;
+			m_target = 4024D162113D7D2400C7059E /* Test */;
 			targetProxy = 4024D1EE113D840D00C7059E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */

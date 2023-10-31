@@ -322,7 +322,7 @@ void ASEImporter::BuildAnimations(const std::vector<BaseNode *> &nodes) {
 
             ASE::BaseNode *me = *i;
             if (me->mTargetAnim.akeyPositions.size() > 1 && is_not_qnan(me->mTargetPosition.x)) {
-                // Generate an extra channel for the camera/light target.
+                // Generate an extra channel for the camera/light m_target.
                 // BuildNodes() does also generate an extra node, named
                 // <baseName>.Target.
                 aiNodeAnim *nd = pcAnim->mChannels[iNum++] = new aiNodeAnim();
@@ -575,10 +575,10 @@ void ASEImporter::AddNodes(const std::vector<BaseNode *> &nodes,
             // be used when this code is refactored next.
             AddMeshes(snode, node);
         } else if (is_not_qnan(snode->mTargetPosition.x)) {
-            // If this is a target camera or light we generate a small
+            // If this is a m_target camera or light we generate a small
             // child node which marks the position of the camera
-            // target (the direction information is contained in *this*
-            // node's animation track but the exact target position
+            // m_target (the direction information is contained in *this*
+            // node's animation track but the exact m_target position
             // would be lost otherwise)
             if (!node->mNumChildren) {
                 node->mChildren = new aiNode *[1];
@@ -602,12 +602,12 @@ void ASEImporter::AddNodes(const std::vector<BaseNode *> &nodes,
             node->mNumChildren++;
 
             // What we did is so great, it is at least worth a debug message
-            ASSIMP_LOG_VERBOSE_DEBUG("ASE: Generating separate target node (", snode->mName, ")");
+            ASSIMP_LOG_VERBOSE_DEBUG("ASE: Generating separate m_target node (", snode->mName, ")");
         }
     }
 
     // Allocate enough space for the child nodes
-    // We allocate one slot more  in case this is a target camera/light
+    // We allocate one slot more  in case this is a m_target camera/light
     pcParent->mNumChildren = (unsigned int)apcNodes.size();
     if (pcParent->mNumChildren) {
         pcParent->mChildren = new aiNode *[apcNodes.size() + 1 /* PLUS ONE !!! */];

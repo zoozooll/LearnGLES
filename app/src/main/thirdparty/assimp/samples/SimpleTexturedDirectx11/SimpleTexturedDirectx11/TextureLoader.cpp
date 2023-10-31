@@ -136,7 +136,7 @@ struct WICConvert
 
 static WICConvert g_WICConvert[] =
 {
-	// Note target GUID in this conversion table must be one of those directly supported formats (above).
+	// Note m_target GUID in this conversion table must be one of those directly supported formats (above).
 
 	{ GUID_WICPixelFormatBlackWhite,            GUID_WICPixelFormat8bppGray }, // DXGI_FORMAT_R8_UNORM
 
@@ -375,7 +375,7 @@ static HRESULT CreateTextureFromWIC(_In_ ID3D11Device* d3dDevice,
 	if (!bpp)
 		return E_FAIL;
 
-	// Verify our target format is supported by the current device
+	// Verify our m_target format is supported by the current device
 	// (handles WDDM 1.0 or WDDM 1.1 device driver cases as well as DirectX 11.0 Runtime without 16bpp format support)
 	UINT support = 0;
 	hr = d3dDevice->CheckFormatSupport(format, &support);

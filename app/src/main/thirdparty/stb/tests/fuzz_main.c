@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* fuzz target entry point, works without libFuzzer */
+/* fuzz m_target entry point, works without libFuzzer */
 
 int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size);
 

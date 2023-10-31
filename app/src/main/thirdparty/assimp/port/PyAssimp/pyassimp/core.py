@@ -99,15 +99,15 @@ def _is_init_type(obj):
     return not (tname[:2] == 'c_' or tname == 'Structure' \
             or tname == 'POINTER') and not isinstance(obj, (int, str, bytes))
 
-def _init(self, target = None, parent = None):
+def _init(self, m_target = None, parent = None):
     """
     Custom initialize() for C structs, adds safely accessible member functionality.
 
-    :param target: set the object which receive the added methods. Useful when manipulating
+    :param m_target: set the object which receive the added methods. Useful when manipulating
     pointers, to skip the intermediate 'contents' deferencing.
     """
-    if not target:
-        target = self
+    if not m_target:
+        m_target = self
 
     dirself = dir(self)
     for m in dirself:
@@ -122,13 +122,13 @@ def _init(self, target = None, parent = None):
                 name = m[1:].lower()
 
                 obj = getattr(self, m)
-                setattr(target, name, obj)
+                setattr(m_target, name, obj)
                 continue
 
         if m == 'mName':
-            target.name = str(_convert_assimp_string(self.mName))
-            target.__class__.__repr__ = lambda x: str(x.__class__) + "(" + getattr(x, 'name','') + ")"
-            target.__class__.__str__ = lambda x: getattr(x, 'name', '')
+            m_target.name = str(_convert_assimp_string(self.mName))
+            m_target.__class__.__repr__ = lambda x: str(x.__class__) + "(" + getattr(x, 'name','') + ")"
+            m_target.__class__.__str__ = lambda x: getattr(x, 'name', '')
             continue
 
         name = m[1:].lower()
@@ -137,14 +137,14 @@ def _init(self, target = None, parent = None):
 
         # Create tuples
         if isinstance(obj, structs.assimp_structs_as_tuple):
-            setattr(target, name, make_tuple(obj))
-            logger.debug(str(self) + ": Added array " + str(getattr(target, name)) +  " as self." + name.lower())
+            setattr(m_target, name, make_tuple(obj))
+            logger.debug(str(self) + ": Added array " + str(getattr(m_target, name)) +  " as self." + name.lower())
             continue
 
         if m.startswith('m') and len(m) > 1 and m[1].upper() == m[1]:
 
             if name == "parent":
-                setattr(target, name, parent)
+                setattr(m_target, name, parent)
                 logger.debug("Added a parent as self." + name)
                 continue
 
@@ -155,12 +155,12 @@ def _init(self, target = None, parent = None):
                 # -> special case: properties are
                 # stored as a dict.
                 if m == 'mProperties':
-                    setattr(target, name, _get_properties(obj, length))
+                    setattr(m_target, name, _get_properties(obj, length))
                     continue
 
 
                 if not length: # empty!
-                    setattr(target, name, [])
+                    setattr(m_target, name, [])
                     logger.debug(str(self) + ": " + name + " is an empty list.")
                     continue
 
@@ -168,16 +168,16 @@ def _init(self, target = None, parent = None):
                 try:
                     if obj._type_ in structs.assimp_structs_as_tuple:
                         if numpy:
-                            setattr(target, name, numpy.array([make_tuple(obj[i]) for i in range(length)], dtype=numpy.float32))
+                            setattr(m_target, name, numpy.array([make_tuple(obj[i]) for i in range(length)], dtype=numpy.float32))
 
                             logger.debug(str(self) + ": Added an array of numpy arrays (type "+ str(type(obj)) + ") as self." + name)
                         else:
-                            setattr(target, name, [make_tuple(obj[i]) for i in range(length)])
+                            setattr(m_target, name, [make_tuple(obj[i]) for i in range(length)])
 
                             logger.debug(str(self) + ": Added a list of lists (type "+ str(type(obj)) + ") as self." + name)
 
                     else:
-                        setattr(target, name, [obj[i] for i in range(length)]) #TODO: maybe not necessary to recreate an array?
+                        setattr(m_target, name, [obj[i] for i in range(length)]) #TODO: maybe not necessary to recreate an array?
 
                         logger.debug(str(self) + ": Added list of " + str(obj) + " " + name + " as self." + name + " (type: " + str(type(obj)) + ")")
 
@@ -186,10 +186,10 @@ def _init(self, target = None, parent = None):
                             init = assimp_struct_inits[type(obj[0])]
                         except KeyError:
                             if _is_init_type(obj[0]):
-                                for e in getattr(target, name):
-                                    call_init(e, target)
+                                for e in getattr(m_target, name):
+                                    call_init(e, m_target)
                         else:
-                            for e in getattr(target, name):
+                            for e in getattr(m_target, name):
                                 init(e)
 
 
@@ -211,20 +211,20 @@ def _init(self, target = None, parent = None):
 
 
             else: # starts with 'm' but not iterable
-                setattr(target, m, obj)
+                setattr(m_target, m, obj)
                 logger.debug("Added " + name + " as self." + name + " (type: " + str(type(obj)) + ")")
 
                 if _is_init_type(obj):
-                    call_init(obj, target)
+                    call_init(obj, m_target)
 
     if isinstance(self, structs.Mesh):
-        _finalize_mesh(self, target)
+        _finalize_mesh(self, m_target)
 
     if isinstance(self, structs.Texture):
-        _finalize_texture(self, target)
+        _finalize_texture(self, m_target)
 
     if isinstance(self, structs.Metadata):
-        _finalize_metadata(self, target)
+        _finalize_metadata(self, m_target)
 
 
     return self
@@ -386,15 +386,15 @@ def export_blob(scene,
         raise AssimpError('Could not export scene to blob!')
     return exportBlobPtr
 
-def _finalize_texture(tex, target):
-    setattr(target, "achformathint", tex.achFormatHint)
+def _finalize_texture(tex, m_target):
+    setattr(m_target, "achformathint", tex.achFormatHint)
     if numpy:
         data = numpy.array([make_tuple(getattr(tex, "pcData")[i]) for i in range(tex.mWidth * tex.mHeight)])
     else:
         data = [make_tuple(getattr(tex, "pcData")[i]) for i in range(tex.mWidth * tex.mHeight)]
-    setattr(target, "data", data)
+    setattr(m_target, "data", data)
 
-def _finalize_mesh(mesh, target):
+def _finalize_mesh(mesh, m_target):
     """ Building of meshes is a bit specific.
 
     We override here the various datasets that can
@@ -410,15 +410,15 @@ def _finalize_mesh(mesh, target):
         if numpy:
             if mAttr:
                 data = numpy.array([make_tuple(getattr(mesh, name)[i]) for i in range(nb_vertices)], dtype=numpy.float32)
-                setattr(target, name[1:].lower(), data)
+                setattr(m_target, name[1:].lower(), data)
             else:
-                setattr(target, name[1:].lower(), numpy.array([], dtype="float32"))
+                setattr(m_target, name[1:].lower(), numpy.array([], dtype="float32"))
         else:
             if mAttr:
                 data = [make_tuple(getattr(mesh, name)[i]) for i in range(nb_vertices)]
-                setattr(target, name[1:].lower(), data)
+                setattr(m_target, name[1:].lower(), data)
             else:
-                setattr(target, name[1:].lower(), [])
+                setattr(m_target, name[1:].lower(), [])
 
     def fillarray(name):
         mAttr = getattr(mesh, name)
@@ -429,9 +429,9 @@ def _finalize_mesh(mesh, target):
                 data.append([make_tuple(getattr(mesh, name)[index][i]) for i in range(nb_vertices)])
 
         if numpy:
-            setattr(target, name[1:].lower(), numpy.array(data, dtype=numpy.float32))
+            setattr(m_target, name[1:].lower(), numpy.array(data, dtype=numpy.float32))
         else:
-            setattr(target, name[1:].lower(), data)
+            setattr(m_target, name[1:].lower(), data)
 
     fill("mNormals")
     fill("mTangents")
@@ -442,10 +442,10 @@ def _finalize_mesh(mesh, target):
 
     # prepare faces
     if numpy:
-        faces = numpy.array([f.indices for f in target.faces], dtype=numpy.int32)
+        faces = numpy.array([f.indices for f in m_target.faces], dtype=numpy.int32)
     else:
-        faces = [f.indices for f in target.faces]
-    setattr(target, 'faces', faces)
+        faces = [f.indices for f in m_target.faces]
+    setattr(m_target, 'faces', faces)
 
 def _init_metadata_entry(entry):
     entry.type = entry.mType
@@ -468,7 +468,7 @@ def _init_metadata_entry(entry):
 
     return entry
 
-def _finalize_metadata(metadata, target):
+def _finalize_metadata(metadata, m_target):
     """ Building the metadata object is a bit specific.
 
     Firstly, there are two separate arrays: one with metadata keys and one
@@ -480,8 +480,8 @@ def _finalize_metadata(metadata, target):
     metadata entry type.
     """
     length = metadata.mNumProperties
-    setattr(target, 'keys', [str(_convert_assimp_string(metadata.mKeys[i])) for i in range(length)])
-    setattr(target, 'values', [_init_metadata_entry(metadata.mValues[i]) for i in range(length)])
+    setattr(m_target, 'keys', [str(_convert_assimp_string(metadata.mKeys[i])) for i in range(length)])
+    setattr(m_target, 'values', [_init_metadata_entry(metadata.mValues[i]) for i in range(length)])
 
 class PropertyGetter(dict):
     def __getitem__(self, key):

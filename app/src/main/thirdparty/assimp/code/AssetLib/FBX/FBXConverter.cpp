@@ -2729,7 +2729,7 @@ static void validateAnimCurveNodes(const std::vector<const AnimationCurveNode *>
             target = node->Target();
         }
         if (node->Target() != target) {
-            FBXImporter::LogWarn("Node target is nullptr type.");
+            FBXImporter::LogWarn("Node m_target is nullptr type.");
         }
         if (strictMode) {
             ai_assert(node->Target() == target);
@@ -2758,7 +2758,7 @@ void FBXConverter::GenerateNodeAnimations(std::vector<aiNodeAnim *> &node_anims,
         ai_assert(node);
 
         if (node->TargetProperty().empty()) {
-            FBXImporter::LogWarn("target property for animation curve not set: ", node->Name());
+            FBXImporter::LogWarn("m_target property for animation curve not set: ", node->Name());
             continue;
         }
 
@@ -3035,7 +3035,7 @@ aiNodeAnim *FBXConverter::GenerateRotationNodeAnim(const std::string &name,
 }
 
 aiNodeAnim *FBXConverter::GenerateScalingNodeAnim(const std::string &name,
-        const Model & /*target*/,
+        const Model & /*m_target*/,
         const std::vector<const AnimationCurveNode *> &curves,
         const LayerMap &layer_map,
         int64_t start, int64_t stop,
@@ -3064,7 +3064,7 @@ aiNodeAnim *FBXConverter::GenerateScalingNodeAnim(const std::string &name,
 }
 
 aiNodeAnim *FBXConverter::GenerateTranslationNodeAnim(const std::string &name,
-        const Model & /*target*/,
+        const Model & /*m_target*/,
         const std::vector<const AnimationCurveNode *> &curves,
         const LayerMap &layer_map,
         int64_t start, int64_t stop,
@@ -3179,7 +3179,7 @@ aiNodeAnim* FBXConverter::GenerateSimpleNodeAnim(const std::string& name,
     }
 
     bool ok = false;
-    
+
     const float zero_epsilon = ai_epsilon;
 
     const aiVector3D& preRotation = PropertyGet<aiVector3D>(props, "PreRotation", ok);
@@ -3245,7 +3245,7 @@ FBXConverter::KeyFrameListList FBXConverter::GetKeyframeList(const std::vector<c
             } else if (kv.first == "d|Z") {
                 mapto = 2;
             } else {
-                FBXImporter::LogWarn("ignoring scale animation curve, did not recognize target component");
+                FBXImporter::LogWarn("ignoring scale animation curve, did not recognize m_target component");
                 continue;
             }
 
@@ -3296,7 +3296,7 @@ FBXConverter::KeyFrameListList FBXConverter::GetRotationKeyframeList(const std::
             } else if (kv.first == "d|Z") {
                 mapto = 2;
             } else {
-                FBXImporter::LogWarn("ignoring scale animation curve, did not recognize target component");
+                FBXImporter::LogWarn("ignoring scale animation curve, did not recognize m_target component");
                 continue;
             }
 

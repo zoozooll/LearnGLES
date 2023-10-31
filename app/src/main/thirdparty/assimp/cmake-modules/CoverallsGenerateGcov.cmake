@@ -21,7 +21,7 @@
 #
 # Copyright (C) 2014 Joakim Söderberg <joakim.soderberg@gmail.com>
 #
-# This is intended to be run by a custom target in a CMake project like this.
+# This is intended to be run by a custom m_target in a CMake project like this.
 # 0. Compile program with coverage support.
 # 1. Clear coverage data. (Recursively delete *.gcda in build dir)
 # 2. Run the unit tests.

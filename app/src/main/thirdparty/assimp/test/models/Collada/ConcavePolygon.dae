@@ -125,7 +125,7 @@
                 <instance_geometry url="#Mesh_Object_lib">
                     <bind_material>
                         <technique_common>
-                            <instance_material symbol="test_Smoothing" target="#test_Smoothing"></instance_material>
+                            <instance_material symbol="test_Smoothing" m_target="#test_Smoothing"></instance_material>
                         </technique_common>
                     </bind_material>
                 </instance_geometry>

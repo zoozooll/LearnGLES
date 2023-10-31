@@ -94,7 +94,7 @@ macro(draco_test_cxx_flag)
   endif()
 
   if(draco_all_cxx_flags_pass)
-    # Test passed: update the global flag list used by the draco target creation
+    # Test passed: update the global flag list used by the draco m_target creation
     # wrappers.
     set(DRACO_CXX_FLAGS ${cxx_flags})
     list(REMOVE_DUPLICATES DRACO_CXX_FLAGS)

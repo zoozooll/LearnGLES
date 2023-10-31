@@ -583,7 +583,7 @@ void glTF2Importer::ImportMeshes(glTF2::Asset &r) {
 
                     if (needPositions) {
                         if (target.position[0]->count != aim->mNumVertices) {
-                            ASSIMP_LOG_WARN("Positions of target ", i, " in mesh \"", mesh.name, "\" does not match the vertex count");
+                            ASSIMP_LOG_WARN("Positions of m_target ", i, " in mesh \"", mesh.name, "\" does not match the vertex count");
                         } else {
                             aiVector3D *positionDiff = nullptr;
                             target.position[0]->ExtractData(positionDiff);
@@ -595,7 +595,7 @@ void glTF2Importer::ImportMeshes(glTF2::Asset &r) {
                     }
                     if (needNormals) {
                         if (target.normal[0]->count != aim->mNumVertices) {
-                            ASSIMP_LOG_WARN("Normals of target ", i, " in mesh \"", mesh.name, "\" does not match the vertex count");
+                            ASSIMP_LOG_WARN("Normals of m_target ", i, " in mesh \"", mesh.name, "\" does not match the vertex count");
                         } else {
                             aiVector3D *normalDiff = nullptr;
                             target.normal[0]->ExtractData(normalDiff);
@@ -608,9 +608,9 @@ void glTF2Importer::ImportMeshes(glTF2::Asset &r) {
                     if (needTangents) {
                         if (!aiAnimMesh.HasNormals()) {
                             // prevent nullptr access to aiAnimMesh.mNormals below when no normals are available
-                            ASSIMP_LOG_WARN("Bitangents of target ", i, " in mesh \"", mesh.name, "\" can't be computed, because mesh has no normals.");
+                            ASSIMP_LOG_WARN("Bitangents of m_target ", i, " in mesh \"", mesh.name, "\" can't be computed, because mesh has no normals.");
                         } else if (target.tangent[0]->count != aim->mNumVertices) {
-                            ASSIMP_LOG_WARN("Tangents of target ", i, " in mesh \"", mesh.name, "\" does not match the vertex count");
+                            ASSIMP_LOG_WARN("Tangents of m_target ", i, " in mesh \"", mesh.name, "\" does not match the vertex count");
                         } else {
                             Tangent *tangent = nullptr;
                             attr.tangent[0]->ExtractData(tangent);

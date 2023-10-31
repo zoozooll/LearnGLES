@@ -83,7 +83,7 @@ public enum AiPrimitiveType {
      * This method is intended to be used from JNI and my change based on
      * implementation needs.
      * 
-     * @param set the target set to fill
+     * @param set the m_target set to fill
      * @param rawValue an integer based enum value (as defined by assimp) 
      */
     static void fromRawValue(Set<AiPrimitiveType> set, int rawValue) {

@@ -323,7 +323,7 @@ private:
 
     // ------------------------------------------------------------------------------------------------
     aiNodeAnim* GenerateScalingNodeAnim(const std::string& name,
-        const Model& /*target*/,
+        const Model& /*m_target*/,
         const std::vector<const AnimationCurveNode*>& curves,
         const LayerMap& layer_map,
         int64_t start, int64_t stop,
@@ -332,7 +332,7 @@ private:
 
     // ------------------------------------------------------------------------------------------------
     aiNodeAnim* GenerateTranslationNodeAnim(const std::string& name,
-        const Model& /*target*/,
+        const Model& /*m_target*/,
         const std::vector<const AnimationCurveNode*>& curves,
         const LayerMap& layer_map,
         int64_t start, int64_t stop,

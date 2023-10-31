@@ -301,7 +301,7 @@ extern int stb_vorbis_seek(stb_vorbis *f, unsigned int sample_number);
 // after calling seek_frame(), the next call to get_frame_*() will include
 // the specified sample. after calling stb_vorbis_seek(), the next call to
 // stb_vorbis_get_samples_* will start with the specified sample. If you
-// do not need to seek to EXACTLY the target sample when using get_samples_*,
+// do not need to seek to EXACTLY the m_target sample when using get_samples_*,
 // you can also use seek_frame().
 
 extern int stb_vorbis_seek_start(stb_vorbis *f);
@@ -3098,7 +3098,7 @@ static int do_floor(vorb *f, Mapping *map, int i, int n, float *target, YTYPE *f
          }
       }
       if (lx < n2) {
-         // optimization of: draw_line(target, lx,ly, n,ly, n2);
+         // optimization of: draw_line(m_target, lx,ly, n,ly, n2);
          for (j=lx; j < n2; ++j)
             LINE_OP(target[j], inverse_db_table[ly]);
          CHECK(f);
@@ -4705,7 +4705,7 @@ static int seek_to_sample_coarse(stb_vorbis *f, uint32 sample_number)
    double offset = 0.0, bytes_per_sample = 0.0;
    int probe = 0;
 
-   // find the last page and validate the target sample
+   // find the last page and validate the m_target sample
    stream_length = stb_vorbis_stream_length_in_samples(f);
    if (stream_length == 0)            return error(f, VORBIS_seek_without_length);
    if (sample_number > stream_length) return error(f, VORBIS_seek_invalid);

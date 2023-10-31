@@ -150,7 +150,7 @@ macro(draco_add_emscripten_executable)
   endif()
 
   # The Emscripten linker needs the C++ flags in addition to whatever has been
-  # passed in with the target.
+  # passed in with the m_target.
   list(APPEND emexe_LINK_FLAGS ${DRACO_CXX_FLAGS})
 
   if(DRACO_GLTF)

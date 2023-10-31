@@ -362,13 +362,13 @@
         <instance_geometry url="#Box01-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="bottom" target="#bottom">
+              <instance_material symbol="bottom" m_target="#bottom">
                 <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1"/>
               </instance_material>
-              <instance_material symbol="top" target="#top">
+              <instance_material symbol="top" m_target="#top">
                 <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1"/>
               </instance_material>
-              <instance_material symbol="side" target="#side">
+              <instance_material symbol="side" m_target="#side">
                 <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1"/>
               </instance_material>
             </technique_common>

@@ -9,7 +9,7 @@ if(NOT ANDROID_PLATFORM)
   set(ANDROID_PLATFORM android-21)
 endif()
 
-# Choose target architecture with:
+# Choose m_target architecture with:
 #
 # -DANDROID_ABI={armeabi-v7a,armeabi-v7a with NEON,arm64-v8a,x86,x86_64}
 if(NOT ANDROID_ABI)

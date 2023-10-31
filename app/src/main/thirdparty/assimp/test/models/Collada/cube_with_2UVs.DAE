@@ -142,7 +142,7 @@
           <instance_geometry url="#geom-Quader01">
             <bind_material>
               <technique_common>
-                <instance_material symbol="ColorMaterial" target="#ColorEffectR138G8B110-material"/>
+                <instance_material symbol="ColorMaterial" m_target="#ColorEffectR138G8B110-material"/>
               </technique_common>
             </bind_material>
           </instance_geometry>

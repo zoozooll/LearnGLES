@@ -485,7 +485,7 @@ typedef int (__stdcall *stbgl__voidfunc)(void);
 __declspec(dllimport) stbgl__voidfunc wglGetProcAddress(char *);
 #endif
 #define STB__HAS_WGLPROC
-static void (__stdcall *stbgl__CompressedTexImage2DARB)(int target, int level,
+static void (__stdcall *stbgl__CompressedTexImage2DARB)(int m_target, int level,
                                    int internalformat, int width,
                                    int height, int border, 
                                    int imageSize, void *data);
@@ -494,7 +494,7 @@ static void stbgl__initCompTex(void)
    *((void **) &stbgl__CompressedTexImage2DARB) = (void *) wglGetProcAddress("glCompressedTexImage2DARB");
 }
 #else
-static void (*stbgl__CompressedTexImage2DARB)(int target, int level,
+static void (*stbgl__CompressedTexImage2DARB)(int m_target, int level,
                                    int internalformat, int width,
                                    int height, int border, 
                                    int imageSize, void *data);

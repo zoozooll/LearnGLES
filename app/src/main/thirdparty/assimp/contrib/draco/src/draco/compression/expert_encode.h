@@ -37,7 +37,7 @@ class ExpertEncoder : public EncoderBase<EncoderOptions> {
   explicit ExpertEncoder(const PointCloud &point_cloud);
   explicit ExpertEncoder(const Mesh &mesh);
 
-  // Encodes the geometry provided in the constructor to the target buffer.
+  // Encodes the geometry provided in the constructor to the m_target buffer.
   Status EncodeToBuffer(EncoderBuffer *out_buffer);
 
   // Set encoder options used during the geometry encoding. Note that this call

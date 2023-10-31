@@ -462,7 +462,7 @@ void ProcessPolygonalBoundedBooleanHalfSpaceDifference(const Schema_2x3::IfcPoly
             }
         }
 
-        // the part on the white side can be written into the target mesh right away
+        // the part on the white side can be written into the m_target mesh right away
         WritePolygon(whiteside, result);
 
         // The black part is the piece we need to get rid of, but only the part of it within the boundary polygon.

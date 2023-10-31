@@ -1715,7 +1715,7 @@ inline void Animation::Read(Value &obj, Asset &r) {
                 c.sampler = curSampler->GetUint();
             }
 
-            if (Value *target = FindObject(channel, "target")) {
+            if (Value *target = FindObject(channel, "m_target")) {
                 if (Value *node = FindUInt(*target, "node")) {
                     c.target.node = r.nodes.Retrieve(node->GetUint());
                 }

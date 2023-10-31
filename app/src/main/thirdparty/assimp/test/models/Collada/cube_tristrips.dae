@@ -25,7 +25,7 @@
 						<instance_geometry url="#BlueSG">
 							<bind_material>
 								<technique_common>
-									<instance_material symbol="BlueSG_material" target="#material"/>
+									<instance_material symbol="BlueSG_material" m_target="#material"/>
 								</technique_common>
 							</bind_material>
 						</instance_geometry>

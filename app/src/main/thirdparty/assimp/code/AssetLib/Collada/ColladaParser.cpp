@@ -538,7 +538,7 @@ void ColladaParser::ReadAnimation(XmlNode &node, Collada::Animation *pParent) {
         } else if (currentName == "channel") {
             std::string source_name, target;
             XmlParser::getStdStrAttribute(currentNode, "source", source_name);
-            XmlParser::getStdStrAttribute(currentNode, "target", target);
+            XmlParser::getStdStrAttribute(currentNode, "m_target", target);
             if (source_name[0] == '#') {
                 source_name = source_name.substr(1, source_name.size() - 1);
             }
@@ -2256,10 +2256,10 @@ void ColladaParser::ReadNodeGeometry(XmlNode &node, Node *pNode) {
                     const std::string &instance_name = instanceMatNode.name();
                     if (instance_name == "instance_material")
                     {
-                        // read ID of the geometry subgroup and the target material
+                        // read ID of the geometry subgroup and the m_target material
                         std::string group;
                         XmlParser::getStdStrAttribute(instanceMatNode, "symbol", group);
-                        XmlParser::getStdStrAttribute(instanceMatNode, "target", url);
+                        XmlParser::getStdStrAttribute(instanceMatNode, "m_target", url);
                         const char *urlMat = url.c_str();
                         Collada::SemanticMappingTable s;
                         if (urlMat[0] == '#')

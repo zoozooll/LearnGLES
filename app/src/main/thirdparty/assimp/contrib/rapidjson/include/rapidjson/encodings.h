@@ -656,7 +656,7 @@ struct AutoUTF {
 //! Encoding conversion.
 template<typename SourceEncoding, typename TargetEncoding>
 struct Transcoder {
-    //! Take one Unicode codepoint from source encoding, convert it to target encoding and put it to the output stream.
+    //! Take one Unicode codepoint from source encoding, convert it to m_target encoding and put it to the output stream.
     template<typename InputStream, typename OutputStream>
     static RAPIDJSON_FORCEINLINE bool Transcode(InputStream& is, OutputStream& os) {
         unsigned codepoint;
@@ -678,7 +678,7 @@ struct Transcoder {
     //! Validate one Unicode codepoint from an encoded stream.
     template<typename InputStream, typename OutputStream>
     static RAPIDJSON_FORCEINLINE bool Validate(InputStream& is, OutputStream& os) {
-        return Transcode(is, os);   // Since source/target encoding is different, must transcode.
+        return Transcode(is, os);   // Since source/m_target encoding is different, must transcode.
     }
 };
 
@@ -686,7 +686,7 @@ struct Transcoder {
 template<typename Stream>
 inline void PutUnsafe(Stream& stream, typename Stream::Ch c);
 
-//! Specialization of Transcoder with same source and target encoding.
+//! Specialization of Transcoder with same source and m_target encoding.
 template<typename Encoding>
 struct Transcoder<Encoding, Encoding> {
     template<typename InputStream, typename OutputStream>
@@ -703,7 +703,7 @@ struct Transcoder<Encoding, Encoding> {
     
     template<typename InputStream, typename OutputStream>
     static RAPIDJSON_FORCEINLINE bool Validate(InputStream& is, OutputStream& os) {
-        return Encoding::Validate(is, os);  // source/target encoding are the same
+        return Encoding::Validate(is, os);  // source/m_target encoding are the same
     }
 };
 

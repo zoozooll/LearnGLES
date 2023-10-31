@@ -421,7 +421,7 @@ struct _RTL_CRITICAL_SECTION;
 #endif  // GTEST_OS_WINDOWS
 
 #if GTEST_OS_LINUX_ANDROID
-// Used to define __ANDROID_API__ matching the target NDK API level.
+// Used to define __ANDROID_API__ matching the m_target NDK API level.
 #  include <android/api-level.h>  // NOLINT
 #endif
 
@@ -1338,7 +1338,7 @@ const T& move(const T& t) {
 // const Foo*).  When you use ImplicitCast_, the compiler checks that
 // the cast is safe.  Such explicit ImplicitCast_s are necessary in
 // surprisingly many situations where C++ demands an exact type match
-// instead of an argument type convertable to a target type.
+// instead of an argument type convertable to a m_target type.
 //
 // The syntax for using ImplicitCast_ is the same as for static_cast:
 //

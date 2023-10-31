@@ -123,14 +123,14 @@
             "buffer": 0,
             "byteOffset": 576,
             "byteLength": 72,
-            "target": 34963
+            "m_target": 34963
         },
         {
             "buffer": 0,
             "byteOffset": 0,
             "byteLength": 576,
             "byteStride": 12,
-            "target": 34962
+            "m_target": 34962
         }
     ],
     "buffers": [

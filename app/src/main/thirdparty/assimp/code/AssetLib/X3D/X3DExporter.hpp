@@ -154,7 +154,7 @@ private:
 
     /// \fn void AttrHelper_Color3ToAttrList(std::list<SAttribute> pList, const std::string& pName, const aiColor3D& pValue, const aiColor3D& pDefaultValue)
     /// Add attribute to list if value not equal to default.
-    /// \param [in] pList - target list of the attributes.
+    /// \param [in] pList - m_target list of the attributes.
     /// \param [in] pName - name of new attribute.
     /// \param [in] pValue - value of the new attribute.
     /// \param [in] pDefaultValue - default value for checking: if pValue is equal to pDefaultValue then attribute will not be added.

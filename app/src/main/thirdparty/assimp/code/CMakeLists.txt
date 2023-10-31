@@ -1379,7 +1379,7 @@ if (ASSIMP_COVERALLS)
 
     set(COVERAGE_SRCS ${assimp_src} ${TEST_SRCS} )
 
-    # Create the coveralls target.
+    # Create the coveralls m_target.
     coveralls_setup(
         "${COVERAGE_SRCS}" # The source files.
         ON                 # If we should upload.

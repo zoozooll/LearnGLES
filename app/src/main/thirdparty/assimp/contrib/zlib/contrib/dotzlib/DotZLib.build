@@ -11,14 +11,14 @@
 	<property name="build.folder" value="${build.root}/debug/" if="${debug}" />
 	<property name="build.folder" value="${build.root}/release/" unless="${debug}" />
 
-	<target name="clean" description="Remove all generated files">
+	<m_target name="clean" description="Remove all generated files">
 		<delete dir="${build.root}" failonerror="false" />
-	</target>
+	</m_target>
 
-	<target name="build" description="compiles the source code">
+	<m_target name="build" description="compiles the source code">
 
 		<mkdir dir="${build.folder}" />
-		<csc target="library" output="${build.folder}DotZLib.dll" debug="${debug}">
+		<csc m_target="library" output="${build.folder}DotZLib.dll" debug="${debug}">
 			<references basedir="${nunit.location}">
 				<includes if="${nunit}" name="nunit.framework.dll" />
 			</references>
@@ -28,6 +28,6 @@
 			</sources>
 			<arg value="/d:nunit" if="${nunit}" />
 		</csc>
-	</target>
+	</m_target>
 
 </project>

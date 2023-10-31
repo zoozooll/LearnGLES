@@ -197,7 +197,7 @@ endfunction()
 
 # cxx_executable(name dir lib srcs...)
 #
-# creates a named target that depends on the given libs and is built
+# creates a named m_target that depends on the given libs and is built
 # from the given source files.  dir/name.cc is implicitly included in
 # the source file list.
 function(cxx_executable name dir libs)
@@ -219,7 +219,7 @@ endfunction()
 
 # cxx_test(name libs srcs...)
 #
-# creates a named test target that depends on the given libs and is
+# creates a named test m_target that depends on the given libs and is
 # built from the given source files.  Unlike cxx_test_with_flags,
 # test/name.cc is already implicitly included in the source file list.
 function(cxx_test name libs)

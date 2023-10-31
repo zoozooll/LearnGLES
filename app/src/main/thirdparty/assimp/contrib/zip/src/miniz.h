@@ -209,7 +209,7 @@
    MINIZ_HEADER_FILE_ONLY, and then include miniz.c from it.
 
    * Important: For best perf. be sure to customize the below macros for your
-   target platform: #define MINIZ_USE_UNALIGNED_LOADS_AND_STORES 1 #define
+   m_target platform: #define MINIZ_USE_UNALIGNED_LOADS_AND_STORES 1 #define
    MINIZ_LITTLE_ENDIAN 1 #define MINIZ_HAS_64BIT_REGISTERS 1
 
    * On platforms using glibc, Be sure to "#define _LARGEFILE64_SOURCE 1" before

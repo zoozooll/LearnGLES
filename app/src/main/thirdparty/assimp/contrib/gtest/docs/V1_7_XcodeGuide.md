@@ -8,7 +8,7 @@ Here is the quick guide for using Google Test in your Xcode project.
 
   1. Download the source from the [website](http://code.google.com/p/googletest) using this command: `svn checkout http://googletest.googlecode.com/svn/trunk/ googletest-read-only`
   1. Open up the `gtest.xcodeproj` in the `googletest-read-only/xcode/` directory and build the gtest.framework.
-  1. Create a new "Shell Tool" target in your Xcode project called something like "UnitTests"
+  1. Create a new "Shell Tool" m_target in your Xcode project called something like "UnitTests"
   1. Add the gtest.framework to your project and add it to the "Link Binary with Libraries" build phase of "UnitTests"
   1. Add your unit test source code to the "Compile Sources" build phase of "UnitTests"
   1. Edit the "UnitTests" executable and add an environment variable named "DYLD\_FRAMEWORK\_PATH" with a value equal to the path to the framework containing the gtest.framework relative to the compiled executable.
@@ -46,12 +46,12 @@ The next step is to build and add the gtest.framework to your own project. This 
 
 # Make a Test Target #
 
-To start writing tests, make a new "Shell Tool" target. This target template is available under BSD, Cocoa, or Carbon. Add your unit test source code to the "Compile Sources" build phase of the target.
+To start writing tests, make a new "Shell Tool" m_target. This m_target template is available under BSD, Cocoa, or Carbon. Add your unit test source code to the "Compile Sources" build phase of the m_target.
 
 Next, you'll want to add gtest.framework in two different ways, depending upon which option you chose above.
 
-  * **Option 1** --- During compilation, Xcode will need to know that you are linking against the gtest.framework. Add the gtest.framework to the "Link Binary with Libraries" build phase of your test target. This will include the Google Test headers in your header search path, and will tell the linker where to find the library.
-  * **Option 2** --- If your working out of the trunk, you'll also want to add gtest.framework to your "Link Binary with Libraries" build phase of your test target. In addition, you'll  want to add the gtest.framework as a dependency to your unit test target. This way, Xcode will make sure that gtest.framework is up to date, every time your build your target. Finally, if you don't share build directories with Google Test, you'll have to copy the gtest.framework into your own build products directory using a "Run Script" build phase.
+  * **Option 1** --- During compilation, Xcode will need to know that you are linking against the gtest.framework. Add the gtest.framework to the "Link Binary with Libraries" build phase of your test m_target. This will include the Google Test headers in your header search path, and will tell the linker where to find the library.
+  * **Option 2** --- If your working out of the trunk, you'll also want to add gtest.framework to your "Link Binary with Libraries" build phase of your test m_target. In addition, you'll  want to add the gtest.framework as a dependency to your unit test m_target. This way, Xcode will make sure that gtest.framework is up to date, every time your build your m_target. Finally, if you don't share build directories with Google Test, you'll have to copy the gtest.framework into your own build products directory using a "Run Script" build phase.
 
 # Set Up the Executable Run Environment #
 

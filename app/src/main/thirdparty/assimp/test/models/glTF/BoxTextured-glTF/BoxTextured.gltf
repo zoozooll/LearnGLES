@@ -76,13 +76,13 @@
             "buffer": "BoxTextured",
             "byteLength": 72,
             "byteOffset": 0,
-            "target": 34963
+            "m_target": 34963
         },
         "bufferView_30": {
             "buffer": "BoxTextured",
             "byteLength": 768,
             "byteOffset": 72,
-            "target": 34962
+            "m_target": 34962
         }
     },
     "buffers": {
@@ -332,7 +332,7 @@
             "internalFormat": 6408,
             "sampler": "sampler_0",
             "source": "Image0001",
-            "target": 3553,
+            "m_target": 3553,
             "type": 5121
         }
     }

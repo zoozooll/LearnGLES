@@ -28,7 +28,7 @@ public:
 private:
     unsigned int texture1 = 0;
     unsigned int VBO = 0, VAO = 0;
-    Camera camera = Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+    Camera camera = Camera(glm::vec3(0.0f, 0.0f, 8.0f));
     Shader *ourShader = nullptr;
     glm::mat4 curCameraTranslate = glm::mat4(1.0f);
 };

@@ -2102,7 +2102,7 @@ MSCGEN_PATH            =
 DIA_PATH               = 
 
 # If set to YES, the inheritance and collaboration graphs will hide inheritance
-# and usage relations if the target is undocumented or is not a class.
+# and usage relations if the m_target is undocumented or is not a class.
 # The default value is: YES.
 
 HIDE_UNDOC_RELATIONS   = YES

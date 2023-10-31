@@ -346,7 +346,7 @@ inline Ref<Accessor> ExportDataSparse(Asset &a, std::string &meshName, Ref<Buffe
         Ref<BufferView> bv = a.bufferViews.Create(a.FindUniqueID(meshName, "view"));
         bv->buffer = buffer;
         bv->byteOffset = base_offset;
-        bv->byteLength = base_length; //! The target that the WebGL buffer should be bound to.
+        bv->byteLength = base_length; //! The m_target that the WebGL buffer should be bound to.
         bv->byteStride = 0;
         bv->target = target;
         acc->bufferView = bv;
@@ -424,7 +424,7 @@ inline Ref<Accessor> ExportData(Asset &a, std::string &meshName, Ref<Buffer> &bu
     Ref<BufferView> bv = a.bufferViews.Create(a.FindUniqueID(meshName, "view"));
     bv->buffer = buffer;
     bv->byteOffset = offset;
-    bv->byteLength = length; //! The target that the WebGL buffer should be bound to.
+    bv->byteLength = length; //! The m_target that the WebGL buffer should be bound to.
     bv->byteStride = 0;
     bv->target = target;
 
@@ -518,7 +518,7 @@ void glTF2Exporter::GetMatTex(const aiMaterial &mat, Ref<Texture> &texture, unsi
     if (mat.GetTextureCount(tt) == 0) {
         return;
     }
-        
+
     aiString tex;
 
     // Read texcoord (UV map index)
@@ -853,13 +853,13 @@ void glTF2Exporter::ExportMaterials() {
                     mAsset->extensionsUsed.KHR_materials_transmission = true;
                     m->materialTransmission = Nullable<MaterialTransmission>(transmission);
                 }
-                
+
                 MaterialVolume volume;
                 if (GetMatVolume(mat, volume)) {
                     mAsset->extensionsUsed.KHR_materials_volume = true;
                     m->materialVolume = Nullable<MaterialVolume>(volume);
                 }
-                                
+
                 MaterialIOR ior;
                 if (GetMatIOR(mat, ior)) {
                     mAsset->extensionsUsed.KHR_materials_ior = true;
@@ -913,7 +913,7 @@ Ref<Node> FindSkeletonRootJoint(Ref<Skin> &skinRef) {
     return parentNodeRef;
 }
 
-void ExportSkin(Asset &mAsset, const aiMesh *aimesh, Ref<Mesh> &meshRef, Ref<Buffer> &bufferRef, Ref<Skin> &skinRef, 
+void ExportSkin(Asset &mAsset, const aiMesh *aimesh, Ref<Mesh> &meshRef, Ref<Buffer> &bufferRef, Ref<Skin> &skinRef,
         std::vector<aiMatrix4x4> &inverseBindMatricesData) {
     if (aimesh->mNumBones < 1) {
         return;
@@ -977,14 +977,14 @@ void ExportSkin(Asset &mAsset, const aiMesh *aimesh, Ref<Mesh> &meshRef, Ref<Buf
                 vertexJointData[vertexId][jointsPerVertex[vertexId]] = static_cast<float>(jointNamesIndex);
                 vertexWeightData[vertexId][jointsPerVertex[vertexId]] = vertWeight;
 
-                jointsPerVertex[vertexId] += 1;   
+                jointsPerVertex[vertexId] += 1;
             }
         }
 
     } // End: for-loop mNumMeshes
 
     Mesh::Primitive &p = meshRef->primitives.back();
-    Ref<Accessor> vertexJointAccessor = ExportData(mAsset, skinRef->id, bufferRef, aimesh->mNumVertices, 
+    Ref<Accessor> vertexJointAccessor = ExportData(mAsset, skinRef->id, bufferRef, aimesh->mNumVertices,
         vertexJointData, AttribType::VEC4, AttribType::VEC4, ComponentType_FLOAT);
     if (vertexJointAccessor) {
         size_t offset = vertexJointAccessor->bufferView->byteOffset;
@@ -1082,7 +1082,7 @@ void glTF2Exporter::ExportMeshes() {
             }
         }
 
-        Ref<Accessor> n = ExportData(*mAsset, meshId, b, aim->mNumVertices, aim->mNormals, AttribType::VEC3, 
+        Ref<Accessor> n = ExportData(*mAsset, meshId, b, aim->mNumVertices, aim->mNormals, AttribType::VEC3,
             AttribType::VEC3, ComponentType_FLOAT, BufferViewTarget_ARRAY_BUFFER);
         if (n) {
             p.attributes.normal.push_back(n);
@@ -1104,7 +1104,7 @@ void glTF2Exporter::ExportMeshes() {
             if (aim->mNumUVComponents[i] > 0) {
                 AttribType::Value type = (aim->mNumUVComponents[i] == 2) ? AttribType::VEC2 : AttribType::VEC3;
 
-                Ref<Accessor> tc = ExportData(*mAsset, meshId, b, aim->mNumVertices, aim->mTextureCoords[i], 
+                Ref<Accessor> tc = ExportData(*mAsset, meshId, b, aim->mNumVertices, aim->mTextureCoords[i],
                     AttribType::VEC3, type, ComponentType_FLOAT, BufferViewTarget_ARRAY_BUFFER);
                 if (tc) {
                     p.attributes.texcoord.push_back(tc);
@@ -1132,7 +1132,7 @@ void glTF2Exporter::ExportMeshes() {
                 }
             }
 
-            p.indices = ExportData(*mAsset, meshId, b, indices.size(), &indices[0], AttribType::SCALAR, AttribType::SCALAR, 
+            p.indices = ExportData(*mAsset, meshId, b, indices.size(), &indices[0], AttribType::SCALAR, AttribType::SCALAR,
                 ComponentType_UNSIGNED_INT, BufferViewTarget_ELEMENT_ARRAY_BUFFER);
         }
 

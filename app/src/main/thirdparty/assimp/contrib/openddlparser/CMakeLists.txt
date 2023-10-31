@@ -97,7 +97,7 @@ SET ( openddl_parser_src
     include/openddlparser/TPoolAllocator.h
     README.md
 )
- 
+
 SOURCE_GROUP( code            FILES ${openddl_parser_src} )
 
 if ( DDL_STATIC_LIBRARY )
@@ -123,7 +123,7 @@ SET ( gtest_src
     ${GTEST_PATH}/src/gtest.cc
 )
 
-SET( openddl_parser_unittest_src  
+SET( openddl_parser_unittest_src
     test/UnitTestCommon.h
     test/DDLNodeTest.cpp
     test/OpenDDLCommonTest.cpp
@@ -142,21 +142,21 @@ add_definitions(-DOPENDDL_TEST_DATA="${CMAKE_CURRENT_LIST_DIR}/test/TestData")
 SOURCE_GROUP( code  FILES ${openddl_parser_unittest_src} )
 SOURCE_GROUP( gtest FILES ${gtest_src} )
 
-ADD_EXECUTABLE( openddl_parser_unittest 
+ADD_EXECUTABLE( openddl_parser_unittest
     ${gtest_src}
     ${openddl_parser_unittest_src}
 )
 
 target_link_libraries( openddl_parser_unittest openddl_parser ${CMAKE_THREAD_LIBS_INIT} )
 
-SET( openddl_parser_demo_src  
-    demo/main.cpp 
+SET( openddl_parser_demo_src
+    demo/main.cpp
 )
 
 if (COVERALLS)
     set(COVERAGE_SRCS     ${gtest_src} ${openddl_parser_unittest_src} )
 
-    # Create the coveralls target.
+    # Create the coveralls m_target.
     coveralls_setup(
         "${COVERAGE_SRCS}" # The source files.
         ON                 # If we should upload.
@@ -165,6 +165,6 @@ endif()
 
 ADD_EXECUTABLE( openddl_parser_demo
     ${openddl_parser_demo_src}
-) 
+)
 
 target_link_libraries( openddl_parser_demo openddl_parser )

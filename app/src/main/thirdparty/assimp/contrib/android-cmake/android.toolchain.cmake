@@ -57,14 +57,14 @@
 #    ANDROID_NDK=/opt/android-ndk - path to the NDK root.
 #      Can be set as environment variable. Can be set only at first cmake run.
 #
-#    ANDROID_ABI=armeabi-v7a - specifies the target Application Binary
+#    ANDROID_ABI=armeabi-v7a - specifies the m_target Application Binary
 #      Interface (ABI). This option nearly matches to the APP_ABI variable
 #      used by ndk-build tool from Android NDK.
 #
 #      Possible targets are:
 #        "armeabi" - ARMv5TE based CPU with software floating point operations
 #        "armeabi-v7a" - ARMv7 based devices with hardware FPU instructions
-#            this ABI target is used by default
+#            this ABI m_target is used by default
 #        "armeabi-v7a with NEON" - same as armeabi-v7a, but
 #            sets NEON as floating-point unit
 #        "armeabi-v7a with VFPV3" - same as armeabi-v7a, but
@@ -630,9 +630,9 @@ if( NOT ANDROID_SUPPORTED_ABIS )
  message( FATAL_ERROR "No one of known Android ABIs is supported by this cmake toolchain." )
 endif()
 
-# choose target ABI
+# choose m_target ABI
 __INIT_VARIABLE( ANDROID_ABI VALUES ${ANDROID_SUPPORTED_ABIS} )
-# verify that target ABI is supported
+# verify that m_target ABI is supported
 list( FIND ANDROID_SUPPORTED_ABIS "${ANDROID_ABI}" __androidAbiIdx )
 if( __androidAbiIdx EQUAL -1 )
  string( REPLACE ";" "\", \"" PRINTABLE_ANDROID_SUPPORTED_ABIS  "${ANDROID_SUPPORTED_ABIS}" )
@@ -642,7 +642,7 @@ if( __androidAbiIdx EQUAL -1 )
 endif()
 unset( __androidAbiIdx )
 
-# set target ABI options
+# set m_target ABI options
 if( ANDROID_ABI STREQUAL "x86" )
  set( X86 true )
  set( ANDROID_NDK_ABI_NAME "x86" )
@@ -816,7 +816,7 @@ endif()
 unset( __levelIdx )
 
 
-# remember target ABI
+# remember m_target ABI
 set( ANDROID_ABI "${ANDROID_ABI}" CACHE STRING "The target ABI for Android. If arm, then armeabi-v7a is recommended for hardware floating point." FORCE )
 if( CMAKE_VERSION VERSION_GREATER "2.8" )
  list( SORT ANDROID_SUPPORTED_ABIS_${ANDROID_ARCH_NAME} )
@@ -1522,7 +1522,7 @@ endif()
 set( ANDROID True )
 set( BUILD_ANDROID True )
 
-# where is the target environment
+# where is the m_target environment
 set( CMAKE_FIND_ROOT_PATH "${ANDROID_TOOLCHAIN_ROOT}/bin" "${ANDROID_TOOLCHAIN_ROOT}/${ANDROID_TOOLCHAIN_MACHINE_NAME}" "${ANDROID_SYSROOT}" "${CMAKE_INSTALL_PREFIX}" "${CMAKE_INSTALL_PREFIX}/share" )
 
 # only search for libraries and includes in the ndk toolchain
@@ -1639,7 +1639,7 @@ endif()
 #   ANDROID_RELRO : ON/OFF
 #   ANDROID_FORCE_ARM_BUILD : ON/OFF
 #   ANDROID_STL_FORCE_FEATURES : ON/OFF
-#   ANDROID_LIBM_PATH : path to libm.so (set to something like $(TOP)/out/target/product/<product_name>/obj/lib/libm.so) to workaround unresolved `sincos`
+#   ANDROID_LIBM_PATH : path to libm.so (set to something like $(TOP)/out/m_target/product/<product_name>/obj/lib/libm.so) to workaround unresolved `sincos`
 # Can be set only at the first run:
 #   ANDROID_NDK : path to your NDK install
 #   NDK_CCACHE : path to your ccache executable

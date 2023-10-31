@@ -118,31 +118,31 @@
          "buffer" : "buffer_0",
          "byteLength" : 72,
          "byteOffset" : 0,
-         "target" : 34963
+         "m_target" : 34963
       },
       "bufferView_1" : {
          "buffer" : "buffer_0",
          "byteLength" : 432,
          "byteOffset" : 72,
-         "target" : 34962
+         "m_target" : 34962
       },
       "bufferView_2" : {
          "buffer" : "buffer_0",
          "byteLength" : 432,
          "byteOffset" : 504,
-         "target" : 34962
+         "m_target" : 34962
       },
       "bufferView_3" : {
          "buffer" : "buffer_0",
          "byteLength" : 576,
          "byteOffset" : 936,
-         "target" : 34962
+         "m_target" : 34962
       },
       "bufferView_4" : {
          "buffer" : "buffer_0",
          "byteLength" : 288,
          "byteOffset" : 1512,
-         "target" : 34962
+         "m_target" : 34962
       }
    },
    "buffers" : {

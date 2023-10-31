@@ -3289,13 +3289,13 @@ void *stb_arr_malloc_parent(void *p)
    return q;
 }
 
-void stb_arr_malloc(void **target, void *context)
+void stb_arr_malloc(void **m_target, void *context)
 {
    stb__arr *q = (stb__arr *) stb_malloc(context, sizeof(*q));
    q->len = q->limit = 0;
    q->stb_malloc = 1;
    q->signature = stb_arr_signature;
-   *target = (void *) (q+1);
+   *m_target = (void *) (q+1);
 }
 
 static void * stb__arr_malloc(int size)
@@ -4760,7 +4760,7 @@ STB_EXTERN void stb_nptr_recache(void); // recache all known pointers
 //   level 2: each stb__memory_node represents a 64K block of memory
 //            with 256 stb__memory_leafs (worst case 64MB)
 //   level 3: each stb__memory_leaf represents 256 bytes of memory
-//            using a list of target locations and a list of pointers
+//            using a list of m_target locations and a list of pointers
 //            (which are hopefully fairly short normally!)
 
 // this approach won't work in 64-bit, which has a much larger address
@@ -4779,14 +4779,14 @@ STB_EXTERN void stb_nptr_recache(void); // recache all known pointers
 typedef struct stb__st_nptr
 {
    void *ptr;   // address of actual pointer
-   struct stb__st_nptr *next;   // next pointer with same target
-   struct stb__st_nptr **prev;  // prev pointer with same target, address of 'next' field (or first)
+   struct stb__st_nptr *next;   // next pointer with same m_target
+   struct stb__st_nptr **prev;  // prev pointer with same m_target, address of 'next' field (or first)
    struct stb__st_nptr *next_in_block;
 } stb__nptr;
 
 typedef struct stb__st_nptr_target
 {
-   void *ptr;   // address of target
+   void *ptr;   // address of m_target
    stb__nptr *first; // address of first nptr pointing to this
    struct stb__st_nptr_target *next_in_block;
 } stb__nptr_target;
@@ -4843,21 +4843,21 @@ static stb__memory_leaf *stb__nptr_make_leaf(void *mem)
    return f;
 }
 
-static stb__nptr_target *stb__nptr_find_target(void *target, int force)
+static stb__nptr_target *stb__nptr_find_target(void *m_target, int force)
 {
-   stb__memory_leaf *p = stb__nptr_find_leaf(target);
+   stb__memory_leaf *p = stb__nptr_find_leaf(m_target);
    if (p) {
       stb__nptr_target *t = p->targets;
       while (t) {
-         if (t->ptr == target)
+         if (t->ptr == m_target)
             return t;
          t = t->next_in_block;
       }
    }
    if (force) {
       stb__nptr_target *t = (stb__nptr_target*) stb__nptr_alloc(sizeof(*t));
-      if (!p) p = stb__nptr_make_leaf(target);
-      t->ptr = target;
+      if (!p) p = stb__nptr_make_leaf(m_target);
+      t->ptr = m_target;
       t->first = NULL;
       t->next_in_block = p->targets;
       p->targets = t;
@@ -5030,7 +5030,7 @@ static void stb__nptr_delete_targets(stb__memory_leaf *f, int offset, void *star
             *(void **) z->ptr = NULL;
             z = y;
          }
-         // unlink this target
+         // unlink this m_target
          *p = n->next_in_block;
          stb__nptr_free(n);
       } else
@@ -7019,8 +7019,8 @@ extern stb_dirtree *stb_dirtree_get_with_file ( char *dir, char *cache_file);
 // to all of the innards.
 extern void stb_dirtree_db_add_dir(stb_dirtree *active, char *path, time_t last);
 extern void stb_dirtree_db_add_file(stb_dirtree *active, char *name, int dir, stb_int64 size, time_t last);
-extern void stb_dirtree_db_read(stb_dirtree *target, char *filename, char *dir);
-extern void stb_dirtree_db_write(stb_dirtree *target, char *filename, char *dir);
+extern void stb_dirtree_db_read(stb_dirtree *m_target, char *filename, char *dir);
+extern void stb_dirtree_db_write(stb_dirtree *m_target, char *filename, char *dir);
 
 #ifdef STB_DEFINE
 static void stb__dirtree_add_dir(char *path, time_t last, stb_dirtree *active)
@@ -7433,19 +7433,19 @@ void stb_dirtree_db_add_file(stb_dirtree *active, char *name, int dir, stb_int64
    stb__dirtree_add_file(name, dir, size, last, active);
 }
 
-void stb_dirtree_db_read(stb_dirtree *target, char *filename, char *dir)
+void stb_dirtree_db_read(stb_dirtree *m_target, char *filename, char *dir)
 {
    char *s = stb_strip_final_slash(stb_p_strdup(dir));
-   target->dirs = 0;
-   target->files = 0;
-   target->string_pool = 0;
-   stb__dirtree_load_db(filename, target, s);
+   m_target->dirs = 0;
+   m_target->files = 0;
+   m_target->string_pool = 0;
+   stb__dirtree_load_db(filename, m_target, s);
    free(s);
 }
 
-void stb_dirtree_db_write(stb_dirtree *target, char *filename, char *dir)
+void stb_dirtree_db_write(stb_dirtree *m_target, char *filename, char *dir)
 {
-   stb__dirtree_save_db(filename, target, 0); // don't strip out any directories
+   stb__dirtree_save_db(filename, m_target, 0); // don't strip out any directories
 }
 
 #endif // STB_DEFINE
@@ -9600,7 +9600,7 @@ static int stb__opt(stb_matcher *m, int n)
 
 static void stb__optimize(stb_matcher *m)
 {
-   // if the target of any edge is a node with exactly
+   // if the m_target of any edge is a node with exactly
    // one out-epsilon, shorten it
    int i,j;
    for (i=0; i < stb_arr_len(m->nodes); ++i) {
@@ -11518,7 +11518,7 @@ STB_EXTERN void          stb_mutex_end(stb_mutex m);
 STB_EXTERN stb_sync      stb_sync_new(void);
 STB_EXTERN void          stb_sync_delete(stb_sync s);
 STB_EXTERN int           stb_sync_set_target(stb_sync s, int count);
-STB_EXTERN void          stb_sync_reach_and_wait(stb_sync s);    // wait for 'target' reachers
+STB_EXTERN void          stb_sync_reach_and_wait(stb_sync s);    // wait for 'm_target' reachers
 STB_EXTERN int           stb_sync_reach(stb_sync s);
 
 typedef struct stb__threadqueue stb_threadqueue;
@@ -11783,7 +11783,7 @@ void      stb_mutex_end(stb_mutex m)     { if (m) stb_sem_release(m); stb__wait(
 // thread merge operation
 struct stb__sync
 {
-   int target;  // target number of threads to hit it
+   int m_target;  // m_target number of threads to hit it
    int sofar;   // total threads that hit it
    int waiting; // total threads waiting
 
@@ -11799,7 +11799,7 @@ stb_sync stb_sync_new(void)
    stb_sync s = (stb_sync) malloc(sizeof(*s));
    if (!s) return s;
 
-   s->target = s->sofar = s->waiting = 0;
+   s->m_target = s->sofar = s->waiting = 0;
    s->mutex   = stb_mutex_new();
    s->start   = stb_mutex_new();
    s->release = stb_sem_new(1);
@@ -11827,7 +11827,7 @@ void stb_sync_delete(stb_sync s)
 
 int stb_sync_set_target(stb_sync s, int count)
 {
-   // don't allow setting a target until the last one is fully released;
+   // don't allow setting a m_target until the last one is fully released;
    // note that this can lead to inefficient pipelining, and maybe we'd
    // be better off ping-ponging between two internal syncs?
    // I tried seeing how often this happened using TryEnterCriticalSection
@@ -11839,8 +11839,8 @@ int stb_sync_set_target(stb_sync s, int count)
    // to call reach() before anyone calls set_target() anyway
    stb_mutex_begin(s->mutex);
 
-   assert(s->target == 0); // enforced by start mutex
-   s->target  = count;
+   assert(s->m_target == 0); // enforced by start mutex
+   s->m_target  = count;
    s->sofar   = 0;
    s->waiting = 0;
    stb_mutex_end(s->mutex);
@@ -11852,7 +11852,7 @@ void stb__sync_release(stb_sync s)
    if (s->waiting)
       stb_sem_release(s->release);
    else {
-      s->target = 0;
+      s->m_target = 0;
       stb_mutex_end(s->start);
    }
 }
@@ -11861,9 +11861,9 @@ int stb_sync_reach(stb_sync s)
 {
    int n;
    stb_mutex_begin(s->mutex);
-   assert(s->sofar < s->target);
+   assert(s->sofar < s->m_target);
    n = ++s->sofar; // record this value to avoid possible race if we did 'return s->sofar';
-   if (s->sofar == s->target)
+   if (s->sofar == s->m_target)
       stb__sync_release(s);
    stb_mutex_end(s->mutex);
    return n;
@@ -11872,9 +11872,9 @@ int stb_sync_reach(stb_sync s)
 void stb_sync_reach_and_wait(stb_sync s)
 {
    stb_mutex_begin(s->mutex);
-   assert(s->sofar < s->target);
+   assert(s->sofar < s->m_target);
    ++s->sofar;
-   if (s->sofar == s->target) {
+   if (s->sofar == s->m_target) {
       stb__sync_release(s);
       stb_mutex_end(s->mutex);
    } else {

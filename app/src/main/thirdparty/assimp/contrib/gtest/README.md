@@ -11,7 +11,7 @@ straightforward.
 #### Build ####
 
 Suppose you put Google Test in directory `${GTEST_DIR}`.  To build it,
-create a library build target (or a project as called by Visual Studio
+create a library build m_target (or a project as called by Visual Studio
 and Xcode) to compile
 
     ${GTEST_DIR}/src/gtest-all.cc
@@ -103,7 +103,7 @@ Visual Studio 2005 or above, we recommend the -md version as /MD is
 the default for new projects in these versions of Visual Studio.
 
 On Mac OS X, open the `gtest.xcodeproj` in the `xcode/` folder using
-Xcode.  Build the "gtest" target.  The universal binary framework will
+Xcode.  Build the "gtest" m_target.  The universal binary framework will
 end up in your selected build directory (selected in the Xcode
 "Preferences..." -> "Building" pane and defaults to xcode/build).
 Alternatively, at the command line, enter:
@@ -120,7 +120,7 @@ above, you need to either:
 
  * update the SDK configuration options in xcode/Config/General.xconfig.
    Comment options `SDKROOT`, `MACOS_DEPLOYMENT_TARGET`, and `GCC_VERSION`. If
-   you choose this route you lose the ability to target earlier versions
+   you choose this route you lose the ability to m_target earlier versions
    of MacOS X.
  * Install an SDK for an earlier version. This doesn't appear to be
    supported by Apple, but has been reported to work

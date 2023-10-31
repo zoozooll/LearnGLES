@@ -104,6 +104,7 @@
 #include "8_guest/PhysicallyBasedBloomScene.h"
 #include "1_getting_started/CameraExercise1Scene.h"
 #include "1_getting_started/CameraExercise2Scene.h"
+#include "1_getting_started/CameraCircleScene.h"
 
 inline Scene* GenSceneByName(const char *tutorial) {
     if (!strcmp(tutorial, "hello_window")) {
@@ -157,9 +158,9 @@ inline Scene* GenSceneByName(const char *tutorial) {
     } else if (!strcmp(tutorial, "coordinate_systems_multiple")) {
         return new CoordinateSystemMultipleScene;
     } else if (!strcmp(tutorial, "coordinate_systems_exercise")) {
-//        return new CoordinateSystemExercise3Scene;
+        return new CoordinateSystemExercise3Scene;
     } else if (!strcmp(tutorial, "camera_circle")) {
-
+        return new CameraCircleScene;
     } else if (!strcmp(tutorial, "camera_keyboard_dt")) {
 
     } else if (!strcmp(tutorial, "camera_mouse_zoom")) {

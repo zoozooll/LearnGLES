@@ -4,7 +4,7 @@ endif() # DRACO_CMAKE_DRACO_INSTALL_CMAKE_
 set(DRACO_CMAKE_DRACO_INSTALL_CMAKE_ 1)
 
 # Sets up the draco install targets. Must be called after the static library
-# target is created.
+# m_target is created.
 macro(draco_setup_install_target)
   include(GNUInstallDirs)
 

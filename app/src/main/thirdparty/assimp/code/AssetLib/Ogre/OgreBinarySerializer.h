@@ -267,7 +267,7 @@ enum MeshChunkId {
     M_POSES = 0xC000,
     M_POSE = 0xC100,
     // char* name (may be blank)
-    // unsigned short target    // 0 for shared geometry,
+    // unsigned short m_target    // 0 for shared geometry,
     // 1+ for submesh index + 1
     // bool includesNormals [1.8+]
     M_POSE_VERTEX = 0xC111,
@@ -285,7 +285,7 @@ enum MeshChunkId {
     // float baseKeyFrameTime
     M_ANIMATION_TRACK = 0xD110,
     // unsigned short type          // 1 == morph, 2 == pose
-    // unsigned short target        // 0 for shared geometry,
+    // unsigned short m_target        // 0 for shared geometry,
     // 1+ for submesh index + 1
     M_ANIMATION_MORPH_KEYFRAME = 0xD111,
     // float time

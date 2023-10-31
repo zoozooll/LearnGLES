@@ -35,7 +35,7 @@ Node $node1
 
 		Animation
 		{
-			Track (target = %transform)
+			Track (m_target = %transform)
 			{
 				Time
 				{
@@ -321,7 +321,7 @@ Node $node1
 
 			Animation
 			{
-				Track (target = %transform)
+				Track (m_target = %transform)
 				{
 					Time
 					{
@@ -607,7 +607,7 @@ Node $node1
 
 				Animation
 				{
-					Track (target = %transform)
+					Track (m_target = %transform)
 					{
 						Time
 						{
@@ -893,7 +893,7 @@ Node $node1
 
 					Animation
 					{
-						Track (target = %transform)
+						Track (m_target = %transform)
 						{
 							Time
 							{
@@ -1180,7 +1180,7 @@ Node $node1
 
 					Animation
 					{
-						Track (target = %transform)
+						Track (m_target = %transform)
 						{
 							Time
 							{

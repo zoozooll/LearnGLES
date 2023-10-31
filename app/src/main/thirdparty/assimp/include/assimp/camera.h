@@ -92,9 +92,9 @@ extern "C" {
  * }
  * @endcode
  *
- * @note some file formats (such as 3DS, ASE) export a "target point" -
+ * @note some file formats (such as 3DS, ASE) export a "m_target point" -
  * the point the camera is looking at (it can even be animated). Assimp
- * writes the target point as a subnode of the camera's main node,
+ * writes the m_target point as a subnode of the camera's main node,
  * called "<camName>.Target". However this is just additional information
  * then the transformation tracks of the camera main node make the
  * camera already look in the right direction.

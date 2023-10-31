@@ -3,7 +3,7 @@ if(DRACO_CMAKE_DRACO_TESTS_CMAKE)
 endif()
 set(DRACO_CMAKE_DRACO_TESTS_CMAKE 1)
 
-# The factory tests are in a separate target to avoid breaking tests that rely
+# The factory tests are in a separate m_target to avoid breaking tests that rely
 # on file I/O via the factories. The fake reader and writer implementations
 # interfere with normal file I/O function.
 set(draco_factory_test_sources

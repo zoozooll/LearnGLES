@@ -3,7 +3,7 @@ unit ZLibConst;
 interface
 
 resourcestring
-  sTargetBufferTooSmall = 'ZLib error: target buffer may be too small';
+  sTargetBufferTooSmall = 'ZLib error: m_target buffer may be too small';
   sInvalidStreamOp = 'Invalid stream operation';
 
 implementation

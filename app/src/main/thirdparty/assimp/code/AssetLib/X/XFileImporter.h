@@ -115,7 +115,7 @@ protected:
      * up per material, the indices of the generated meshes are stored in
      * the node structure.
      * @param pScene The scene to construct the return data in.
-     * @param pNode The target node structure that references the
+     * @param pNode The m_target node structure that references the
      *   constructed meshes.
      * @param pMeshes The array of meshes to convert
      */

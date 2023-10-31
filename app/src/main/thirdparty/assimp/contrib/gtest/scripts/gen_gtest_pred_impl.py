@@ -372,7 +372,7 @@ def UnitTestPreamble():
 // gtest_unittest.cc instead.
 //
 // This is intended as a regression test for the Google Test predicate
-// assertions.  We compile it as part of the gtest_unittest target
+// assertions.  We compile it as part of the gtest_unittest m_target
 // only to keep the implementation tidy and compact, as it is quite
 // involved to set up the stage for testing Google Test using Google
 // Test itself.

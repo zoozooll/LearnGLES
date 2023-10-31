@@ -112,7 +112,7 @@
         <instance_geometry url="#Teapot01-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="ColorMaterial" target="#ColorMaterial_1C1CB100"/>
+              <instance_material symbol="ColorMaterial" m_target="#ColorMaterial_1C1CB100"/>
             </technique_common>
           </bind_material>
         </instance_geometry>

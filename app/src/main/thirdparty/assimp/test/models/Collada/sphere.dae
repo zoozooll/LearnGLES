@@ -122,7 +122,7 @@ limitations under the License.
                 <instance_geometry url="#pSphereShape1-lib">
                     <bind_material>
                         <technique_common>
-                            <instance_material symbol="initialShadingGroup" target="#lambert1"/>
+                            <instance_material symbol="initialShadingGroup" m_target="#lambert1"/>
                         </technique_common>
                     </bind_material>
                 </instance_geometry>

@@ -843,7 +843,7 @@ END_TYPE;
 
 TYPE dimension_extent_usage = ENUMERATION OF (
 	origin,
-	target );
+	m_target );
 END_TYPE;
 
 TYPE dimensional_characteristic = SELECT (
@@ -4318,7 +4318,7 @@ END_ENTITY;
 ENTITY defined_symbol
 	SUBTYPE OF (geometric_representation_item);
 	definition : defined_symbol_select;
-	target : symbol_target;
+	m_target : symbol_target;
 END_ENTITY;
 
 
@@ -4537,7 +4537,7 @@ WHERE
                    'TERMINATOR_SYMBOL.ANNOTATED_CURVE') 
                  | (('AP203_CONFIGURATION_CONTROLLED_3D_DESIGN_OF_MECHANICAL_PARTS_AND_ASSEMBLIES_MIM_LF.'+
                    'DIMENSION_CURVE_TERMINATOR' IN TYPEOF(dct2))
-                   AND (dct2\dimension_curve_terminator.role = dimension_extent_usage.target)))
+                   AND (dct2\dimension_curve_terminator.role = dimension_extent_usage.m_target)))
          ) <= 1);
 END_ENTITY;
 
@@ -9220,7 +9220,7 @@ END_ENTITY;
 ENTITY pre_defined_geometrical_tolerance_symbol
 	SUBTYPE OF (pre_defined_symbol);
 WHERE
-	WR1 : SELF.name IN ['angularity' , 'basic dimension' , 'blanked datum reference' , 'circular runout' , 'circularity' , 'concentricity' , 'cylindricity' , 'datum target identification' , 'diameter' , 'filled datum reference' , 'flatness' , 'least material condition' , 'maximum material condition' , 'parallelism' , 'perpendicularity' , 'position' , 'profile of a line' , 'profile of a surface' , 'projected tolerance zone' , 'regardless of feature size' , 'straightness' , 'symmetry' , 'total runout' ];
+	WR1 : SELF.name IN ['angularity' , 'basic dimension' , 'blanked datum reference' , 'circular runout' , 'circularity' , 'concentricity' , 'cylindricity' , 'datum m_target identification' , 'diameter' , 'filled datum reference' , 'flatness' , 'least material condition' , 'maximum material condition' , 'parallelism' , 'perpendicularity' , 'position' , 'profile of a line' , 'profile of a surface' , 'projected tolerance zone' , 'regardless of feature size' , 'straightness' , 'symmetry' , 'total runout' ];
 END_ENTITY;
 
 
@@ -15822,14 +15822,14 @@ CASE pdf\shape_aspect.description OF
               (SIZEOF(srwp.items) = 2))) = 1) AND
              (SIZEOF( QUERY( srwp <* parameter_representations |
               (SIZEOF( QUERY( i <* srwp.items |
-                (i.name='target diameter') AND
+                (i.name='m_target diameter') AND
                 (SIZEOF(['AP203_CONFIGURATION_CONTROLLED_3D_DESIGN_OF_MECHANICAL_PARTS_AND_ASSEMBLIES_MIM_LF.MEASURE_REPRESENTATION_ITEM',
 		   'AP203_CONFIGURATION_CONTROLLED_3D_DESIGN_OF_MECHANICAL_PARTS_AND_ASSEMBLIES_MIM_LF.LENGTH_MEASURE_WITH_UNIT']*TYPEOF(i)
                  ) = 2) )) = 1))) = 1));
 
 'line': RETURN(SIZEOF( QUERY( srwp <* parameter_representations |
               (SIZEOF( QUERY( i <* srwp.items |
-                (i.name='target length') AND
+                (i.name='m_target length') AND
                 (SIZEOF(['AP203_CONFIGURATION_CONTROLLED_3D_DESIGN_OF_MECHANICAL_PARTS_AND_ASSEMBLIES_MIM_LF.MEASURE_REPRESENTATION_ITEM',
 		'AP203_CONFIGURATION_CONTROLLED_3D_DESIGN_OF_MECHANICAL_PARTS_AND_ASSEMBLIES_MIM_LF.LENGTH_MEASURE_WITH_UNIT']*TYPEOF(i)
                  ) = 2) )) = 1))) = 1);
@@ -15838,13 +15838,13 @@ CASE pdf\shape_aspect.description OF
               (SIZEOF(srwp.items)= 3))) = 1) AND
              (SIZEOF( QUERY( srwp <* parameter_representations |
               (SIZEOF( QUERY( i <* srwp.items |
-                (i.name='target length') AND
+                (i.name='m_target length') AND
                 (SIZEOF(['AP203_CONFIGURATION_CONTROLLED_3D_DESIGN_OF_MECHANICAL_PARTS_AND_ASSEMBLIES_MIM_LF.MEASURE_REPRESENTATION_ITEM',
 		'AP203_CONFIGURATION_CONTROLLED_3D_DESIGN_OF_MECHANICAL_PARTS_AND_ASSEMBLIES_MIM_LF.LENGTH_MEASURE_WITH_UNIT']*TYPEOF(i)
                  ) = 2))) = 1))) = 1) AND
               (SIZEOF( QUERY( srwp <* parameter_representations |
                (SIZEOF( QUERY( i <* srwp.items |
-                 (i.name='target width') AND
+                 (i.name='m_target width') AND
                  (SIZEOF(['AP203_CONFIGURATION_CONTROLLED_3D_DESIGN_OF_MECHANICAL_PARTS_AND_ASSEMBLIES_MIM_LF.MEASURE_REPRESENTATION_ITEM',
  		'AP203_CONFIGURATION_CONTROLLED_3D_DESIGN_OF_MECHANICAL_PARTS_AND_ASSEMBLIES_MIM_LF.LENGTH_MEASURE_WITH_UNIT']*TYPEOF(i)
                   ) = 2))) = 1) )) = 1));

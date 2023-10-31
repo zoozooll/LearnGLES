@@ -35,10 +35,10 @@ These files are listed in order of interest to maintainers of the build system.
 -   `cmake/draco_options.cmake` defines macros that control optional features
     of draco, and help track draco library and build system options.
 
--   `cmake/draco_install.cmake` defines the draco install target.
+-   `cmake/draco_install.cmake` defines the draco install m_target.
 
 -   `cmake/draco_cpu_detection.cmake` determines the optimization types to
-    enable based on target system processor as reported by CMake.
+    enable based on m_target system processor as reported by CMake.
 
 -   `cmake/draco_intrinsics.cmake` manages flags for source files that use
     intrinsics. It handles detection of whether flags are necessary, and the

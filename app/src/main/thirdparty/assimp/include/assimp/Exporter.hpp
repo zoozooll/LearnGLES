@@ -200,7 +200,7 @@ public:
      *  #SetIOSystem to supply a custom IOSystem to gain fine-grained control
      *  about the output data flow of the export process.
      * @param pBlob A data blob obtained from a previous call to #aiExportScene. Must not be nullptr.
-     * @param pPath Full target file name. Target must be accessible.
+     * @param pPath Full m_target file name. Target must be accessible.
      * @param pPreprocessing Accepts any choice of the #aiPostProcessSteps enumerated
      *   flags, but in reality only a subset of them makes sense here. Specifying
      *   'preprocessing' flags is useful if the input scene does not conform to

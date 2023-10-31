@@ -411,7 +411,7 @@ static aiVector3D CalculateVertexNormal(SIBMesh *mesh, uint32_t faceIdx, uint32_
             for (uint32_t n = 0; n < numPoints; n++, idx += N) {
                 uint32_t posB = idx[POS];
 
-                // Test if this edge shares our target position.
+                // Test if this edge shares our m_target position.
                 if (posA == pos || posB == pos) {
                     SIBEdge &edge = GetEdge(mesh, posA, posB);
 

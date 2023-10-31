@@ -364,7 +364,7 @@ struct VertexAnimationTrack
     // Animation type.
     Type type;
 
-    /// Vertex data target.
+    /// Vertex data m_target.
     /**  0 == shared geometry
         >0 == submesh index + 1 */
     uint16_t target;

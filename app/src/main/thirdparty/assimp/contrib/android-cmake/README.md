@@ -48,7 +48,7 @@ So don't even try other targets that can be found in CMake documentation and don
 
 * Latest GCC available in NDK is used as the default compiler;
 * `Release` builds with `-O3` instead of `-Os`;
-* `Release` builds without debug info (without `-g`) (because _ndk-build_ always creates a stripped version but cmake delays this for `install/strip` target);
+* `Release` builds without debug info (without `-g`) (because _ndk-build_ always creates a stripped version but cmake delays this for `install/strip` m_target);
 * `-fsigned-char` is added to compiler flags to make `char` signed by default as it is on x86/x86_64;
 * GCC's stack protector is not used neither in `Debug` nor `Release` configurations;
 * No builds for multiple platforms (e.g. building for both arm and x86 require to run cmake twice with different parameters);
@@ -61,10 +61,10 @@ The following features of _ndk-build_ are not supported by the _android-cmake_ y
 
 ## Basic options
 
-Similarly to the NDK build system _android-cmake_ allows to select between several compiler toolchains and target platforms. Most of the options can be set either as cmake arguments: `-D<NAME>=<VALUE>` or as environment variables:
+Similarly to the NDK build system _android-cmake_ allows to select between several compiler toolchains and m_target platforms. Most of the options can be set either as cmake arguments: `-D<NAME>=<VALUE>` or as environment variables:
 
 * **ANDROID_NDK** - path to the Android NDK. If not set then _android-cmake_ will search for the most recent version of supported NDK in commonly used locations;
-* **ANDROID_ABI** - specifies the target Application Binary Interface (ABI). This option nearly matches to the APP_ABI variable used by ndk-build tool from Android NDK. If not specified then set to `armeabi-v7a`. Possible target names are:
+* **ANDROID_ABI** - specifies the m_target Application Binary Interface (ABI). This option nearly matches to the APP_ABI variable used by ndk-build tool from Android NDK. If not specified then set to `armeabi-v7a`. Possible m_target names are:
     * `armeabi` - ARMv5TE based CPU with software floating point operations;
     * **`armeabi-v7a`** - ARMv7 based devices with hardware FPU instructions (VFPv3_D16);
     * `armeabi-v7a with NEON` - same as armeabi-v7a, but sets NEON as floating-point unit;
@@ -75,7 +75,7 @@ Similarly to the NDK build system _android-cmake_ allows to select between sever
     * `arm64-v8a` - ARMv8 AArch64 instruction set - only for NDK r10 and newer
     * `x86_64` - Intel64 instruction set (r1) - only for NDK r10 and newer
     * `mips64` - MIPS64 instruction set (r6) - only for NDK r10 and newer
-* **ANDROID_NATIVE_API_LEVEL** - level of android API to build for. Can be set either to full name (example: `android-8`) or a numeric value (example: `17`). The default API level depends on the target ABI:
+* **ANDROID_NATIVE_API_LEVEL** - level of android API to build for. Can be set either to full name (example: `android-8`) or a numeric value (example: `17`). The default API level depends on the m_target ABI:
     * `android-8` for ARM;
     * `android-9` for x86 and MIPS;
     * `android-21` for 64-bit ABIs.
@@ -137,7 +137,7 @@ Normally _android-cmake_ users are not supposed to touch these variables but the
 * **ANDROID_GOLD_LINKER** = `ON` - use gold linker with GCC 4.6 for NDK r8b and newer (only for ARM and x86);
 * **ANDROID_NOEXECSTACK** = `ON` - enables or disables stack execution protection code (`-Wl,-z,noexecstack`);
 * **ANDROID_RELRO** = `ON` - Enables RELRO - a memory corruption mitigation technique (`-Wl,-z,relro -Wl,-z,now`);
-* **ANDROID_LIBM_PATH** - path to `libm.so` (set to something like `$(TOP)/out/target/product/<product_name>/obj/lib/libm.so`) to workaround unresolved `sincos`.
+* **ANDROID_LIBM_PATH** - path to `libm.so` (set to something like `$(TOP)/out/m_target/product/<product_name>/obj/lib/libm.so`) to workaround unresolved `sincos`.
 
 ## Fine-tuning `CMakeLists.txt` for _android-cmake_
 
@@ -162,7 +162,7 @@ The recommended way to identify ARM/MIPS/x86 architecture is examining `CMAKE_SY
 
 Other variables that are set by _android-cmake_ and can be used for the fine-grained build configuration are:
 
-* `NEON` - set if target ABI supports Neon;
+* `NEON` - set if m_target ABI supports Neon;
 * `ANDROID_NATIVE_API_LEVEL` - native Android API level we are building for (note: Java part of Andoid application can be built for another API level)
 * `ANDROID_NDK_RELEASE` - version of the Android NDK
 * `ANDROID_NDK_HOST_SYSTEM_NAME` - "windows", "linux-x86" or "darwin-x86" depending on the host platform
@@ -171,7 +171,7 @@ Other variables that are set by _android-cmake_ and can be used for the fine-gra
 
 ### Finding packages
 
-When crosscompiling CMake `find_*` commands are normally expected to find libraries and packages belonging to the same build target. So _android-cmake_ configures CMake to search in Android-specific paths only and ignore your host system locations. So
+When crosscompiling CMake `find_*` commands are normally expected to find libraries and packages belonging to the same build m_target. So _android-cmake_ configures CMake to search in Android-specific paths only and ignore your host system locations. So
 
     find_package(ZLIB)
 
@@ -184,7 +184,7 @@ However sometimes you need to locate a host package even when cross-compiling. F
 
 However this will break regular builds so instead of wrapping package search into platform-specific logic you can copy the following snippet into your project (put it after your top-level `project()` command):
 
-    # Search packages for host system instead of packages for target system
+    # Search packages for host system instead of packages for m_target system
     # in case of cross compilation these macro should be defined by toolchain file
     if(NOT COMMAND find_host_package)
       macro(find_host_package)

@@ -143,12 +143,12 @@ protected:
     void StoreSceneTextures(aiScene *pScene);
 
     /** Stores all animations
-     * @param pScene target scene to store the anims
+     * @param pScene m_target scene to store the anims
      */
     void StoreAnimations(aiScene *pScene, const ColladaParser &pParser);
 
     /** Stores all animations for the given source anim and its nested child animations
-     * @param pScene target scene to store the anims
+     * @param pScene m_target scene to store the anims
      * @param pSrcAnim the source animation to process
      * @param pPrefix Prefix to the name in case of nested animations
      */
@@ -215,10 +215,10 @@ protected:
     /** Which material was stored under which index in the scene */
     std::map<std::string, size_t> mMaterialIndexByName;
 
-    /** Accumulated meshes for the target scene */
+    /** Accumulated meshes for the m_target scene */
     std::vector<aiMesh *> mMeshes;
 
-    /** Accumulated morph target meshes */
+    /** Accumulated morph m_target meshes */
     std::vector<aiMesh *> mTargetMeshes;
 
     /** Temporary material list */
@@ -233,7 +233,7 @@ protected:
     /** Temporary texture list */
     std::vector<aiTexture *> mTextures;
 
-    /** Accumulated animations for the target scene */
+    /** Accumulated animations for the m_target scene */
     std::vector<aiAnimation *> mAnims;
 
     bool noSkeletonMesh;

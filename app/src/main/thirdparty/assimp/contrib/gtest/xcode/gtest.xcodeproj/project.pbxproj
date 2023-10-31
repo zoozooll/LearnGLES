@@ -28,7 +28,7 @@
 			buildPhases = (
 				40C44ADB0E3798F4008FCC51 /* Generate Version.h */,
 			);
-			comments = "The generation of Version.h must be performed in its own target. Since the Info.plist is preprocessed before any of the other build phases in gtest, the Version.h file would not be ready if included as a build phase of that target.";
+			comments = "The generation of Version.h must be performed in its own m_target. Since the Info.plist is preprocessed before any of the other build phases in gtest, the Version.h file would not be ready if included as a build phase of that m_target.";
 			dependencies = (
 			);
 			name = "Version Info";
@@ -724,67 +724,67 @@
 /* Begin PBXTargetDependency section */
 		40899F9D0FFA740F000B29AE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 40899F420FFA7184000B29AE /* gtest_unittest-framework */;
+			m_target = 40899F420FFA7184000B29AE /* gtest_unittest-framework */;
 			targetProxy = 40899F9C0FFA740F000B29AE /* PBXContainerItemProxy */;
 		};
 		4089A0980FFAD34A000B29AE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 4089A0120FFACEFC000B29AE /* sample1_unittest-framework */;
+			m_target = 4089A0120FFACEFC000B29AE /* sample1_unittest-framework */;
 			targetProxy = 4089A0970FFAD34A000B29AE /* PBXContainerItemProxy */;
 		};
 		408BEC101046CFE900DEF522 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 40C848F9101A209C0083642A /* gtest-static */;
+			m_target = 40C848F9101A209C0083642A /* gtest-static */;
 			targetProxy = 408BEC0F1046CFE900DEF522 /* PBXContainerItemProxy */;
 		};
 		40C44AE60E379922008FCC51 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 40C44ADC0E3798F4008FCC51 /* Version Info */;
+			m_target = 40C44ADC0E3798F4008FCC51 /* Version Info */;
 			targetProxy = 40C44AE50E379922008FCC51 /* PBXContainerItemProxy */;
 		};
 		40C8497B101A36850083642A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 40C848F9101A209C0083642A /* gtest-static */;
+			m_target = 40C848F9101A209C0083642A /* gtest-static */;
 			targetProxy = 40C8497C101A36850083642A /* PBXContainerItemProxy */;
 		};
 		40C8497D101A36850083642A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 40C8490A101A217E0083642A /* gtest_main-static */;
+			m_target = 40C8490A101A217E0083642A /* gtest_main-static */;
 			targetProxy = 40C8497E101A36850083642A /* PBXContainerItemProxy */;
 		};
 		40C8498A101A36A60083642A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 40C848F9101A209C0083642A /* gtest-static */;
+			m_target = 40C848F9101A209C0083642A /* gtest-static */;
 			targetProxy = 40C8498B101A36A60083642A /* PBXContainerItemProxy */;
 		};
 		40C8498C101A36A60083642A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 40C8490A101A217E0083642A /* gtest_main-static */;
+			m_target = 40C8490A101A217E0083642A /* gtest_main-static */;
 			targetProxy = 40C8498D101A36A60083642A /* PBXContainerItemProxy */;
 		};
 		40C8499C101A36DC0083642A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 40C8490A101A217E0083642A /* gtest_main-static */;
+			m_target = 40C8490A101A217E0083642A /* gtest_main-static */;
 			targetProxy = 40C8499B101A36DC0083642A /* PBXContainerItemProxy */;
 		};
 		40C8499E101A36E50083642A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8D07F2BC0486CC7A007CD1D0 /* gtest-framework */;
+			m_target = 8D07F2BC0486CC7A007CD1D0 /* gtest-framework */;
 			targetProxy = 40C8499D101A36E50083642A /* PBXContainerItemProxy */;
 		};
 		40C849A0101A36F10083642A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8D07F2BC0486CC7A007CD1D0 /* gtest-framework */;
+			m_target = 8D07F2BC0486CC7A007CD1D0 /* gtest-framework */;
 			targetProxy = 40C8499F101A36F10083642A /* PBXContainerItemProxy */;
 		};
 		40C849F7101A43440083642A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 40C8497A101A36850083642A /* gtest_unittest-static */;
+			m_target = 40C8497A101A36850083642A /* gtest_unittest-static */;
 			targetProxy = 40C849F6101A43440083642A /* PBXContainerItemProxy */;
 		};
 		40C849F9101A43490083642A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 40C84989101A36A60083642A /* sample1_unittest-static */;
+			m_target = 40C84989101A36A60083642A /* sample1_unittest-static */;
 			targetProxy = 40C849F8101A43490083642A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */

@@ -37,7 +37,7 @@ Build instructions:
    You can define 2 properties on the nant command-line to control the build:
    debug={true|false} to toggle between release/debug builds (default=true).
    nunit={true|false} to include or esclude unit tests (default=true).
-   Also the target clean will remove binaries.
+   Also the m_target clean will remove binaries.
    Output file (DotZLib.dll) will be found in either ./DotZLib/bin/release
    or ./DotZLib/bin/debug, depending on whether you are building the release
    or debug version of the library.

@@ -83,7 +83,7 @@ bool ImproveCacheLocalityProcess::IsActive( unsigned int pFlags) const {
 // ------------------------------------------------------------------------------------------------
 // Setup configuration
 void ImproveCacheLocalityProcess::SetupProperties(const Importer* pImp) {
-    // AI_CONFIG_PP_ICL_PTCACHE_SIZE controls the target cache size for the optimizer
+    // AI_CONFIG_PP_ICL_PTCACHE_SIZE controls the m_target cache size for the optimizer
     mConfigCacheDepth = pImp->GetPropertyInteger(AI_CONFIG_PP_ICL_PTCACHE_SIZE,PP_ICL_PTCACHE_SIZE);
 }
 

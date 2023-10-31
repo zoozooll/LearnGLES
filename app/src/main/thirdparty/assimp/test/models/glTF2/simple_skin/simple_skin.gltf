@@ -33,7 +33,7 @@
   "animations" : [ {
     "channels" : [ {
       "sampler" : 0,
-      "target" : {
+      "m_target" : {
         "node" : 2,
         "path" : "rotation"
       }
@@ -63,12 +63,12 @@
     "buffer" : 0,
     "byteOffset" : 0,
     "byteLength" : 48,
-    "target" : 34963
+    "m_target" : 34963
   }, {
     "buffer" : 0,
     "byteOffset" : 48,
     "byteLength" : 120,
-    "target" : 34962
+    "m_target" : 34962
   }, {
     "buffer" : 1,
     "byteOffset" : 0,

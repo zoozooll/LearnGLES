@@ -814,7 +814,7 @@ void Parser::ParseLV1ObjectBlock(ASE::BaseNode &node) {
                 if (TokenMatch(filePtr, "LIGHT_TYPE", 10)) {
                     if (!ASSIMP_strincmp("omni", filePtr, 4)) {
                         ((ASE::Light &)node).mLightType = ASE::Light::OMNI;
-                    } else if (!ASSIMP_strincmp("target", filePtr, 6)) {
+                    } else if (!ASSIMP_strincmp("m_target", filePtr, 6)) {
                         ((ASE::Light &)node).mLightType = ASE::Light::TARGET;
                     } else if (!ASSIMP_strincmp("free", filePtr, 4)) {
                         ((ASE::Light &)node).mLightType = ASE::Light::FREE;
@@ -831,7 +831,7 @@ void Parser::ParseLV1ObjectBlock(ASE::BaseNode &node) {
                     ParseLV2CameraSettingsBlock((ASE::Camera &)node);
                     continue;
                 } else if (TokenMatch(filePtr, "CAMERA_TYPE", 11)) {
-                    if (!ASSIMP_strincmp("target", filePtr, 6)) {
+                    if (!ASSIMP_strincmp("m_target", filePtr, 6)) {
                         ((ASE::Camera &)node).mCameraType = ASE::Camera::TARGET;
                     } else if (!ASSIMP_strincmp("free", filePtr, 4)) {
                         ((ASE::Camera &)node).mCameraType = ASE::Camera::FREE;
@@ -924,14 +924,14 @@ void Parser::ParseLV2AnimationBlock(ASE::BaseNode &mesh) {
                 if (!ParseString(temp, "*NODE_NAME"))
                     SkipToNextToken();
 
-                // If the name of the node contains .target it
+                // If the name of the node contains .m_target it
                 // represents an animated camera or spot light
-                // target.
+                // m_target.
                 if (std::string::npos != temp.find(".Target")) {
                     if ((mesh.mType != BaseNode::Camera || ((ASE::Camera &)mesh).mCameraType != ASE::Camera::TARGET) &&
                             (mesh.mType != BaseNode::Light || ((ASE::Light &)mesh).mLightType != ASE::Light::TARGET)) {
 
-                        ASSIMP_LOG_ERROR("ASE: Found target animation channel "
+                        ASSIMP_LOG_ERROR("ASE: Found m_target animation channel "
                                          "but the node is neither a camera nor a spot light");
                         anim = nullptr;
                     } else
@@ -956,7 +956,7 @@ void Parser::ParseLV2AnimationBlock(ASE::BaseNode &mesh) {
                     TokenMatch(filePtr, "CONTROL_SCALE_TCB", 17)) {
                 if (!anim || anim == &mesh.mTargetAnim) {
                     // Target animation channels may have no rotation channels
-                    ASSIMP_LOG_ERROR("ASE: Ignoring scaling channel in target animation");
+                    ASSIMP_LOG_ERROR("ASE: Ignoring scaling channel in m_target animation");
                     SkipSection();
                 } else
                     ParseLV3ScaleAnimationBlock(*anim);
@@ -968,7 +968,7 @@ void Parser::ParseLV2AnimationBlock(ASE::BaseNode &mesh) {
                     TokenMatch(filePtr, "CONTROL_ROT_TCB", 15)) {
                 if (!anim || anim == &mesh.mTargetAnim) {
                     // Target animation channels may have no rotation channels
-                    ASSIMP_LOG_ERROR("ASE: Ignoring rotation channel in target animation");
+                    ASSIMP_LOG_ERROR("ASE: Ignoring rotation channel in m_target animation");
                     SkipSection();
                 } else
                     ParseLV3RotAnimationBlock(*anim);
@@ -1118,13 +1118,13 @@ void Parser::ParseLV2NodeTransformBlock(ASE::BaseNode &mesh) {
                     mode = 1;
                 } else if (std::string::npos != (s = temp.find(".Target")) &&
                            mesh.mName == temp.substr(0, s)) {
-                    // This should be either a target light or a target camera
+                    // This should be either a m_target light or a m_target camera
                     if ((mesh.mType == BaseNode::Light && ((ASE::Light &)mesh).mLightType == ASE::Light::TARGET) ||
                             (mesh.mType == BaseNode::Camera && ((ASE::Camera &)mesh).mCameraType == ASE::Camera::TARGET)) {
                         mode = 2;
                     } else {
-                        ASSIMP_LOG_ERROR("ASE: Ignoring target transform, "
-                                         "this is no spot light or target camera");
+                        ASSIMP_LOG_ERROR("ASE: Ignoring m_target transform, "
+                                         "this is no spot light or m_target camera");
                     }
                 } else {
                     ASSIMP_LOG_ERROR("ASE: Unknown node transformation: ", temp);

@@ -549,7 +549,7 @@ void ColladaLoader::BuildMeshesForNode(const ColladaParser &pParser, const Node 
         }
     }
 
-    // now place all mesh references we gathered in the target node
+    // now place all mesh references we gathered in the m_target node
     pTarget->mNumMeshes = static_cast<unsigned int>(newMeshRefs.size());
     if (!newMeshRefs.empty()) {
         struct UIntTypeConverter {
@@ -564,7 +564,7 @@ void ColladaLoader::BuildMeshesForNode(const ColladaParser &pParser, const Node 
 }
 
 // ------------------------------------------------------------------------------------------------
-// Find mesh from either meshes or morph target meshes
+// Find mesh from either meshes or morph m_target meshes
 aiMesh *ColladaLoader::findMesh(const std::string &meshid) {
     if (meshid.empty()) {
         return nullptr;
@@ -667,7 +667,7 @@ aiMesh *ColladaLoader::CreateMesh(const ColladaParser &pParser, const Mesh *pSrc
         }
     }
 
-    // create morph target meshes if any
+    // create morph m_target meshes if any
     std::vector<aiMesh *> targetMeshes;
     std::vector<float> targetWeights;
     Collada::MorphMethod method = Normalized;
@@ -687,10 +687,10 @@ aiMesh *ColladaLoader::CreateMesh(const ColladaParser &pParser, const Mesh *pSrc
             method = c.mMethod;
 
             if (!targetData.mIsStringArray) {
-                throw DeadlyImportError("target data must contain id. ");
+                throw DeadlyImportError("m_target data must contain id. ");
             }
             if (weightData.mIsStringArray) {
-                throw DeadlyImportError("target weight data must not be textual ");
+                throw DeadlyImportError("m_target weight data must not be textual ");
             }
 
             for (const auto & mString : targetData.mStrings) {
@@ -699,7 +699,7 @@ aiMesh *ColladaLoader::CreateMesh(const ColladaParser &pParser, const Mesh *pSrc
                 aiMesh *aimesh = findMesh(useColladaName ? targetMesh->mName : targetMesh->mId);
                 if (!aimesh) {
                     if (targetMesh->mSubMeshes.size() > 1) {
-                        throw DeadlyImportError("Morphing target mesh must be a single");
+                        throw DeadlyImportError("Morphing m_target mesh must be a single");
                     }
                     aimesh = CreateMesh(pParser, targetMesh, targetMesh->mSubMeshes.at(0), nullptr, 0, 0);
                     mTargetMeshes.push_back(aimesh);
@@ -1117,7 +1117,7 @@ void ColladaLoader::CreateAnimation(aiScene *pScene, const ColladaParser &pParse
             const AnimationChannel &srcChannel = *cit;
             ChannelEntry entry;
 
-            // we expect the animation target to be of type "nodeName/transformID.subElement". Ignore all others
+            // we expect the animation m_target to be of type "nodeName/transformID.subElement". Ignore all others
             // find the slash that separates the node name - there should be only one
             std::string::size_type slashPos = srcChannel.mTarget.find('/');
             if (slashPos == std::string::npos) {
@@ -1393,8 +1393,8 @@ void ColladaLoader::CreateAnimation(aiScene *pScene, const ColladaParser &pParse
                 }
             }
             if (!morphChannels.empty()) {
-                // either 1) morph weight animation count should contain morph target count channels
-                // or     2) one channel with morph target count arrays
+                // either 1) morph weight animation count should contain morph m_target count channels
+                // or     2) one channel with morph m_target count arrays
                 // assume first
 
                 aiMeshMorphAnim *morphAnim = new aiMeshMorphAnim;
@@ -1411,7 +1411,7 @@ void ColladaLoader::CreateAnimation(aiScene *pScene, const ColladaParser &pParse
                         continue;
                     }
 
-                    // weight target can be in format Weight_M_N, Weight_N, WeightN, or some other way
+                    // weight m_target can be in format Weight_M_N, Weight_N, WeightN, or some other way
                     // we ignore the name and just assume the channels are in the right order
                     for (unsigned int i = 0; i < e.mTimeData->mValues.size(); i++) {
                         insertMorphTimeValue(morphTimeValues, e.mTimeData->mValues[i], e.mValueData->mValues[i], morphAnimChannelIndex);
@@ -1522,7 +1522,7 @@ void ColladaLoader::AddTexture(aiMaterial &mat,
         map = -1;
         for (std::string::const_iterator it = sampler.mUVChannel.begin(); it != sampler.mUVChannel.end(); ++it) {
             if (IsNumeric(*it)) {
-                map = strtoul10(&(*it));        
+                map = strtoul10(&(*it));
                 break;
             }
         }

@@ -156,7 +156,7 @@
             "channels": [
                 {
                     "sampler": "animation_0_rotation_sampler",
-                    "target": {
+                    "m_target": {
                         "id": "Geometry-mesh001Node",
                         "path": "rotation"
                     }
@@ -178,7 +178,7 @@
             "channels": [
                 {
                     "sampler": "animation_1_rotation_sampler",
-                    "target": {
+                    "m_target": {
                         "id": "meshInst962Node",
                         "path": "rotation"
                     }
@@ -216,13 +216,13 @@
             "buffer": "CesiumMilkTruck",
             "byteLength": 17136,
             "byteOffset": 620,
-            "target": 34963
+            "m_target": 34963
         },
         "bufferView_105": {
             "buffer": "CesiumMilkTruck",
             "byteLength": 95296,
             "byteOffset": 17756,
-            "target": 34962
+            "m_target": 34962
         }
     },
     "buffers": {
@@ -698,7 +698,7 @@
             "internalFormat": 6408,
             "sampler": "sampler_0",
             "source": "Image0001",
-            "target": 3553,
+            "m_target": 3553,
             "type": 5121
         }
     }

@@ -448,7 +448,7 @@ PUGI__NS_BEGIN
 	#define PUGI__GETPAGE_IMPL(header) (header).get_page()
 #else
 	#define PUGI__GETHEADER_IMPL(object, page, flags) (((reinterpret_cast<char*>(object) - reinterpret_cast<char*>(page)) << 8) | (flags))
-	// this macro casts pointers through void* to avoid 'cast increases required alignment of target type' warnings
+	// this macro casts pointers through void* to avoid 'cast increases required alignment of m_target type' warnings
 	#define PUGI__GETPAGE_IMPL(header) static_cast<impl::xml_memory_page*>(const_cast<void*>(static_cast<const void*>(reinterpret_cast<const char*>(&header) - (header >> 8))))
 #endif
 
@@ -666,14 +666,14 @@ PUGI__NS_BEGIN
 			assert(full_size < max_encoded_offset || (page->busy_size == full_size && page_offset == 0));
 			header->full_size = static_cast<uint16_t>(full_size < max_encoded_offset ? full_size / xml_memory_block_alignment : 0);
 
-			// round-trip through void* to avoid 'cast increases required alignment of target type' warning
+			// round-trip through void* to avoid 'cast increases required alignment of m_target type' warning
 			// header is guaranteed a pointer-sized alignment, which should be enough for char_t
 			return static_cast<char_t*>(static_cast<void*>(header + 1));
 		}
 
 		void deallocate_string(char_t* string)
 		{
-			// this function casts pointers through void* to avoid 'cast increases required alignment of target type' warnings
+			// this function casts pointers through void* to avoid 'cast increases required alignment of m_target type' warnings
 			// we're guaranteed the proper (pointer-sized) alignment on the input string if it was allocated via allocate_string
 
 			// get header
@@ -782,7 +782,7 @@ PUGI__NS_BEGIN
 
 		xml_memory_page* get_page() const
 		{
-			// round-trip through void* to silence 'cast increases required alignment of target type' warnings
+			// round-trip through void* to silence 'cast increases required alignment of m_target type' warnings
 			const char* page_marker = reinterpret_cast<const char*>(this) - (_page << compact_alignment_log2);
 			const char* page = page_marker - *reinterpret_cast<const uint32_t*>(static_cast<const void*>(page_marker));
 
@@ -978,7 +978,7 @@ PUGI__NS_BEGIN
 
 				if (static_cast<uintptr_t>(offset) < (65535 << 7))
 				{
-					// round-trip through void* to silence 'cast increases required alignment of target type' warnings
+					// round-trip through void* to silence 'cast increases required alignment of m_target type' warnings
 					uint16_t* base = reinterpret_cast<uint16_t*>(static_cast<void*>(reinterpret_cast<char*>(this) - base_offset));
 
 					if (*base == 0)
@@ -1023,7 +1023,7 @@ PUGI__NS_BEGIN
 				{
 					xml_memory_page* page = compact_get_page(this, header_offset);
 
-					// round-trip through void* to silence 'cast increases required alignment of target type' warnings
+					// round-trip through void* to silence 'cast increases required alignment of m_target type' warnings
 					const uint16_t* base = reinterpret_cast<const uint16_t*>(static_cast<const void*>(reinterpret_cast<const char*>(this) - base_offset));
 					assert(*base);
 
@@ -1641,7 +1641,7 @@ PUGI__NS_BEGIN
 					// process aligned single-byte (ascii) blocks
 					if ((reinterpret_cast<uintptr_t>(data) & 3) == 0)
 					{
-						// round-trip through void* to silence 'cast increases required alignment of target type' warnings
+						// round-trip through void* to silence 'cast increases required alignment of m_target type' warnings
 						while (size >= 4 && (*static_cast<const uint32_t*>(static_cast<const void*>(data)) & 0x80808080) == 0)
 						{
 							result = Traits::low(result, data[0]);
@@ -3157,7 +3157,7 @@ PUGI__NS_BEGIN
 			// parse node contents, starting with question mark
 			++s;
 
-			// read PI target
+			// read PI m_target
 			char_t* target = s;
 
 			if (!PUGI__IS_CHARTYPE(*s, ct_start_symbol)) PUGI__THROW_ERROR(status_bad_pi, s);
@@ -7000,7 +7000,7 @@ namespace pugi
 
 		// setup first page marker
 	#ifdef PUGIXML_COMPACT
-		// round-trip through void* to avoid 'cast increases required alignment of target type' warning
+		// round-trip through void* to avoid 'cast increases required alignment of m_target type' warning
 		page->compact_page_marker = reinterpret_cast<uint32_t*>(static_cast<void*>(reinterpret_cast<char*>(page) + sizeof(impl::xml_memory_page)));
 		*page->compact_page_marker = sizeof(impl::xml_memory_page);
 	#endif
@@ -7869,7 +7869,7 @@ PUGI__NS_BEGIN
 			// skip empty sources
 			if (!*o._buffer) return;
 
-			// fast append for constant empty target and constant source
+			// fast append for constant empty m_target and constant source
 			if (!*_buffer && !_uses_heap && !o._uses_heap)
 			{
 				_buffer = o._buffer;
@@ -9564,7 +9564,7 @@ PUGI__NS_BEGIN
 			double number;
 			// variable for ast_variable
 			xpath_variable* variable;
-			// node test for ast_step (node name/namespace/node type/pi target)
+			// node test for ast_step (node name/namespace/node type/pi m_target)
 			const char_t* nodetest;
 			// table for ast_opt_translate_table
 			const unsigned char* table;

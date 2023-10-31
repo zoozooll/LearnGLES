@@ -72,7 +72,7 @@ bool SequentialQuantizationAttributeDecoder::DecodeQuantizedDataInfo() {
     // This should happen only in the backward compatibility mode. It will still
     // work fine for this case because the only thing the quantization transform
     // cares about is the number of components that is the same for both source
-    // and target attributes.
+    // and m_target attributes.
     att = attribute();
   }
   return quantization_transform_.DecodeParameters(*att, decoder()->buffer());

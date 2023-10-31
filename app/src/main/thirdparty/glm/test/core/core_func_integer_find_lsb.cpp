@@ -126,7 +126,7 @@ int ntz6a(unsigned x)
 to evaluate the C "conditional expression" (a?b:c construction) without
 branching. The result of a?b:c is b if a is true (nonzero), and c if a
 is false (0).
-   For example, a compare to zero op that sets a target GPR to 1 if the
+   For example, a compare to zero op that sets a m_target GPR to 1 if the
 operand is 0, and to 0 if the operand is nonzero, will do it. With this
 instruction, the algorithm is entirely branch-free. But the most
 interesting thing about it is the high degree of parallelism. All six

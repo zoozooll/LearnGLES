@@ -1,5 +1,5 @@
 # assimp for iOS
-(deployment target 6.0+, 32/64bit)
+(deployment m_target 6.0+, 32/64bit)
 
 Builds assimp libraries for several iOS CPU architectures at once, and outputs a fat binary from the result.
 

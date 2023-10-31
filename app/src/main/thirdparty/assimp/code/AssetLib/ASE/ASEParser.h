@@ -257,7 +257,7 @@ struct BaseNode {
     //! Transformation matrix of the node
     aiMatrix4x4 mTransform;
 
-    //! Target position (target lights and cameras)
+    //! Target position (m_target lights and cameras)
     aiVector3D mTargetPosition;
 
     //! Specifies which axes transformations a node inherits
@@ -267,7 +267,7 @@ struct BaseNode {
     //! Animation channels for the node
     Animation mAnim;
 
-    //! Needed for lights and cameras: target animation channel
+    //! Needed for lights and cameras: m_target animation channel
     //! Should contain position keys only.
     Animation mTargetAnim;
 

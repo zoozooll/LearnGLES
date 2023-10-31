@@ -570,7 +570,7 @@ void ProcessExtrudedArea(const Schema_2x3::IfcExtrudedAreaSolid& solid, const Te
     result.mVertcnt.reserve(curve.mVerts.size() + 2);
     std::vector<IfcVector3> in = curve.mVerts;
 
-    // First step: transform all vertices into the target coordinate space
+    // First step: transform all vertices into the m_target coordinate space
     IfcMatrix4 trafo;
     ConvertAxisPlacement(trafo, solid.Position);
 

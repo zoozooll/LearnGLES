@@ -742,7 +742,7 @@ public:
     const AnimationCurveMap& Curves() const;
 
     /** Object the curve is assigned to, this can be nullptr if the
-     *  target object has no DOM representation or could not
+     *  m_target object has no DOM representation or could not
      *  be read for other reasons.*/
     const Object* Target() const {
         return target;

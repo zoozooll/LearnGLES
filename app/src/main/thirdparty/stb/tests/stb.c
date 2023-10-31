@@ -3204,7 +3204,7 @@ typedef struct stb_summary_tree2
    float makes_target_weight;
    float weight_at_target;
    stb_summary_tree *original;
-   struct stb_summary_tree2 *target;
+   struct stb_summary_tree2 *m_target;
    STB__ARR(struct stb_summary_tree2 *) targeters;
 } stb_summary_tree2;
 
@@ -3217,7 +3217,7 @@ static stb_summary_tree2 *stb__summarize_clone(stb_summary_tree *t)
    s->weight = t->weight;
    s->weight_with_all_children = 0;
    s->weight_at_target = 0;
-   s->target = NULL;
+   s->m_target = NULL;
    s->targeters = NULL;
    s->num_children = t->num_children;
    s->children = NULL;
@@ -3230,7 +3230,7 @@ static float stb__summarize_compute_targets(stb_summary_tree2 *parent, stb_summa
 {
    float total = 0;
    if (node->weight == 0 && node->num_children == 1 && parent) {
-      node->target = parent;
+      node->m_target = parent;
       return stb__summarize_compute_targets(parent, node->children[0], reweight, weight*reweight);
    } else {
       float total=0;
@@ -3239,12 +3239,12 @@ static float stb__summarize_compute_targets(stb_summary_tree2 *parent, stb_summa
          total += stb__summarize_compute_targets(node, node->children[i], reweight, reweight);
       node->weight_with_all_children = total + node->weight;
       if (parent && node->weight_with_all_children) {
-         node->target = parent;
+         node->m_target = parent;
          node->weight_at_target = node->weight_with_all_children * weight;
          node->makes_target_weight = node->weight_at_target + parent->weight;
          stb_arr_push(parent->targeters, node);
       } else {
-         node->target = NULL;
+         node->m_target = NULL;
          node->weight_at_target = node->weight;
          node->makes_target_weight = 0;
       }
@@ -3290,7 +3290,7 @@ void *stb_summarize_tree(void *tree, int limit, float reweight)
    for (i=0; i < stb_arr_len(all) - limit; ++i) {
       stb_summary_tree2 *src, *dest;
       src = all[i];
-      dest = all[i]->target;
+      dest = all[i]->m_target;
       if (src->makes_target_weight == 0) continue;
       assert(dest != NULL);
 
@@ -3300,7 +3300,7 @@ void *stb_summarize_tree(void *tree, int limit, float reweight)
       assert(k != stb_arr_len(all));
       assert(i < k);
 
-      // move weight from all[i] to target
+      // move weight from all[i] to m_target
       src->weight = dest->makes_target_weight;
       src->weight = 0;
       src->makes_target_weight = 0;

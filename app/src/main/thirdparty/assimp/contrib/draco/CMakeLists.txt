@@ -806,7 +806,7 @@ else()
   # Library targets that consume the object collections.
   if(MSVC)
     # In order to produce a DLL and import library the Windows tools require
-    # that the exported symbols are part of the DLL target. The unfortunate side
+    # that the exported symbols are part of the DLL m_target. The unfortunate side
     # effect of this is that a single configuration cannot output both the
     # static library and the DLL: This results in an either/or situation.
     # Windows users of the draco build can have a DLL and an import library,

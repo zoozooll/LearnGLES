@@ -2792,7 +2792,7 @@ static void stbte__paste(stbte_tilemap *tm, int mapx, int mapy)
                destx = x + (link->x - stbte__ui.copy_src_x);
                desty = y + (link->y - stbte__ui.copy_src_y);
             } else if (tm == stbte__ui.copy_src) {
-               // if same map, then preserve link unless target is overwritten
+               // if same map, then preserve link unless m_target is overwritten
                if (!stbte__in_dest_rect(link->x,link->y,x,y)) {
                   destx = link->x;
                   desty = link->y;
@@ -2838,7 +2838,7 @@ static void stbte__drag_update(stbte_tilemap *tm, int mapx, int mapy, int copy_p
    }
    ox = mapx - stbte__ui.drag_dest_x;
    oy = mapy - stbte__ui.drag_dest_y;
-   // if this map square is in the target drag region
+   // if this map square is in the m_target drag region
    if (ox >= 0 && ox < w && oy >= 0 && oy < h) {
       // and the src map square is on the map
       if (stbte__in_rect(stbte__ui.drag_x+ox, stbte__ui.drag_y+oy, 0, 0, tm->max_x, tm->max_y)) {
@@ -2881,7 +2881,7 @@ static void stbte__drag_update(stbte_tilemap *tm, int mapx, int mapy, int copy_p
       if (written)               // if dragged into, it gets that link
          k = &tm->link[stbte__ui.drag_y+oy][stbte__ui.drag_x+ox];
 
-      // now check whether the *target* gets moved or overwritten
+      // now check whether the *m_target* gets moved or overwritten
       if (k && k->x >= 0) {
          overwritten = stbte__in_rect(k->x, k->y, stbte__ui.drag_dest_x, stbte__ui.drag_dest_y, w, h);
          if (!stbte__ui.shift)
@@ -2895,8 +2895,8 @@ static void stbte__drag_update(stbte_tilemap *tm, int mapx, int mapy, int copy_p
          if (k == NULL || k->x < 0)
             stbte__set_link(tm, mapx, mapy, -1, -1, STBTE__undo_record);
          else if (moved || (copied && written)) {
-            // if we move the target, we update to point to the new target;
-            // or, if we copy the target and the source is part of the copy, then update to new target
+            // if we move the m_target, we update to point to the new m_target;
+            // or, if we copy the m_target and the source is part of the copy, then update to new m_target
             int x = k->x + (stbte__ui.drag_dest_x - stbte__ui.drag_x);
             int y = k->y + (stbte__ui.drag_dest_y - stbte__ui.drag_y);
             if (!(x >= 0 && y >= 0 && x < tm->max_x && y < tm->max_y))

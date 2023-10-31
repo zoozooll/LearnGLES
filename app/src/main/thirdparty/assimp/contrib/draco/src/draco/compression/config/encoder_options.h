@@ -66,7 +66,7 @@ class EncoderOptionsBase : public DracoOptions<AttributeKeyT> {
     this->SetGlobalInt("decoding_speed", decoding_speed);
   }
 
-  // Sets a given feature as supported or unsupported by the target decoder.
+  // Sets a given feature as supported or unsupported by the m_target decoder.
   // Encoder will always use only supported features when encoding the input
   // geometry.
   void SetSupportedFeature(const std::string &name, bool supported) {

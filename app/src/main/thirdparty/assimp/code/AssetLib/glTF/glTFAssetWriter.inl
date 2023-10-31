@@ -146,7 +146,7 @@ namespace glTF {
                     valTarget.AddMember("id", StringRef(c.target.id->id), w.mAl);
                     valTarget.AddMember("path", c.target.path, w.mAl);
                 }
-                valChannel.AddMember("target", valTarget, w.mAl);
+                valChannel.AddMember("m_target", valTarget, w.mAl);
             }
             channels.PushBack(valChannel, w.mAl);
         }
@@ -210,7 +210,7 @@ namespace glTF {
         obj.AddMember("byteOffset", static_cast<uint64_t>(bv.byteOffset), w.mAl);
         obj.AddMember("byteLength", static_cast<uint64_t>(bv.byteLength), w.mAl);
         if (bv.target != BufferViewTarget_NONE) {
-            obj.AddMember("target", int(bv.target), w.mAl);
+            obj.AddMember("m_target", int(bv.target), w.mAl);
         }
     }
 
@@ -515,7 +515,7 @@ namespace glTF {
             a.mDicts[i]->WriteObjects(*this);
         }
 
-        // Add the target scene field
+        // Add the m_target scene field
         if (mAsset.scene) {
             mDoc.AddMember("scene", StringRef(mAsset.scene->id), mAl);
         }

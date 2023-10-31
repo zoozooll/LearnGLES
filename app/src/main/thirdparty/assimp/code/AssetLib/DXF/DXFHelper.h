@@ -58,7 +58,7 @@ namespace Assimp {
 namespace DXF {
 
 // read pairs of lines, parse group code and value and provide utilities
-// to convert the data to the target data type.
+// to convert the data to the m_target data type.
 // do NOT skip empty lines. In DXF files, they count as valid data.
 class LineReader {
 public:

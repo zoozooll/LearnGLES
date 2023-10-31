@@ -606,7 +606,7 @@ public enum AiConfigOptions {
 //    // ---------------------------------------------------------------------------
 //    /** @brief Ogre Importer detect the texture usage from its filename
 //     *
-//     * Normally, a texture is loaded as a colormap, if no target is specified in the
+//     * Normally, a texture is loaded as a colormap, if no m_target is specified in the
 //     * materialfile. Is this switch is enabled, texture names ending with _n, _l, _s
 //     * are used as normalmaps, lightmaps or specularmaps. 
 //     * <br>

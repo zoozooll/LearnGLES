@@ -183,7 +183,7 @@ namespace glTF2 {
                             break;
                     }
                 }
-                valChannel.AddMember("target", valTarget, w.mAl);
+                valChannel.AddMember("m_target", valTarget, w.mAl);
             }
             channels.PushBack(valChannel, w.mAl);
         }
@@ -235,7 +235,7 @@ namespace glTF2 {
             obj.AddMember("byteStride", bv.byteStride, w.mAl);
         }
         if (bv.target != BufferViewTarget_NONE) {
-            obj.AddMember("target", int(bv.target), w.mAl);
+            obj.AddMember("m_target", int(bv.target), w.mAl);
         }
     }
 
@@ -744,7 +744,7 @@ namespace glTF2 {
             a.mDicts[i]->WriteObjects(*this);
         }
 
-        // Add the target scene field
+        // Add the m_target scene field
         if (mAsset.scene) {
             mDoc.AddMember("scene", mAsset.scene->index, mAl);
         }

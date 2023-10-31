@@ -114,7 +114,7 @@ void ToCamelCase(std::string &text);
 
 /// Contains all data for one of the different transformation types
 struct Transform {
-    std::string mID; ///< SID of the transform step, by which anim channels address their target node
+    std::string mID; ///< SID of the transform step, by which anim channels address their m_target node
     TransformType mType;
     ai_real f[16]; ///< Interpretation of data depends on the type of the transformation
 };

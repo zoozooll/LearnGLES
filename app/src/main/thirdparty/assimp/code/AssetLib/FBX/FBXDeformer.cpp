@@ -116,7 +116,7 @@ Cluster::Cluster(uint64_t id, const Element& element, const Document& doc, const
     }
 
     if (!node) {
-        DOMError("failed to read target Node for Cluster",&element);
+        DOMError("failed to read m_target Node for Cluster",&element);
     }
 }
 

@@ -16,7 +16,7 @@ To use this module please provide following cmake defines:
 
 
 The build script for this port is based on [android-cmake](https://github.com/taka-no-me/android-cmake).  
-See its documentation for more Android-specific cmake options (e.g. -DANDROID_ABI for the target ABI).
+See its documentation for more Android-specific cmake options (e.g. -DANDROID_ABI for the m_target ABI).
 Check [Asset-Importer-Docs](https://assimp-docs.readthedocs.io/en/latest/) for more information.
 
 ### Code ###

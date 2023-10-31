@@ -34,7 +34,7 @@
 #
 #    include(AndroidNdkGdb)
 #    android_ndk_gdb_enable()
-#    # for each target
+#    # for each m_target
 #    add_library(MyLibrary ...)
 #    android_ndk_gdb_debuggable(MyLibrary)    
 
@@ -46,7 +46,7 @@
 # uses PROJECT_SOURCE_DIR by default.
 macro(android_ndk_gdb_enable)
     if(ANDROID)
-        # create custom target that depends on the real target so it gets executed afterwards
+        # create custom m_target that depends on the real m_target so it gets executed afterwards
         add_custom_target(NDK_GDB ALL)
         
         if(${ARGC})
@@ -78,13 +78,13 @@ macro(android_ndk_gdb_enable)
     endif()
 endmacro()
 
-# register a target for remote debugging
+# register a m_target for remote debugging
 # copies the debug version to NDK_GDB_SOLIB_PATH then strips symbols of original
 macro(android_ndk_gdb_debuggable TARGET_NAME)
     if(ANDROID)
         get_property(TARGET_LOCATION TARGET ${TARGET_NAME} PROPERTY LOCATION)
         
-        # create custom target that depends on the real target so it gets executed afterwards
+        # create custom m_target that depends on the real m_target so it gets executed afterwards
         add_dependencies(NDK_GDB ${TARGET_NAME})
     
         # 4. copy lib to obj

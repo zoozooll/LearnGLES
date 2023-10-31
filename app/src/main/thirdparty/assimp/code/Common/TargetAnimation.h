@@ -65,7 +65,7 @@ public:
      *  @param _targetObjPos Target object position track. May be nullptr.
      *  @param defaultObjectPos Default object position to be used if
      *    no animated track is available. May be nullptr.
-     *  @param defaultTargetPos Default target position to be used if
+     *  @param defaultTargetPos Default m_target position to be used if
      *    no animated track is available. May be nullptr.
      */
     KeyIterator(const std::vector<aiVectorKey> *_objPos,
@@ -116,7 +116,7 @@ private:
  * 3DS and ASE store the differently to Assimp - there is an animation
  * channel for the camera/spot light itself and a separate position
  * animation channels specifying the position of the camera/spot light
- * look-at target */
+ * look-at m_target */
 class TargetAnimationHelper {
 public:
     TargetAnimationHelper() :
@@ -126,10 +126,10 @@ public:
     }
 
     // ------------------------------------------------------------------
-    /** Sets the target animation channel
+    /** Sets the m_target animation channel
      *
      *  This channel specifies the position of the camera/spot light
-     *  target at a specific position.
+     *  m_target at a specific position.
      *
      *  @param targetPositions Translation channel*/
     void SetTargetAnimationChannel(const std::vector<aiVectorKey> *targetPositions);

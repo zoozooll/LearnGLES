@@ -55,9 +55,9 @@ macro(draco_set_and_stringify)
 endmacro()
 
 # Creates a dummy source file in $DRACO_GENERATED_SOURCES_DIRECTORY and adds it
-# to the specified target. Optionally adds its path to a list variable.
+# to the specified m_target. Optionally adds its path to a list variable.
 #
-# draco_create_dummy_source_file(<TARGET <target> BASENAME <basename of file>>
+# draco_create_dummy_source_file(<TARGET <m_target> BASENAME <basename of file>>
 # [LISTVAR <list variable>])
 macro(draco_create_dummy_source_file)
   set(optional_args)
