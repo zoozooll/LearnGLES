@@ -7,10 +7,12 @@
 
 #include "Scene.h"
 
+#include "SceneTouchEvent.h"
+
 class Shader;
 class Camera;
 
-class FramebuffersExercise1Scene : public Scene {
+class FramebuffersExercise1Scene : public Scene, public SceneTouchEvent {
 public:
     void init() override;
 
@@ -19,6 +21,16 @@ public:
     void draw() override;
 
     void destroy() override;
+
+    void move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) override;
+
+    void scale(const float &scale) override;
+
+    void yawPitch(const glm::vec2 &director) override;
+
+    void roll(const float &angle) override;
+
+    void onDoubleClick(const glm::vec2 point) override;
 
 private:
     unsigned int SCR_WIDTH = 0, SCR_HEIGHT = 0;

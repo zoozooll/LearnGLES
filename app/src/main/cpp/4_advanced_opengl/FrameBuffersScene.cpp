@@ -244,3 +244,32 @@ void FrameBuffersScene::destroy() {
     delete screenShader;
     delete camera;
 }
+
+void FrameBuffersScene::move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) {
+    camera->ProcessMove(glm::vec3((end_pivot - start_pivot) * glm::vec2(0.001f, -0.001f), 0.f));
+}
+
+void FrameBuffersScene::scale(const float &scale) {
+    float zoom = 0.f;
+    if (scale > 1.02f) {
+        zoom = 1.f;
+    } else if (scale < 0.98f) {
+        zoom = -1.f;
+    }
+    camera->ProcessMouseScroll(zoom);
+}
+
+void FrameBuffersScene::yawPitch(const glm::vec2 &director) {
+    camera->ProcessMouseMovement(director.x, director.y);
+}
+
+void FrameBuffersScene::roll(const float &angle) {
+}
+
+void FrameBuffersScene::onDoubleClick(const glm::vec2 point) {
+    camera->Position = glm::vec3(0.0f, 0.0f, 3.0f);
+    camera->WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
+    camera->Yaw = YAW;
+    camera->Pitch = PITCH;
+    camera->Zoom = ZOOM;
+}

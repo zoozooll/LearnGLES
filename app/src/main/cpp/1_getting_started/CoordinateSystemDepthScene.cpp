@@ -189,6 +189,7 @@ void CoordinateSystemDepthScene::draw() {
     glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
     // note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
     ourShader->setMat4("projection", projection);
+    ourShader->setVec2("screenSize", (float)SCR_WIDTH, (float)SCR_HEIGHT);
 
     // render box
     glBindVertexArray(VAO);
