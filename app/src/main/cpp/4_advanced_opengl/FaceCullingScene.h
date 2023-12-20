@@ -1,5 +1,5 @@
 //
-// Created by huion on 2023/8/23.
+// Created by Aaron Lee on 2023/8/23.
 //
 
 #ifndef LEARNGLES_FACECULLINGSCENE_H

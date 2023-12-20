@@ -23,7 +23,7 @@ void _check_gl_error(const char *file, int line) {
             default: error = "UNKNOWN"; break;
         }
 #ifdef ANDROID
-        LOGE("GLError", "GL_%s - %s : %d", error.c_str(), file, line);
+        LOGE("GLError", "GL_%s - %s:%d", error.c_str(), file, line);
 #else
         cerr << "GL_" << error.c_str() << " - " << file << ":" << line << endl;
 #endif

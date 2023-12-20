@@ -1,5 +1,5 @@
 //
-// Created by huion on 2023/8/22.
+// Created by Aaron Lee on 2023/8/22.
 //
 
 #ifndef LEARNGLES_SKELETALANIMATIONSCENE_H

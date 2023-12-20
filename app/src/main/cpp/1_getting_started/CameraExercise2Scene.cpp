@@ -1,5 +1,5 @@
 //
-// Created by huion on 2023/10/19.
+// Created by Aaron Lee on 2023/10/19.
 //
 
 #include "CameraExercise2Scene.h"

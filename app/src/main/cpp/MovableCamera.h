@@ -1,5 +1,5 @@
 //
-// Created by huion on 2023/4/10.
+// Created by Aaron Lee on 2023/4/10.
 //
 
 #ifndef OBJECT3DDEMO_MOVABLECAMERA_H
