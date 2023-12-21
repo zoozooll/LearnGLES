@@ -13,7 +13,7 @@
 #include "Camera.h"
 
 void ShadowMappingDepthScene::init() {
-    // MARK This feature need to enable depth test.
+    // This feature need to enable depth test.
     glEnable(GL_DEPTH_TEST);
 
     simpleDepthShader = new Shader ("5/3.1.1.shadow_mapping_depth.vert", "5/3.1.1.shadow_mapping_depth.frag");

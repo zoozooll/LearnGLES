@@ -34,6 +34,9 @@ public:
     const mat4 &getProjectionMatrix() const;
 
     void updateCameraMatrix();
+
+    const vec3 &getCameraPosition() const;
+
 private:
 
     mat4 m_targetTransform = mat4(1.f);
@@ -45,6 +48,7 @@ private:
 
     mat4 m_viewMatrix;
     mat4 m_projectionMatrix;
+    vec3 cameraPosition;
 };
 
 

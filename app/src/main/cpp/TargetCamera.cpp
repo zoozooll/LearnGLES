@@ -19,7 +19,7 @@ void TargetCamera::updateCameraMatrix() {
     up = normalize(up);
     forward = normalize(forward);
 
-    vec3 cameraPosition = target + forward * m_radius;
+    cameraPosition = target + forward * m_radius;
     LOGI(__FILE_NAME__, "updateCameraMatrix cameraPosition: %s, target: %s, up: %s",
          to_string(cameraPosition).c_str(),  to_string(target).c_str(), to_string(up).c_str());
     m_viewMatrix = lookAt(cameraPosition, target, up);
@@ -84,4 +84,8 @@ const mat4 &TargetCamera::getViewMatrix() const {
 
 const mat4 &TargetCamera::getProjectionMatrix() const {
     return m_projectionMatrix;
+}
+
+const vec3 &TargetCamera::getCameraPosition() const {
+    return cameraPosition;
 }
