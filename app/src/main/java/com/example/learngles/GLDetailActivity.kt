@@ -86,7 +86,6 @@ class GLDetailActivity : AppCompatActivity(), Renderer {
                     binding.surfaceSupportedView.requestRender()
                 }
             }
-
             override fun onLongPress(point: PointF) {
                 Log.i(TAG, "onLongPress")
                 binding.surfaceSupportedView.queueEvent {
@@ -95,11 +94,10 @@ class GLDetailActivity : AppCompatActivity(), Renderer {
                 }
             }
 
-            override fun onSingleMove(start: PointF, end: PointF) {
-                val dis = PointF(end.x - start.x, start.y - end.y) // Y direct is opposite in opengl and on screen
-                Log.i(TAG, "onSingleMove: $dis")
+            override fun onSingleTouch(disX: Float, disY: Float) {
+                Log.i(TAG, "onSingleMove: $disX, $disY")
                 binding.surfaceSupportedView.queueEvent {
-                    NativeLibHelper.onSingleTouch(dis.x, dis.y)
+                    NativeLibHelper.onSingleTouch(disX, disY)
                     binding.surfaceSupportedView.requestRender()
                 }
             }
@@ -118,11 +116,20 @@ class GLDetailActivity : AppCompatActivity(), Renderer {
                 }
             }
 
-            override fun onMoving(x: Float, y: Float, x1: Float, y1: Float) {
+            override fun onMoving(prevCenter: PointF, centerPoint: PointF) {
                 binding.surfaceSupportedView.queueEvent {
-                    NativeLibHelper.onMoving(x, y, x1, y1)
+                    NativeLibHelper.onMoving(prevCenter.x, prevCenter.y, centerPoint.x, centerPoint.y)
                     binding.surfaceSupportedView.requestRender()
                 }
+            }
+
+            override fun onActionUp(event: PointF) {
+            }
+
+            override fun onTwoFingersClick() {
+            }
+
+            override fun onThreeFingersClick() {
             }
         }
     }

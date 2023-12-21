@@ -203,12 +203,7 @@ void ShadowMappingScene::draw() {
 //    glActiveTexture(GL_TEXTURE0);
 //    glBindTexture(GL_TEXTURE_2D, woodTexture);
     renderScene(*simpleDepthShader);
-    check_gl_error();
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-    // reset viewport
-    glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // render Depth map to quad for visual debugging
     // ---------------------------------------------

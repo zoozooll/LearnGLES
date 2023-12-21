@@ -208,7 +208,7 @@ void ShadowMappingDepthScene::draw() {
     // render Depth map to quad for visual debugging
     // ---------------------------------------------
     debugDepthQuad->use();
-    debugDepthQuad->setInt("depthMap", 0);
+    debugDepthQuad->setInt("depthCubemap", 0);
     debugDepthQuad->setFloat("near_plane", near_plane);
     debugDepthQuad->setFloat("far_plane", far_plane);
     glActiveTexture(GL_TEXTURE0);
