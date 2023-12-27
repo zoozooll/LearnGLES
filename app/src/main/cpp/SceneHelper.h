@@ -254,6 +254,8 @@ inline Scene* GenSceneByName(const char *tutorial) {
         return new ShadowMappingBaseScene;
     } else if (!strcmp(tutorial, "shadow_mapping")) {
         return new ShadowMappingScene;
+    } else if (!strcmp(tutorial, "shadow_mapping_exercise1")) {
+        return new ShadowMappingScene;
     } else if (!strcmp(tutorial, "point_shadows")) {
         return new PointShadowsScene;
     } else if (!strcmp(tutorial, "point_shadow_soft")) {
@@ -312,7 +314,6 @@ inline Scene* GenSceneByName(const char *tutorial) {
         return new ComputeshaderHelloworld;
     } else if (!strcmp(tutorial, "physically_based_bloom")) {
         return new PhysicallyBasedBloomScene;
-
     }
     return nullptr;
 }

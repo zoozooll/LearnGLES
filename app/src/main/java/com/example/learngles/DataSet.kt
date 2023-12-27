@@ -79,6 +79,7 @@ object DataSet {
         "shadow_mapping_depth" ,
         "shadow_mapping_base" ,
         "shadow_mapping" ,
+        "shadow_mapping_exercise1",
         "point_shadows" ,
         "point_shadow_soft" ,
         "csm" ,
