@@ -54,7 +54,7 @@ class TouchEventView @JvmOverloads constructor(
         }
 
         override fun onScroll(
-            e1: MotionEvent,
+            e1: MotionEvent?,
             e2: MotionEvent,
             _1: Float,
             _2: Float
@@ -110,7 +110,7 @@ class TouchEventView @JvmOverloads constructor(
         }
 
         override fun onFling(
-            e1: MotionEvent,
+            e1: MotionEvent?,
             e2: MotionEvent,
             velocityX: Float,
             velocityY: Float

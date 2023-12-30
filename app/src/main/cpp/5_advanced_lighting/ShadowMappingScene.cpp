@@ -112,7 +112,8 @@ void ShadowMappingScene::init() {
             // bottom face
             -1.0f, -1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f, // top-right
             1.0f, -1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 1.0f, // top-left
-            1.0f, -1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f, // bottom-left
+            1.0f, -1.0f,  1.0f,  0.0f,
+            -1.0f,  0.0f, 1.0f, 0.0f, // bottom-left
             1.0f, -1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f, // bottom-left
             -1.0f, -1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 0.0f, // bottom-right
             -1.0f, -1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f, // top-right
@@ -143,10 +144,16 @@ void ShadowMappingScene::init() {
     glDeleteBuffers(1, &cubeVBO);
     check_gl_error();
 
+
+
+    woodTexture = loadTexture("textures/wood.png");
+}
+
+void ShadowMappingScene::resize(int width, int height) {
     // configure depth map FBO
     // -----------------------
-    SHADOW_WIDTH = 1024;
-    SHADOW_HEIGHT = 1024;
+    SHADOW_WIDTH = min(width, height);
+    SHADOW_HEIGHT = SHADOW_WIDTH;
 
     glGenFramebuffers(1, &depthMapFBO);
     // create depth texture
@@ -167,10 +174,6 @@ void ShadowMappingScene::init() {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     check_gl_error();
 
-    woodTexture = loadTexture("textures/wood.png");
-}
-
-void ShadowMappingScene::resize(int width, int height) {
     SCR_WIDTH = width;
     SCR_HEIGHT = height;
     camera.setAspec((float)width / height);

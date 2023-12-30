@@ -197,12 +197,11 @@ void ShaderMappingExercise1Scene::draw() {
     simpleDepthShader->use();
     simpleDepthShader->setMat4("lightSpaceMatrix", lightSpaceMatrix);
     simpleDepthShader->setVec3("lightPos", lightPos);
+    simpleDepthShader->setMat4("model", mat4(1.0f));
 
     glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
     glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
     glClear(GL_DEPTH_BUFFER_BIT);
-//    glActiveTexture(GL_TEXTURE0);
-//    glBindTexture(GL_TEXTURE_2D, woodTexture);
     renderScene(*simpleDepthShader);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
