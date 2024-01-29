@@ -23,6 +23,7 @@ static const char *fragmentShaderSource = "#version 320 es\n"
                                    "void main()\n"
                                    "{\n"
                                    "   FragColor = ourColor;\n"
+//                                   "   FragColor = dFdx(FragColor) * 1000.;\n"
                                    "}\n\0";
 
 void ShadersUniformScene::init() {

@@ -57,6 +57,7 @@
 #include "4_advanced_opengl/BlendingDiscardScene.h"
 #include "4_advanced_opengl/FrameBuffersScene.h"
 #include "4_advanced_opengl/FramebuffersExercise1Scene.h"
+#include "4_advanced_opengl/FramebuffersMultiTexturesScene.h"
 #include "4_advanced_opengl/CubemapSkyboxScene.h"
 #include "4_advanced_opengl/CubemapsEnvironmentMappingScene.h"
 #include "4_advanced_opengl/AdvancedGlslUboScene.h"
@@ -222,6 +223,8 @@ inline Scene* GenSceneByName(const char *tutorial) {
         return new FrameBuffersScene;
     } else if (!strcmp(tutorial, "framebuffers_exercise1")) {
         return new FramebuffersExercise1Scene;
+    } else if (!strcmp(tutorial, "framebuffers_multi_textures")) {
+        return new FramebuffersMultiTexturesScene;
     } else if (!strcmp(tutorial, "cubemap_skybox")) {
         return new CubemapSkyboxScene;
     } else if (!strcmp(tutorial, "cubemap_environment_mapping" )) {

@@ -27,17 +27,19 @@ void ModelLoadingScene::init() {
     // build and compile shaders
     // -------------------------
     ourShader = new Shader("3/1.model_loading.vert", "3/1.model_loading.frag");
-
+    check_gl_error();
     // load models
     // -----------
     ourModel = new Model("objects/backpack/backpack.obj");
     model = glm::mat4(1.0f);
+    check_gl_error();
 }
 
 void ModelLoadingScene::resize(int width, int height) {
     glViewport(0, 0, width, height);
     SCR_WIDTH = width;
     SCR_HEIGHT = height;
+    check_gl_error();
 }
 
 void ModelLoadingScene::draw() {

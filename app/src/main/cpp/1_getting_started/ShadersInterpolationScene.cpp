@@ -25,8 +25,15 @@ static const char *fragmentShaderSource = "#version 320 es\n"
                                    "void main()\n"
                                    "{\n"
                                    "   FragColor = vec4(ourColor, 1.0f);\n"
+//                                   "   float dvalue = dFdx(ourColor.r)* 1000.;\n"
+//                                   "   float dvalue = -dFdy(ourColor.r)* 1000.;\n"
+//                                   "   float dvalue = -dFdx(ourColor.g)* 1000.;\n"
+//                                   "   float dvalue = -dFdy(ourColor.g)* 1000.;\n"
+//                                   "   float dvalue = dFdx(ourColor.b)* 1000.;\n"
+//                                   "   float dvalue = dFdy(ourColor.b)* 1000.;\n"
+//                                   "   FragColor = vec4(dvalue, dvalue, dvalue, 1.);\n"
                                    "}\n\0";
-
+//
 void ShadersInterpolationScene::init() {
 // build and compile our shader program
     // ------------------------------------

@@ -7,6 +7,7 @@
 #include <assimp/port/AndroidJNI/AndroidJNIIOSystem.h>
 
 #include "logutil.h"
+#include "glerror.h"
 
 extern char *g_internalPath;
 extern AAssetManager* mgr;
@@ -44,6 +45,7 @@ void Model::loadModel(string const &path)
 
     // process ASSIMP's root node recursively
     processNode(scene->mRootNode, scene);
+
 }
 
 // processes a node in a recursive fashion. Processes each individual mesh located at the node and repeats this process on its children nodes (if any).
@@ -123,6 +125,8 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
         for(unsigned int j = 0; j < face.mNumIndices; j++)
             indices.push_back(face.mIndices[j]);
     }
+
+    check_gl_error();
     // process materials
     aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
     // we assume a convention for sampler names in the shaders. Each diffuse texture should be named
@@ -144,7 +148,7 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
     // 4. height maps
     std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
     textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
-
+    check_gl_error();
     // return a mesh object created from the extracted mesh data
     return Mesh(vertices, indices, textures);
 }
@@ -196,11 +200,12 @@ unsigned int TextureFromFile(const char *path, const string &directory, bool gam
     unsigned char *data;
     int width, height, nrComponents;
     data = stbi_load_from_memory(file_data, file_size, &width, &height, &nrComponents, 0);
+    check_gl_error();
     if (data)
     {
         GLenum format;
         if (nrComponents == 1)
-            format = GL_RED;
+            format = GL_ALPHA;
         else if (nrComponents == 3)
             format = GL_RGB;
         else if (nrComponents == 4)
@@ -212,9 +217,9 @@ unsigned int TextureFromFile(const char *path, const string &directory, bool gam
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
+        check_gl_error();
         stbi_image_free(data);
     }
     else
