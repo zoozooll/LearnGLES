@@ -9,6 +9,12 @@
 
 #include "logutil.h"
 
+using glm::vec2;
+using glm::vec3;
+using glm::mat4;
+using glm::radians;
+using glm::perspective;
+
 void TargetCamera::updateCameraMatrix() {
     vec3 target(m_targetTransform[3][0] / m_targetTransform[3][3], m_targetTransform[3][1] / m_targetTransform[3][3],
                 m_targetTransform[3][2] / m_targetTransform[3][3]);

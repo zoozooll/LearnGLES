@@ -15,6 +15,7 @@
 #include "Texture.h"
 #include "TimeUtil.h"
 
+using glm::vec2;
 using glm::mat4;
 
 void PointShadowsScene::init() {

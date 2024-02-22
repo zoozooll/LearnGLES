@@ -6,15 +6,15 @@
 #define OBJECT3DDEMO_MOVABLECAMERA_H
 #include <glm/glm.hpp>
 
-using namespace glm;
+//using namespace glm;
 
 class MovableCamera {
 private:
     float m_radius;  //半径
     float m_longitude;  // 经度
     float m_latitude; // 纬度
-    mat4 viewMatrix;
-    vec3 position;
+    glm::mat4 viewMatrix;
+    glm::vec3 position;
     void calculateViewTransform();
 
 public:
@@ -30,9 +30,9 @@ public:
 
     void setLatitude(float latitude);
 
-    const mat4 &GetViewMatrix();
+    const glm::mat4 &GetViewMatrix();
 
-    const vec3 &getPosition() const;
+    const glm::vec3 &getPosition() const;
 };
 
 

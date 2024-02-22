@@ -9,6 +9,12 @@
 
 #include "logutil.h"
 
+using glm::vec2;
+using glm::vec3;
+using glm::mat4;
+using glm::radians;
+using glm::perspective;
+
 void CircleCamera::moveRound(const vec2 &round) {
 
     updateCamera();

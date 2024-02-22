@@ -7,7 +7,7 @@
 
 #include <glm/glm.hpp>
 
-using namespace glm;
+//using namespace glm;
 
 class TargetCamera {
 public:
@@ -29,26 +29,26 @@ public:
 
     void setFar(float mFar);
 
-    const mat4 &getViewMatrix() const;
+    const glm::mat4 &getViewMatrix() const;
 
-    const mat4 &getProjectionMatrix() const;
+    const glm::mat4 &getProjectionMatrix() const;
 
     void updateCameraMatrix();
 
-    const vec3 &getCameraPosition() const;
+    const glm::vec3 &getCameraPosition() const;
 
 private:
 
-    mat4 m_targetTransform = mat4(1.f);
+    glm::mat4 m_targetTransform = glm::mat4(1.f);
     float m_radius = 8.f;
     float m_vdy = 75.f;
     float m_aspec = 0.f;
     float m_near = 0.f;
     float m_far = 0.f;
 
-    mat4 m_viewMatrix;
-    mat4 m_projectionMatrix;
-    vec3 cameraPosition;
+    glm::mat4 m_viewMatrix;
+    glm::mat4 m_projectionMatrix;
+    glm::vec3 cameraPosition;
 };
 
 

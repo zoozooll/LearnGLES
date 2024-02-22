@@ -6,13 +6,18 @@
 
 #include <glm/ext.hpp>
 
+using glm::vec3;
+using glm::mat4;
+using glm::radians;
+using glm::fclamp;
+
 void MovableCamera::calculateViewTransform() {
     float x = m_radius * cosf(radians(m_latitude)) * cosf(radians(m_longitude));
     float y = m_radius * sinf(radians(m_latitude));
     float z = m_radius * cosf(radians(m_latitude)) * sinf(radians(m_longitude));
-    glm::vec3 position = {x, y, z};
-    glm::vec3 target(0.f);
-    glm::vec3 up(0.f, 1.f, 0.f);
+    vec3 position = {x, y, z};
+    vec3 target(0.f);
+    vec3 up(0.f, 1.f, 0.f);
     viewMatrix = lookAt(position, target, up);
 }
 

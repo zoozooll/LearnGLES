@@ -5,6 +5,9 @@
 #include "Mesh.h"
 #include "glerror.h"
 
+using std::string;
+using std::vector;
+
 // constructor
 Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures)
 {

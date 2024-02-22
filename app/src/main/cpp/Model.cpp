@@ -9,6 +9,9 @@
 #include "logutil.h"
 #include "glerror.h"
 
+using std::string;
+using std::vector;
+
 extern char *g_internalPath;
 extern AAssetManager* mgr;
 

@@ -11,6 +11,9 @@
 #include "Shader.h"
 #include "Texture.h"
 
+using glm::vec3;
+using glm::mat4;
+
 static int SCR_WIDTH = 0, SCR_HEIGHT = 0;
 
 void CameraExercise2Scene::init() {
@@ -90,18 +93,18 @@ void CameraExercise2Scene::draw() {
     ourShader->use();
 
     // pass projection matrix to shader (note that in this case it could change every frame)
-    glm::mat4 projection = glm::perspective(glm::radians(45.f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    mat4 projection = glm::perspective(glm::radians(45.f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
     ourShader->setMat4("projection", projection);
 
     // camera/view transformation
-    glm::mat4 view = camera.GetViewMatrix();
+    mat4 view = camera.GetViewMatrix();
     ourShader->setMat4("view", view);
 
     // render boxes
     glBindVertexArray(VAO);
 
     // calculate the model matrix for each object and pass it to shader before drawing
-    glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+    mat4 model = mat4(1.0f); // make sure to initialize matrix to identity matrix first
     vec3 billboardFrontWorld = vec3(0.f, 0.f, 1.f);
     vec3 billboardPosition = vec3(0.f);
     vec3 billboard_to_camera = glm::normalize(camera.getPosition() - billboardPosition);

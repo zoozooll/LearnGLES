@@ -11,6 +11,8 @@
 #include "Shader.h"
 #include "Texture.h"
 
+using glm::vec2;
+
 // world space positions of our cubes
 static glm::vec3 cubePositions[] = {
         glm::vec3( 0.0f,  0.0f,  0.0f),

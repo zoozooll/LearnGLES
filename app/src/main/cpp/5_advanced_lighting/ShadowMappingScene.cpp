@@ -4,6 +4,7 @@
 
 #include "ShadowMappingScene.h"
 
+#include <cmath>
 #include <GLES3/gl32.h>
 #include <stb_image.h>
 #include <glm/ext.hpp>
@@ -14,6 +15,7 @@
 #include "Camera.h"
 #include "Texture.h"
 
+using glm::vec2;
 using glm::mat4;
 
 void ShadowMappingScene::init() {
@@ -152,7 +154,7 @@ void ShadowMappingScene::init() {
 void ShadowMappingScene::resize(int width, int height) {
     // configure depth map FBO
     // -----------------------
-    SHADOW_WIDTH = min(width, height);
+    SHADOW_WIDTH = glm::min(width, height);
     SHADOW_HEIGHT = SHADOW_WIDTH;
 
     glGenFramebuffers(1, &depthMapFBO);

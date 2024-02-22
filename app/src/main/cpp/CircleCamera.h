@@ -7,7 +7,7 @@
 
 #include <glm/glm.hpp>
 
-using namespace glm;
+//using namespace glm;
 
 class CircleCamera {
 public:
@@ -21,11 +21,11 @@ public:
 
     void setFar(float far);
 
-    void moveRound(const vec2& round);
+    void moveRound(const glm::vec2& round);
 
     void moveZoom(const float& radius);
 
-    void moveTranslate(const vec2& tran);
+    void moveTranslate(const glm::vec2& tran);
 
     void setRadius(float radius);
 
@@ -38,7 +38,7 @@ public:
     void testSingleClick();
 
 private:
-    mat4 calculatorViewMatrix(const vec3 &position, const vec3 &right, const vec3 &up, const vec3 &forward) ;
+    glm::mat4 calculatorViewMatrix(const glm::vec3 &position, const glm::vec3 &right, const glm::vec3 &up, const glm::vec3 &forward) ;
 
     float m_vdy = 75.f;
     float m_aspec = 0.f;
@@ -46,14 +46,14 @@ private:
     float m_far = 0.f;
 
 
-    mat4 m_viewMatrix;
-    mat4 m_projectionMatrix;
+    glm::mat4 m_viewMatrix;
+    glm::mat4 m_projectionMatrix;
 
-    vec3 m_target = {0.f, 0.f, 0.f};
+    glm::vec3 m_target = {0.f, 0.f, 0.f};
     float m_radius = 8.f;
-    float m_longitude = radians(-90.f);  // 经度
+    float m_longitude = glm::radians(-90.f);  // 经度
     float m_latitude = 0.f; // 纬度
-    vec3 m_up = {0.f, 1.f, 0.f};
+    glm::vec3 m_up = {0.f, 1.f, 0.f};
 };
 
 
