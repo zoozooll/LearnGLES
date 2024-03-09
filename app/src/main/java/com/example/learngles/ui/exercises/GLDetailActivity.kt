@@ -1,25 +1,22 @@
-package com.example.learngles
+package com.example.learngles.ui.exercises
 
 import android.annotation.SuppressLint
 import android.graphics.PointF
 import android.opengl.GLSurfaceView
-import android.opengl.GLSurfaceView.RENDERMODE_CONTINUOUSLY
 import android.opengl.GLSurfaceView.RENDERMODE_WHEN_DIRTY
 import android.opengl.GLSurfaceView.Renderer
 import android.os.Bundle
 import android.util.Log
-import android.view.GestureDetector
-import android.view.MotionEvent
-import android.view.SurfaceHolder
 import androidx.appcompat.app.AppCompatActivity
+import com.example.learngles.MainActivity
+import com.example.learngles.NativeLibHelper
+import com.example.learngles.TouchEventView
 import com.example.learngles.databinding.ActivityGldetailBinding
 import javax.microedition.khronos.egl.EGL10
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.egl.EGLContext
 import javax.microedition.khronos.egl.EGLDisplay
 import javax.microedition.khronos.opengles.GL10
-import kotlin.math.atan2
-import kotlin.math.sqrt
 
 class GLDetailActivity : AppCompatActivity(), Renderer {
 
@@ -70,7 +67,7 @@ class GLDetailActivity : AppCompatActivity(), Renderer {
             renderMode = RENDERMODE_WHEN_DIRTY
         }
 
-        binding.viewTouchEvent.callback = object: TouchEventView.Callback{
+        binding.viewTouchEvent.callback = object: TouchEventView.Callback {
             override fun onSingleClick(point: PointF) {
                 Log.i(TAG, "onSingleClick")
                 binding.surfaceSupportedView.queueEvent {
@@ -118,7 +115,12 @@ class GLDetailActivity : AppCompatActivity(), Renderer {
 
             override fun onMoving(prevCenter: PointF, centerPoint: PointF) {
                 binding.surfaceSupportedView.queueEvent {
-                    NativeLibHelper.onMoving(prevCenter.x, prevCenter.y, centerPoint.x, centerPoint.y)
+                    NativeLibHelper.onMoving(
+                        prevCenter.x,
+                        prevCenter.y,
+                        centerPoint.x,
+                        centerPoint.y
+                    )
                     binding.surfaceSupportedView.requestRender()
                 }
             }

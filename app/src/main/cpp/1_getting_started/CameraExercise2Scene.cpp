@@ -105,16 +105,14 @@ void CameraExercise2Scene::draw() {
 
     // calculate the model matrix for each object and pass it to shader before drawing
     mat4 model = mat4(1.0f); // make sure to initialize matrix to identity matrix first
-    vec3 billboardFrontWorld = vec3(0.f, 0.f, 1.f);
+    vec3 billboardFrontWorld = vec3(0.f, 0.f, 1.f); // 目标物体的正面方向
     vec3 billboardPosition = vec3(0.f);
-    vec3 billboard_to_camera = glm::normalize(camera.getPosition() - billboardPosition);
-    vec3 pivot = glm::normalize(cross(billboardFrontWorld, billboard_to_camera));
+    vec3 billboard_to_camera = glm::normalize(camera.getPosition() - billboardPosition); // 目标点（重心，几何中心）到摄像头的方向
+    vec3 pivot = glm::normalize(cross(billboardFrontWorld, billboard_to_camera)); //旋转轴
     float theta = acos(dot(billboardFrontWorld, billboard_to_camera));
     rotate(model, theta, pivot);
     ourShader->setMat4("model", model);
-
     glDrawArrays(GL_TRIANGLES, 0, 6);
-
 }
 
 void CameraExercise2Scene::destroy() {

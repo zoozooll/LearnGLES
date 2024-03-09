@@ -5,14 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.learngles.DataSet
-import com.example.learngles.GLDetailActivity
+import com.example.learngles.ui.exercises.GLDetailActivity
 import com.example.learngles.MainActivity
 import com.example.learngles.R
 import com.example.learngles.databinding.FragmentMainBinding
@@ -49,16 +49,19 @@ class PlaceholderFragment : Fragment() {
         return root
     }
 
-    inner class ContactsAdapter(private val dataList: List<String>) : RecyclerView.Adapter<RecyclerView.ViewHolder>()
+    inner class ContactsAdapter(private val dataList: List<Pair<String, Boolean>>) : RecyclerView.Adapter<RecyclerView.ViewHolder>()
     {
 
         inner class TutorialViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            val text1 = itemView.findViewById<TextView>(androidx.core.R.id.title)
+            val text1 = itemView.findViewById<TextView>(R.id.tvw_title)
+            val checkBox = itemView.findViewById<CheckBox>(R.id.check_enable)
             init {
                 itemView.setOnClickListener {
-                    val intent = Intent(requireContext(), GLDetailActivity::class.java)
-                    intent.putExtra(MainActivity.KEY_TUTORIAL_TITLE, text1.text.toString())
-                    startActivity(intent)
+                    if (checkBox.isChecked) {
+                        val intent = Intent(requireContext(), GLDetailActivity::class.java)
+                        intent.putExtra(MainActivity.KEY_TUTORIAL_TITLE, text1.text.toString())
+                        startActivity(intent)
+                    }
                 }
             }
         }
@@ -71,7 +74,8 @@ class PlaceholderFragment : Fragment() {
         }
 
         override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-            (viewHolder as TutorialViewHolder).text1.text = dataList[position]
+            (viewHolder as TutorialViewHolder).text1.text = dataList[position].first
+            (viewHolder as TutorialViewHolder).checkBox.isChecked = dataList[position].second
         }
 
         override fun getItemCount(): Int {

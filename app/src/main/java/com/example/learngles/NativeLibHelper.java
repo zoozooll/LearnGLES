@@ -2,6 +2,8 @@ package com.example.learngles;
 
 import android.content.res.AssetManager;
 
+import java.util.Map;
+
 public class NativeLibHelper {
     static {
         System.loadLibrary("nativegl");
@@ -32,4 +34,6 @@ public class NativeLibHelper {
     public static native void onDoubleClick(float x, float y);
 
     public static native void onLongPress(float x, float y);
+
+    public static native void sendCommands(Map<String, Object> commands);
 }
