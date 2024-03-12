@@ -7,7 +7,7 @@ project("nativegl")
 include_directories(".")
 
 # Add glm library
-#add_subdirectory("../thirdparty/glm" ${CMAKE_CURRENT_BINARY_DIR}/glm)
+add_subdirectory("../thirdparty/glm" ${CMAKE_CURRENT_BINARY_DIR}/glm)
 include_directories("${glm_SOURCE_DIR}")
 
 # Add stb_image library

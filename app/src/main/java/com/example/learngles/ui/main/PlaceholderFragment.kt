@@ -16,6 +16,7 @@ import com.example.learngles.ui.exercises.GLDetailActivity
 import com.example.learngles.MainActivity
 import com.example.learngles.R
 import com.example.learngles.databinding.FragmentMainBinding
+import com.example.learngles.ui.exercises.TransformExer2Activity
 
 /**
  * A placeholder fragment containing a simple view.
@@ -58,7 +59,12 @@ class PlaceholderFragment : Fragment() {
             init {
                 itemView.setOnClickListener {
                     if (checkBox.isChecked) {
-                        val intent = Intent(requireContext(), GLDetailActivity::class.java)
+                        val tutorialTitle = text1.text.toString();
+                        val dstActivity = when(tutorialTitle) {
+                            "transformations_exercise2" -> TransformExer2Activity::class.java
+                            else -> GLDetailActivity::class.java
+                        }
+                        val intent = Intent(requireContext(), dstActivity)
                         intent.putExtra(MainActivity.KEY_TUTORIAL_TITLE, text1.text.toString())
                         startActivity(intent)
                     }

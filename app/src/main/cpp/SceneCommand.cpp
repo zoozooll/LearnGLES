@@ -9,6 +9,9 @@
 #include <any>
 #include <string>
 #include <vector>
+#include "Scene.h"
+
+extern Scene *g_scene;
 
 extern "C"
 JNIEXPORT void JNICALL
@@ -144,9 +147,12 @@ Java_com_example_learngles_NativeLibHelper_sendCommands(JNIEnv *env, jclass claz
         env->DeleteLocalRef(javaKey);
         env->DeleteLocalRef(entry);
     }
-//    if (model3DScene) {
-//        model3DScene->sendCommands(cppMap);
-//    }
+    if (g_scene) {
+        auto baseCommand = dynamic_cast<SceneCommand*>(g_scene);
+        if (baseCommand) {
+           baseCommand->sendCommand(cppMap);
+        }
+    }
     // Now cppMap contains the converted values from the Java Map
     // You can use cppMap as needed in your C++ code
 

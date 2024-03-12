@@ -11,6 +11,13 @@
 #include "Shader.h"
 #include "stb_image.h"
 #include "TimeUtil.h"
+#include "glm/gtx/matrix_decompose.hpp"
+#include "constants.h"
+
+using glm::vec3;
+using glm::vec4;
+using glm::quat;
+using glm::mat4;
 
 void TransformationsExercise2Scene::init() {
 // build and compile our shader zprogram
@@ -150,31 +157,226 @@ void TransformationsExercise2Scene::destroy() {
     glDeleteBuffers(1, &EBO);
 }
 
-void TransformationsExercise2Scene::move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) {
-    glm::mat4 l_matrix(1.0f);
-    l_matrix = glm::translate(l_matrix, glm::vec3((end_pivot - start_pivot) * glm::vec2(0.001f, -0.001f), 0.f));
-    transform = l_matrix * transform;
+std::map<std::string, std::any>
+TransformationsExercise2Scene::sendCommand(std::map<std::string, std::any> commands) {
+    for (const auto& [key, value]: commands) {
+        if ("translate_x" == key && value.type() == typeid(float)) {
+            auto l_value = any_cast<float>(value);
+            translateX(l_value);
+        } else if ("translate_y" == key && value.type() == typeid(float)) {
+            auto l_value = any_cast<float>(value);
+            translateY(l_value);
+        } else if ("translate_z" == key && value.type() == typeid(float)) {
+            auto l_value = any_cast<float>(value);
+            translateZ(l_value);
+        } else if ("rotate_x" == key && value.type() == typeid(float)) {
+            auto l_value = any_cast<float>(value);
+            rotateX(l_value);
+        } else if ("rotate_y" == key && value.type() == typeid(float)) {
+            auto l_value = any_cast<float>(value);
+            rotateY(l_value);
+        } else if ("rotate_z" == key && value.type() == typeid(float)) {
+            auto l_value = any_cast<float>(value);
+            rotateZ(l_value);
+        } else if ("scale_x" == key && value.type() == typeid(float)) {
+            auto l_value = any_cast<float>(value);
+            scaleX(l_value);
+        } else if ("scale_y" == key && value.type() == typeid(float)) {
+            auto l_value = any_cast<float>(value);
+            scaleY(l_value);
+        } else if ("scale_z" == key && value.type() == typeid(float)) {
+            auto l_value = any_cast<float>(value);
+            scaleZ(l_value);
+        }
+    }
+    return {};
 }
 
-void TransformationsExercise2Scene::scale(const float &scale) {
-    glm::mat4 l_matrix(1.0f);
-    LOGI("TransformationsScene", "scale %f", scale);
-    l_matrix = glm::scale(l_matrix, glm::vec3(scale, scale, scale));
-    transform = l_matrix * transform;
+void TransformationsExercise2Scene::translate(glm::vec3 t) {
+    vec3 l_scale;
+    quat l_rotation;
+    vec3 translation;
+    vec3 skew;
+    vec4 perspective;
+    glm::decompose(transform, l_scale, l_rotation, translation, skew, perspective);
+    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
+    mat4 mat_rotate = glm::mat4_cast(l_rotation);
+    mat4 mat_translate = glm::translate(mat4(1.f), t);
+    transform = mat_translate * mat_rotate * mat_scale;
 }
 
-void TransformationsExercise2Scene::yawPitch(const glm::vec2 &director) {
+void TransformationsExercise2Scene::rotate(glm::vec3 r) {
+    vec3 l_scale;
+    quat l_rotation;
+    vec3 translation;
+    vec3 skew;
+    vec4 perspective;
+    glm::decompose(transform, l_scale, l_rotation, translation, skew, perspective);
+    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
 
-    glm::mat4 l_matrix(1.0f);
-    glm::vec2 perpendicular = glm::normalize(glm::vec2(-director.y, director.x));
-    auto angle = glm::length(director) * 0.1f / M_PI;
-    l_matrix = glm::rotate(l_matrix, float(angle), glm::vec3(perpendicular, 0.f) );
-    transform = l_matrix * transform;
+    mat4 QuatAroundX = glm::rotate(mat4(1.f), r.x, X_AXIS);
+    mat4 QuatAroundY = glm::rotate(mat4(1.f), r.y, Y_AXIS);
+    mat4 QuatAroundZ = glm::rotate(mat4(1.f), r.z, Z_AXIS);
+    mat4 mat_rotate = QuatAroundX * QuatAroundY * QuatAroundZ;
+    mat4 mat_translate = glm::translate(mat4(1.f), translation);
+    transform = mat_translate * mat_rotate * mat_scale;
 }
 
-void TransformationsExercise2Scene::roll(const float &angle) {
-    LOGI("TransformationsScene", "roll %f", angle);
-    glm::mat4 l_matrix(1.0f);
-    l_matrix = glm::rotate(l_matrix, angle, glm::vec3(0.f, 0.f, 1.f));
-    transform = l_matrix * transform;
+void TransformationsExercise2Scene::scale(glm::vec3 s) {
+    vec3 l_scale;
+    quat l_rotation;
+    vec3 translation;
+    vec3 skew;
+    vec4 perspective;
+    glm::decompose(transform, l_scale, l_rotation, translation, skew, perspective);
+    mat4 mat_scale = glm::scale(mat4(1.f), s);
+    mat4 mat_rotate = glm::mat4_cast(l_rotation);
+    mat4 mat_translate = glm::translate(mat4(1.f), translation);
+    transform = mat_translate * mat_rotate * mat_scale;
+}
+
+void TransformationsExercise2Scene::translateX(float t) {
+    vec3 l_scale;
+    quat l_rotation;
+    vec3 translation;
+    vec3 skew;
+    vec4 perspective;
+    glm::decompose(transform, l_scale, l_rotation, translation, skew, perspective);
+    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
+    mat4 mat_rotate = glm::mat4_cast(l_rotation);
+    translation.x = t;
+    mat4 mat_translate = glm::translate(mat4(1.f), translation);
+    transform = mat_translate * mat_rotate * mat_scale;
+}
+
+void TransformationsExercise2Scene::translateY(float t) {
+    vec3 l_scale;
+    quat l_rotation;
+    vec3 translation;
+    vec3 skew;
+    vec4 perspective;
+    glm::decompose(transform, l_scale, l_rotation, translation, skew, perspective);
+    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
+    mat4 mat_rotate = glm::mat4_cast(l_rotation);
+    translation.y = t;
+    mat4 mat_translate = glm::translate(mat4(1.f), translation);
+    transform = mat_translate * mat_rotate * mat_scale;
+}
+
+void TransformationsExercise2Scene::translateZ(float t) {
+    vec3 l_scale;
+    quat l_rotation;
+    vec3 translation;
+    vec3 skew;
+    vec4 perspective;
+    glm::decompose(transform, l_scale, l_rotation, translation, skew, perspective);
+    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
+    mat4 mat_rotate = glm::mat4_cast(l_rotation);
+    translation.z = t;
+    mat4 mat_translate = glm::translate(mat4(1.f), translation);
+    transform = mat_translate * mat_rotate * mat_scale;
+}
+
+void TransformationsExercise2Scene::rotateX(float d) {
+    vec3 l_scale;
+    quat l_rotation;
+    vec3 translation;
+    vec3 skew;
+    vec4 perspective;
+    glm::decompose(transform, l_scale, l_rotation, translation, skew, perspective);
+    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
+
+    float r = glm::radians(d);
+    auto euler = glm::eulerAngles(l_rotation);
+    euler.x = r;
+
+    mat4 QuatAroundX = glm::rotate(mat4(1.f), euler.x, X_AXIS);
+    mat4 QuatAroundY = glm::rotate(mat4(1.f), euler.y, Y_AXIS);
+    mat4 QuatAroundZ = glm::rotate(mat4(1.f), euler.z, Z_AXIS);
+    mat4 mat_rotate = QuatAroundX * QuatAroundY * QuatAroundZ;
+    mat4 mat_translate = glm::translate(mat4(1.f), translation);
+    transform = mat_translate * mat_rotate * mat_scale;
+}
+
+void TransformationsExercise2Scene::rotateY(float d) {
+    vec3 l_scale;
+    quat l_rotation;
+    vec3 translation;
+    vec3 skew;
+    vec4 perspective;
+    glm::decompose(transform, l_scale, l_rotation, translation, skew, perspective);
+    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
+
+    float r = glm::radians(d);
+    auto euler = glm::eulerAngles(l_rotation);
+    euler.y = r;
+
+    mat4 QuatAroundX = glm::rotate(mat4(1.f), euler.x, X_AXIS);
+    mat4 QuatAroundY = glm::rotate(mat4(1.f), euler.y, Y_AXIS);
+    mat4 QuatAroundZ = glm::rotate(mat4(1.f), euler.z, Z_AXIS);
+    mat4 mat_rotate = QuatAroundX * QuatAroundY * QuatAroundZ;
+    mat4 mat_translate = glm::translate(mat4(1.f), translation);
+    transform = mat_translate * mat_rotate * mat_scale;
+}
+
+void TransformationsExercise2Scene::rotateZ(float d) {
+    vec3 l_scale;
+    quat l_rotation;
+    vec3 translation;
+    vec3 skew;
+    vec4 perspective;
+    glm::decompose(transform, l_scale, l_rotation, translation, skew, perspective);
+    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
+    float r = glm::radians(d);
+    auto euler = glm::eulerAngles(l_rotation);
+    euler.z = r;
+
+    mat4 QuatAroundX = glm::rotate(mat4(1.f), euler.x, X_AXIS);
+    mat4 QuatAroundY = glm::rotate(mat4(1.f), euler.y, Y_AXIS);
+    mat4 QuatAroundZ = glm::rotate(mat4(1.f), euler.z, Z_AXIS);
+    mat4 mat_rotate = QuatAroundX * QuatAroundY * QuatAroundZ;
+    mat4 mat_translate = glm::translate(mat4(1.f), translation);
+    transform = mat_translate * mat_rotate * mat_scale;
+}
+
+void TransformationsExercise2Scene::scaleX(float s) {
+    vec3 l_scale;
+    quat l_rotation;
+    vec3 translation;
+    vec3 skew;
+    vec4 perspective;
+    glm::decompose(transform, l_scale, l_rotation, translation, skew, perspective);
+    l_scale.x = s;
+    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
+    mat4 mat_rotate = glm::mat4_cast(l_rotation);
+    mat4 mat_translate = glm::translate(mat4(1.f), translation);
+    transform = mat_translate * mat_rotate * mat_scale;
+}
+
+void TransformationsExercise2Scene::scaleY(float s) {
+    vec3 l_scale;
+    quat l_rotation;
+    vec3 translation;
+    vec3 skew;
+    vec4 perspective;
+    glm::decompose(transform, l_scale, l_rotation, translation, skew, perspective);
+    l_scale.y = s;
+    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
+    mat4 mat_rotate = glm::mat4_cast(l_rotation);
+    mat4 mat_translate = glm::translate(mat4(1.f), translation);
+    transform = mat_translate * mat_rotate * mat_scale;
+}
+
+void TransformationsExercise2Scene::scaleZ(float s) {
+    vec3 l_scale;
+    quat l_rotation;
+    vec3 translation;
+    vec3 skew;
+    vec4 perspective;
+    glm::decompose(transform, l_scale, l_rotation, translation, skew, perspective);
+    l_scale.z = s;
+    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
+    mat4 mat_rotate = glm::mat4_cast(l_rotation);
+    mat4 mat_translate = glm::translate(mat4(1.f), translation);
+    transform = mat_translate * mat_rotate * mat_scale;
 }

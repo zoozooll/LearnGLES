@@ -17,7 +17,7 @@ AAssetManager* mgr = nullptr;
 
 char *g_internalPath = nullptr;
 
-static Scene *g_scene = nullptr;
+Scene *g_scene = nullptr;
 
 extern "C"
 JNIEXPORT void JNICALL

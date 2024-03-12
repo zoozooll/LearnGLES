@@ -6,11 +6,11 @@
 #define LEARNGLES_TRANSFORMATIONSEXERCISE2SCENE_H
 
 #include "Scene.h"
-#include "SceneTouchEvent.h"
+#include "SceneCommand.h"
 
 class Shader;
 
-class TransformationsExercise2Scene : public Scene, public SceneTouchEvent {
+class TransformationsExercise2Scene : public Scene, public SceneCommand {
 public:
     void init() override;
 
@@ -20,19 +20,26 @@ public:
 
     void destroy() override;
 
-    void move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) override;
-
-    void scale(const float &scale) override;
-
-    void yawPitch(const glm::vec2 &director) override;
-
-    void roll(const float &angle) override;
+    std::map<std::string, std::any> sendCommand(std::map<std::string, std::any> map) override;
 
 private:
     unsigned int texture1, texture2;
     Shader *ourShader = nullptr;
     unsigned int VBO, VAO, EBO;
     glm::mat4 transform = glm::mat4(1.0f);
+
+    void translateX(float t);
+    void translateY(float t);
+    void translateZ(float t);
+    void translate(glm::vec3 t);
+    void rotateX(float d);
+    void rotateY(float d);
+    void rotateZ(float d);
+    void rotate(glm::vec3 r);
+    void scaleX(float s);
+    void scaleY(float s);
+    void scaleZ(float s);
+    void scale(glm::vec3 s);
 };
 
 

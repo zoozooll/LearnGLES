@@ -5,9 +5,13 @@
 #ifndef LEARNGLES_SCENECOMMAND_H
 #define LEARNGLES_SCENECOMMAND_H
 
+#include <string>
+#include <map>
+#include <any>
 
 class SceneCommand {
-
+public:
+    virtual std::map<std::string, std::any> sendCommand(std::map<std::string, std::any>) = 0;
 };
 
 
