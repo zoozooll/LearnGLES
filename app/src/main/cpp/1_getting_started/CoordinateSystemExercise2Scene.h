@@ -5,6 +5,8 @@
 #ifndef LEARNGLES_COORDINATESYSTEMEXERCISE2SCENE_H
 #define LEARNGLES_COORDINATESYSTEMEXERCISE2SCENE_H
 
+#include <glm/glm.hpp>
+
 #include "Scene.h"
 #include "SceneCommand.h"
 
@@ -28,6 +30,9 @@ private:
     Shader *ourShader = nullptr;
 
     glm::mat4 model = glm::mat4(1.0f);
+    glm::vec3 _trans;
+    glm::vec3 _euler;
+    glm::vec3 _scale = glm::vec3(1.f);
 
     void translateX(float t);
     void translateY(float t);
@@ -41,6 +46,8 @@ private:
     void scaleY(float s);
     void scaleZ(float s);
     void scale(glm::vec3 s);
+
+    void update();
 };
 
 

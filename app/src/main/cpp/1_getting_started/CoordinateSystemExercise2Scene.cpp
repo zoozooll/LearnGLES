@@ -12,6 +12,7 @@
 #include "Shader.h"
 #include "logutil.h"
 #include "constants.h"
+#include "glm/gtx/string_cast.hpp"
 
 using glm::vec3;
 using glm::vec4;
@@ -214,191 +215,72 @@ CoordinateSystemExercise2Scene::sendCommand(std::map<std::string, std::any> comm
 }
 
 void CoordinateSystemExercise2Scene::translate(glm::vec3 t) {
-    vec3 l_scale;
-    quat l_rotation;
-    vec3 translation;
-    vec3 skew;
-    vec4 perspective;
-    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
-    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
-    mat4 mat_rotate = glm::mat4_cast(l_rotation);
-    mat4 mat_translate = glm::translate(mat4(1.f), t);
-    model = mat_translate * mat_rotate * mat_scale;
+    _trans = t;
+    update();
 }
 
 void CoordinateSystemExercise2Scene::rotate(glm::vec3 r) {
-    vec3 l_scale;
-    quat l_rotation;
-    vec3 translation;
-    vec3 skew;
-    vec4 perspective;
-    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
-    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
-
-    mat4 QuatAroundX = glm::rotate(mat4(1.f), r.x, X_AXIS);
-    mat4 QuatAroundY = glm::rotate(mat4(1.f), r.y, Y_AXIS);
-    mat4 QuatAroundZ = glm::rotate(mat4(1.f), r.z, Z_AXIS);
-    mat4 mat_rotate = QuatAroundX * QuatAroundY * QuatAroundZ;
-    mat4 mat_translate = glm::translate(mat4(1.f), translation);
-    model = mat_translate * mat_rotate * mat_scale;
+    _euler = glm::radians(r);
+    update();
 }
 
 void CoordinateSystemExercise2Scene::scale(glm::vec3 s) {
-    vec3 l_scale;
-    quat l_rotation;
-    vec3 translation;
-    vec3 skew;
-    vec4 perspective;
-    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
-    mat4 mat_scale = glm::scale(mat4(1.f), s);
-    mat4 mat_rotate = glm::mat4_cast(l_rotation);
-    mat4 mat_translate = glm::translate(mat4(1.f), translation);
-    model = mat_translate * mat_rotate * mat_scale;
+    _scale = s;
+    update();
 }
 
 void CoordinateSystemExercise2Scene::translateX(float t) {
-    vec3 l_scale;
-    quat l_rotation;
-    vec3 translation;
-    vec3 skew;
-    vec4 perspective;
-    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
-    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
-    mat4 mat_rotate = glm::mat4_cast(l_rotation);
-    translation.x = t;
-    mat4 mat_translate = glm::translate(mat4(1.f), translation);
-    model = mat_translate * mat_rotate * mat_scale;
+    _trans.x = t;
+    update();
 }
 
 void CoordinateSystemExercise2Scene::translateY(float t) {
-    vec3 l_scale;
-    quat l_rotation;
-    vec3 translation;
-    vec3 skew;
-    vec4 perspective;
-    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
-    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
-    mat4 mat_rotate = glm::mat4_cast(l_rotation);
-    translation.y = t;
-    mat4 mat_translate = glm::translate(mat4(1.f), translation);
-    model = mat_translate * mat_rotate * mat_scale;
+    _trans.y = t;
+    update();
 }
 
 void CoordinateSystemExercise2Scene::translateZ(float t) {
-    vec3 l_scale;
-    quat l_rotation;
-    vec3 translation;
-    vec3 skew;
-    vec4 perspective;
-    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
-    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
-    mat4 mat_rotate = glm::mat4_cast(l_rotation);
-    translation.z = t;
-    mat4 mat_translate = glm::translate(mat4(1.f), translation);
-    model = mat_translate * mat_rotate * mat_scale;
+    _trans.z = t;
+    update();
 }
 
 void CoordinateSystemExercise2Scene::rotateX(float d) {
-    vec3 l_scale;
-    quat l_rotation;
-    vec3 translation;
-    vec3 skew;
-    vec4 perspective;
-    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
-    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
-
-    float r = glm::radians(d);
-    auto euler = glm::eulerAngles(l_rotation);
-    euler.x = r;
-
-    mat4 QuatAroundX = glm::rotate(mat4(1.f), euler.x, X_AXIS);
-    mat4 QuatAroundY = glm::rotate(mat4(1.f), euler.y, Y_AXIS);
-    mat4 QuatAroundZ = glm::rotate(mat4(1.f), euler.z, Z_AXIS);
-    mat4 mat_rotate = QuatAroundX * QuatAroundY * QuatAroundZ;
-    mat4 mat_translate = glm::translate(mat4(1.f), translation);
-    model = mat_translate * mat_rotate * mat_scale;
+    _euler.x = glm::radians(d);
+    update();
 }
 
 void CoordinateSystemExercise2Scene::rotateY(float d) {
-    vec3 l_scale;
-    quat l_rotation;
-    vec3 translation;
-    vec3 skew;
-    vec4 perspective;
-    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
-    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
-
-    float r = glm::radians(d);
-    auto euler = glm::eulerAngles(l_rotation);
-    euler.y = r;
-
-    mat4 QuatAroundX = glm::rotate(mat4(1.f), euler.x, X_AXIS);
-    mat4 QuatAroundY = glm::rotate(mat4(1.f), euler.y, Y_AXIS);
-    mat4 QuatAroundZ = glm::rotate(mat4(1.f), euler.z, Z_AXIS);
-    mat4 mat_rotate = QuatAroundX * QuatAroundY * QuatAroundZ;
-    mat4 mat_translate = glm::translate(mat4(1.f), translation);
-    model = mat_translate * mat_rotate * mat_scale;
+    _euler.y = glm::radians(d);
+    update();
 }
 
 void CoordinateSystemExercise2Scene::rotateZ(float d) {
-    vec3 l_scale;
-    quat l_rotation;
-    vec3 translation;
-    vec3 skew;
-    vec4 perspective;
-    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
-    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
-    float r = glm::radians(d);
-    auto euler = glm::eulerAngles(l_rotation);
-    euler.z = r;
-
-    mat4 QuatAroundX = glm::rotate(mat4(1.f), euler.x, X_AXIS);
-    mat4 QuatAroundY = glm::rotate(mat4(1.f), euler.y, Y_AXIS);
-    mat4 QuatAroundZ = glm::rotate(mat4(1.f), euler.z, Z_AXIS);
-    mat4 mat_rotate = QuatAroundX * QuatAroundY * QuatAroundZ;
-    mat4 mat_translate = glm::translate(mat4(1.f), translation);
-    model = mat_translate * mat_rotate * mat_scale;
+    _euler.z = glm::radians(d);
+    update();
 }
 
 void CoordinateSystemExercise2Scene::scaleX(float s) {
-    vec3 l_scale;
-    quat l_rotation;
-    vec3 translation;
-    vec3 skew;
-    vec4 perspective;
-    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
-    l_scale.x = s;
-    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
-    mat4 mat_rotate = glm::mat4_cast(l_rotation);
-    mat4 mat_translate = glm::translate(mat4(1.f), translation);
-    model = mat_translate * mat_rotate * mat_scale;
+    _scale.x = s;
+    update();
 }
 
 void CoordinateSystemExercise2Scene::scaleY(float s) {
-    vec3 l_scale;
-    quat l_rotation;
-    vec3 translation;
-    vec3 skew;
-    vec4 perspective;
-    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
-    l_scale.y = s;
-    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
-    mat4 mat_rotate = glm::mat4_cast(l_rotation);
-    mat4 mat_translate = glm::translate(mat4(1.f), translation);
-    model = mat_translate * mat_rotate * mat_scale;
+    _scale.y = s;
+    update();
 }
 
 void CoordinateSystemExercise2Scene::scaleZ(float s) {
-    vec3 l_scale;
-    quat l_rotation;
-    vec3 translation;
-    vec3 skew;
-    vec4 perspective;
-    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
-    l_scale.z = s;
-    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
-    mat4 mat_rotate = glm::mat4_cast(l_rotation);
-    mat4 mat_translate = glm::translate(mat4(1.f), translation);
-    model = mat_translate * mat_rotate * mat_scale;
+    _scale.z = s;
+    update();
+}
+
+void CoordinateSystemExercise2Scene::update() {
+    mat4 l_matrix(1.f);
+    l_matrix = glm::scale(l_matrix, _scale);
+    l_matrix = glm::translate(l_matrix, _trans);
+    l_matrix = glm::rotate(l_matrix, _euler.x, X_AXIS);
+    l_matrix = glm::rotate(l_matrix, _euler.y, Y_AXIS);
+    l_matrix = glm::rotate(l_matrix, _euler.z, Z_AXIS);
+    model = l_matrix;
 }
 
