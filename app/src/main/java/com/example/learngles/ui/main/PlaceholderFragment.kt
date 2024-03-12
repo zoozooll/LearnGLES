@@ -61,7 +61,7 @@ class PlaceholderFragment : Fragment() {
                     if (checkBox.isChecked) {
                         val tutorialTitle = text1.text.toString();
                         val dstActivity = when(tutorialTitle) {
-                            "transformations_exercise2" -> TransformExer2Activity::class.java
+                            "transformations_exercise2", "coordinate_systems_exercise2" -> TransformExer2Activity::class.java
                             else -> GLDetailActivity::class.java
                         }
                         val intent = Intent(requireContext(), dstActivity)

@@ -1,20 +1,20 @@
 //
-// Created by zoozo on 7/25/2023.
+// Created by zoozo on 8/9/2023.
 //
 
-#ifndef LEARNGLES_TRANSFORMATIONSEXERCISE2SCENE_H
-#define LEARNGLES_TRANSFORMATIONSEXERCISE2SCENE_H
+#ifndef LEARNGLES_COORDINATESYSTEMEXERCISE2SCENE_H
+#define LEARNGLES_COORDINATESYSTEMEXERCISE2SCENE_H
 
 #include "Scene.h"
 #include "SceneCommand.h"
 
 class Shader;
 
-class TransformationsExercise2Scene : public Scene, public SceneCommand {
+class CoordinateSystemExercise2Scene : public Scene, public SceneCommand {
 public:
     void init() override;
 
-    void resize(int i, int i1) override;
+    void resize(int width, int height) override;
 
     void draw() override;
 
@@ -23,10 +23,9 @@ public:
     std::map<std::string, std::any> sendCommand(std::map<std::string, std::any> map) override;
 
 private:
-    unsigned int texture1, texture2;
+    unsigned int texture1 = 0, texture2 = 0;
+    unsigned int VAO = 0;
     Shader *ourShader = nullptr;
-    unsigned int VBO, VAO, EBO;
-
 
     glm::mat4 model = glm::mat4(1.0f);
 
@@ -45,4 +44,4 @@ private:
 };
 
 
-#endif //LEARNGLES_TRANSFORMATIONSEXERCISE2SCENE_H
+#endif //LEARNGLES_COORDINATESYSTEMEXERCISE2SCENE_H

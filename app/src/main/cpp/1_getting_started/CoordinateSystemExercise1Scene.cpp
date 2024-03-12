@@ -2,7 +2,7 @@
 // Created by zoozo on 8/9/2023.
 //
 
-#include "CoordinateSystemExercise3Scene.h"
+#include "CoordinateSystemExercise1Scene.h"
 #include <GLES3/gl32.h>
 #include <stb_image.h>
 #include <glm/glm.hpp>
@@ -14,7 +14,7 @@
 static int SCR_WIDTH = 0;
 static int SCR_HEIGHT = 0;
 
-void CoordinateSystemExercise3Scene::init() {
+void CoordinateSystemExercise1Scene::init() {
 // build and compile our shader zprogram
     // ------------------------------------
     ourShader = new Shader("1/6.1.coordinate_systems.vert", "1/6.1.coordinate_systems.frag");
@@ -122,13 +122,13 @@ void CoordinateSystemExercise3Scene::init() {
     ourShader->setInt("texture2", 1);
 }
 
-void CoordinateSystemExercise3Scene::resize(int width, int height) {
+void CoordinateSystemExercise1Scene::resize(int width, int height) {
     glViewport(0, 0, width, height);
     SCR_WIDTH = width;
     SCR_HEIGHT = height;
 }
 
-void CoordinateSystemExercise3Scene::draw() {
+void CoordinateSystemExercise1Scene::draw() {
 // render
     // ------
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -164,14 +164,14 @@ void CoordinateSystemExercise3Scene::draw() {
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
-void CoordinateSystemExercise3Scene::destroy() {
+void CoordinateSystemExercise1Scene::destroy() {
     glDeleteVertexArrays(1, &VAO);
     glDeleteTextures(1, &texture1);
     glDeleteTextures(1, &texture2);
     delete ourShader;
 }
 
-void CoordinateSystemExercise3Scene::roll(const float &angle) {
+void CoordinateSystemExercise1Scene::roll(const float &angle) {
     LOGI(__FILE_NAME__, "roll %f", angle);
     glm::mat4 l_matrix(1.0f);
     l_matrix = glm::translate(l_matrix, glm::vec3(0.25f, 0.25f, 0.f));

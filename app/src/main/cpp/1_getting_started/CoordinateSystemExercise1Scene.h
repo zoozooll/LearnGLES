@@ -2,15 +2,15 @@
 // Created by zoozo on 8/9/2023.
 //
 
-#ifndef LEARNGLES_COORDINATESYSTEMEXERCISE3SCENE_H
-#define LEARNGLES_COORDINATESYSTEMEXERCISE3SCENE_H
+#ifndef LEARNGLES_COORDINATESYSTEMEXERCISE1SCENE_H
+#define LEARNGLES_COORDINATESYSTEMEXERCISE1SCENE_H
 
 #include "Scene.h"
 #include "SceneTouchEvent.h"
 
 class Shader;
 
-class CoordinateSystemExercise3Scene : public Scene, public SceneTouchEvent {
+class CoordinateSystemExercise1Scene : public Scene, public SceneTouchEvent {
 public:
     void init() override;
 
@@ -31,4 +31,4 @@ private:
 };
 
 
-#endif //LEARNGLES_COORDINATESYSTEMEXERCISE3SCENE_H
+#endif //LEARNGLES_COORDINATESYSTEMEXERCISE1SCENE_H

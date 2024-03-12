@@ -27,6 +27,7 @@ object DataSet {
                     "coordinate_systems_depth" to true,
                     "coordinate_systems_multiple" to true,
                     "coordinate_systems_exercise" to true,
+                    "coordinate_systems_exercise2" to true,
                     "camera_circle" to true,
                     "camera_keyboard_dt" to true,
                     "camera_mouse_zoom" to true,

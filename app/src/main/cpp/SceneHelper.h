@@ -33,7 +33,7 @@
 #include "1_getting_started/CoordinateSystemScene.h"
 #include "1_getting_started/CoordinateSystemDepthScene.h"
 #include "1_getting_started/CoordinateSystemMultipleScene.h"
-#include "1_getting_started/CoordinateSystemExercise3Scene.h"
+#include "1_getting_started/CoordinateSystemExercise1Scene.h"
 #include "1_getting_started/CameraScene.h"
 #include "3_model_loading/ModelLoadingScene.h"
 #include "5_advanced_lighting/AdvancedLightingScene.h"
@@ -106,6 +106,7 @@
 #include "1_getting_started/CameraExercise1Scene.h"
 #include "1_getting_started/CameraExercise2Scene.h"
 #include "1_getting_started/CameraCircleScene.h"
+#include "1_getting_started/CoordinateSystemExercise2Scene.h"
 
 inline Scene* GenSceneByName(const char *tutorial) {
     if (!strcmp(tutorial, "hello_window")) {
@@ -159,7 +160,9 @@ inline Scene* GenSceneByName(const char *tutorial) {
     } else if (!strcmp(tutorial, "coordinate_systems_multiple")) {
         return new CoordinateSystemMultipleScene;
     } else if (!strcmp(tutorial, "coordinate_systems_exercise")) {
-        return new CoordinateSystemExercise3Scene;
+        return new CoordinateSystemExercise1Scene;
+    } else if (!strcmp(tutorial, "coordinate_systems_exercise2")) {
+        return new CoordinateSystemExercise2Scene;
     } else if (!strcmp(tutorial, "camera_circle")) {
         return new CameraCircleScene;
     } else if (!strcmp(tutorial, "camera_keyboard_dt")) {
