@@ -2,7 +2,7 @@
 // Created by zoozo on 8/9/2023.
 //
 
-#include "CoordinateSystemExercise2Scene.h"
+#include "CoordinateSystemExercise3Scene.h"
 #include <GLES3/gl32.h>
 #include <stb_image.h>
 #include <glm/glm.hpp>
@@ -22,7 +22,7 @@ using glm::mat4;
 static int SCR_WIDTH = 0;
 static int SCR_HEIGHT = 0;
 
-void CoordinateSystemExercise2Scene::init() {
+void CoordinateSystemExercise3Scene::init() {
 // build and compile our shader zprogram
     // ------------------------------------
     ourShader = new Shader("1/6.1.coordinate_systems.vert", "1/6.1.coordinate_systems.frag");
@@ -84,7 +84,7 @@ void CoordinateSystemExercise2Scene::init() {
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
     unsigned char *file_data;
     size_t file_size;
-    LoadDataFromAsset("textures/container.jpg", reinterpret_cast<void **>(&file_data), &file_size);
+    LoadDataFromAsset("textures/arrow.png", reinterpret_cast<void **>(&file_data), &file_size);
     unsigned char *data;
     int width, height, nrChannels;
     data = stbi_load_from_memory(file_data, file_size, &width, &height, &nrChannels, 0);
@@ -95,7 +95,7 @@ void CoordinateSystemExercise2Scene::init() {
     }
     else
     {
-        LOGE("CoordinateSystemScene","Failed to load texture : %s", "textures/container.jpg");
+        LOGE("CoordinateSystemScene","Failed to load texture : %s", "textures/arrow.png");
     }
     stbi_image_free(data);
     // texture 2
@@ -109,7 +109,7 @@ void CoordinateSystemExercise2Scene::init() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
-    LoadDataFromAsset("textures/awesomeface.png", reinterpret_cast<void **>(&file_data), &file_size);
+    LoadDataFromAsset("textures/arrow.png", reinterpret_cast<void **>(&file_data), &file_size);
     data = stbi_load_from_memory(file_data, file_size, &width, &height, &nrChannels, 0);
     if (data)
     {
@@ -119,7 +119,7 @@ void CoordinateSystemExercise2Scene::init() {
     }
     else
     {
-        LOGE("CoordinateSystemScene","Failed to load texture : %s", "textures/awesomeface.png");
+        LOGE("CoordinateSystemScene","Failed to load texture : %s", "textures/arrow.png");
     }
     stbi_image_free(data);
 
@@ -130,13 +130,13 @@ void CoordinateSystemExercise2Scene::init() {
     ourShader->setInt("texture2", 1);
 }
 
-void CoordinateSystemExercise2Scene::resize(int width, int height) {
+void CoordinateSystemExercise3Scene::resize(int width, int height) {
     glViewport(0, 0, width, height);
     SCR_WIDTH = width;
     SCR_HEIGHT = height;
 }
 
-void CoordinateSystemExercise2Scene::draw() {
+void CoordinateSystemExercise3Scene::draw() {
 // render
     // ------
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -159,17 +159,19 @@ void CoordinateSystemExercise2Scene::draw() {
     view  = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
     projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
     // retrieve the matrix uniform locations
+    unsigned int modelLoc = glGetUniformLocation(ourShader->ID, "model");
+    unsigned int viewLoc  = glGetUniformLocation(ourShader->ID, "view");
+    // pass them to the shaders (3 different ways)
     vec3 right   (model[0][0], model[1][0], model[2][0]);
     vec3 up      (model[0][1], model[1][1], model[2][1]);
     vec3 forward (model[0][2], model[1][2], model[2][2]);
+
     vec3 l_x = glm::normalize(glm::mat3(model) * X_AXIS);
     vec3 l_y = glm::normalize(glm::mat3(model) * Y_AXIS);
     vec3 l_z = glm::normalize(glm::mat3(model) * Z_AXIS);
     LOGI(__FILE_NAME__, "update right: %s, up: %s, forward: %s", glm::to_string(right + l_x).c_str(),
          glm::to_string(up + l_y).c_str(), glm::to_string(forward + l_z).c_str());
-    unsigned int modelLoc = glGetUniformLocation(ourShader->ID, "model");
-    unsigned int viewLoc  = glGetUniformLocation(ourShader->ID, "view");
-    // pass them to the shaders (3 different ways)
+
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
     glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
     // note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
@@ -178,9 +180,10 @@ void CoordinateSystemExercise2Scene::draw() {
     // render container
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
 }
 
-void CoordinateSystemExercise2Scene::destroy() {
+void CoordinateSystemExercise3Scene::destroy() {
     glDeleteVertexArrays(1, &VAO);
     glDeleteTextures(1, &texture1);
     glDeleteTextures(1, &texture2);
@@ -188,7 +191,7 @@ void CoordinateSystemExercise2Scene::destroy() {
 }
 
 std::map<std::string, std::any>
-CoordinateSystemExercise2Scene::sendCommand(std::map<std::string, std::any> commands) {
+CoordinateSystemExercise3Scene::sendCommand(std::map<std::string, std::any> commands) {
     for (const auto& [key, value]: commands) {
         if ("translate_x" == key && value.type() == typeid(float)) {
             auto l_value = any_cast<float>(value);
@@ -222,73 +225,125 @@ CoordinateSystemExercise2Scene::sendCommand(std::map<std::string, std::any> comm
     return {};
 }
 
-void CoordinateSystemExercise2Scene::translate(glm::vec3 t) {
-    _trans = t;
-    update();
+void CoordinateSystemExercise3Scene::translate(glm::vec3 t) {
+
 }
 
-void CoordinateSystemExercise2Scene::rotate(glm::vec3 r) {
-    _euler = glm::radians(r);
-    update();
+void CoordinateSystemExercise3Scene::rotate(glm::vec3 r) {
+
 }
 
-void CoordinateSystemExercise2Scene::scale(glm::vec3 s) {
-    _scale = s;
-    update();
+void CoordinateSystemExercise3Scene::scale(glm::vec3 s) {
+
 }
 
-void CoordinateSystemExercise2Scene::translateX(float t) {
-    _trans.x = t;
-    update();
+void CoordinateSystemExercise3Scene::translateX(float t) {
+    vec3 l_x = glm::normalize(glm::mat3(model) * X_AXIS);
+    mat4 l_matrix = glm::translate(mat4(1.f), l_x * t * 0.01f);
+    model = l_matrix * model;
 }
 
-void CoordinateSystemExercise2Scene::translateY(float t) {
-    _trans.y = t;
-    update();
+void CoordinateSystemExercise3Scene::translateY(float t) {
+    vec3 l_x = glm::normalize(glm::mat3(model) * Y_AXIS);
+    mat4 l_matrix = glm::translate(mat4(1.f), l_x * t * 0.01f);
+    model = l_matrix * model;
 }
 
-void CoordinateSystemExercise2Scene::translateZ(float t) {
-    _trans.z = t;
-    update();
+void CoordinateSystemExercise3Scene::translateZ(float t) {
+    vec3 l_x = glm::normalize(glm::mat3(model) * Z_AXIS);
+    mat4 l_matrix = glm::translate(mat4(1.f), l_x * t * 0.01f);
+    model = l_matrix * model;
 }
 
-void CoordinateSystemExercise2Scene::rotateX(float d) {
-    _euler.x = glm::radians(d);
-    update();
+void CoordinateSystemExercise3Scene::rotateX(float d) {
+    vec3 l_scale;
+    quat l_rotation;
+    vec3 translation;
+    vec3 skew;
+    vec4 perspective;
+    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
+    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
+    l_rotation = glm::rotate(l_rotation, glm::radians(d * 5.f), X_AXIS);
+    mat4 mat_rotate = glm::mat4_cast(l_rotation);
+    mat4 mat_translate = glm::translate(mat4(1.f), translation);
+    model = mat_translate * mat_rotate * mat_scale;
 }
 
-void CoordinateSystemExercise2Scene::rotateY(float d) {
-    _euler.y = glm::radians(d);
-    update();
+void CoordinateSystemExercise3Scene::rotateY(float d) {
+    vec3 l_scale;
+    quat l_rotation;
+    vec3 translation;
+    vec3 skew;
+    vec4 perspective;
+    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
+    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
+    l_rotation = glm::rotate(l_rotation, glm::radians(d * 5.f), Y_AXIS);
+    mat4 mat_rotate = glm::mat4_cast(l_rotation);
+    mat4 mat_translate = glm::translate(mat4(1.f), translation);
+    model = mat_translate * mat_rotate * mat_scale;
 }
 
-void CoordinateSystemExercise2Scene::rotateZ(float d) {
-    _euler.z = glm::radians(d);
-    update();
+void CoordinateSystemExercise3Scene::rotateZ(float d) {
+    vec3 l_scale;
+    quat l_rotation;
+    vec3 translation;
+    vec3 skew;
+    vec4 perspective;
+    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
+    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
+    l_rotation = glm::rotate(l_rotation, glm::radians(d * 5.f), Z_AXIS);
+    mat4 mat_rotate = glm::mat4_cast(l_rotation);
+    mat4 mat_translate = glm::translate(mat4(1.f), translation);
+    model = mat_translate * mat_rotate * mat_scale;
 }
 
-void CoordinateSystemExercise2Scene::scaleX(float s) {
-    _scale.x = s;
-    update();
+void CoordinateSystemExercise3Scene::scaleX(float s) {
+    vec3 l_scale;
+    quat l_rotation;
+    vec3 translation;
+    vec3 skew;
+    vec4 perspective;
+    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
+    float scale = 1.f + s * 0.1f;
+    l_scale.x *= scale;
+    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
+    mat4 mat_rotate = glm::mat4_cast(l_rotation);
+    mat4 mat_translate = glm::translate(mat4(1.f), translation);
+    model = mat_translate * mat_rotate * mat_scale;
 }
 
-void CoordinateSystemExercise2Scene::scaleY(float s) {
-    _scale.y = s;
-    update();
+void CoordinateSystemExercise3Scene::scaleY(float s) {
+    vec3 l_scale;
+    quat l_rotation;
+    vec3 translation;
+    vec3 skew;
+    vec4 perspective;
+    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
+    float scale = 1.f + s * 0.1f;
+    l_scale.y *= scale;
+    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
+    mat4 mat_rotate = glm::mat4_cast(l_rotation);
+    mat4 mat_translate = glm::translate(mat4(1.f), translation);
+    model = mat_translate * mat_rotate * mat_scale;
 }
 
-void CoordinateSystemExercise2Scene::scaleZ(float s) {
-    _scale.z = s;
-    update();
+void CoordinateSystemExercise3Scene::scaleZ(float s) {
+    vec3 l_scale;
+    quat l_rotation;
+    vec3 translation;
+    vec3 skew;
+    vec4 perspective;
+    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
+    float scale = 1.f + s * 0.1f;
+    l_scale.z *= scale;
+    mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
+    mat4 mat_rotate = glm::mat4_cast(l_rotation);
+    mat4 mat_translate = glm::translate(mat4(1.f), translation);
+    model = mat_translate * mat_rotate * mat_scale;
 }
 
-void CoordinateSystemExercise2Scene::update() {
+void CoordinateSystemExercise3Scene::update() {
     mat4 l_matrix(1.f);
-    l_matrix = glm::scale(l_matrix, _scale);
-    l_matrix = glm::translate(l_matrix, _trans);
-    l_matrix = glm::rotate(l_matrix, _euler.x, X_AXIS);
-    l_matrix = glm::rotate(l_matrix, _euler.y, Y_AXIS);
-    l_matrix = glm::rotate(l_matrix, _euler.z, Z_AXIS);
     model = l_matrix;
 }
 

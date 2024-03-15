@@ -11,7 +11,7 @@ import com.example.learngles.databinding.SliderBarBinding
 import java.util.Locale
 
 class SliderBar @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-    FrameLayout(context, attrs, defStyleAttr) {
+    ConstraintLayout(context, attrs, defStyleAttr) {
 
     private lateinit var binding: SliderBarBinding
 
@@ -21,7 +21,7 @@ class SliderBar @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     }
 
     private fun init(attrs: AttributeSet?) {
-        binding = SliderBarBinding.inflate(LayoutInflater.from(context), this, true)
+        binding = SliderBarBinding.inflate(LayoutInflater.from(context), this)
 
         val ta = context.obtainStyledAttributes(attrs, R.styleable.SliderBar)
         try {

@@ -16,6 +16,7 @@ import com.example.learngles.ui.exercises.GLDetailActivity
 import com.example.learngles.MainActivity
 import com.example.learngles.R
 import com.example.learngles.databinding.FragmentMainBinding
+import com.example.learngles.ui.exercises.CoordinateSystemExer3Activity
 import com.example.learngles.ui.exercises.TransformExer2Activity
 
 /**
@@ -62,6 +63,7 @@ class PlaceholderFragment : Fragment() {
                         val tutorialTitle = text1.text.toString();
                         val dstActivity = when(tutorialTitle) {
                             "transformations_exercise2", "coordinate_systems_exercise2" -> TransformExer2Activity::class.java
+                            "coordinate_systems_exercise3" -> CoordinateSystemExer3Activity::class.java
                             else -> GLDetailActivity::class.java
                         }
                         val intent = Intent(requireContext(), dstActivity)

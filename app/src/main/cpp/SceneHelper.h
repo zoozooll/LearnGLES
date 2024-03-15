@@ -107,6 +107,7 @@
 #include "1_getting_started/CameraExercise2Scene.h"
 #include "1_getting_started/CameraCircleScene.h"
 #include "1_getting_started/CoordinateSystemExercise2Scene.h"
+#include "1_getting_started/CoordinateSystemExercise3Scene.h"
 
 inline Scene* GenSceneByName(const char *tutorial) {
     if (!strcmp(tutorial, "hello_window")) {
@@ -163,6 +164,8 @@ inline Scene* GenSceneByName(const char *tutorial) {
         return new CoordinateSystemExercise1Scene;
     } else if (!strcmp(tutorial, "coordinate_systems_exercise2")) {
         return new CoordinateSystemExercise2Scene;
+    } else if (!strcmp(tutorial, "coordinate_systems_exercise3")) {
+        return new CoordinateSystemExercise3Scene;
     } else if (!strcmp(tutorial, "camera_circle")) {
         return new CameraCircleScene;
     } else if (!strcmp(tutorial, "camera_keyboard_dt")) {

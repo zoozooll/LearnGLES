@@ -7,6 +7,5 @@ in vec3 ourColor;
 
 void main()
 {
-    uint a = 1u;
     FragColor = vec4(ourColor, 1.0f);
 }
