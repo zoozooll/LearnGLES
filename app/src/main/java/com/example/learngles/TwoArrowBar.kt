@@ -1,6 +1,5 @@
 package com.example.learngles
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -30,6 +29,20 @@ class TwoArrowBar @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
             binding.btnAdd.setOnClickListener {
                 callback?.onAdd()
+            }
+
+            binding.btnSubmit.setOnTouchListener { v, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {}
+                    MotionEvent.ACTION_UP -> {
+                       if (v.performClick()) {
+                           true
+                       }
+                    }
+
+                    else -> {}
+                }
+                true
             }
         }
 
