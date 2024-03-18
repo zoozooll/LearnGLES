@@ -220,6 +220,10 @@ CoordinateSystemExercise4Scene::sendCommand(std::map<std::string, std::any> comm
         } else if ("scale_z" == key && value.type() == typeid(float)) {
             auto l_value = any_cast<float>(value);
             scaleZ(l_value);
+        } else if ("transform_start" == key) {
+            startTransform();
+        } else if ("transform_start" == key) {
+            endTransform();
         }
     }
     return {};
@@ -238,21 +242,21 @@ void CoordinateSystemExercise4Scene::scale(glm::vec3 s) {
 }
 
 void CoordinateSystemExercise4Scene::translateX(float t) {
-    vec3 l_x = glm::normalize(glm::mat3(model) * X_AXIS);
+    vec3 l_x = glm::normalize(glm::mat3(startMatrix) * X_AXIS);
     mat4 l_matrix = glm::translate(mat4(1.f), l_x * t * 0.01f);
-    model = l_matrix * model;
+    model = l_matrix * startMatrix;
 }
 
 void CoordinateSystemExercise4Scene::translateY(float t) {
     vec3 l_x = glm::normalize(glm::mat3(model) * Y_AXIS);
     mat4 l_matrix = glm::translate(mat4(1.f), l_x * t * 0.01f);
-    model = l_matrix * model;
+    model = l_matrix * startMatrix;
 }
 
 void CoordinateSystemExercise4Scene::translateZ(float t) {
     vec3 l_x = glm::normalize(glm::mat3(model) * Z_AXIS);
     mat4 l_matrix = glm::translate(mat4(1.f), l_x * t * 0.01f);
-    model = l_matrix * model;
+    model = l_matrix * startMatrix;
 }
 
 void CoordinateSystemExercise4Scene::rotateX(float d) {
@@ -261,7 +265,7 @@ void CoordinateSystemExercise4Scene::rotateX(float d) {
     vec3 translation;
     vec3 skew;
     vec4 perspective;
-    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
+    glm::decompose(startMatrix, l_scale, l_rotation, translation, skew, perspective);
     mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
     l_rotation = glm::rotate(l_rotation, glm::radians(d * 5.f), X_AXIS);
     mat4 mat_rotate = glm::mat4_cast(l_rotation);
@@ -275,7 +279,7 @@ void CoordinateSystemExercise4Scene::rotateY(float d) {
     vec3 translation;
     vec3 skew;
     vec4 perspective;
-    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
+    glm::decompose(startMatrix, l_scale, l_rotation, translation, skew, perspective);
     mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
     l_rotation = glm::rotate(l_rotation, glm::radians(d * 5.f), Y_AXIS);
     mat4 mat_rotate = glm::mat4_cast(l_rotation);
@@ -289,7 +293,7 @@ void CoordinateSystemExercise4Scene::rotateZ(float d) {
     vec3 translation;
     vec3 skew;
     vec4 perspective;
-    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
+    glm::decompose(startMatrix, l_scale, l_rotation, translation, skew, perspective);
     mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
     l_rotation = glm::rotate(l_rotation, glm::radians(d * 5.f), Z_AXIS);
     mat4 mat_rotate = glm::mat4_cast(l_rotation);
@@ -303,7 +307,7 @@ void CoordinateSystemExercise4Scene::scaleX(float s) {
     vec3 translation;
     vec3 skew;
     vec4 perspective;
-    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
+    glm::decompose(startMatrix, l_scale, l_rotation, translation, skew, perspective);
     float scale = 1.f + s * 0.1f;
     l_scale.x *= scale;
     mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
@@ -318,7 +322,7 @@ void CoordinateSystemExercise4Scene::scaleY(float s) {
     vec3 translation;
     vec3 skew;
     vec4 perspective;
-    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
+    glm::decompose(startMatrix, l_scale, l_rotation, translation, skew, perspective);
     float scale = 1.f + s * 0.1f;
     l_scale.y *= scale;
     mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
@@ -333,7 +337,7 @@ void CoordinateSystemExercise4Scene::scaleZ(float s) {
     vec3 translation;
     vec3 skew;
     vec4 perspective;
-    glm::decompose(model, l_scale, l_rotation, translation, skew, perspective);
+    glm::decompose(startMatrix, l_scale, l_rotation, translation, skew, perspective);
     float scale = 1.f + s * 0.1f;
     l_scale.z *= scale;
     mat4 mat_scale = glm::scale(mat4(1.f), l_scale);
@@ -345,5 +349,13 @@ void CoordinateSystemExercise4Scene::scaleZ(float s) {
 void CoordinateSystemExercise4Scene::update() {
     mat4 l_matrix(1.f);
     model = l_matrix;
+}
+
+void CoordinateSystemExercise4Scene::startTransform() {
+    startMatrix = model;
+}
+
+void CoordinateSystemExercise4Scene::endTransform() {
+
 }
 

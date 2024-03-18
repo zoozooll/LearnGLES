@@ -30,6 +30,7 @@ private:
     Shader *ourShader = nullptr;
 
     glm::mat4 model = glm::mat4(1.0f);
+    glm::mat4 startMatrix = glm::mat4(1.f);
 
     void translateX(float t);
     void translateY(float t);
@@ -45,6 +46,10 @@ private:
     void scale(glm::vec3 s);
 
     void update();
+
+    void startTransform();
+
+    void endTransform();
 };
 
 

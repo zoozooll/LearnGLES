@@ -3,6 +3,7 @@ package com.example.learngles.ui.exercises
 import android.opengl.GLSurfaceView
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.learngles.HorizontalJoystickView
 import com.example.learngles.MainActivity
 import com.example.learngles.NativeLibHelper
@@ -62,65 +63,138 @@ class CoordinateSystemExer4Activity : AppCompatActivity(), GLSurfaceView.Rendere
             renderMode = GLSurfaceView.RENDERMODE_WHEN_DIRTY
 
             binding.sliderbarTranslateX.callback = object: HorizontalJoystickView.Callback {
+                override fun onStart() {
+                    NativeLibHelper.sendCommands(mapOf("transform_start" to 1))
+                }
+
                 override fun onMove(v: Float) {
+                    Log.i(TAG, "onMove $v")
                     NativeLibHelper.sendCommands(mapOf("translate_x" to v))
                     binding.surfaceSupportedView.requestRender()
+                }
+
+                override fun onEnd() {
+                    NativeLibHelper.sendCommands(mapOf("transform_end" to 1))
                 }
             }
 
             binding.sliderbarTranslateY.callback = object: HorizontalJoystickView.Callback {
+                override fun onStart() {
+                    NativeLibHelper.sendCommands(mapOf("transform_start" to 1))
+                }
+
                 override fun onMove(v: Float) {
                     NativeLibHelper.sendCommands(mapOf("translate_y" to v))
                     binding.surfaceSupportedView.requestRender()
                 }
+
+                override fun onEnd() {
+                    NativeLibHelper.sendCommands(mapOf("transform_end" to 1))
+                }
             }
 
             binding.sliderbarTranslateZ.callback = object: HorizontalJoystickView.Callback {
+                override fun onStart() {
+                    NativeLibHelper.sendCommands(mapOf("transform_start" to 1))
+                }
+
                 override fun onMove(v: Float) {
                     NativeLibHelper.sendCommands(mapOf("translate_z" to v))
                     binding.surfaceSupportedView.requestRender()
                 }
+
+                override fun onEnd() {
+                    NativeLibHelper.sendCommands(mapOf("transform_end" to 1))
+                }
             }
 
             binding.sliderbarRotateX.callback = object: HorizontalJoystickView.Callback {
+                override fun onStart() {
+                    NativeLibHelper.sendCommands(mapOf("transform_start" to 1))
+                }
+
                 override fun onMove(v: Float) {
                     NativeLibHelper.sendCommands(mapOf("rotate_x" to v))
                     binding.surfaceSupportedView.requestRender()
                 }
+
+                override fun onEnd() {
+                    NativeLibHelper.sendCommands(mapOf("transform_end" to 1))
+                }
             }
 
             binding.sliderbarRotateY.callback = object: HorizontalJoystickView.Callback {
+                override fun onStart() {
+                    NativeLibHelper.sendCommands(mapOf("transform_start" to 1))
+                }
+
                 override fun onMove(v: Float) {
                     NativeLibHelper.sendCommands(mapOf("rotate_y" to v))
                     binding.surfaceSupportedView.requestRender()
                 }
+
+                override fun onEnd() {
+                    NativeLibHelper.sendCommands(mapOf("transform_end" to 1))
+                }
             }
 
             binding.sliderbarRotateZ.callback = object: HorizontalJoystickView.Callback {
+                override fun onStart() {
+                    NativeLibHelper.sendCommands(mapOf("transform_start" to 1))
+                }
+
                 override fun onMove(v: Float) {
                     NativeLibHelper.sendCommands(mapOf("rotate_z" to v))
                     binding.surfaceSupportedView.requestRender()
                 }
+
+                override fun onEnd() {
+                    NativeLibHelper.sendCommands(mapOf("transform_end" to 1))
+                }
             }
 
             binding.sliderbarScaleX.callback = object: HorizontalJoystickView.Callback {
+                override fun onStart() {
+                    NativeLibHelper.sendCommands(mapOf("transform_start" to 1))
+                }
+
                 override fun onMove(v: Float) {
                     NativeLibHelper.sendCommands(mapOf("scale_x" to v))
                     binding.surfaceSupportedView.requestRender()
                 }
+
+                override fun onEnd() {
+                    NativeLibHelper.sendCommands(mapOf("transform_end" to 1))
+                }
             }
 
             binding.sliderbarScaleY.callback = object: HorizontalJoystickView.Callback {
+                override fun onStart() {
+                    NativeLibHelper.sendCommands(mapOf("transform_start" to 1))
+                }
+
                 override fun onMove(v: Float) {
                     NativeLibHelper.sendCommands(mapOf("scale_y" to v))
                     binding.surfaceSupportedView.requestRender()
                 }
+
+                override fun onEnd() {
+                    NativeLibHelper.sendCommands(mapOf("transform_end" to 1))
+                }
             }
 
             binding.sliderbarScaleZ.callback = object: HorizontalJoystickView.Callback {
+                override fun onStart() {
+                    NativeLibHelper.sendCommands(mapOf("transform_start" to 1))
+                }
+
                 override fun onMove(v: Float) {
                     NativeLibHelper.sendCommands(mapOf("scale_z" to v))
                     binding.surfaceSupportedView.requestRender()
+                }
+
+                override fun onEnd() {
+                    NativeLibHelper.sendCommands(mapOf("transform_end" to 1))
                 }
             }
         }
@@ -139,6 +213,6 @@ class CoordinateSystemExer4Activity : AppCompatActivity(), GLSurfaceView.Rendere
     }
 
     companion object {
-        private const val TAG = "TransformExer3Activity"
+        private const val TAG = "TransformExer4Activity"
     }
 }

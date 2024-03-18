@@ -7,25 +7,25 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.widget.ImageView
 import androidx.annotation.MainThread
 
 class LongPressView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
-    defStyleRes: Int = 0
-) : View(context, attrs, defStyleAttr, defStyleRes) {
+) : androidx.appcompat.widget.AppCompatImageView(context, attrs, defStyleAttr) {
 
-
-    var callback: (() -> Unit)?  = null
-
+    var callback: Callback?  = null
+    private var pressing = false
 
     private val eventHandler = object: Handler(context.mainLooper) {
         override fun handleMessage(msg: Message) {
             when(msg.what) {
                 EVENT_LONG_PRESS -> {
-                    if (isPressed) {
-                        callback?.invoke()
+                    Log.i(TAG, "onTouchEvent $isPressed")
+                    if (pressing) {
+                        callback?.onPressing()
                         removeMessages(EVENT_LONG_PRESS)
                         sendEmptyMessageDelayed(EVENT_LONG_PRESS, 20L)
                     }
@@ -35,18 +35,34 @@ class LongPressView @JvmOverloads constructor(
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        if (((event?.action ?: -1) and MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
-            eventHandler.removeMessages(EVENT_LONG_PRESS)
+        Log.i(TAG, "onTouchEvent ${event?.action}")
+        when((event?.action ?: -1) and MotionEvent.ACTION_MASK) {
+            MotionEvent.ACTION_DOWN -> {
+                pressing = true
+                eventHandler.sendEmptyMessage(EVENT_LONG_PRESS)
+                callback?.onPressingStart()
+                return true
+            }
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                pressing = false
+                eventHandler.removeMessages(EVENT_LONG_PRESS)
+                callback?.onPressingEnd()
+                return false
+            }
         }
-        return super.onTouchEvent(event)
-    }
-
-    override fun setOnLongClickListener(l: OnLongClickListener?) {
-        eventHandler.sendEmptyMessage(EVENT_LONG_PRESS)
-        true
+        return true
     }
 
     companion object {
+        private const val TAG = "LongPressView"
         private const val EVENT_LONG_PRESS = 1
+    }
+
+    interface Callback {
+
+        fun onPressingStart()
+        fun onPressing()
+
+        fun onPressingEnd()
     }
 }

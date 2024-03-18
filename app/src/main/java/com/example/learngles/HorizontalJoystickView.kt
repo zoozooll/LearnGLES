@@ -11,6 +11,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -25,6 +26,8 @@ class HorizontalJoystickView @JvmOverloads constructor(context: Context, attrs: 
     var callback: Callback? = null
 
     private val binding = HorizontalJoystickViewBinding.inflate(LayoutInflater.from(context), this)
+
+    private var value: Float = 0F
     init {
 
         val ta = context.obtainStyledAttributes(attrs, R.styleable.HorizontalJoystickView)
@@ -35,18 +38,52 @@ class HorizontalJoystickView @JvmOverloads constructor(context: Context, attrs: 
             ta.recycle()
         }
 
-        binding.btnSubmit.setOnTouchListener { v, event ->
-            callback?.onMove(-1f)
-            true
+        binding.btnSubmit.callback = object: LongPressView.Callback {
+            override fun onPressingStart() {
+                value = 0F
+                callback?.onStart()
+            }
+
+            override fun onPressing() {
+                value -= 1f
+                callback?.onMove(value)
+            }
+
+            override fun onPressingEnd() {
+                callback?.onEnd()
+                value = 0F
+            }
+
         }
 
-        binding.btnAdd.setOnTouchListener { v, event ->
-            callback?.onMove(1f)
-            true
+        binding.btnAdd.callback = object: LongPressView.Callback {
+            override fun onPressingStart() {
+                callback?.onStart()
+                value = 0F
+            }
+
+            override fun onPressing() {
+                value += 1F
+                callback?.onMove(value)
+            }
+
+            override fun onPressingEnd() {
+                callback?.onEnd()
+                value = 0F
+            }
+
         }
     }
 
+    companion object {
+        private const val TAG = "LongPressView"
+    }
+
     interface Callback {
+
+        fun onStart()
         fun onMove(v: Float)
+
+        fun onEnd()
     }
 }
