@@ -1,6 +1,6 @@
 # 1.getting_started 
                 
-            hello_window  
+            hello_window  [V]
             hello_window_clear  
             hello_triangle  
             hello_triangle_indexed  
