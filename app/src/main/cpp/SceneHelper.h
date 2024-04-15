@@ -44,6 +44,7 @@
 #include "2_lighting/MaterialExercise1Scene.h"
 #include "2_lighting/LightingMapsDiffuseMapScene.h"
 #include "2_lighting/LightingMapsSpecularMapScene.h"
+#include "2_lighting/LightingMapsExercise3Scene.h"
 #include "2_lighting/LightingMapsExercise4Scene.h"
 #include "2_lighting/LightingCastersDirectionalScene.h"
 #include "2_lighting/LightingCastersPointScene.h"
@@ -191,9 +192,6 @@ inline Scene* GenSceneByName(const char *tutorial) {
         return new BasicLightingDiffuseScene;
     } else if (!strcmp(tutorial, "basic_lighting_specular" )) {
         return new BasicLightingSpecularScene;
-    } else if (!strcmp(tutorial, "basic_lighting_exercise1" )) {
-    } else if (!strcmp(tutorial, "basic_lighting_exercise2" )) {
-    } else if (!strcmp(tutorial, "basic_lighting_exercise3" )) {
     } else if (!strcmp(tutorial, "materials" )) {
         return new MaterialScene;
     } else if (!strcmp(tutorial, "materials_exercise1" )) {
@@ -202,9 +200,10 @@ inline Scene* GenSceneByName(const char *tutorial) {
         return new LightingMapsDiffuseMapScene;
     } else if (!strcmp(tutorial, "lighting_maps_specular_map")) {
         return new LightingMapsSpecularMapScene;
-    } else if (!strcmp(tutorial, "lighting_maps_exercise2" )) {
-        return new LightingMapsExercise4Scene;
     } else if (!strcmp(tutorial, "lighting_maps_exercise3" )) {
+        return new LightingMapsExercise3Scene;
+    } else if (!strcmp(tutorial, "lighting_maps_exercise4" )) {
+        return new LightingMapsExercise4Scene;
     } else if (!strcmp(tutorial, "light_casters_directional" )) {
         return new LightingCastersDirectionalScene;
     } else if (!strcmp(tutorial, "light_casters_point" )) {

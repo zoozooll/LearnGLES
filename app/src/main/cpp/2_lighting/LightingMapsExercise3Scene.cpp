@@ -2,17 +2,17 @@
 // Created by Aaron Lee on 2023/8/22.
 //
 
-#include "LightingMapsSpecularMapScene.h"
+#include "LightingMapsExercise3Scene.h"
 #include "Shader.h"
 #include "Camera.h"
 #include <glm/gtx/string_cast.hpp>
 #include "Texture.h"
 
-void LightingMapsSpecularMapScene::init() {
+void LightingMapsExercise3Scene::init() {
     camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
     lightPos = glm::vec3(1.2f, 1.0f, 2.0f);
 
-    lightingShader = new Shader("2/4.2.lighting_maps.vert", "2/4.2.lighting_maps.frag");
+    lightingShader = new Shader("2/4.2.lighting_maps.vert", "2/4.3.lighting_maps.frag");
     lightCubeShader = new Shader("2/light_cube.vert", "2/light_cube.frag");
     // set up vertex data (and buffer(s)) and configure vertex attributes
 // ------------------------------------------------------------------
@@ -94,13 +94,13 @@ void LightingMapsSpecularMapScene::init() {
     lightingShader->setInt("material.diffuse", 0);
 }
 
-void LightingMapsSpecularMapScene::resize(int width, int height) {
+void LightingMapsExercise3Scene::resize(int width, int height) {
     glViewport(0, 0, width, height);
     SCR_WIDTH = width;
     SCR_HEIGHT = height;
 }
 
-void LightingMapsSpecularMapScene::draw() {
+void LightingMapsExercise3Scene::draw() {
 // render
 // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -152,18 +152,18 @@ void LightingMapsSpecularMapScene::draw() {
     glDrawArrays(GL_TRIANGLES, 0, 36);
 }
 
-void LightingMapsSpecularMapScene::destroy() {
+void LightingMapsExercise3Scene::destroy() {
     glDeleteVertexArrays(1, &cubeVAO);
     glDeleteVertexArrays(1, &lightCubeVAO);
     glDeleteBuffers(1, &VBO);
 }
 
-void LightingMapsSpecularMapScene::move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) {
+void LightingMapsExercise3Scene::move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) {
     LOGI(__FILE_NAME__, "move %s -> %s", glm::to_string(start_pivot).c_str(), glm::to_string(end_pivot).c_str());
     camera->ProcessMove(glm::vec3((end_pivot - start_pivot) * glm::vec2(0.001f, -0.001f), 0.f));
 }
 
-void LightingMapsSpecularMapScene::scale(const float &scale) {
+void LightingMapsExercise3Scene::scale(const float &scale) {
     float zoom = 0.f;
     if (scale > 1.02f) {
         zoom = 1.f;
@@ -173,11 +173,11 @@ void LightingMapsSpecularMapScene::scale(const float &scale) {
     camera->ProcessMouseScroll(zoom);
 }
 
-void LightingMapsSpecularMapScene::yawPitch(const glm::vec2 &director) {
+void LightingMapsExercise3Scene::yawPitch(const glm::vec2 &director) {
     camera->ProcessMouseMovement(director.x, director.y);
 }
 
-void LightingMapsSpecularMapScene::onDoubleClick(const glm::vec2 point) {
+void LightingMapsExercise3Scene::onDoubleClick(const glm::vec2 point) {
     camera->Position = glm::vec3(0.0f, 0.0f, 3.0f);
     camera->WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
     camera->Yaw = YAW;

@@ -12,12 +12,14 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath, const char* geo
     char* vShaderCode;
     int vSize;
     LoadStringFromAsset(vertexPath, &vShaderCode, &vSize);
+//    LOGI(__FILE_NAME__, "vertexPath ==> %s", vShaderCode);
 //    std::string vString(vShaderCode, vSize);
 //    auto vertexString = vString.data();
 
     char * fShaderCode;
     int fSize;
     LoadStringFromAsset(fragmentPath, &fShaderCode, &fSize);
+//    LOGI(__FILE_NAME__, "fragmentPath ==> %s", fShaderCode);
 //    std::string fString(fShaderCode, fSize);
 //    auto fragmentString = fString.data();
 

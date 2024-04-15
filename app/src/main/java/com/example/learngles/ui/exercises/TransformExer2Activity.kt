@@ -61,6 +61,7 @@ class TransformExer2Activity : AppCompatActivity(), GLSurfaceView.Renderer {
             NativeLibHelper.sendCommands(mapOf("translate_x" to v))
             binding.surfaceSupportedView.requestRender()
         }
+
         binding.sliderbarTranslateX.callback = { v ->
             NativeLibHelper.sendCommands(mapOf("translate_x" to v))
             binding.surfaceSupportedView.requestRender()

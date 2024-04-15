@@ -8,7 +8,12 @@
 #define LEARNGLES_LIGHTINGMAPSEXERCISE4SCENE_H
 
 #include "Scene.h"
-class LightingMapsExercise4Scene : public Scene {
+#include "SceneTouchEvent.h"
+
+class Camera;
+class Shader;
+
+class LightingMapsExercise4Scene : public Scene, public SceneTouchEvent   {
 public:
     void init() override;
 
@@ -17,7 +22,26 @@ public:
     void draw() override;
 
     void destroy() override;
-};
 
+    void move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) override;
+
+    void scale(const float &scale) override;
+
+    void yawPitch(const glm::vec2 &director) override;
+
+    void onDoubleClick(const glm::vec2 point) override;
+
+private:
+
+    unsigned int SCR_WIDTH = 0;
+    unsigned int SCR_HEIGHT = 0;
+    unsigned int VBO, cubeVAO;
+    unsigned int lightCubeVAO;
+    glm::vec3 lightPos;
+    Camera *camera = nullptr;
+    Shader *lightingShader = nullptr;
+    Shader *lightCubeShader = nullptr;
+    unsigned int diffuseMap;
+};
 
 #endif //LEARNGLES_LIGHTINGMAPSEXERCISE4SCENE_H

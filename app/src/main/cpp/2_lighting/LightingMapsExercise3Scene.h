@@ -2,8 +2,8 @@
 // Created by Aaron Lee on 2023/8/22.
 //
 
-#ifndef LEARNGLES_LIGHTINGMAPSDIFFUSEMAPSCENE_H
-#define LEARNGLES_LIGHTINGMAPSDIFFUSEMAPSCENE_H
+#ifndef LEARNGLES_LIGHTINGMAPSEXERCISE3_H
+#define LEARNGLES_LIGHTINGMAPSEXERCISE3_H
 
 #include "Scene.h"
 #include "SceneTouchEvent.h"
@@ -11,7 +11,7 @@
 class Camera;
 class Shader;
 
-class LightingMapsDiffuseMapScene : public Scene, public SceneTouchEvent   {
+class LightingMapsExercise3Scene : public Scene, public SceneTouchEvent   {
 public:
     void init() override;
 
@@ -43,4 +43,4 @@ private:
 };
 
 
-#endif //LEARNGLES_LIGHTINGMAPSDIFFUSEMAPSCENE_H
+#endif //LEARNGLES_LIGHTINGMAPSEXERCISE3_H
