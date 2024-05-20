@@ -35,6 +35,7 @@
 #include "1_getting_started/CoordinateSystemMultipleScene.h"
 #include "1_getting_started/CoordinateSystemExercise1Scene.h"
 #include "1_getting_started/CameraScene.h"
+#include "1_getting_started/FocalLengthAndFOVScene.h"
 #include "3_model_loading/ModelLoadingScene.h"
 #include "5_advanced_lighting/AdvancedLightingScene.h"
 #include "2_lighting/ColorScene.h"
@@ -170,6 +171,8 @@ inline Scene* GenSceneByName(const char *tutorial) {
         return new CoordinateSystemExercise3Scene;
     } else if (!strcmp(tutorial, "coordinate_systems_exercise4")) {
         return new CoordinateSystemExercise4Scene;
+    } else if (!strcmp(tutorial, "Focal Length and FOV")) {
+        return new FocalLengthAndFOVScene();
     } else if (!strcmp(tutorial, "camera_circle")) {
         return new CameraCircleScene;
     } else if (!strcmp(tutorial, "camera_keyboard_dt")) {

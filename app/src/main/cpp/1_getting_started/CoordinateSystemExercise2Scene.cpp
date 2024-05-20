@@ -18,6 +18,7 @@ using glm::vec3;
 using glm::vec4;
 using glm::quat;
 using glm::mat4;
+using std::any_cast;
 
 static int SCR_WIDTH = 0;
 static int SCR_HEIGHT = 0;

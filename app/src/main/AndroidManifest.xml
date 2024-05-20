@@ -25,6 +25,9 @@
             android:name=".ui.exercises.GLDetailActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.exercises.FocalLengthAndFOVActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

@@ -30,6 +30,7 @@ object DataSet {
                     "coordinate_systems_exercise2" to true,
                     "coordinate_systems_exercise3" to true,
                     "coordinate_systems_exercise4" to true,
+                    "Focal Length and FOV" to true,
                     "camera_circle" to true,
                     "camera_keyboard_dt" to true,
                     "camera_mouse_zoom" to true,

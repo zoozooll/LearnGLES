@@ -2,7 +2,7 @@
 // Created by Aaron Lee on 2023/10/30.
 //
 
-#include "CameraCircleScene.h"
+#include "FocalLengthAndFOVScene.h"
 
 #include <GLES3/gl32.h>
 #include <glm/glm.hpp>
@@ -12,6 +12,7 @@
 #include "Texture.h"
 
 using glm::vec2;
+using std::any_cast;
 
 // world space positions of our cubes
 static glm::vec3 cubePositions[] = {
@@ -29,7 +30,7 @@ static glm::vec3 cubePositions[] = {
 
 static int SCR_WIDTH = 0, SCR_HEIGHT = 0;
 
-void CameraCircleScene::init() {
+void FocalLengthAndFOVScene::init() {
 // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
@@ -120,7 +121,7 @@ void CameraCircleScene::init() {
     camera.setFar(100.f);
 }
 
-void CameraCircleScene::resize(int width, int height) {
+void FocalLengthAndFOVScene::resize(int width, int height) {
     glViewport(0, 0, width, height);
     SCR_WIDTH = width;
     SCR_HEIGHT = height;
@@ -128,7 +129,7 @@ void CameraCircleScene::resize(int width, int height) {
     camera.updateCameraMatrix();
 }
 
-void CameraCircleScene::draw() {
+void FocalLengthAndFOVScene::draw() {
 // render
     // ------
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -163,33 +164,45 @@ void CameraCircleScene::draw() {
 
 }
 
-void CameraCircleScene::destroy() {
+void FocalLengthAndFOVScene::destroy() {
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteTextures(1, &texture1);
     glDeleteTextures(1, &texture2);
 }
 
-void CameraCircleScene::move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) {
+void FocalLengthAndFOVScene::move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) {
     camera.move((end_pivot - start_pivot)  * vec2(0.001f, -0.001f));
 }
 
-void CameraCircleScene::scale(const float &scale) {
+void FocalLengthAndFOVScene::scale(const float &scale) {
     camera.zoom(scale);
 }
 
-void CameraCircleScene::yawPitch(const glm::vec2 &director) {
+void FocalLengthAndFOVScene::yawPitch(const glm::vec2 &director) {
     camera.yawPitch(director);
 }
 
-void CameraCircleScene::roll(const float &angle) {
+void FocalLengthAndFOVScene::roll(const float &angle) {
     camera.roll(angle);
 }
 
-void CameraCircleScene::onDoubleClick(const glm::vec2 point) {
+void FocalLengthAndFOVScene::onDoubleClick(const glm::vec2 point) {
+}
+
+void FocalLengthAndFOVScene::onSingleClick(const glm::vec2 point) {
 
 }
 
-void CameraCircleScene::onSingleClick(const glm::vec2 point) {
-
+std::map<std::string, std::any>
+FocalLengthAndFOVScene::sendCommand(std::map<std::string, std::any> commands) {
+    for (const auto& [key, value]: commands) {
+        if ("set_fovy" == key && value.type() == typeid(float)) {
+            auto l_value = any_cast<float>(value);
+            camera.setVdy(l_value);
+            camera.updateCameraMatrix();
+        }
+    }
+    return {};
 }
+
