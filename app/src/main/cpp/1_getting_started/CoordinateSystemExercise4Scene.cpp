@@ -222,7 +222,7 @@ CoordinateSystemExercise4Scene::sendCommand(std::map<std::string, std::any> comm
             scaleZ(l_value);
         } else if ("transform_start" == key) {
             startTransform();
-        } else if ("transform_start" == key) {
+        } else if ("transform_end" == key) {
             endTransform();
         }
     }

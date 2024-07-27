@@ -146,12 +146,13 @@ void PointShadowsScene::resize(int width, int height) {
     SCR_WIDTH = width;
     SCR_HEIGHT = height;
     camera.setAspec((float)width / height);
-    camera.updateCameraMatrix();
+
     glViewport(0, 0, width, height);
     check_gl_error();
 }
 
 void PointShadowsScene::draw() {
+    camera.update();
     // move light position over time
     lightPos.z = static_cast<float>(1. * 3.0);
 
@@ -201,7 +202,7 @@ void PointShadowsScene::draw() {
     shader->setMat4("view", view);
     // set lighting uniforms
     shader->setVec3("lightPos", lightPos);
-    shader->setVec3("viewPos", camera.getCameraPosition());
+    shader->setVec3("viewPos", camera.getPosition());
     shader->setInt("shadows", 1); // enable/disable shadows by pressing 'SPACE'
     shader->setFloat("far_plane", far_plane);
     check_gl_error();

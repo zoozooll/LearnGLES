@@ -19,6 +19,7 @@ import com.example.learngles.databinding.FragmentMainBinding
 import com.example.learngles.ui.exercises.CoordinateSystemExer3Activity
 import com.example.learngles.ui.exercises.CoordinateSystemExer4Activity
 import com.example.learngles.ui.exercises.FocalLengthAndFOVActivity
+import com.example.learngles.ui.exercises.SsaoExerActivity
 import com.example.learngles.ui.exercises.TransformExer2Activity
 
 /**
@@ -68,6 +69,7 @@ class PlaceholderFragment : Fragment() {
                             "coordinate_systems_exercise3" -> CoordinateSystemExer3Activity::class.java
                             "coordinate_systems_exercise4" -> CoordinateSystemExer4Activity::class.java
                             "Focal Length and FOV" -> FocalLengthAndFOVActivity::class.java
+                            "ssao" -> SsaoExerActivity::class.java
                             else -> GLDetailActivity::class.java
                         }
                         val intent = Intent(requireContext(), dstActivity)

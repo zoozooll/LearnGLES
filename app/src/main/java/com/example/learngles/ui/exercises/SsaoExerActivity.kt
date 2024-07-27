@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.learngles.MainActivity
 import com.example.learngles.NativeLibHelper
 import com.example.learngles.TouchEventView
-import com.example.learngles.databinding.ActivityFocallengthFovBinding
 import com.example.learngles.databinding.ActivityGldetailBinding
 import javax.microedition.khronos.egl.EGL10
 import javax.microedition.khronos.egl.EGLConfig
@@ -19,16 +18,16 @@ import javax.microedition.khronos.egl.EGLContext
 import javax.microedition.khronos.egl.EGLDisplay
 import javax.microedition.khronos.opengles.GL10
 
-class FocalLengthAndFOVActivity : AppCompatActivity(), Renderer {
+class SsaoExerActivity : AppCompatActivity(), Renderer {
 
-    private lateinit var binding: ActivityFocallengthFovBinding
+    private lateinit var binding: ActivityGldetailBinding
     private lateinit var tutorialArg: String
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityFocallengthFovBinding.inflate(layoutInflater)
+        binding = ActivityGldetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         tutorialArg = intent.getStringExtra(MainActivity.KEY_TUTORIAL_TITLE) ?: ""
         Log.i("GLDetailActivity", "tutorialArg $tutorialArg")
@@ -64,7 +63,7 @@ class FocalLengthAndFOVActivity : AppCompatActivity(), Renderer {
                     egl.eglDestroyContext(display, context)
                 }
             })
-            setRenderer(this@FocalLengthAndFOVActivity)
+            setRenderer(this@SsaoExerActivity)
             renderMode = RENDERMODE_WHEN_DIRTY
         }
 
@@ -130,16 +129,10 @@ class FocalLengthAndFOVActivity : AppCompatActivity(), Renderer {
             }
 
             override fun onTwoFingersClick() {
-
             }
 
             override fun onThreeFingersClick() {
             }
-        }
-
-        binding.barSetFov.callback = {
-            NativeLibHelper.sendCommands(mapOf("set_fovy" to it))
-            binding.surfaceSupportedView.requestRender()
         }
     }
 
@@ -156,6 +149,6 @@ class FocalLengthAndFOVActivity : AppCompatActivity(), Renderer {
     }
 
     companion object {//n
-        private const val TAG = "GLDetailActivity"
+        private const val TAG = "SsaoExerActivity"
     }
 }

@@ -175,12 +175,13 @@ void ShaderMappingExercise1Scene::resize(int width, int height) {
     SCR_WIDTH = width;
     SCR_HEIGHT = height;
     camera.setAspec((float)width / height);
-    camera.updateCameraMatrix();
+
     glViewport(0, 0, width, height);
     check_gl_error();
 }
 
 void ShaderMappingExercise1Scene::draw() {
+    camera.update();
     // render
     // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -218,7 +219,7 @@ void ShaderMappingExercise1Scene::draw() {
     shader->setMat4("projection", projection);
     shader->setMat4("view", view);
     // set light uniforms
-    shader->setVec3("viewPos", camera.getCameraPosition());
+    shader->setVec3("viewPos", camera.getPosition());
     shader->setVec3("lightPos", lightPos);
     shader->setMat4("lightSpaceMatrix", lightSpaceMatrix);
     glActiveTexture(GL_TEXTURE0);

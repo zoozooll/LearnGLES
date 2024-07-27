@@ -7,8 +7,6 @@
 
 #include <glm/glm.hpp>
 
-//using namespace glm;
-
 class TargetCamera {
 public:
     void move(const glm::vec2 &move);
@@ -33,9 +31,35 @@ public:
 
     const glm::mat4 &getProjectionMatrix() const;
 
-    void updateCameraMatrix();
+    void start();
 
-    const glm::vec3 &getCameraPosition() const;
+    void update();
+
+    const glm::vec3& getPosition() const;
+
+    glm::mat4 getVPMatrix() const;
+
+    const glm::mat4 &getTargetTransform() const;
+
+    float getRadius() const;
+
+    void setTargetTransform(const glm::mat4 &targetTransform);
+
+    glm::vec3 getTarget() const;
+
+    float getNear() const;
+
+    float getFar() const;
+ 
+    const glm::mat4 &getProjectionDepthMatrix() const;
+
+    float calculateScaleFactor(const float &distanceFromCamera, const float &desiredObjectSize) const;
+
+    float getVdy() const;
+
+    glm::vec3 getTargetPosition() const;
+
+    float getFracRadius() const;
 
 private:
 
@@ -46,9 +70,21 @@ private:
     float m_near = 0.f;
     float m_far = 0.f;
 
+    float fracRadius = 0.F;
+
+    glm::vec3 m_cameraPosition;
+
     glm::mat4 m_viewMatrix;
     glm::mat4 m_projectionMatrix;
-    glm::vec3 cameraPosition;
+    glm::mat4 m_projectionDepthMatrix;
+    bool dirty = false;
+
+
+    constexpr static const float CAMERA_FOVY_DEGREE = 60.f;
+    constexpr static const float CAMERA_NEAR = 1.f;
+    constexpr static const float CAMERA_FAR = 20.f;
+    constexpr static const float CAMERA_DEF_RADIUS = 8.f;
+    constexpr static const glm::vec3 CAMERA_DEF_TARGET_POSITION = glm::vec3(.0f, 2.f, .0f);
 };
 
 

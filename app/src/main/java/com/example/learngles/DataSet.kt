@@ -102,7 +102,7 @@ object DataSet {
                     "bloom" to false,
                     "deferred_shading" to false,
                     "deferred_shading_volumes" to false,
-                    "ssao" to false
+                    "ssao" to true
                 ),
         "6.pbr" to
                 listOf(

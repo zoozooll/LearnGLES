@@ -126,11 +126,12 @@ void FocalLengthAndFOVScene::resize(int width, int height) {
     SCR_WIDTH = width;
     SCR_HEIGHT = height;
     camera.setAspec((float)width / height);
-    camera.updateCameraMatrix();
+
 }
 
 void FocalLengthAndFOVScene::draw() {
-// render
+    camera.update();
+    // render
     // ------
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -200,7 +201,6 @@ FocalLengthAndFOVScene::sendCommand(std::map<std::string, std::any> commands) {
         if ("set_fovy" == key && value.type() == typeid(float)) {
             auto l_value = any_cast<float>(value);
             camera.setVdy(l_value);
-            camera.updateCameraMatrix();
         }
     }
     return {};
