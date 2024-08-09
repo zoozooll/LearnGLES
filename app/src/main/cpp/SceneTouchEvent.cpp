@@ -20,14 +20,14 @@ void SceneTouchEvent::roll(const float &angle) {
 
 }
 
-void SceneTouchEvent::onSingleClick(const glm::vec2 point) {
+void SceneTouchEvent::onSingleClick(const glm::vec2 &point) {
 
 }
 
-void SceneTouchEvent::onDoubleClick(const glm::vec2 point) {
+void SceneTouchEvent::onDoubleClick(const glm::vec2 &point) {
 
 }
 
-void SceneTouchEvent::onLongPress(const glm::vec2 point) {
+void SceneTouchEvent::onLongPress(const glm::vec2 &point) {
 
 }

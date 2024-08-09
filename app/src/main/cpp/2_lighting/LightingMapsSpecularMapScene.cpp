@@ -177,7 +177,7 @@ void LightingMapsSpecularMapScene::yawPitch(const glm::vec2 &director) {
     camera->ProcessMouseMovement(director.x, director.y);
 }
 
-void LightingMapsSpecularMapScene::onDoubleClick(const glm::vec2 point) {
+void LightingMapsSpecularMapScene::onDoubleClick(const glm::vec2 &point) {
     camera->Position = glm::vec3(0.0f, 0.0f, 3.0f);
     camera->WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
     camera->Yaw = YAW;

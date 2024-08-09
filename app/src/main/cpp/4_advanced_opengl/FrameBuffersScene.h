@@ -29,7 +29,7 @@ public:
 
     void roll(const float &angle) override;
 
-    void onDoubleClick(const glm::vec2 point) override;
+    void onDoubleClick(const glm::vec2 &point) override;
 
 private:
     unsigned int SCR_WIDTH = 0;

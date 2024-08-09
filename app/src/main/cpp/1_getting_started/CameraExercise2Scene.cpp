@@ -126,6 +126,6 @@ void CameraExercise2Scene::yawPitch(const glm::vec2 &director) {
 
 }
 
-void CameraExercise2Scene::onDoubleClick(const glm::vec2 point) {
+void CameraExercise2Scene::onDoubleClick(const glm::vec2 &point) {
 
 }

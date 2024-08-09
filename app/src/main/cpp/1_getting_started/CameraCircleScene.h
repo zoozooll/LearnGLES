@@ -28,10 +28,10 @@ class CameraCircleScene : public Scene, public SceneTouchEvent {
 
     void roll(const float &angle) override;
 
-    void onDoubleClick(const glm::vec2 point) override;
+    void onDoubleClick(const glm::vec2 &point) override;
 
 public:
-    void onSingleClick(const glm::vec2 point) override;
+    void onSingleClick(const glm::vec2 &point) override;
 
 private:
     unsigned int texture1 = 0, texture2 = 0;

@@ -115,6 +115,6 @@ void CameraExercise1Scene::yawPitch(const glm::vec2 &director) {
     curCameraTranslate = l_translate * curCameraTranslate;
 }
 
-void CameraExercise1Scene::onDoubleClick(const glm::vec2 point) {
+void CameraExercise1Scene::onDoubleClick(const glm::vec2 &point) {
     curCameraTranslate = glm::mat4(1.f);
 }

@@ -27,7 +27,7 @@ public:
 
     void yawPitch(const glm::vec2 &director) override;
 
-    void onDoubleClick(const glm::vec2 point) override;
+    void onDoubleClick(const glm::vec2 &point) override;
 
 private:
     unsigned int VBO = 0, cubeVAO = 0;

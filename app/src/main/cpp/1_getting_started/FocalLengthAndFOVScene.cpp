@@ -188,10 +188,10 @@ void FocalLengthAndFOVScene::roll(const float &angle) {
     camera.roll(angle);
 }
 
-void FocalLengthAndFOVScene::onDoubleClick(const glm::vec2 point) {
+void FocalLengthAndFOVScene::onDoubleClick(const glm::vec2 &point) {
 }
 
-void FocalLengthAndFOVScene::onSingleClick(const glm::vec2 point) {
+void FocalLengthAndFOVScene::onSingleClick(const glm::vec2 &point) {
 
 }
 

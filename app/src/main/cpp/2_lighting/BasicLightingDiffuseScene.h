@@ -27,7 +27,7 @@ public:
 
     void yawPitch(const glm::vec2 &director) override;
 
-    void onDoubleClick(const glm::vec2 point) override;
+    void onDoubleClick(const glm::vec2 &point) override;
 private:
     Shader *lightingShader = nullptr;
     Shader *lightCubeShader = nullptr;

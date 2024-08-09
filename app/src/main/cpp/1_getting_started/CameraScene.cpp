@@ -185,7 +185,7 @@ void CameraScene::yawPitch(const glm::vec2 &director) {
 void CameraScene::roll(const float &angle) {
 }
 
-void CameraScene::onDoubleClick(const glm::vec2 point) {
+void CameraScene::onDoubleClick(const glm::vec2 &point) {
     camera.Position = glm::vec3(0.0f, 0.0f, 3.0f);
     camera.WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
     camera.Yaw = YAW;

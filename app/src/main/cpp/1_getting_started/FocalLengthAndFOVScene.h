@@ -30,9 +30,9 @@ public:
 
     void roll(const float &angle) override;
 
-    void onDoubleClick(const glm::vec2 point) override;
+    void onDoubleClick(const glm::vec2 &point) override;
 
-    void onSingleClick(const glm::vec2 point) override;
+    void onSingleClick(const glm::vec2 &point) override;
 
     std::map<std::string, std::any> sendCommand(std::map<std::string, std::any> map) override;
 

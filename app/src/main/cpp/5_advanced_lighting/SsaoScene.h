@@ -32,11 +32,11 @@ public:
 
     void roll(const float &angle) override;
 
-    void onSingleClick(const glm::vec2 point) override;
+    void onSingleClick(const glm::vec2 &point) override;
 
-    void onDoubleClick(const glm::vec2 point) override;
+    void onDoubleClick(const glm::vec2 &point) override;
 
-    void onLongPress(const glm::vec2 point) override;
+    void onLongPress(const glm::vec2 &point) override;
 
 private:
     TargetCamera camera = TargetCamera();

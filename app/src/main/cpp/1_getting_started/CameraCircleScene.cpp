@@ -187,10 +187,10 @@ void CameraCircleScene::roll(const float &angle) {
     camera.roll(angle);
 }
 
-void CameraCircleScene::onDoubleClick(const glm::vec2 point) {
+void CameraCircleScene::onDoubleClick(const glm::vec2 &point) {
 
 }
 
-void CameraCircleScene::onSingleClick(const glm::vec2 point) {
+void CameraCircleScene::onSingleClick(const glm::vec2 &point) {
 
 }

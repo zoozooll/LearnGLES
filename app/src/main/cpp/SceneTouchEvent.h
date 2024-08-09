@@ -17,11 +17,11 @@ public:
 
     virtual void roll(const float &angle);
 
-    virtual void onSingleClick(const glm:: vec2 point);
+    virtual void onSingleClick(const glm::vec2 &point);
 
-    virtual void onDoubleClick(const glm:: vec2 point);
+    virtual void onDoubleClick(const glm::vec2 &point);
 
-    virtual void onLongPress(const glm:: vec2 point);
+    virtual void onLongPress(const glm::vec2 &point);
 };
 
 

@@ -417,15 +417,15 @@ void SsaoScene::roll(const float &angle) {
 }
 
 
-void SsaoScene::onSingleClick(const glm::vec2 point) {
+void SsaoScene::onSingleClick(const glm::vec2 &point) {
     SceneTouchEvent::onSingleClick(point);
 }
 
-void SsaoScene::onDoubleClick(const glm::vec2 point) {
+void SsaoScene::onDoubleClick(const glm::vec2 &point) {
     SceneTouchEvent::onDoubleClick(point);
 }
 
-void SsaoScene::onLongPress(const glm::vec2 point) {
+void SsaoScene::onLongPress(const glm::vec2 &point) {
     SceneTouchEvent::onLongPress(point);
 }
 
