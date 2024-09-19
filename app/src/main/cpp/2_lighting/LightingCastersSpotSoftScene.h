@@ -11,7 +11,7 @@
 class Camera;
 class Shader;
 
-class LightingCastersSpotSoftScene : public Scene, public SceneTouchEvent  {
+class LightingCastersSpotSoftScene : public Scene, public SceneTouchEvent {
 public:
     void init() override;
 

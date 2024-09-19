@@ -53,8 +53,7 @@ object DataSet {
                     "light_casters_point" to true,
                     "light_casters_spot" to true,
                     "light_casters_spot_soft" to true,
-                    "multiple_lights" to false,
-                    "multiple_lights_exercise1" to false
+                    "multiple_lights" to false
                 ),
         "3.model_loading" to
                 listOf(

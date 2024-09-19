@@ -3,7 +3,7 @@
 //
 
 #include "LightingCastersSpotSoftScene.h"
-
+#include <GLES3/gl32.h>
 #include <glm/gtx/string_cast.hpp>
 
 #include "Camera.h"
