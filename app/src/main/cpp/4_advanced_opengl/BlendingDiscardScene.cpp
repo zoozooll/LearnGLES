@@ -3,12 +3,12 @@
 //
 
 #include "BlendingDiscardScene.h"
-#include <vector>
 
 #include "Camera.h"
 #include "Shader.h"
+#include "Texture.h"
 
-using std::vecotr;
+using std::vector;
 
 void BlendingDiscardScene::init() {
     camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -125,19 +125,12 @@ void BlendingDiscardScene::init() {
 
 // transparent vegetation locations
 // --------------------------------
-    vector<glm::vec3> vegetation
-            {
-                    glm::vec3(-1.5f, 0.0f, -0.48f),
-                    glm::vec3( 1.5f, 0.0f, 0.51f),
-                    glm::vec3( 0.0f, 0.0f, 0.7f),
-                    glm::vec3(-0.3f, 0.0f, -2.3f),
-                    glm::vec3 (0.5f, 0.0f, -0.6f)
-            };
+
 
 // shader configuration
 // --------------------
-    shader.use();
-    shader.setInt("texture1", 0);
+    shader->use();
+    shader->setInt("texture1", 0);
 
 }
 
@@ -154,28 +147,28 @@ void BlendingDiscardScene::draw() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 // draw objects
-    shader.use();
-    glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-    glm::mat4 view = camera.GetViewMatrix();
+    shader->use();
+    glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    glm::mat4 view = camera->GetViewMatrix();
     glm::mat4 model = glm::mat4(1.0f);
-    shader.setMat4("projection", projection);
-    shader.setMat4("view", view);
+    shader->setMat4("projection", projection);
+    shader->setMat4("view", view);
 // cubes
     glBindVertexArray(cubeVAO);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, cubeTexture);
     model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
-    shader.setMat4("model", model);
+    shader->setMat4("model", model);
     glDrawArrays(GL_TRIANGLES, 0, 36);
     model = glm::mat4(1.0f);
     model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
-    shader.setMat4("model", model);
+    shader->setMat4("model", model);
     glDrawArrays(GL_TRIANGLES, 0, 36);
 // floor
     glBindVertexArray(planeVAO);
     glBindTexture(GL_TEXTURE_2D, floorTexture);
     model = glm::mat4(1.0f);
-    shader.setMat4("model", model);
+    shader->setMat4("model", model);
     glDrawArrays(GL_TRIANGLES, 0, 6);
 // vegetation
     glBindVertexArray(transparentVAO);
@@ -184,7 +177,7 @@ void BlendingDiscardScene::draw() {
     {
         model = glm::mat4(1.0f);
         model = glm::translate(model, vegetation[i]);
-        shader.setMat4("model", model);
+        shader->setMat4("model", model);
         glDrawArrays(GL_TRIANGLES, 0, 6);
     }
 }
