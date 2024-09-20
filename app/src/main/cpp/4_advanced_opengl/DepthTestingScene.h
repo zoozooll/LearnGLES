@@ -42,6 +42,7 @@ private:
     unsigned int planeVAO = 0U, planeVBO= 0U;
     unsigned int cubeTexture = 0u;
     unsigned int floorTexture = 0u;
+    bool depthTesting = true;
 };
 
 

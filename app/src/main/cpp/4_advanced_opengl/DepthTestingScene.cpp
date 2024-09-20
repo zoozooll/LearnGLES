@@ -11,15 +11,21 @@
 #include "Shader.h"
 
 void DepthTestingScene::init() {
+    camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
 
-    glDepthFunc(GL_ALWAYS); // always pass the depth test (same effect as glDisable(GL_DEPTH_TEST))
+    if (depthTesting) {
+        glDepthFunc(GL_ALWAYS); // always pass the depth test (same effect as glDisable(GL_DEPTH_TEST))
+    } else {
+        glDepthFunc(GL_LESS);
+    }
 
     // build and compile shaders
     // -------------------------
-    shader = new Shader("1.1.depth_testing.vs", "1.1.depth_testing.fs");
+    shader = new Shader("4/1.1.depth_testing.vsh", "4/1.1.depth_testing.fsh");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -118,7 +124,11 @@ void DepthTestingScene::resize(int width, int height) {
 }
 
 void DepthTestingScene::draw() {
-
+    if (depthTesting) {
+        glDepthFunc(GL_ALWAYS); // always pass the depth test (same effect as glDisable(GL_DEPTH_TEST))
+    } else {
+        glDepthFunc(GL_LESS);
+    }
     // render
     // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -190,6 +200,9 @@ void DepthTestingScene::onDoubleClick(const glm::vec2 &point) {
     camera->updateCameraVectors();
 }
 
-std::map<std::string, std::any> DepthTestingScene::sendCommand(std::map<std::string, std::any>) {
+std::map<std::string, std::any> DepthTestingScene::sendCommand(std::map<std::string, std::any> commands) {
+    if (commands.find("depthTesting") != commands.end()) {
+        depthTesting = !depthTesting;
+    }
     return {};
 }
