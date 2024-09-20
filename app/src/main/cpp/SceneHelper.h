@@ -217,7 +217,6 @@ inline Scene* GenSceneByName(const char *tutorial) {
         return new LightingCastersSpotSoftScene;
     } else if (!strcmp(tutorial, "multiple_lights" )) {
         return new MultipleLightsScene;
-    } else if (!strcmp(tutorial, "multiple_lights_exercise1" )) {
     } else if (!strcmp(tutorial, "depth_testing")) {
         return new DepthTestingScene();
     } else if (!strcmp(tutorial, "depth_testing_view")) {

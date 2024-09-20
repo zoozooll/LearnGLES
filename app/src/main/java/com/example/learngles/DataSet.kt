@@ -62,7 +62,6 @@ object DataSet {
         "4.advanced_opengl" to
                 listOf(
                     "depth_testing" to false,
-                    "depth_testing_view" to false,
                     "stencil_testing" to false,
                     "blending_discard" to false,
                     "blending_sort" to false,
