@@ -135,7 +135,7 @@ void CubemapSkyboxScene::init() {
 
     // load textures
     // -------------
-    cubeTexture = loadTexture("resources/textures/container.jpg");
+    cubeTexture = loadTexture("textures/container.jpg");
 
     std::vector<std::string> faces
             {

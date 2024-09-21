@@ -20,8 +20,8 @@ void CubemapsEnvironmentMappingScene::init() {
 
     // build and compile shaders
     // -------------------------
-    shader = new Shader("6.2.cubemaps.vsh", "6.2.cubemaps.fsh");
-    skyboxShader = new Shader("6.2.skybox.vs", "6.2.skybox.fs");
+    shader = new Shader("4/6.2.cubemaps.vsh", "4/6.2.cubemaps.fsh");
+    skyboxShader = new Shader("4/6.1.skybox.vsh", "4/6.1.skybox.fsh");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -156,7 +156,9 @@ void CubemapsEnvironmentMappingScene::init() {
 }
 
 void CubemapsEnvironmentMappingScene::resize(int width, int height) {
-
+    glViewport(0, 0, width, height);
+    SCR_WIDTH = width;
+    SCR_HEIGHT = height;
 }
 
 void CubemapsEnvironmentMappingScene::draw() {
