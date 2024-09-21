@@ -123,9 +123,9 @@ void BlenderSortScene::init() {
 
     // load textures
     // -------------
-    cubeTexture = loadTexture("resources/textures/marble.jpg");
-    floorTexture = loadTexture("resources/textures/metal.png");
-    transparentTexture = loadTexture("resources/textures/window.png");
+    cubeTexture = loadTexture("textures/marble.jpg");
+    floorTexture = loadTexture("textures/metal.png");
+    transparentTexture = loadTexture("textures/window.png");
 
     // shader configuration
     // --------------------

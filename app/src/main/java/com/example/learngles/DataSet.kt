@@ -65,7 +65,6 @@ object DataSet {
                     "stencil_testing" to false,
                     "blending_discard" to false,
                     "blending_sort" to false,
-                    "face_culling_exercise1" to false,
                     "framebuffers" to true,
                     "framebuffers_exercise1" to true,
                     "framebuffers_multi_textures" to false,

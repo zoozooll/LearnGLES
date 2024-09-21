@@ -6,7 +6,24 @@
 #define LEARNGLES_CUBEMAPSENVIRONMENTMAPPINGSCENE_H
 
 #include "Scene.h"
+
+class Camera;
+
+class Shader;
+
 class CubemapsEnvironmentMappingScene : public Scene {
+private:
+    Camera *camera = nullptr;
+    Shader *shader = nullptr;
+    Shader *skyboxShader = nullptr;
+
+    unsigned int SCR_WIDTH = 0u;
+    unsigned int SCR_HEIGHT = 0u;
+    // cube VAO
+    unsigned int cubeVAO = 0U, cubeVBO = 0U;
+    // skybox VAO
+    unsigned int skyboxVAO = 0U, skyboxVBO = 0U;
+    unsigned int cubemapTexture = 0U;
 public:
     void init() override;
 
