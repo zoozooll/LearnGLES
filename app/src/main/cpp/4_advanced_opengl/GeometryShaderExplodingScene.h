@@ -6,7 +6,23 @@
 #define LEARNGLES_GEOMETRYSHADEREXPLODINGSCENE_H
 
 #include "Scene.h"
+
+class Camera;
+
+class Shader;
+
+class Model;
+
 class GeometryShaderExplodingScene : public Scene {
+private:
+    Camera *camera = nullptr;
+    Shader *shader = nullptr;
+    Model *nanosuit = nullptr;
+    int SCR_WIDTH = 0;
+    int SCR_HEIGHT = 0;
+
+    float time = 0.F;
+
 public:
     void init() override;
 
@@ -15,6 +31,8 @@ public:
     void draw() override;
 
     void destroy() override;
+
+    void setTime(float time);
 };
 
 

@@ -6,7 +6,22 @@
 #define LEARNGLES_GEOMETRYSHADERNORMALSSCENE_H
 
 #include "Scene.h"
+
+class Camera;
+
+class Shader;
+
+class Model;
+
 class GeometryShaderNormalsScene : public Scene {
+private:
+    Camera *camera = nullptr;
+    Shader *shader = nullptr;
+    Shader *normalShader = nullptr;
+    Model *backpack = nullptr;
+    int SCR_WIDTH = 0;
+    int SCR_HEIGHT = 0;
+
 public:
     void init() override;
 
