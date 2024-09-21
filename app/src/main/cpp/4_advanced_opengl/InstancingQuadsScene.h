@@ -6,7 +6,21 @@
 #define LEARNGLES_INSTANCINGQUADSSCENE_H
 
 #include "Scene.h"
+
+class Camera;
+class Shader;
+
 class InstancingQuadsScene : public Scene {
+private:
+    Camera* camera = nullptr;
+    int SCR_WIDTH = 0;
+    int SCR_HEIGHT = 0;
+
+    Shader *shader = nullptr;
+
+    unsigned int instanceVBO = 0U;
+    unsigned int quadVAO = 0u, quadVBO = 0u;
+
 public:
     void init() override;
 
