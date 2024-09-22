@@ -1,5 +1,5 @@
 //
-// Created by huion on 2023/12/27.
+// Created by Aaron Lee on 2023/12/27.
 //
 
 #include "ShaderMappingExercise1Scene.h"

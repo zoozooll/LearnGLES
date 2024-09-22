@@ -10,6 +10,10 @@
 
 unsigned int loadTexture(char const * path);
 
+// utility function for loading a 2D texture from file
+// ---------------------------------------------------
+unsigned int loadTexture(char const * path, bool gammaCorrection);
+
 unsigned int loadCubemap(std::vector<std::string> faces);
 
 #endif //LEARNGLES_TEXTURE_H

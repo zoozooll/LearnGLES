@@ -16,8 +16,8 @@ void AntiAliasingOffscreenScene::init() {
 
 // build and compile shaders
 // -------------------------
-    Shader shader("11.2.anti_aliasing.vs", "11.2.anti_aliasing.fs");
-    Shader screenShader("11.2.aa_post.vs", "11.2.aa_post.fs");
+    Shader shader("11.2.anti_aliasing.vsh", "11.2.anti_aliasing.fsh");
+    Shader screenShader("11.2.aa_post.vsh", "11.2.aa_post.fsh");
 
 // set up vertex data (and buffer(s)) and configure vertex attributes
 // ------------------------------------------------------------------
