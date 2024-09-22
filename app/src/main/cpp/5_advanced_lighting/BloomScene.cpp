@@ -234,6 +234,19 @@ void BloomScene::destroy() {
     delete shaderLight;
     delete shaderBlur;
     delete shaderBloomFinal;
+
+    glDeleteFramebuffers(1, &hdrFBO);
+    glDeleteFramebuffers(2, pingpongFBO);
+    glDeleteFramebuffers(2, pingpongFBO);
+    glDeleteTextures(1, &woodTexture);
+    glDeleteTextures(1, &containerTexture);
+    glDeleteTextures(2, pingpongColorbuffers);
+    glDeleteTextures(2, colorBuffers);
+    glDeleteRenderbuffers(1, &rboDepth);
+    glDeleteVertexArrays(1, &quadVAO);
+    glDeleteBuffers(1, &quadVBO);
+    glDeleteVertexArrays(1, &cubeVAO);
+    glDeleteBuffers(1, &cubeVBO);
 }
 
 void BloomScene::renderQuad()

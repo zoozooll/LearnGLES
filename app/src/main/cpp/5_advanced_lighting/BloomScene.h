@@ -26,17 +26,17 @@ private:
     unsigned int hdrFBO;
     unsigned int woodTexture;
     unsigned int containerTexture;
-    std::vector<glm::vec3> lightPositions;
-    std::vector<glm::vec3> lightColors;
     unsigned int pingpongFBO[2];
     unsigned int pingpongColorbuffers[2];
     unsigned int rboDepth;
     unsigned int colorBuffers[2];
-
     unsigned int quadVAO;
     unsigned int quadVBO;
     unsigned int cubeVAO;
     unsigned int cubeVBO;
+
+    std::vector<glm::vec3> lightPositions;
+    std::vector<glm::vec3> lightColors;
     int SCR_WIDTH = 0;
     int SCR_HEIGHT = 0;
 
