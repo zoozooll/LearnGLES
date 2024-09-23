@@ -6,7 +6,25 @@
 #define LEARNGLES_SKELETALANIMATIONSCENE_H
 
 #include "Scene.h"
+
+class Camera;
+class Shader;
+class AnimatedModel;
+class Animator;
+
 class SkeletalAnimationScene : public Scene {
+private:
+    Camera *camera = nullptr;
+    Shader *ourShader = nullptr;
+    AnimatedModel *ourModel = nullptr;
+    Animator *animator = nullptr;
+
+    float deltaTime = 0.F;
+    float lastFrame = 0.F;
+
+    int SCR_WIDTH = 0;
+    int SCR_HEIGHT = 0;
+
 public:
     void init() override;
 
