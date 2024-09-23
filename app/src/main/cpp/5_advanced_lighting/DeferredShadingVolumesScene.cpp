@@ -20,9 +20,9 @@ void DeferredShadingVolumesScene::init() {
 
 // build and compile shaders
 // -------------------------
-    shaderGeometryPass = new Shader("5/8.2.g_buffer.vs", "5/8.2.g_buffer.fs");
-    shaderLightingPass = new Shader("5/8.2.deferred_shading.vs", "5/8.2.deferred_shading.fs");
-    shaderLightBox = new Shader("5/8.2.deferred_light_box.vs", "5/8.2.deferred_light_box.fs");
+    shaderGeometryPass = new Shader("5/8.2.g_buffer.vsh", "5/8.2.g_buffer.fsh");
+    shaderLightingPass = new Shader("5/8.2.deferred_shading.vsh", "5/8.2.deferred_shading.fsh");
+    shaderLightBox = new Shader("5/8.2.deferred_light_box.vsh", "5/8.2.deferred_light_box.fsh");
 
 // load models
 // -----------
@@ -192,7 +192,21 @@ void DeferredShadingVolumesScene::draw() {
 }
 
 void DeferredShadingVolumesScene::destroy() {
+    delete camera;
+    delete shaderGeometryPass;
+    delete shaderLightingPass;
+    delete shaderLightBox;
+    delete backpack;
 
+    glDeleteVertexArrays(1, &quadVAO);
+    glDeleteBuffers(1, &quadVBO);
+    glDeleteVertexArrays(1, &cubeVAO);
+    glDeleteBuffers(1, &cubeVBO);
+    glDeleteFramebuffers(1, &gBuffer);
+    glDeleteTextures(1, &gPosition);
+    glDeleteTextures(1, &gNormal);
+    glDeleteTextures(1, &gAlbedoSpec);
+    glDeleteRenderbuffers(1, &rboDepth);
 }
 
 void DeferredShadingVolumesScene::renderQuad()
