@@ -171,7 +171,7 @@ void AnimatedModel::ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, 
 }
 
 
-unsigned int AnimatedModel::TextureFromFile(const char* path, const string& _directory, bool gamma = false)
+unsigned int AnimatedModel::TextureFromFile(const char* path, const string& _directory, bool gamma)
 {
     string filename = string(path);
     filename = _directory + '/' + filename;

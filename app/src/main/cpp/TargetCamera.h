@@ -27,48 +27,48 @@ public:
 
     void setFar(float mFar);
 
-    const glm::mat4 &getViewMatrix() const;
+    [[nodiscard]] const glm::mat4 &getViewMatrix() const;
 
-    const glm::mat4 &getProjectionMatrix() const;
+    [[nodiscard]] const glm::mat4 &getProjectionMatrix() const;
 
     void start();
 
     void update();
 
-    const glm::vec3& getPosition() const;
+    [[nodiscard]] const glm::vec3& getPosition() const;
 
-    glm::mat4 getVPMatrix() const;
+    [[nodiscard]] glm::mat4 getVPMatrix() const;
 
-    const glm::mat4 &getTargetTransform() const;
+    [[nodiscard]] const glm::mat4 &getTargetTransform() const;
 
-    float getRadius() const;
+    [[nodiscard]] float getRadius() const;
 
     void setTargetTransform(const glm::mat4 &targetTransform);
 
-    glm::vec3 getTarget() const;
+    [[nodiscard]] glm::vec3 getTarget() const;
 
-    float getNear() const;
+    [[nodiscard]] float getNear() const;
 
-    float getFar() const;
- 
-    const glm::mat4 &getProjectionDepthMatrix() const;
+    [[nodiscard]] float getFar() const;
 
-    float calculateScaleFactor(const float &distanceFromCamera, const float &desiredObjectSize) const;
+    [[nodiscard]] float calculateScaleFactor(const float &distanceFromCamera, const float &desiredObjectSize) const;
 
-    float getVdy() const;
+    [[nodiscard]] float getVdy() const;
 
-    glm::vec3 getTargetPosition() const;
+    [[nodiscard]] glm::vec3 getTargetPosition() const;
 
-    float getFracRadius() const;
+    [[nodiscard]] float getFracRadius() const;
+
+    void reset();
 
 private:
 
     glm::mat4 m_targetTransform = glm::mat4(1.f);
-    float m_radius = 8.f;
-    float m_vdy = 75.f;
+    float m_radius = CAMERA_DEF_RADIUS;
+    float m_vdy = CAMERA_FOVY_DEGREE;
     float m_aspec = 0.f;
-    float m_near = 0.f;
-    float m_far = 0.f;
+    float m_near = CAMERA_NEAR;
+    float m_far = CAMERA_FAR;
 
     float fracRadius = 0.F;
 
@@ -76,15 +76,13 @@ private:
 
     glm::mat4 m_viewMatrix;
     glm::mat4 m_projectionMatrix;
-    glm::mat4 m_projectionDepthMatrix;
     bool dirty = false;
-
 
     constexpr static const float CAMERA_FOVY_DEGREE = 60.f;
     constexpr static const float CAMERA_NEAR = 1.f;
-    constexpr static const float CAMERA_FAR = 20.f;
+    constexpr static const float CAMERA_FAR = 15.f;
     constexpr static const float CAMERA_DEF_RADIUS = 8.f;
-    constexpr static const glm::vec3 CAMERA_DEF_TARGET_POSITION = glm::vec3(.0f, 2.f, .0f);
+    constexpr static const glm::vec3 CAMERA_DEF_TARGET_POSITION = glm::vec3(.0f, 0.f, .0f);
 };
 
 

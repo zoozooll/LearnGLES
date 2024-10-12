@@ -122,7 +122,6 @@ void TargetCamera::update() {
          to_string(m_cameraPosition).c_str(),  to_string(target).c_str(), to_string(up).c_str());
     m_viewMatrix = lookAt(m_cameraPosition, target, up);
     m_projectionMatrix = glm::perspective(glm::radians(m_vdy), m_aspec, m_near, m_far);
-    m_projectionDepthMatrix = glm::perspective(glm::radians(m_vdy), m_aspec, 1.f, 25.f);
 }
 
 vec3 TargetCamera::getTarget() const {
@@ -136,10 +135,6 @@ float TargetCamera::getNear() const {
 
 float TargetCamera::getFar() const {
     return m_far;
-}
-
-const mat4 &TargetCamera::getProjectionDepthMatrix() const {
-    return m_projectionDepthMatrix;
 }
 
 float TargetCamera::calculateScaleFactor(const float &distanceFromCamera, const float &desiredObjectSize) const {
@@ -159,4 +154,12 @@ glm::vec3 TargetCamera::getTargetPosition() const {
 
 float TargetCamera::getFracRadius() const {
     return fracRadius;
+}
+
+void TargetCamera::reset() {
+    m_targetTransform = glm::mat4(1.f);
+    m_radius = CAMERA_DEF_RADIUS;
+    m_vdy = CAMERA_FOVY_DEGREE;
+    m_near = CAMERA_NEAR;
+    m_far = CAMERA_FAR;
 }
