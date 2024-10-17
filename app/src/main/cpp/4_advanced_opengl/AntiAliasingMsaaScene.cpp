@@ -6,11 +6,11 @@
 
 #include <GLES3/gl32.h>
 
-#include "Camera.h"
+
 #include "Shader.h"
 
 void AntiAliasingMsaaScene::init() {
-    camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+
     
     // configure global opengl state
     // -----------------------------
@@ -78,22 +78,22 @@ void AntiAliasingMsaaScene::init() {
 }
 
 void AntiAliasingMsaaScene::resize(int width, int height) {
+    BaseScene::resize(width, height);
     glViewport(0, 0, width, height);
-    SCR_WIDTH = width;
-    SCR_HEIGHT = height;
 }
 
 void AntiAliasingMsaaScene::draw() {
     // render
+    BaseScene::draw();
     // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // set transformation matrices
     shader->use();
-    glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
+    glm::mat4 projection = camera->getProjectionMatrix();
     shader->setMat4("projection", projection);
-    shader->setMat4("view", camera->GetViewMatrix());
+    shader->setMat4("view", camera->getViewMatrix());
     shader->setMat4("model", glm::mat4(1.0f));
 
     glBindVertexArray(cubeVAO);

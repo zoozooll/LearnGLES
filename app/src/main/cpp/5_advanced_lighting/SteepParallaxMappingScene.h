@@ -5,19 +5,19 @@
 #ifndef LEARNGLES_STEEPPARALLAXMAPPINGSCENE_H
 #define LEARNGLES_STEEPPARALLAXMAPPINGSCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 
-class Camera;
+
 class Shader;
 
-class SteepParallaxMappingScene : public Scene {
+class SteepParallaxMappingScene : public BaseScene {
 private:
     unsigned int quadVAO = 0;
     unsigned int quadVBO = 0;
-    Camera* camera = nullptr;
+
     Shader* shader = nullptr;
-    int SCR_WIDTH = 0;
-    int SCR_HEIGHT = 0;
+
+
     unsigned int diffuseMap;
     unsigned int normalMap;
     unsigned int heightMap;

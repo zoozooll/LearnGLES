@@ -7,12 +7,12 @@
 #include <vector>
 #include <GLES3/gl32.h>
 
-#include "Camera.h"
+
 #include "Shader.h"
 #include "Texture.h"
 
 void CubemapSkyboxScene::init() {
-    camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+
 
     // configure global opengl state
     // -----------------------------
@@ -158,13 +158,14 @@ void CubemapSkyboxScene::init() {
 }
 
 void CubemapSkyboxScene::resize(int width, int height) {
+    BaseScene::resize(width, height);
     glViewport(0, 0, width, height);
-    SCR_WIDTH = width;
-    SCR_HEIGHT = height;
+
 }
 
 void CubemapSkyboxScene::draw() {
     // render
+    BaseScene::draw();
     // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -172,8 +173,8 @@ void CubemapSkyboxScene::draw() {
     // draw scene as normal
     shader->use();
     glm::mat4 model = glm::mat4(1.0f);
-    glm::mat4 view = camera->GetViewMatrix();
-    glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    glm::mat4 view = camera->getViewMatrix();;
+    glm::mat4 projection = camera->getProjectionMatrix();
     shader->setMat4("model", model);
     shader->setMat4("view", view);
     shader->setMat4("projection", projection);
@@ -187,7 +188,7 @@ void CubemapSkyboxScene::draw() {
     // draw skybox as last
     glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
     skyboxShader->use();
-    view = glm::mat4(glm::mat3(camera->GetViewMatrix())); // remove translation from the view matrix
+    view = glm::mat4(glm::mat3(camera->getViewMatrix())); // remove translation from the view matrix
     skyboxShader->setMat4("view", view);
     skyboxShader->setMat4("projection", projection);
     // skybox cube

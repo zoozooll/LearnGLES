@@ -11,7 +11,7 @@
 #include "Texture.h"
 
 void LightingScene::init() {
-    camera = new Camera({0.F, 0.F, 3.F});
+
     
 // configure global opengl state
 // -----------------------------
@@ -27,26 +27,26 @@ void LightingScene::init() {
 }
 
 void LightingScene::resize(int width, int height) {
+    BaseScene::resize(width, height);
     glViewport(0, 0, width, height);
-    SCR_WIDTH = width;
-    SCR_HEIGHT = height;
     // initialize static shader uniforms before rendering
 // --------------------------------------------------
-    glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    glm::mat4 projection = camera->getProjectionMatrix();;
     shader->use();
     shader->setMat4("projection", projection);
 }
 
 void LightingScene::draw() {
 // render
-// ------
+    BaseScene::draw();
+    // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     shader->use();
-    glm::mat4 view = camera->GetViewMatrix();
+    glm::mat4 view = camera->getViewMatrix();;
     shader->setMat4("view", view);
-    shader->setVec3("camPos", camera->Position);
+    shader->setVec3("camPos", camera->getPosition());
 
 // render rows*column number of spheres with varying metallic/roughness values scaled by rows and columns respectively
     glm::mat4 model = glm::mat4(1.0f);

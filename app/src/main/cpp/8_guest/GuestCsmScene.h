@@ -5,8 +5,8 @@
 #ifndef LEARNGLES_GUESTCSMSCENE_H
 #define LEARNGLES_GUESTCSMSCENE_H
 
-#include "Scene.h"
-class GuestCsmScene  : public Scene {
+#include "BaseScene.h"
+class GuestCsmScene  : public BaseScene {
 public:
     void init() override;
 

@@ -168,14 +168,14 @@ void ShadowMappingDepthScene::init() {
 }
 
 void ShadowMappingDepthScene::resize(int width, int height) {
-    SCR_WIDTH = width;
-    SCR_HEIGHT = height;
+    BaseScene::resize(width, height);
     glViewport(0, 0, width, height);
     check_gl_error();
 }
 
 void ShadowMappingDepthScene::draw() {
     // render
+    BaseScene::draw();
     // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -202,7 +202,7 @@ void ShadowMappingDepthScene::draw() {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     // reset viewport
-    glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
+    glViewport(0, 0, scrWidth, scrHeight);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // render Depth map to quad for visual debugging

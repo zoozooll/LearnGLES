@@ -5,12 +5,12 @@
 #ifndef LEARNGLES_SHADOWMAPPINGDEPTHSCENE_H
 #define LEARNGLES_SHADOWMAPPINGDEPTHSCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 #include "Camera.h"
 
 class Shader;
 
-class ShadowMappingDepthScene : public Scene {
+class ShadowMappingDepthScene : public BaseScene {
 private:
     // plane VAO
     unsigned int planeVAO = 0;
@@ -20,9 +20,9 @@ private:
     Shader* debugDepthQuad = nullptr;
     int SHADOW_WIDTH = 0;
     int SHADOW_HEIGHT = 0;
-    int SCR_WIDTH = 0;
-    int SCR_HEIGHT = 0;
-    Camera camera = Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+
+
+    #include "BaseScene.h"
 
 //    unsigned int woodTexture = 0;
     glm::vec3 lightPos = glm::vec3(-2.0f, 4.0f, -1.0f);

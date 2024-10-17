@@ -1,5 +1,5 @@
 // vertex shader
-#version 330 core
+#version 320 es
 layout (location = 0) in vec2 position;
 layout (location = 1) in vec2 texCoords;
 

@@ -5,8 +5,8 @@
 #ifndef LEARNGLES_TESSELLATIONSCENE_H
 #define LEARNGLES_TESSELLATIONSCENE_H
 
-#include "Scene.h"
-class TessellationScene : public Scene {
+#include "BaseScene.h"
+class TessellationScene : public BaseScene {
 public:
     void init() override;
 

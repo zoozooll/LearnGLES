@@ -7,11 +7,11 @@
 #include <GLES3/gl32.h>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Camera.h"
+
 #include "Shader.h"
 
 void AdvancedGlslUboScene::init() {
-    camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+
 
     // configure global opengl state
     // -----------------------------
@@ -100,27 +100,28 @@ void AdvancedGlslUboScene::init() {
     // define the range of the buffer that links to a uniform binding point
     glBindBufferRange(GL_UNIFORM_BUFFER, 0, uboMatrices, 0, 2 * sizeof(glm::mat4));
 
+
+}
+
+void AdvancedGlslUboScene::resize(int width, int height) {
+    BaseScene::resize(width, height);
+    glViewport(0, 0, width, height);
     // store the projection matrix (we only do this once now) (note: we're not using zoom anymore by changing the FoV)
-    glm::mat4 projection = glm::perspective(45.0f, (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    glm::mat4 projection = camera->getProjectionMatrix();
     glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
     glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(projection));
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
-void AdvancedGlslUboScene::resize(int width, int height) {
-    glViewport(0, 0, width, height);
-    SCR_WIDTH = width;
-    SCR_HEIGHT = height;
-}
-
 void AdvancedGlslUboScene::draw() {
     // render
+    BaseScene::draw();
     // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // set the view and projection matrix in the uniform block - we only have to do this once per loop iteration.
-    glm::mat4 view = camera->GetViewMatrix();
+    glm::mat4 view = camera->getViewMatrix();;
     glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
     glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(view));
     glBindBuffer(GL_UNIFORM_BUFFER, 0);

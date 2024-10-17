@@ -5,18 +5,18 @@
 #ifndef LEARNGLES_BLENDERSORTSCENE_H
 #define LEARNGLES_BLENDERSORTSCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 
 #include <vector>
 #include <glm/glm.hpp>
 
-class Camera;
+
 
 class Shader;
 
-class BlenderSortScene : public Scene {
+class BlenderSortScene : public BaseScene {
 private:
-    Camera *camera = nullptr;
+
 
     unsigned int SCR_WIDTH = 0u;
     unsigned int SCR_HEIGHT = 0u;

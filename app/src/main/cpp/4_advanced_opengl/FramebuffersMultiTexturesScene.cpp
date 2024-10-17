@@ -9,13 +9,13 @@
 
 #include "Shader.h"
 #include "Texture.h"
-#include "Camera.h"
+
 #include "logutil.h"
 #include "glerror.h"
 
 void FramebuffersMultiTexturesScene::init() {
 
-    camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
@@ -54,10 +54,10 @@ void FramebuffersMultiTexturesScene::init() {
 }
 
 void FramebuffersMultiTexturesScene::resize(int width, int height) {
+    BaseScene::resize(width, height);
 
     glViewport(0, 0, width, height);
-    SCR_WIDTH = width;
-    SCR_HEIGHT = height;
+
     // framebuffer configuration
     // -------------------------
 
@@ -67,21 +67,21 @@ void FramebuffersMultiTexturesScene::resize(int width, int height) {
 
     glGenTextures(1, &textureColorbuffer0);
     glBindTexture(GL_TEXTURE_2D, textureColorbuffer0);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorbuffer0, 0);
 
     glGenTextures(1, &textureColorbuffer1);
     glBindTexture(GL_TEXTURE_2D, textureColorbuffer1);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, textureColorbuffer1, 0);
 
     glGenTextures(1, &textureColorbuffer2);
     glBindTexture(GL_TEXTURE_2D, textureColorbuffer2);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, textureColorbuffer2, 0);
@@ -99,6 +99,7 @@ void FramebuffersMultiTexturesScene::resize(int width, int height) {
 }
 
 void FramebuffersMultiTexturesScene::draw() {
+    BaseScene::draw();
     // first render pass: mirror texture.
     // bind to framebuffer and draw to color texture as we normally
     // would, but with the view camera reversed.

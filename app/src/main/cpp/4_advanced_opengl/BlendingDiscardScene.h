@@ -5,18 +5,18 @@
 #ifndef LEARNGLES_BLENDINGDISCARDSCENE_H
 #define LEARNGLES_BLENDINGDISCARDSCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 
 #include <vector>
 #include <glm/glm.hpp>
 
-class Camera;
+
 
 class Shader;
 
-class BlendingDiscardScene : public Scene {
+class BlendingDiscardScene : public BaseScene {
 private:
-    Camera *camera = nullptr;
+
 
     unsigned int SCR_WIDTH = 0u;
     unsigned int SCR_HEIGHT = 0u;

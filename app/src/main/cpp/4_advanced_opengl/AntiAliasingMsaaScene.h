@@ -5,22 +5,22 @@
 #ifndef LEARNGLES_ANTIALIASINGMSAASCENE_H
 #define LEARNGLES_ANTIALIASINGMSAASCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 
-class Camera;
+
 
 class Shader;
 
-class AntiAliasingMsaaScene : public Scene {
+class AntiAliasingMsaaScene : public BaseScene {
 private:
-    Camera *camera = nullptr;
+
 
     Shader *shader = nullptr;
     // setup cube VAO
     unsigned int cubeVAO, cubeVBO;
 
-    int SCR_WIDTH = 0;
-    int SCR_HEIGHT = 0;
+
+
 
 public:
     void init() override;

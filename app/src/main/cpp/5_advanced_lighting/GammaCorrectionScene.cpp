@@ -11,7 +11,7 @@
 #include "Texture.h"
 
 void GammaCorrectionScene::init() {
-    camera = new Camera({0.F, 0.F, 3.F});
+
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
@@ -60,27 +60,27 @@ void GammaCorrectionScene::init() {
 }
 
 void GammaCorrectionScene::resize(int width, int height) {
+    BaseScene::resize(width, height);
     glViewport(0, 0, width, height);
-    SCR_WIDTH = width;
-    SCR_HEIGHT = height;
 }
 
 void GammaCorrectionScene::draw() {
     // render
+    BaseScene::draw();
     // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // draw objects
     shader->use();
-    glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-    glm::mat4 view = camera->GetViewMatrix();
+    glm::mat4 projection = camera->getProjectionMatrix();;
+    glm::mat4 view = camera->getViewMatrix();;
     shader->setMat4("projection", projection);
     shader->setMat4("view", view);
     // set light uniforms
     glUniform3fv(glGetUniformLocation(shader->ID, "lightPositions"), 4, &lightPositions[0][0]);
     glUniform3fv(glGetUniformLocation(shader->ID, "lightColors"), 4, &lightColors[0][0]);
-    shader->setVec3("viewPos", camera->Position);
+    shader->setVec3("viewPos", camera->getPosition());
     shader->setInt("gamma", gammaEnabled);
     // floor
     glBindVertexArray(planeVAO);

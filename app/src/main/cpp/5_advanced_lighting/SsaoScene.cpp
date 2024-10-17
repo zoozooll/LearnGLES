@@ -19,9 +19,6 @@ using std::vector;
 using glm::vec2;
 
 void SsaoScene::init() {
-    camera.setVdy(75.f);
-    camera.setNear(0.1f);
-    camera.setFar(100.f);
 
     glEnable(GL_DEPTH_TEST);
     shaderGeometryPass = new Shader("5/9.ssao_geometry.vert", "5/9.ssao_geometry.frag");
@@ -32,8 +29,7 @@ void SsaoScene::init() {
 }
 
 void SsaoScene::resize(int width, int height) {
-    camera.setAspec((float)width / height);
-
+    BaseScene::resize(width, height);
     // ------------------------------
     glGenFramebuffers(1, &gBuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
@@ -164,8 +160,8 @@ void SsaoScene::resize(int width, int height) {
 }
 
 void SsaoScene::draw() {
-    camera.update();
     // render
+    BaseScene::draw();
     // ------
     glClearColor(0.f, 0.f, 0.f, 0.f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -174,8 +170,8 @@ void SsaoScene::draw() {
     // -----------------------------------------------------------------
     glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glm::mat4 projection = camera.getProjectionMatrix();
-    glm::mat4 view = camera.getViewMatrix();
+    glm::mat4 projection = camera->getProjectionMatrix();
+    glm::mat4 view = camera->getViewMatrix();
     glm::mat4 model = glm::mat4(1.0f);
     shaderGeometryPass->use();
     shaderGeometryPass->setMat4("projection", projection);
@@ -233,7 +229,7 @@ void SsaoScene::draw() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     shaderLightingPass->use();
     // send light relevant uniforms
-    glm::vec3 lightPosView = glm::vec3(camera.getViewMatrix() * glm::vec4(lightPos, 1.0));
+    glm::vec3 lightPosView = glm::vec3(camera->getViewMatrix() * glm::vec4(lightPos, 1.0));
     shaderLightingPass->setVec3("light.Position", lightPosView);
     shaderLightingPass->setVec3("light.Color", lightColor);
     // Update attenuation parameters
@@ -276,31 +272,6 @@ void SsaoScene::destroy() {
     glDeleteTextures(1, &noiseTexture);
 }
 
-std::map<std::string, std::any> SsaoScene::sendCommand(map<string, any> commands) {
-    for (const auto& [key, value]: commands) {
-        if ("camera_move" == key && value.type() == typeid(vector<float>)) {
-            auto l_value = any_cast<vector<float>>(value);
-            if (l_value.size() >= 2) {
-                camera.move({l_value[0], l_value[1]});
-            }
-        } else if ("camera_zoom" == key && value.type() == typeid(float)) {
-            auto l_value = any_cast<float>(value);
-            camera.zoom(l_value);
-        } else if ("camera_yaw_pitch" == key && value.type() == typeid(vector<float>)) {
-            auto l_value = any_cast<vector<float>>(value);
-            if (l_value.size() >= 2) {
-                camera.yawPitch({l_value[0], l_value[1]});
-            }
-        } else if ("camera_roll" == key && value.type() == typeid(float)) {
-            auto l_value = any_cast<float>(value);
-            camera.roll(l_value);
-        } else if ("camera_radius" == key && value.type() == typeid(float)) {
-            auto l_value = any_cast<float>(value);
-            camera.setRadius(l_value);
-        }
-    }
-    return {};
-}
 
 void SsaoScene::renderQuad()
 {
@@ -399,33 +370,3 @@ void SsaoScene::renderCube()
     glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArray(0);
 }
-
-void SsaoScene::move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) {
-    camera.move((end_pivot - start_pivot)  * vec2(0.001f, -0.001f));
-}
-
-void SsaoScene::scale(const float &scale) {
-    camera.zoom(scale);
-}
-
-void SsaoScene::yawPitch(const glm::vec2 &director) {
-    camera.yawPitch(director);
-}
-
-void SsaoScene::roll(const float &angle) {
-    camera.roll(angle);
-}
-
-
-void SsaoScene::onSingleClick(const glm::vec2 &point) {
-    SceneTouchEvent::onSingleClick(point);
-}
-
-void SsaoScene::onDoubleClick(const glm::vec2 &point) {
-    SceneTouchEvent::onDoubleClick(point);
-}
-
-void SsaoScene::onLongPress(const glm::vec2 &point) {
-    SceneTouchEvent::onLongPress(point);
-}
-

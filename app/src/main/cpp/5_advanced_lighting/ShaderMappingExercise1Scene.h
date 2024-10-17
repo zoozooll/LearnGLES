@@ -5,14 +5,14 @@
 #ifndef LEARNGLES_SHADERMAPPINGEXERCISE1SCENE_H
 #define LEARNGLES_SHADERMAPPINGEXERCISE1SCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 #include "TargetCamera.h"
 #include "SceneTouchEvent.h"
 
 class Shader;
 
 
-class ShaderMappingExercise1Scene : public Scene, public SceneTouchEvent {
+class ShaderMappingExercise1Scene : public BaseScene {
 private:
     // plane VAO
     unsigned int planeVAO = 0;
@@ -22,9 +22,7 @@ private:
     Shader* shader = nullptr;
     int SHADOW_WIDTH = 0;
     int SHADOW_HEIGHT = 0;
-    int SCR_WIDTH = 0;
-    int SCR_HEIGHT = 0;
-    TargetCamera camera = TargetCamera();
+
 
     unsigned int woodTexture = 0;
     glm::vec3 lightPos = glm::vec3(-2.0f, 4.0f, -1.0f);
@@ -46,12 +44,6 @@ public:
     void draw() override;
 
     void destroy() override;
-
-    void move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) override;
-
-    void scale(const float &scale) override;
-
-    void yawPitch(const glm::vec2 &director) override;
 };
 
 

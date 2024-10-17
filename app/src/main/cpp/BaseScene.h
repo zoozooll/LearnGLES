@@ -22,7 +22,9 @@ public:
 
     virtual void resize(int width, int height) override;
 
-    std::map<std::string, std::any> sendCommand(std::map<std::string, std::any> map) override;
+    std::map<std::string, std::any> sendCommand(std::map<std::string, std::any> commands) override;
+
+    virtual void draw() override;
 };
 
 

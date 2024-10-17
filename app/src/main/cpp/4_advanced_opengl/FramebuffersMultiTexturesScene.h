@@ -5,12 +5,12 @@
 #ifndef LEARNGLES_FRAMEBUFFERSMULTITEXTURESSCENE_H
 #define LEARNGLES_FRAMEBUFFERSMULTITEXTURESSCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 
 class Shader;
-class Camera;
 
-class FramebuffersMultiTexturesScene : public Scene {
+
+class FramebuffersMultiTexturesScene : public BaseScene {
 public:
     void init() override;
 
@@ -20,11 +20,9 @@ public:
 
     void destroy() override;
 private:
-    unsigned int SCR_WIDTH = 0, SCR_HEIGHT = 0;
-
     Shader *shader = nullptr;
     Shader *screenShader = nullptr;
-    Camera *camera = nullptr;
+
     unsigned int quadVAO, quadVBO;
     unsigned int framebuffer;
     unsigned int rbo;

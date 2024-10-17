@@ -6,7 +6,7 @@
 
 #include <GLES3/gl32.h>
 
-#include "Camera.h"
+
 #include "Shader.h"
 
 void AntiAliasingOffscreenScene::init() {
@@ -16,8 +16,8 @@ void AntiAliasingOffscreenScene::init() {
 
 // build and compile shaders
 // -------------------------
-    Shader shader("11.2.anti_aliasing.vsh", "11.2.anti_aliasing.fsh");
-    Shader screenShader("11.2.aa_post.vsh", "11.2.aa_post.fsh");
+    Shader shader("4/11.2.anti_aliasing.vsh", "4/11.2.anti_aliasing.fsh");
+    Shader screenShader("4/11.2.aa_post.vsh", "4/11.2.aa_post.fsh");
 
 // set up vertex data (and buffer(s)) and configure vertex attributes
 // ------------------------------------------------------------------
@@ -97,6 +97,11 @@ void AntiAliasingOffscreenScene::init() {
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 
 
+
+}
+
+void AntiAliasingOffscreenScene::resize(int width, int height) {
+    BaseScene::resize(width, height);
 // configure MSAA framebuffer
 // --------------------------
     unsigned int framebuffer;
@@ -113,7 +118,7 @@ void AntiAliasingOffscreenScene::init() {
     unsigned int rbo;
     glGenRenderbuffers(1, &rbo);
     glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-    glRenderbufferStorageMultisample(GL_RENDERBUFFER, 4, GL_DEPTH24_STENCIL8, SCR_WIDTH, SCR_HEIGHT);
+    glRenderbufferStorageMultisample(GL_RENDERBUFFER, 4, GL_DEPTH24_STENCIL8, width, height);
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
 
@@ -129,7 +134,7 @@ void AntiAliasingOffscreenScene::init() {
     unsigned int screenTexture;
     glGenTextures(1, &screenTexture);
     glBindTexture(GL_TEXTURE_2D, screenTexture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, screenTexture, 0);	// we only need a color buffer
@@ -140,12 +145,8 @@ void AntiAliasingOffscreenScene::init() {
 
 // shader configuration
 // --------------------
-    screenShader.use();
-    screenShader.setInt("screenTexture", 0);
-}
-
-void AntiAliasingOffscreenScene::resize(int width, int height) {
-
+//    screenShader.use();
+//    screenShader.setInt("screenTexture", 0);
 }
 
 void AntiAliasingOffscreenScene::draw() {

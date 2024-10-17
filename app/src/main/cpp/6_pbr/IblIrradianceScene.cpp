@@ -12,7 +12,7 @@
 #include "logutil.h"
 
 void IblIrradianceScene::init() {
-    camera = new Camera({0.f, 0.F, 3.f});
+
     
 // configure global opengl state
 // -----------------------------
@@ -162,7 +162,8 @@ void IblIrradianceScene::init() {
 void IblIrradianceScene::resize(int width, int height) {
 // initialize static shader uniforms before rendering
 // --------------------------------------------------
-    glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float)width / (float)height, 0.1f, 100.0f);
+    BaseScene::resize(width, height);
+    glm::mat4 projection = camera->getProjectionMatrix();;
     pbrShader->use();
     pbrShader->setMat4("projection", projection);
     backgroundShader->use();
@@ -174,16 +175,17 @@ void IblIrradianceScene::resize(int width, int height) {
 
 void IblIrradianceScene::draw() {
 // render
-// ------
+    BaseScene::draw();
+    // ------
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 // render scene, supplying the convoluted irradiance map to the final shader.
 // ------------------------------------------------------------------------------------------
     pbrShader->use();
-    glm::mat4 view = camera->GetViewMatrix();
+    glm::mat4 view = camera->getViewMatrix();;
     pbrShader->setMat4("view", view);
-    pbrShader->setVec3("camPos", camera->Position);
+    pbrShader->setVec3("camPos", camera->getPosition());
 
 // bind pre-computed IBL data
     glActiveTexture(GL_TEXTURE0);

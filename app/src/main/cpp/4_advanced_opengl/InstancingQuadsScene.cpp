@@ -4,11 +4,11 @@
 
 #include "InstancingQuadsScene.h"
 
-#include "Camera.h"
+
 #include "Shader.h"
 
 void InstancingQuadsScene::init() {
-    camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+
 
     // configure global opengl state
     // -----------------------------
@@ -74,13 +74,14 @@ void InstancingQuadsScene::init() {
 }
 
 void InstancingQuadsScene::resize(int width, int height) {
+    BaseScene::resize(width, height);
     glViewport(0, 0, width, height);
-    SCR_WIDTH = width;
-    SCR_HEIGHT = height;
+
 }
 
 void InstancingQuadsScene::draw() {
     // render
+    BaseScene::draw();
     // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

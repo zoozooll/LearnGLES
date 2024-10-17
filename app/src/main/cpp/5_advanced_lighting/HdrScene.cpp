@@ -14,7 +14,7 @@
 #include "logutil.h"
 
 void HdrScene::init() {
-    camera = new Camera({0.F, 0.F, 3.F});
+
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
@@ -49,9 +49,10 @@ void HdrScene::init() {
 }
 
 void HdrScene::resize(int width, int height) {
+    BaseScene::resize(width, height);
     glViewport(0, 0, width, height);
-    SCR_WIDTH = width;
-    SCR_HEIGHT = height;
+
+
     // configure floating point framebuffer
     // ------------------------------------
 
@@ -60,14 +61,14 @@ void HdrScene::resize(int width, int height) {
 
     glGenTextures(1, &colorBuffer);
     glBindTexture(GL_TEXTURE_2D, colorBuffer);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGBA, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // create depth buffer (renderbuffer)
 
     glGenRenderbuffers(1, &rboDepth);
     glBindRenderbuffer(GL_RENDERBUFFER, rboDepth);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, SCR_WIDTH, SCR_HEIGHT);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
     // attach buffers
     glBindFramebuffer(GL_FRAMEBUFFER, hdrFBO);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorBuffer, 0);
@@ -79,6 +80,7 @@ void HdrScene::resize(int width, int height) {
 
 void HdrScene::draw() {
     // render
+    BaseScene::draw();
     // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -87,8 +89,8 @@ void HdrScene::draw() {
     // -----------------------------------------------
     glBindFramebuffer(GL_FRAMEBUFFER, hdrFBO);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (GLfloat)SCR_WIDTH / (GLfloat)SCR_HEIGHT, 0.1f, 100.0f);
-    glm::mat4 view = camera->GetViewMatrix();
+    glm::mat4 projection = camera->getProjectionMatrix();;
+    glm::mat4 view = camera->getViewMatrix();;
     shader->use();
     shader->setMat4("projection", projection);
     shader->setMat4("view", view);
@@ -100,7 +102,7 @@ void HdrScene::draw() {
         shader->setVec3("lights[" + std::to_string(i) + "].Position", lightPositions[i]);
         shader->setVec3("lights[" + std::to_string(i) + "].Color", lightColors[i]);
     }
-    shader->setVec3("viewPos", camera->Position);
+    shader->setVec3("viewPos", camera->getPosition());
     // render tunnel
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, glm::vec3(0.0f, 0.0f, 25.0));

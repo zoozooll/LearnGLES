@@ -5,8 +5,8 @@
 #ifndef LEARNGLES_FACECULLINGSCENE_H
 #define LEARNGLES_FACECULLINGSCENE_H
 
-#include "Scene.h"
-class FaceCullingScene : public Scene {
+#include "BaseScene.h"
+class FaceCullingScene : public BaseScene {
 public:
     void init() override;
 

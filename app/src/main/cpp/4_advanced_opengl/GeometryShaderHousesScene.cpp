@@ -7,11 +7,11 @@
 #include <GLES3/gl32.h>
 #include <glm/glm.hpp>
 
-#include "Camera.h"
+
 #include "Shader.h"
 
 void GeometryShaderHousesScene::init() {
-    camera = new Camera({0.F, 0.F, 3.F});
+
 
     // configure global opengl state
     // -----------------------------
@@ -43,13 +43,14 @@ void GeometryShaderHousesScene::init() {
 }
 
 void GeometryShaderHousesScene::resize(int width, int height) {
+    BaseScene::resize(width, height);
     glViewport(0, 0, width, height);
-    SCR_WIDTH = width;
-    SCR_HEIGHT = height;
+
 }
 
 void GeometryShaderHousesScene::draw() {
     // render
+    BaseScene::draw();
     // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

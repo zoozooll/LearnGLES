@@ -5,14 +5,12 @@
 #include "DepthTestingScene.h"
 
 #include <GLES3/gl32.h>
+#include <glm/ext.hpp>
 
-#include "Camera.h"
 #include "Texture.h"
 #include "Shader.h"
 
 void DepthTestingScene::init() {
-    camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
-
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
@@ -110,8 +108,8 @@ void DepthTestingScene::init() {
 
     // load textures
     // -------------
-    cubeTexture  = loadTexture("resources/textures/marble.jpg");
-    floorTexture = loadTexture("resources/textures/metal.png");
+    cubeTexture  = loadTexture("textures/marble.jpg");
+    floorTexture = loadTexture("textures/metal.png");
 
     // shader configuration
     // --------------------
@@ -120,6 +118,7 @@ void DepthTestingScene::init() {
 }
 
 void DepthTestingScene::resize(int width, int height) {
+    BaseScene::resize(width, height);
     glViewport(0, 0, width, height);
 }
 
@@ -130,14 +129,15 @@ void DepthTestingScene::draw() {
         glDepthFunc(GL_LESS);
     }
     // render
+    BaseScene::draw();
     // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     shader->use();
     glm::mat4 model = glm::mat4(1.0f);
-    glm::mat4 view = camera->GetViewMatrix();
-    glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    glm::mat4 view = camera->getViewMatrix();;
+    glm::mat4 projection = camera->getProjectionMatrix();
     shader->setMat4("view", view);
     shader->setMat4("projection", projection);
     // cubes
@@ -173,36 +173,10 @@ void DepthTestingScene::destroy() {
     delete shader;
 }
 
-void DepthTestingScene::move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) {
-    camera->ProcessMove(glm::vec3((end_pivot - start_pivot) * glm::vec2(0.001f, -0.001f), 0.f));
-}
-
-void DepthTestingScene::scale(const float &scale) {
-    float zoom = 0.f;
-    if (scale > 1.02f) {
-        zoom = 1.f;
-    } else if (scale < 0.98f) {
-        zoom = -1.f;
-    }
-    camera->ProcessMouseScroll(zoom);
-}
-
-void DepthTestingScene::yawPitch(const glm::vec2 &director) {
-    camera->ProcessMouseMovement(director.x, director.y);
-}
-
-void DepthTestingScene::onDoubleClick(const glm::vec2 &point) {
-    camera->Position = glm::vec3(0.0f, 0.0f, 3.0f);
-    camera->WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
-    camera->Yaw = YAW;
-    camera->Pitch = PITCH;
-    camera->Zoom = ZOOM;
-    camera->updateCameraVectors();
-}
-
 std::map<std::string, std::any> DepthTestingScene::sendCommand(std::map<std::string, std::any> commands) {
+    auto super_rs = BaseScene::sendCommand(commands);
     if (commands.find("depthTesting") != commands.end()) {
         depthTesting = !depthTesting;
     }
-    return {};
+    return super_rs;
 }

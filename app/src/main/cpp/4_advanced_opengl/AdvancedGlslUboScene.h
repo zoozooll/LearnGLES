@@ -5,16 +5,11 @@
 #ifndef LEARNGLES_ADVANCEDGLSLUBOSCENE_H
 #define LEARNGLES_ADVANCEDGLSLUBOSCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 
-class Camera;
 class Shader;
-class AdvancedGlslUboScene : public Scene {
+class AdvancedGlslUboScene : public BaseScene {
 private:
-    Camera *camera = nullptr;
-    int SCR_WIDTH = 0;
-    int SCR_HEIGHT = 0;
-
     Shader *shaderRed = nullptr;
     Shader *shaderGreen = nullptr;
     Shader *shaderBlue = nullptr;

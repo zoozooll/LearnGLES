@@ -5,15 +5,13 @@
 #ifndef LEARNGLES_IBLIRRADIANCECONVERSIONSCENE_H
 #define LEARNGLES_IBLIRRADIANCECONVERSIONSCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 
 class Shader;
 
-class Camera;
-
-class IblIrradianceConversionScene : public Scene {
+class IblIrradianceConversionScene : public BaseScene {
 private:
-    Camera *camera = nullptr;
+
     Shader* pbrShader = nullptr;
     Shader* equirectangularToCubemapShader = nullptr;
     Shader* backgroundShader = nullptr;

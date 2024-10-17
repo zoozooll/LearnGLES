@@ -32,20 +32,22 @@ void NormalMappingScene::init() {
 }
 
 void NormalMappingScene::resize(int width, int height) {
+    BaseScene::resize(width, height);
     glViewport(0, 0, width, height);
-    SCR_WIDTH = width;
-    SCR_HEIGHT = height;
+
+
 }
 
 void NormalMappingScene::draw() {
     // render
+    BaseScene::draw();
     // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // configure view/projection matrices
-    glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-    glm::mat4 view = camera->GetViewMatrix();
+    glm::mat4 projection = camera->getProjectionMatrix();;
+    glm::mat4 view = camera->getViewMatrix();;
     shader->use();
     shader->setMat4("projection", projection);
     shader->setMat4("view", view);
@@ -53,7 +55,7 @@ void NormalMappingScene::draw() {
     glm::mat4 model = glm::mat4(1.0f);
     // rotate the quad to show normal mapping from multiple directions
     shader->setMat4("model", model);
-    shader->setVec3("viewPos", camera->Position);
+    shader->setVec3("viewPos", camera->getPosition());
     shader->setVec3("lightPos", lightPos);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, diffuseMap);

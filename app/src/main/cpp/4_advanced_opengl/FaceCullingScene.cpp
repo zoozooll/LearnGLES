@@ -8,6 +8,7 @@ void FaceCullingScene::init() {
 }
 
 void FaceCullingScene::resize(int width, int height) {
+    BaseScene::resize(width, height);
 
 }
 

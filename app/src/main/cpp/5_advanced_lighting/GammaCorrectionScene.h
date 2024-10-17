@@ -5,22 +5,22 @@
 #ifndef LEARNGLES_GAMMACORRECTIONSCENE_H
 #define LEARNGLES_GAMMACORRECTIONSCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 
 class Shader;
 
-class Camera;
 
-class GammaCorrectionScene : public Scene {
+
+class GammaCorrectionScene : public BaseScene {
 private:
-    Camera* camera = nullptr;
+
     Shader* shader = nullptr;
     // plane VAO
     unsigned int planeVAO, planeVBO;
     unsigned int floorTexture;
     unsigned int floorTextureGammaCorrected;
-    int SCR_WIDTH = 0;
-    int SCR_HEIGHT = 0;
+
+
 
     // lighting info
     // -------------

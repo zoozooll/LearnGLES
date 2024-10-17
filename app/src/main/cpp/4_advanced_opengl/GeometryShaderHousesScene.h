@@ -5,18 +5,15 @@
 #ifndef LEARNGLES_GEOMETRYSHADERHOUSESSCENE_H
 #define LEARNGLES_GEOMETRYSHADERHOUSESSCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 
-class Camera;
+
 
 class Shader;
 
-class GeometryShaderHousesScene : public Scene {
+class GeometryShaderHousesScene : public BaseScene {
 private:
-    Camera *camera = nullptr;
     Shader *shader = nullptr;
-    int SCR_WIDTH = 0;
-    int SCR_HEIGHT = 0;
     unsigned int VBO = 0U, VAO = 0U;
 
 public:

@@ -5,8 +5,8 @@
 #ifndef LEARNGLES_DSASCENE_H
 #define LEARNGLES_DSASCENE_H
 
-#include "Scene.h"
-class DsaScene : public Scene {
+#include "BaseScene.h"
+class DsaScene : public BaseScene {
 public:
     void init() override;
 

@@ -5,15 +5,15 @@
 #ifndef LEARNGLES_IBLSPECULARTEXTUREDSCENE_H
 #define LEARNGLES_IBLSPECULARTEXTUREDSCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 
-class Camera;
+
 
 class Shader;
 
-class IblSpecularTexturedScene : public Scene {
+class IblSpecularTexturedScene : public BaseScene {
 private:
-    Camera *camera = nullptr;
+
     Shader* pbrShader = nullptr;
     Shader* equirectangularToCubemapShader = nullptr;
     Shader* irradianceShader = nullptr;

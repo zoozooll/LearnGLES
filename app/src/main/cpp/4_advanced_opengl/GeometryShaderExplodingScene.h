@@ -5,22 +5,17 @@
 #ifndef LEARNGLES_GEOMETRYSHADEREXPLODINGSCENE_H
 #define LEARNGLES_GEOMETRYSHADEREXPLODINGSCENE_H
 
-#include "Scene.h"
-
-class Camera;
+#include "BaseScene.h"
 
 class Shader;
 
 class Model;
 
-class GeometryShaderExplodingScene : public Scene {
+class GeometryShaderExplodingScene : public BaseScene {
 private:
-    Camera *camera = nullptr;
+
     Shader *shader = nullptr;
     Model *nanosuit = nullptr;
-    int SCR_WIDTH = 0;
-    int SCR_HEIGHT = 0;
-
     float time = 0.F;
 
 public:

@@ -5,8 +5,8 @@
 #ifndef LEARNGLES_DEPTHTESTINGVIEWSCENE_H
 #define LEARNGLES_DEPTHTESTINGVIEWSCENE_H
 
-#include "Scene.h"
-class DepthTestingViewScene : public Scene {
+#include "BaseScene.h"
+class DepthTestingViewScene : public BaseScene {
 public:
     void init() override;
 

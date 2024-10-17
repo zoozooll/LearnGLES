@@ -6,7 +6,7 @@
 
 #include "glerror.h"
 #include "SceneHelper.h"
-#include "Scene.h"
+#include "BaseScene.h"
 #include "SceneTouchEvent.h"
 #include "logutil.h"
 

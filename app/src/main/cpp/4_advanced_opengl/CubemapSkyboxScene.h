@@ -5,15 +5,15 @@
 #ifndef LEARNGLES_CUBEMAPSKYBOXSCENE_H
 #define LEARNGLES_CUBEMAPSKYBOXSCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 
-class Camera;
+
 
 class Shader;
 
-class CubemapSkyboxScene : public Scene {
+class CubemapSkyboxScene : public BaseScene {
 private:
-    Camera *camera = nullptr;
+
 
     unsigned int SCR_WIDTH = 0u;
     unsigned int SCR_HEIGHT = 0u;

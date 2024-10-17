@@ -6,15 +6,16 @@
 
 #include <GLES3/gl32.h>
 #include <glm/glm.hpp>
+#include <glm/ext.hpp>
 
 #include "Shader.h"
 #include "Texture.h"
-#include "Camera.h"
+
 #include "logutil.h"
 
 void FramebuffersExercise1Scene::init() {
 
-    camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+
 // configure global opengl state
 // -----------------------------
     glEnable(GL_DEPTH_TEST);
@@ -141,10 +142,10 @@ void FramebuffersExercise1Scene::init() {
 }
 
 void FramebuffersExercise1Scene::resize(int width, int height) {
+    BaseScene::resize(width, height);
 
     glViewport(0, 0, width, height);
-    SCR_WIDTH = width;
-    SCR_HEIGHT = height;
+
 // framebuffer configuration
 // -------------------------
 
@@ -154,7 +155,7 @@ void FramebuffersExercise1Scene::resize(int width, int height) {
 
     glGenTextures(1, &textureColorbuffer);
     glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorbuffer, 0);
@@ -162,7 +163,7 @@ void FramebuffersExercise1Scene::resize(int width, int height) {
 
     glGenRenderbuffers(1, &rbo);
     glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCR_WIDTH, SCR_HEIGHT); // use a single renderbuffer object for both a depth AND stencil buffer.
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height); // use a single renderbuffer object for both a depth AND stencil buffer.
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo); // now actually attach it
     // now that we actually created the framebuffer and added all attachments we want to check if it is actually complete now
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
@@ -171,6 +172,7 @@ void FramebuffersExercise1Scene::resize(int width, int height) {
 }
 
 void FramebuffersExercise1Scene::draw() {
+    BaseScene::draw();
 // first render pass: mirror texture.
 // bind to framebuffer and draw to color texture as we normally
 // would, but with the view camera reversed.
@@ -185,12 +187,12 @@ void FramebuffersExercise1Scene::draw() {
 
     shader->use();
     glm::mat4 model = glm::mat4(1.0f);
-    camera->Yaw   += 180.0f; // rotate the camera's yaw 180 degrees around
-    camera->ProcessMouseMovement(0, 0, false); // call this to make sure it updates its camera vectors, note that we disable pitch constrains for this specific case (otherwise we can't reverse camera's pitch values)
-    glm::mat4 view = camera->GetViewMatrix();
-    camera->Yaw   -= 180.0f; // reset it back to its original orientation
-    camera->ProcessMouseMovement(0, 0, true);
-    glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+//    camera->Yaw   += 180.0f; // rotate the camera's yaw 180 degrees around
+//    camera->ProcessMouseMovement(0, 0, false); // call this to make sure it updates its camera vectors, note that we disable pitch constrains for this specific case (otherwise we can't reverse camera's pitch values)
+    glm::mat4 view = camera->getViewMatrix();;
+//    camera->Yaw   -= 180.0f; // reset it back to its original orientation
+//    camera->ProcessMouseMovement(0, 0, true);
+    glm::mat4 projection = camera->getProjectionMatrix();
     shader->setMat4("view", view);
     shader->setMat4("projection", projection);
 // cubes
@@ -219,7 +221,7 @@ void FramebuffersExercise1Scene::draw() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     model = glm::mat4(1.0f);
-    view = camera->GetViewMatrix();
+    view = camera->getViewMatrix();;
     shader->setMat4("view", view);
 
 // cubes
@@ -267,33 +269,4 @@ void FramebuffersExercise1Scene::destroy() {
     delete shader;
     delete screenShader;
     delete camera;
-}
-
-void FramebuffersExercise1Scene::move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) {
-    camera->ProcessMove(glm::vec3((end_pivot - start_pivot) * glm::vec2(0.001f, -0.001f), 0.f));
-}
-
-void FramebuffersExercise1Scene::scale(const float &scale) {
-    float zoom = 0.f;
-    if (scale > 1.02f) {
-        zoom = 1.f;
-    } else if (scale < 0.98f) {
-        zoom = -1.f;
-    }
-    camera->ProcessMouseScroll(zoom);
-}
-
-void FramebuffersExercise1Scene::yawPitch(const glm::vec2 &director) {
-    camera->ProcessMouseMovement(director.x, director.y);
-}
-
-void FramebuffersExercise1Scene::roll(const float &angle) {
-}
-
-void FramebuffersExercise1Scene::onDoubleClick(const glm::vec2 &point) {
-    camera->Position = glm::vec3(0.0f, 0.0f, 3.0f);
-    camera->WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
-    camera->Yaw = YAW;
-    camera->Pitch = PITCH;
-    camera->Zoom = ZOOM;
 }

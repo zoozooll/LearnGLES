@@ -5,15 +5,15 @@
 #ifndef LEARNGLES_LIGHTINGTEXTUREDSCENE_H
 #define LEARNGLES_LIGHTINGTEXTUREDSCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 
-class Camera;
+
 
 class Shader;
 
-class LightingTexturedScene : public Scene {
+class LightingTexturedScene : public BaseScene {
 private:
-    Camera *camera = nullptr;
+
     Shader *shader = nullptr;
 
     unsigned int sphereVAO = 0u;

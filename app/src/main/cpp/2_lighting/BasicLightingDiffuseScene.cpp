@@ -100,7 +100,7 @@ void BasicLightingDiffuseScene::resize(int width, int height) {
 }
 
 void BasicLightingDiffuseScene::draw() {
-
+    BaseScene::draw();
 // render
 // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -113,7 +113,6 @@ void BasicLightingDiffuseScene::draw() {
     lightingShader->setVec3("lightPos", lightPos);
 
 // view/projection transformations
-    camera->update();
     glm::mat4 projection = camera->getProjectionMatrix();
     glm::mat4 view = camera->getViewMatrix();
     lightingShader->setMat4("projection", projection);

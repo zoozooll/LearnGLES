@@ -5,18 +5,17 @@
 #ifndef LEARNGLES_DEFERREDSHADINGSCENE_H
 #define LEARNGLES_DEFERREDSHADINGSCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 
 #include <vector>
 #include <glm/glm.hpp>
 
-class Camera;
 class Shader;
 class Model;
 
-class DeferredShadingScene : public Scene {
+class DeferredShadingScene : public BaseScene {
 private:
-    Camera* camera = nullptr;
+
     Shader* shaderGeometryPass = nullptr;
     Shader* shaderLightingPass = nullptr;
     Shader* shaderLightBox = nullptr;
@@ -31,9 +30,6 @@ private:
     unsigned int cubeVBO;
 
     std::vector<glm::vec3> objectPositions;
-
-    int SCR_WIDTH = 0;
-    int SCR_HEIGHT = 0;
     const unsigned int NR_LIGHTS = 32;
     std::vector<glm::vec3> lightPositions;
     std::vector<glm::vec3> lightColors;

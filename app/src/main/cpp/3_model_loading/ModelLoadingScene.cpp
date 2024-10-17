@@ -13,9 +13,6 @@
 #include "Model.h"
 #include "glerror.h"
 
-static int SCR_WIDTH;
-static int SCR_HEIGHT;
-
 void ModelLoadingScene::init() {
     // tell stb_image.h to flip loaded texture's on the y-axis (before loading model).
     stbi_set_flip_vertically_on_load(true);
@@ -36,14 +33,13 @@ void ModelLoadingScene::init() {
 }
 
 void ModelLoadingScene::resize(int width, int height) {
+    BaseScene::resize(width, height);
     glViewport(0, 0, width, height);
-    SCR_WIDTH = width;
-    SCR_HEIGHT = height;
-    check_gl_error();
 }
 
 void ModelLoadingScene::draw() {
     // render
+    BaseScene::draw();
     // ------
     glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -52,8 +48,8 @@ void ModelLoadingScene::draw() {
     ourShader->use();
 
     // view/projection transformations
-    glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-    glm::mat4 view = camera.GetViewMatrix();
+    glm::mat4 projection = camera->getProjectionMatrix();
+    glm::mat4 view = camera->getViewMatrix();
     ourShader->setMat4("projection", projection);
     check_gl_error();
     ourShader->setMat4("view", view);
@@ -71,34 +67,5 @@ void ModelLoadingScene::draw() {
 void ModelLoadingScene::destroy() {
     delete ourShader;
     delete ourModel;
-}
-
-void ModelLoadingScene::move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) {
-    glm::mat4 l_matrix(1.0f);
-    l_matrix = glm::translate(l_matrix, glm::vec3((end_pivot - start_pivot) * glm::vec2(0.001f, -0.001f), 0.f));
-    model = l_matrix * model;
-}
-
-void ModelLoadingScene::scale(const float &scale) {
-    glm::mat4 l_matrix(1.0f);
-    LOGI(__FILE_NAME__, "scale %f", scale);
-    l_matrix = glm::scale(l_matrix, glm::vec3(scale, scale, scale));
-    model = l_matrix * model;
-}
-
-void ModelLoadingScene::yawPitch(const glm::vec2 &director) {
-
-    glm::mat4 l_matrix(1.0f);
-    glm::vec2 perpendicular = glm::normalize(glm::vec2(-director.y, director.x));
-    auto angle = glm::length(director) * 0.1f / M_PI;
-    l_matrix = glm::rotate(l_matrix, float(angle), glm::vec3(perpendicular, 0.f) );
-    model = l_matrix * model;
-}
-
-void ModelLoadingScene::roll(const float &angle) {
-    LOGI(__FILE_NAME__, "roll %f", angle);
-    glm::mat4 l_matrix(1.0f);
-    l_matrix = glm::rotate(l_matrix, angle, glm::vec3(0.f, 0.f, 1.f));
-    model = l_matrix * model;
 }
 

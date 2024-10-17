@@ -12,7 +12,7 @@
 #include "glm/gtc/type_ptr.hpp"
 
 void CsmScene::init() {
-    camera = new Camera({0.F, 0.F, 3.F});
+
     
     // Setup some OpenGL options
     glEnable(GL_DEPTH_TEST);
@@ -105,12 +105,12 @@ void CsmScene::init() {
 }
 
 void CsmScene::resize(int width, int height) {
+    BaseScene::resize(width, height);
     glViewport(0, 0, width, height);
-    screenWidth = width;
-    screenHeight = height;
 }
 
 void CsmScene::draw() {
+    BaseScene::draw();
     // Clear the colorbuffer
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -118,8 +118,8 @@ void CsmScene::draw() {
     // Draw objects
     shader->use();
     glm::mat4 model;
-    glm::mat4 view = camera->GetViewMatrix();
-    glm::mat4 projection = glm::perspective(camera->Zoom, (float)screenWidth/(float)screenHeight, 0.1f, 100.0f);
+    glm::mat4 view = camera->getViewMatrix();;
+    glm::mat4 projection = camera->getProjectionMatrix();;
     glUniformMatrix4fv(glGetUniformLocation(shader->ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(glGetUniformLocation(shader->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
     // Cubes

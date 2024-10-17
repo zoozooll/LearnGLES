@@ -8,15 +8,15 @@
 #include <vector>
 #include <glm/glm.hpp>
 
-#include "Scene.h"
+#include "BaseScene.h"
 
-class Camera;
+
 
 class Shader;
 
 class Model;
 
-class DeferredShadingVolumesScene : public Scene {
+class DeferredShadingVolumesScene : public BaseScene {
 private:
     unsigned int quadVAO;
     unsigned int quadVBO;
@@ -27,10 +27,6 @@ private:
     unsigned int gPosition, gNormal, gAlbedoSpec;
     unsigned int rboDepth;
 
-    int SCR_WIDTH = 0;
-    int SCR_HEIGHT = 0;
-
-    Camera *camera = nullptr;
     Shader *shaderGeometryPass = nullptr;
     Shader *shaderLightingPass = nullptr;
     Shader *shaderLightBox = nullptr;

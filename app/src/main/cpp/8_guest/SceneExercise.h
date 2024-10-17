@@ -5,8 +5,8 @@
 #ifndef LEARNGLES_SCENEEXERCISE_H
 #define LEARNGLES_SCENEEXERCISE_H
 
-#include "Scene.h"
-class SceneExercise : public Scene {
+#include "BaseScene.h"
+class SceneExercise : public BaseScene {
 public:
     void init() override;
 

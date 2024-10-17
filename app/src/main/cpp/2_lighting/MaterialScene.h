@@ -5,11 +5,11 @@
 #ifndef LEARNGLES_MATERIALSCENE_H
 #define LEARNGLES_MATERIALSCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 #include "Camera.h"
 class Shader;
 
-class MaterialScene : public Scene {
+class MaterialScene : public BaseScene{
 public:
     void init() override;
 
@@ -25,9 +25,6 @@ private:
     Shader *lightCubeShader = nullptr;
 
     glm::vec3 lightPos = glm::vec3(1.2f, 1.0f, 2.0f);
-    Camera camera = Camera(glm::vec3(0.0f, 0.0f, 3.0f));
-    unsigned int SCR_WIDTH = 0;
-    unsigned int SCR_HEIGHT = 0;
 };
 
 

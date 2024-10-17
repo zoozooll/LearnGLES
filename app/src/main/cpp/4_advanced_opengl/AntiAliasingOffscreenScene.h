@@ -5,21 +5,21 @@
 #ifndef LEARNGLES_ANTIALIASINGOFFSCREENSCENE_H
 #define LEARNGLES_ANTIALIASINGOFFSCREENSCENE_H
 
-class Camera;
+
 
 class Shader;
 
-#include "Scene.h"
-class AntiAliasingOffscreenScene : public Scene {
+#include "BaseScene.h"
+class AntiAliasingOffscreenScene : public BaseScene {
 private:
-    Camera *camera = nullptr;
+
 
     Shader *shader = nullptr;
     // setup cube VAO
     unsigned int cubeVAO, cubeVBO;
 
-    int SCR_WIDTH = 0;
-    int SCR_HEIGHT = 0;
+
+
 
 public:
     void init() override;

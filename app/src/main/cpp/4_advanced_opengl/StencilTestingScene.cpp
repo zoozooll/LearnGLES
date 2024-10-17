@@ -5,13 +5,13 @@
 #include "StencilTestingScene.h"
 
 #include <GLES3/gl32.h>
+#include <glm/ext.hpp>
 
-#include "Camera.h"
 #include "Shader.h"
 #include "Texture.h"
 
 void StencilTestingScene::init() {
-    camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+
 
     // configure global opengl state
     // -----------------------------
@@ -129,15 +129,16 @@ void StencilTestingScene::setStencilTest() const {
 }
 
 void StencilTestingScene::resize(int width, int height) {
+    BaseScene::resize(width, height);
     glViewport(0, 0, width, height);
-    SCR_WIDTH = width;
-    SCR_HEIGHT = height;
+
 }
 
 void StencilTestingScene::draw() {
     setStencilTest();
     
     // render
+    BaseScene::draw();
     // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT); // don't forget to clear the stencil buffer!
@@ -145,8 +146,8 @@ void StencilTestingScene::draw() {
     // set uniforms
     shaderSingleColor->use();
     glm::mat4 model = glm::mat4(1.0f);
-    glm::mat4 view = camera->GetViewMatrix();
-    glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    glm::mat4 view = camera->getViewMatrix();;
+    glm::mat4 projection = camera->getProjectionMatrix();
     shaderSingleColor->setMat4("view", view);
     shaderSingleColor->setMat4("projection", projection);
 

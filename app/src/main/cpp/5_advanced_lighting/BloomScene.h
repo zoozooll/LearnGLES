@@ -5,19 +5,19 @@
 #ifndef LEARNGLES_BLOOMSCENE_H
 #define LEARNGLES_BLOOMSCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 #include <vector>
 
-class Camera;
+
 
 class Shader;
 
-class BloomScene : public Scene {
+class BloomScene : public BaseScene {
 private:
     void renderQuad();
     void renderCube();
 
-    Camera *camera = nullptr;
+
     Shader *shader = nullptr;
     Shader *shaderLight = nullptr;
     Shader *shaderBlur = nullptr;
@@ -37,8 +37,8 @@ private:
 
     std::vector<glm::vec3> lightPositions;
     std::vector<glm::vec3> lightColors;
-    int SCR_WIDTH = 0;
-    int SCR_HEIGHT = 0;
+
+
 
     bool bloom = true;
     float exposure = 1.0f;

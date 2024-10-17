@@ -9,6 +9,7 @@ void DepthTestingViewScene::init() {
 }
 
 void DepthTestingViewScene::resize(int width, int height) {
+    BaseScene::resize(width, height);
 
 }
 

@@ -5,20 +5,20 @@
 #ifndef LEARNGLES_PARALLAXMAPPINGSCENE_H
 #define LEARNGLES_PARALLAXMAPPINGSCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 
-class Camera;
+
 class Shader;
 
 
-class ParallaxMappingScene : public Scene {
+class ParallaxMappingScene : public BaseScene {
 private:
     unsigned int quadVAO = 0;
     unsigned int quadVBO = 0;
-    Camera* camera = nullptr;
+
     Shader* shader = nullptr;
-    int SCR_WIDTH = 0;
-    int SCR_HEIGHT = 0;
+
+
     unsigned int diffuseMap;
     unsigned int normalMap;
     unsigned int heightMap;

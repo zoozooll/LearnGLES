@@ -5,14 +5,14 @@
 #ifndef LEARNGLES_SSAOSCENE_H
 #define LEARNGLES_SSAOSCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 #include "SceneCommand.h"
 #include "TargetCamera.h"
 #include "SceneTouchEvent.h"
 #include "Shader.h"
 #include "Model.h"
 
-class SsaoScene : public Scene, public SceneCommand, public SceneTouchEvent  {
+class SsaoScene : public BaseScene {
 public:
     void init() override;
 
@@ -22,34 +22,14 @@ public:
 
     void destroy() override;
 
-    std::map<std::string, std::any> sendCommand(std::map<std::string, std::any> map) override;
-
-    void move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) override;
-
-    void scale(const float &scale) override;
-
-    void yawPitch(const glm::vec2 &director) override;
-
-    void roll(const float &angle) override;
-
-    void onSingleClick(const glm::vec2 &point) override;
-
-    void onDoubleClick(const glm::vec2 &point) override;
-
-    void onLongPress(const glm::vec2 &point) override;
-
 private:
-    TargetCamera camera = TargetCamera();
+
     Shader *shaderGeometryPass = nullptr;
     Shader *shaderLightingPass = nullptr;
     Shader *shaderSSAO = nullptr;
     Shader *shaderSSAOBlur = nullptr;
 
     Model *backpack = nullptr;
-
-    int SCR_WIDTH = 0;
-    int SCR_HEIGHT = 0;
-
     void renderQuad();
     void renderCube();
 

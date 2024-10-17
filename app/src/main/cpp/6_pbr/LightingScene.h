@@ -5,14 +5,14 @@
 #ifndef LEARNGLES_LIGHTINGSCENE_H
 #define LEARNGLES_LIGHTINGSCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 
-class Camera;
+
 class Shader;
 
-class LightingScene : public Scene {
+class LightingScene : public BaseScene {
 private:
-    Camera* camera = nullptr;
+
     Shader* shader = nullptr;
 
     void renderSphere();
@@ -23,9 +23,6 @@ private:
     const int nrRows    = 7;
     const int nrColumns = 7;
     const float spacing = 2.5;
-
-    int SCR_WIDTH = 0;
-    int SCR_HEIGHT = 0;
 
     // lights
 // ------

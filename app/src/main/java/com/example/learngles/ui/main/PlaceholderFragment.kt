@@ -2,6 +2,7 @@ package com.example.learngles.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,28 +57,25 @@ class PlaceholderFragment : Fragment() {
         return root
     }
 
-    inner class ContactsAdapter(private val dataList: List<Pair<String, Boolean>>) : RecyclerView.Adapter<RecyclerView.ViewHolder>()
+    inner class ContactsAdapter(private val dataList: List<Pair<String, String>>) : RecyclerView.Adapter<RecyclerView.ViewHolder>()
     {
 
         inner class TutorialViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val text1 = itemView.findViewById<TextView>(R.id.tvw_title)
             val checkBox = itemView.findViewById<CheckBox>(R.id.check_enable)
+            var boundData: Pair<String, String>? = null
             init {
                 itemView.setOnClickListener {
                     if (checkBox.isChecked) {
-                        val tutorialTitle = text1.text.toString();
-                        val dstActivity = when(tutorialTitle) {
-                            "transformations_exercise2", "coordinate_systems_exercise2" -> TransformExer2Activity::class.java
-                            "coordinate_systems_exercise3" -> CoordinateSystemExer3Activity::class.java
-                            "coordinate_systems_exercise4" -> CoordinateSystemExer4Activity::class.java
-                            "Focal Length and FOV" -> FocalLengthAndFOVActivity::class.java
-                            "ssao" -> SsaoExerActivity::class.java
-                            "basic_lighting_diffuse" -> TargetCameraExecActivity::class.java
-                            else -> GLDetailActivity::class.java
+                        try {
+                            val tutorialTitle = text1.text.toString();
+                            val dstActivity = Class.forName("com.example.learngles.ui.exercises.${boundData?.second}")
+                            val intent = Intent(requireContext(), dstActivity)
+                            intent.putExtra(MainActivity.KEY_TUTORIAL_TITLE, tutorialTitle)
+                            startActivity(intent)
+                        } catch (ex: Exception) {
+                            ex.printStackTrace()
                         }
-                        val intent = Intent(requireContext(), dstActivity)
-                        intent.putExtra(MainActivity.KEY_TUTORIAL_TITLE, text1.text.toString())
-                        startActivity(intent)
                     }
                 }
             }
@@ -92,7 +90,8 @@ class PlaceholderFragment : Fragment() {
 
         override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
             (viewHolder as TutorialViewHolder).text1.text = dataList[position].first
-            (viewHolder as TutorialViewHolder).checkBox.isChecked = dataList[position].second
+            (viewHolder as TutorialViewHolder).checkBox.isChecked = !TextUtils.isEmpty(dataList[position].second)
+            (viewHolder as TutorialViewHolder).boundData = dataList[position]
         }
 
         override fun getItemCount(): Int {

@@ -7,12 +7,11 @@
 
 #include <glm/glm.hpp>
 
-#include "Scene.h"
-#include "Camera.h"
+#include "BaseScene.h"
 
 class Shader;
 
-class AdvancedLightingScene : public Scene {
+class AdvancedLightingScene : public BaseScene {
 public:
     void init() override;
 
@@ -27,7 +26,6 @@ private:
     unsigned int planeVAO = 0;
     unsigned int planeVBO = 0;
     unsigned int floorTexture = 0;
-    Camera camera = Camera(glm::vec3(0.0f, 0.0f, 3.0f));
     glm::vec3 lightPos = glm::vec3(0.0f, 0.0f, 0.0f);
 };
 

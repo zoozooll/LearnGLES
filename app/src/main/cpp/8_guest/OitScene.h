@@ -5,8 +5,8 @@
 #ifndef LEARNGLES_OITSCENE_H
 #define LEARNGLES_OITSCENE_H
 
-#include "Scene.h"
-class OitScene : public Scene {
+#include "BaseScene.h"
+class OitScene : public BaseScene {
 public:
     void init() override;
 

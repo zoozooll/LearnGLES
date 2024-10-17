@@ -5,8 +5,8 @@
 #ifndef LEARNGLES_GAME2DSCENE_H
 #define LEARNGLES_GAME2DSCENE_H
 
-#include "Scene.h"
-class Game2dScene : public Scene {
+#include "BaseScene.h"
+class Game2dScene : public BaseScene {
 public:
     void init() override;
 

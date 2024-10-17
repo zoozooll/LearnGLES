@@ -5,14 +5,14 @@
 #ifndef LEARNGLES_SKELETALANIMATIONSCENE_H
 #define LEARNGLES_SKELETALANIMATIONSCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 
 class Camera;
 class Shader;
 class AnimatedModel;
 class Animator;
 
-class SkeletalAnimationScene : public Scene {
+class SkeletalAnimationScene : public BaseScene {
 private:
     Camera *camera = nullptr;
     Shader *ourShader = nullptr;

@@ -21,10 +21,6 @@ void ShaderMappingExercise1Scene::init() {
     // MARK This feature need to enable depth test.
     glEnable(GL_DEPTH_TEST);
 
-    camera.setVdy(75.f);
-    camera.setNear(0.1f);
-    camera.setFar(100.f);
-
     simpleDepthShader = new Shader ("5/3.1.4.shadow_mapping_depth.vert", "5/3.1.4.shadow_mapping_depth.frag");
     shader = new Shader ("5/3.1.4.shadow_mapping.vert", "5/3.1.4.shadow_mapping.frag");
 
@@ -172,17 +168,14 @@ void ShaderMappingExercise1Scene::init() {
 }
 
 void ShaderMappingExercise1Scene::resize(int width, int height) {
-    SCR_WIDTH = width;
-    SCR_HEIGHT = height;
-    camera.setAspec((float)width / height);
-
+    BaseScene::resize(width, height);
     glViewport(0, 0, width, height);
     check_gl_error();
 }
 
 void ShaderMappingExercise1Scene::draw() {
-    camera.update();
     // render
+    BaseScene::draw();
     // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -209,17 +202,17 @@ void ShaderMappingExercise1Scene::draw() {
 
     // render Depth map to quad for visual debugging
     // ---------------------------------------------
-    glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
+    glViewport(0, 0, scrWidth, scrHeight);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     shader->use();
     shader->setInt("diffuseTexture", 0);
     shader->setInt("shadowMap", 1);
-    glm::mat4 projection = camera.getProjectionMatrix();
-    glm::mat4 view = camera.getViewMatrix();
+    glm::mat4 projection = camera->getProjectionMatrix();
+    glm::mat4 view = camera->getViewMatrix();
     shader->setMat4("projection", projection);
     shader->setMat4("view", view);
     // set light uniforms
-    shader->setVec3("viewPos", camera.getPosition());
+    shader->setVec3("viewPos", camera->getPosition());
     shader->setVec3("lightPos", lightPos);
     shader->setMat4("lightSpaceMatrix", lightSpaceMatrix);
     glActiveTexture(GL_TEXTURE0);
@@ -281,16 +274,4 @@ void ShaderMappingExercise1Scene::renderCube() const
     glBindVertexArray(cubeVAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArray(0);
-}
-
-void ShaderMappingExercise1Scene::move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) {
-    camera.move((end_pivot - start_pivot)  * vec2(0.001f, -0.001f));
-}
-
-void ShaderMappingExercise1Scene::scale(const float &scale) {
-    camera.zoom(scale);
-}
-
-void ShaderMappingExercise1Scene::yawPitch(const glm::vec2 &director) {
-    camera.yawPitch(director);
 }

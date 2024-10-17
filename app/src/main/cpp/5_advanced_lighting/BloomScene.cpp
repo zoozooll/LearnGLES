@@ -12,7 +12,7 @@
 #include "logutil.h"
 
 void BloomScene::init() {
-    camera = new Camera({0.F, 0.F, 3.F});
+
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
@@ -55,9 +55,10 @@ void BloomScene::init() {
 }
 
 void BloomScene::resize(int width, int height) {
+    BaseScene::resize(width, height);
     glViewport(0, 0, width, height);
-    SCR_WIDTH = width;
-    SCR_HEIGHT = height;
+
+
     // configure (floating point) framebuffers
     // ---------------------------------------
 
@@ -69,7 +70,7 @@ void BloomScene::resize(int width, int height) {
     for (unsigned int i = 0; i < 2; i++)
     {
         glBindTexture(GL_TEXTURE_2D, colorBuffers[i]);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGBA, GL_FLOAT, NULL);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);  // we clamp to the edge as the blur filter would otherwise sample repeated texture values!
@@ -81,7 +82,7 @@ void BloomScene::resize(int width, int height) {
 
     glGenRenderbuffers(1, &rboDepth);
     glBindRenderbuffer(GL_RENDERBUFFER, rboDepth);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, SCR_WIDTH, SCR_HEIGHT);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboDepth);
     // tell OpenGL which color attachments we'll use (of this framebuffer) for rendering
     unsigned int attachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
@@ -99,7 +100,7 @@ void BloomScene::resize(int width, int height) {
     {
         glBindFramebuffer(GL_FRAMEBUFFER, pingpongFBO[i]);
         glBindTexture(GL_TEXTURE_2D, pingpongColorbuffers[i]);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGBA, GL_FLOAT, NULL);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE); // we clamp to the edge as the blur filter would otherwise sample repeated texture values!
@@ -113,6 +114,7 @@ void BloomScene::resize(int width, int height) {
 
 void BloomScene::draw() {
     // render
+    BaseScene::draw();
     // ------
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -121,8 +123,8 @@ void BloomScene::draw() {
     // -----------------------------------------------
     glBindFramebuffer(GL_FRAMEBUFFER, hdrFBO);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-    glm::mat4 view = camera->GetViewMatrix();
+    glm::mat4 projection = camera->getProjectionMatrix();;
+    glm::mat4 view = camera->getViewMatrix();;
     glm::mat4 model = glm::mat4(1.0f);
     shader->use();
     shader->setMat4("projection", projection);
@@ -135,7 +137,7 @@ void BloomScene::draw() {
         shader->setVec3("lights[" + std::to_string(i) + "].Position", lightPositions[i]);
         shader->setVec3("lights[" + std::to_string(i) + "].Color", lightColors[i]);
     }
-    shader->setVec3("viewPos", camera->Position);
+    shader->setVec3("viewPos", camera->getPosition());
     // create one large cube that acts as the floor
     model = glm::mat4(1.0f);
     model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0));

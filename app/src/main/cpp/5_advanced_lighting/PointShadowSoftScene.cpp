@@ -21,11 +21,6 @@ void PointShadowSoftScene::init() {
     // MARK This feature need to enable depth test.
     glEnable(GL_DEPTH_TEST);
 
-    camera.setVdy(75.f);
-    camera.setNear(0.1f);
-    camera.setFar(100.f);
-    camera.setRadius(3.f);
-
     simpleDepthShader = new Shader ("5/3.2.1.point_shadows_depth.vert", "5/3.2.1.point_shadows_depth.frag",
                                     "5/3.2.1.point_shadows_depth.geom");
     shader = new Shader ("5/3.2.1.point_shadows.vert", "5/3.2.2.point_shadows.frag");
@@ -142,20 +137,16 @@ void PointShadowSoftScene::init() {
 }
 
 void PointShadowSoftScene::resize(int width, int height) {
-    SCR_WIDTH = width;
-    SCR_HEIGHT = height;
-    camera.setAspec((float)width / height);
-
+    BaseScene::resize(width, height);
     glViewport(0, 0, width, height);
-    check_gl_error();
 }
 
 void PointShadowSoftScene::draw() {
-    camera.update();
     // move light position over time
     lightPos.z = static_cast<float>(1. * 3.0);
 
     // render
+    BaseScene::draw();
     // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -190,18 +181,18 @@ void PointShadowSoftScene::draw() {
 
     // 2. render scene as normal
     // -------------------------
-    glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
+    glViewport(0, 0, scrWidth, scrHeight);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     shader->use();
     shader->setInt("diffuseTexture", 0);
     shader->setInt("depthMap", 1);
-    glm::mat4 projection = glm::perspective(glm::radians(75.f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-    glm::mat4 view = camera.getViewMatrix();
+    glm::mat4 projection = glm::perspective(glm::radians(75.f), (float)scrWidth / (float)scrHeight, 0.1f, 100.0f);
+    glm::mat4 view = camera->getViewMatrix();
     shader->setMat4("projection", projection);
     shader->setMat4("view", view);
     // set lighting uniforms
     shader->setVec3("lightPos", lightPos);
-    shader->setVec3("viewPos", camera.getPosition());
+    shader->setVec3("viewPos", camera->getPosition());
     shader->setInt("shadows", 1); // enable/disable shadows by pressing 'SPACE'
     shader->setFloat("far_plane", far_plane);
     check_gl_error();
@@ -274,16 +265,4 @@ void PointShadowSoftScene::renderCube() const
     glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArray(0);
     check_gl_error();
-}
-
-void PointShadowSoftScene::move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) {
-    camera.move((end_pivot - start_pivot)  * vec2(0.001f, -0.001f));
-}
-
-void PointShadowSoftScene::scale(const float &scale) {
-    camera.zoom(scale);
-}
-
-void PointShadowSoftScene::yawPitch(const glm::vec2 &director) {
-    camera.yawPitch(director);
 }

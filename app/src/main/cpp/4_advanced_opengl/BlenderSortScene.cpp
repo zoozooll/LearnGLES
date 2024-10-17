@@ -6,13 +6,13 @@
 
 #include <vector>
 #include <map>
+#include <glm/ext.hpp>
 
-#include "Camera.h"
 #include "Shader.h"
 #include "Texture.h"
 
 void BlenderSortScene::init() {
-    camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
@@ -134,9 +134,9 @@ void BlenderSortScene::init() {
 }
 
 void BlenderSortScene::resize(int width, int height) {
+    BaseScene::resize(width, height);
     glViewport(0, 0, width, height);
-    SCR_WIDTH = width;
-    SCR_HEIGHT = height;
+
 }
 
 void BlenderSortScene::draw() {
@@ -145,19 +145,20 @@ void BlenderSortScene::draw() {
     std::map<float, glm::vec3> sorted;
     for (unsigned int i = 0; i < windows.size(); i++)
     {
-        float distance = glm::length(camera->Position - windows[i]);
+        float distance = glm::length(camera->getPosition() - windows[i]);
         sorted[distance] = windows[i];
     }
 
     // render
+    BaseScene::draw();
     // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // draw objects
     shader->use();
-    glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-    glm::mat4 view = camera->GetViewMatrix();
+    glm::mat4 projection = camera->getProjectionMatrix();
+    glm::mat4 view = camera->getViewMatrix();;
     glm::mat4 model = glm::mat4(1.0f);
     shader->setMat4("projection", projection);
     shader->setMat4("view", view);

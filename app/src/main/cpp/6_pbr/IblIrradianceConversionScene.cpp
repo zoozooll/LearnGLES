@@ -12,7 +12,7 @@
 #include "logutil.h"
 
 void IblIrradianceConversionScene::init() {
-    camera = new Camera({0.F, 0.F, 3.F});
+
 
 // configure global opengl state
 // -----------------------------
@@ -118,10 +118,10 @@ void IblIrradianceConversionScene::init() {
 }
 
 void IblIrradianceConversionScene::resize(int width, int height) {
+    BaseScene::resize(width, height);
 // initialize static shader uniforms before rendering
 // --------------------------------------------------
-    glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom),
-        (float)width / (float)height, 0.1f, 100.0f);
+    glm::mat4 projection = camera->getProjectionMatrix();;
     pbrShader->use();
     pbrShader->setMat4("projection", projection);
     backgroundShader->use();
@@ -133,16 +133,17 @@ void IblIrradianceConversionScene::resize(int width, int height) {
 
 void IblIrradianceConversionScene::draw() {
 // render
-// ------
+    BaseScene::draw();
+    // ------
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 // render scene, supplying the convoluted irradiance map to the final shader.
 // ------------------------------------------------------------------------------------------
     pbrShader->use();
-    glm::mat4 view = camera->GetViewMatrix();
+    glm::mat4 view = camera->getViewMatrix();;
     pbrShader->setMat4("view", view);
-    pbrShader->setVec3("camPos", camera->Position);
+    pbrShader->setVec3("camPos", camera->getPosition());
 
 // render rows*column number of spheres with varying metallic/roughness values scaled by rows and columns respectively
     glm::mat4 model = glm::mat4(1.0f);

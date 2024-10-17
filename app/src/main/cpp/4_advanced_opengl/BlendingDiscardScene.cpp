@@ -4,21 +4,22 @@
 
 #include "BlendingDiscardScene.h"
 
-#include "Camera.h"
+#include <glm/ext.hpp>
+
 #include "Shader.h"
 #include "Texture.h"
 
 using std::vector;
 
 void BlendingDiscardScene::init() {
-    camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+
 // configure global opengl state
 // -----------------------------
     glEnable(GL_DEPTH_TEST);
 
     // build and compile shaders
 // -------------------------
-    shader = new Shader("5/3.1.blending.vsh", "5/3.1.blending.fsh");
+    shader = new Shader("4/3.1.blending.vsh", "4/3.1.blending.fsh");
 
 // set up vertex data (and buffer(s)) and configure vertex attributes
 // ------------------------------------------------------------------
@@ -135,21 +136,22 @@ void BlendingDiscardScene::init() {
 }
 
 void BlendingDiscardScene::resize(int width, int height) {
+    BaseScene::resize(width, height);
     glViewport(0, 0, width, height);
-    SCR_WIDTH = width;
-    SCR_HEIGHT = height;
+
 }
 
 void BlendingDiscardScene::draw() {
 // render
-// ------
+    BaseScene::draw();
+    // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 // draw objects
     shader->use();
-    glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-    glm::mat4 view = camera->GetViewMatrix();
+    glm::mat4 projection = camera->getProjectionMatrix();
+    glm::mat4 view = camera->getViewMatrix();;
     glm::mat4 model = glm::mat4(1.0f);
     shader->setMat4("projection", projection);
     shader->setMat4("view", view);

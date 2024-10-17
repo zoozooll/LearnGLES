@@ -58,3 +58,6 @@ void BaseScene::resize(int width, int height) {
     camera->setAspec((float) width / (float) height);
 }
 
+void BaseScene::draw() {
+    camera->update();
+}

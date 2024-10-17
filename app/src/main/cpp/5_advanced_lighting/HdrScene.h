@@ -5,24 +5,24 @@
 #ifndef LEARNGLES_HDRSCENE_H
 #define LEARNGLES_HDRSCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 
 #include <vector>
 
-class Camera;
+
 class Shader;
 
-class HdrScene : public Scene {
+class HdrScene : public BaseScene {
 private:
     unsigned int quadVAO = 0;
     unsigned int quadVBO = 0;
     unsigned int cubeVAO = 0;
     unsigned int cubeVBO = 0;
-    Camera* camera = nullptr;
+
     Shader* shader = nullptr;
     Shader* hdrShader = nullptr;
-    int SCR_WIDTH = 0;
-    int SCR_HEIGHT = 0;
+
+
     unsigned int diffuseMap;
     unsigned int normalMap;
     unsigned int heightMap;

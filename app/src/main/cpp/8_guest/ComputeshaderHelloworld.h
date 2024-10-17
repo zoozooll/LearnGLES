@@ -5,8 +5,8 @@
 #ifndef LEARNGLES_COMPUTESHADERHELLOWORLD_H
 #define LEARNGLES_COMPUTESHADERHELLOWORLD_H
 
-#include "Scene.h"
-class ComputeshaderHelloworld : public Scene {
+#include "BaseScene.h"
+class ComputeshaderHelloworld : public BaseScene {
 public:
     void init() override;
 
@@ -14,7 +14,7 @@ public:
 
     void draw() override;
 
-    void destroy() override;
+    void destroy();
 };
 
 

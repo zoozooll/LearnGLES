@@ -6,7 +6,6 @@
 #include <GLES3/gl32.h>
 
 #include "Shader.h"
-#include "Camera.h"
 #include "glm/gtx/string_cast.hpp"
 #include "TimeUtil.h"
 
@@ -97,13 +96,13 @@ void MaterialExercise1Scene::init() {
 }
 
 void MaterialExercise1Scene::resize(int width, int height) {
+    BaseScene::resize(width, height);
     glViewport(0, 0, width, height);
-    SCR_WIDTH = width;
-    SCR_HEIGHT = height;
 }
 
 void MaterialExercise1Scene::draw() {
     // render
+    BaseScene::draw();
     // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -111,7 +110,7 @@ void MaterialExercise1Scene::draw() {
     // be sure to activate shader when setting uniforms/drawing objects
     lightingShader->use();
     lightingShader->setVec3("light.position", lightPos);
-    lightingShader->setVec3("viewPos", camera.Position);
+    lightingShader->setVec3("viewPos", camera->getPosition());
 
     // light properties
     glm::vec3 lightColor;
@@ -131,8 +130,8 @@ void MaterialExercise1Scene::draw() {
     lightingShader->setFloat("material.shininess", 32.0f);
 
     // view/projection transformations
-    glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-    glm::mat4 view = camera.GetViewMatrix();
+    glm::mat4 projection = camera->getProjectionMatrix();
+    glm::mat4 view = camera->getViewMatrix();
     lightingShader->setMat4("projection", projection);
     lightingShader->setMat4("view", view);
 

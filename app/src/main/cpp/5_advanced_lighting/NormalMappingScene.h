@@ -5,20 +5,20 @@
 #ifndef LEARNGLES_NORMALMAPPINGSCENE_H
 #define LEARNGLES_NORMALMAPPINGSCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 #include <glm/glm.hpp>
 
-class Camera;
+
 class Shader;
 
-class NormalMappingScene : public Scene {
+class NormalMappingScene : public BaseScene {
 private:
     unsigned int quadVAO = 0;
     unsigned int quadVBO = 0;
-    Camera* camera = nullptr;
+
     Shader* shader = nullptr;
-    int SCR_WIDTH = 0;
-    int SCR_HEIGHT = 0;
+
+
     unsigned int diffuseMap;
     unsigned int normalMap;
 

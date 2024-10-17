@@ -1,4 +1,5 @@
-#version 330 core
+#version 320 es
+precision highp float;
 layout (location = 0) out vec4 FragColor;
 
 uniform vec3 lightColor;

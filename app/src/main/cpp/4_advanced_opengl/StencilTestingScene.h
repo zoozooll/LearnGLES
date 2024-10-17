@@ -5,19 +5,15 @@
 #ifndef LEARNGLES_STENCILTESTINGSCENE_H
 #define LEARNGLES_STENCILTESTINGSCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 
 #include <GLES3/gl32.h>
 
-class Camera;
+
 class Shader;
 
-class StencilTestingScene : public Scene {
+class StencilTestingScene : public BaseScene {
 private:
-    Camera* camera = nullptr;
-    int SCR_WIDTH = 0;
-    int SCR_HEIGHT = 0;
-
     Shader *shader = nullptr;
     Shader *shaderSingleColor = nullptr;
 

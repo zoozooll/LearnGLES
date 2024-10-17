@@ -5,15 +5,15 @@
 #ifndef LEARNGLES_CUBEMAPSENVIRONMENTMAPPINGSCENE_H
 #define LEARNGLES_CUBEMAPSENVIRONMENTMAPPINGSCENE_H
 
-#include "Scene.h"
+#include "BaseScene.h"
 
-class Camera;
+
 
 class Shader;
 
-class CubemapsEnvironmentMappingScene : public Scene {
+class CubemapsEnvironmentMappingScene : public BaseScene {
 private:
-    Camera *camera = nullptr;
+
     Shader *shader = nullptr;
     Shader *skyboxShader = nullptr;
 

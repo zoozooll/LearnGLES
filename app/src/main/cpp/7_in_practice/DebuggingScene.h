@@ -5,8 +5,8 @@
 #ifndef LEARNGLES_DEBUGGINGSCENE_H
 #define LEARNGLES_DEBUGGINGSCENE_H
 
-#include "Scene.h"
-class DebuggingScene : public Scene {
+#include "BaseScene.h"
+class DebuggingScene : public BaseScene {
 public:
     void init() override;
 

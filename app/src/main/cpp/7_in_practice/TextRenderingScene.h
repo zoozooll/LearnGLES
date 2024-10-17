@@ -5,8 +5,8 @@
 #ifndef LEARNGLES_TEXTRENDERINGSCENE_H
 #define LEARNGLES_TEXTRENDERINGSCENE_H
 
-#include "Scene.h"
-class TextRenderingScene : public Scene {
+#include "BaseScene.h"
+class TextRenderingScene : public BaseScene {
 public:
     void init() override;
 

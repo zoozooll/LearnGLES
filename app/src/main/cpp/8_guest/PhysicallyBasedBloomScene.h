@@ -5,8 +5,8 @@
 #ifndef LEARNGLES_PHYSICALLYBASEDBLOOMSCENE_H
 #define LEARNGLES_PHYSICALLYBASEDBLOOMSCENE_H
 
-#include "Scene.h"
-class PhysicallyBasedBloomScene : public Scene {
+#include "BaseScene.h"
+class PhysicallyBasedBloomScene : public BaseScene {
 public:
     void init() override;
 

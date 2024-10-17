@@ -11,7 +11,7 @@
 #include "Texture.h"
 
 void LightingTexturedScene::init() {
-    camera = new Camera({0.F, 0.F, 3.f});
+
 
 // configure global opengl state
 // -----------------------------
@@ -40,21 +40,23 @@ void LightingTexturedScene::init() {
 void LightingTexturedScene::resize(int width, int height) {
     // initialize static shader uniforms before rendering
     // --------------------------------------------------
-    glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float)width / (float)height, 0.1f, 100.0f);
+    BaseScene::resize(width, height);
+    glm::mat4 projection = camera->getProjectionMatrix();;
     shader->use();
     shader->setMat4("projection", projection);
 }
 
 void LightingTexturedScene::draw() {
 // render
-// ------
+    BaseScene::draw();
+    // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     shader->use();
-    glm::mat4 view = camera->GetViewMatrix();
+    glm::mat4 view = camera->getViewMatrix();;
     shader->setMat4("view", view);
-    shader->setVec3("camPos", camera->Position);
+    shader->setVec3("camPos", camera->getPosition());
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, albedo);

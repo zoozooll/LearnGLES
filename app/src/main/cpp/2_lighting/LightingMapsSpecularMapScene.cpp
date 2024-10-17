@@ -9,7 +9,6 @@
 #include "Texture.h"
 
 void LightingMapsSpecularMapScene::init() {
-    camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
     lightPos = glm::vec3(1.2f, 1.0f, 2.0f);
 
     lightingShader = new Shader("2/4.2.lighting_maps.vert", "2/4.2.lighting_maps.frag");
@@ -95,13 +94,13 @@ void LightingMapsSpecularMapScene::init() {
 }
 
 void LightingMapsSpecularMapScene::resize(int width, int height) {
+    BaseScene::resize(width, height);
     glViewport(0, 0, width, height);
-    SCR_WIDTH = width;
-    SCR_HEIGHT = height;
 }
 
 void LightingMapsSpecularMapScene::draw() {
 // render
+    BaseScene::draw();
 // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -109,7 +108,7 @@ void LightingMapsSpecularMapScene::draw() {
 // be sure to activate shader when setting uniforms/drawing objects
     lightingShader->use();
     lightingShader->setVec3("light.position", lightPos);
-    lightingShader->setVec3("viewPos", camera->Position);
+    lightingShader->setVec3("viewPos", camera->getPosition());
 
 // light properties
     lightingShader->setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
@@ -121,8 +120,8 @@ void LightingMapsSpecularMapScene::draw() {
     lightingShader->setFloat("material.shininess", 64.0f);
 
 // view/projection transformations
-    glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-    glm::mat4 view = camera->GetViewMatrix();
+    glm::mat4 projection = camera->getProjectionMatrix();
+    glm::mat4 view = camera->getViewMatrix();
     lightingShader->setMat4("projection", projection);
     lightingShader->setMat4("view", view);
 
@@ -156,32 +155,4 @@ void LightingMapsSpecularMapScene::destroy() {
     glDeleteVertexArrays(1, &cubeVAO);
     glDeleteVertexArrays(1, &lightCubeVAO);
     glDeleteBuffers(1, &VBO);
-}
-
-void LightingMapsSpecularMapScene::move(const glm::vec2 &start_pivot, const glm::vec2 &end_pivot) {
-    LOGI(__FILE_NAME__, "move %s -> %s", glm::to_string(start_pivot).c_str(), glm::to_string(end_pivot).c_str());
-    camera->ProcessMove(glm::vec3((end_pivot - start_pivot) * glm::vec2(0.001f, -0.001f), 0.f));
-}
-
-void LightingMapsSpecularMapScene::scale(const float &scale) {
-    float zoom = 0.f;
-    if (scale > 1.02f) {
-        zoom = 1.f;
-    } else if (scale < 0.98f) {
-        zoom = -1.f;
-    }
-    camera->ProcessMouseScroll(zoom);
-}
-
-void LightingMapsSpecularMapScene::yawPitch(const glm::vec2 &director) {
-    camera->ProcessMouseMovement(director.x, director.y);
-}
-
-void LightingMapsSpecularMapScene::onDoubleClick(const glm::vec2 &point) {
-    camera->Position = glm::vec3(0.0f, 0.0f, 3.0f);
-    camera->WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
-    camera->Yaw = YAW;
-    camera->Pitch = PITCH;
-    camera->Zoom = ZOOM;
-    camera->updateCameraVectors();
 }
