@@ -121,11 +121,8 @@ void IblIrradianceConversionScene::resize(int width, int height) {
     BaseScene::resize(width, height);
 // initialize static shader uniforms before rendering
 // --------------------------------------------------
-    glm::mat4 projection = camera->getProjectionMatrix();;
-    pbrShader->use();
-    pbrShader->setMat4("projection", projection);
-    backgroundShader->use();
-    backgroundShader->setMat4("projection", projection);
+
+
 
 // then before rendering, configure the viewport to the original framebuffer's screen dimensions
     glViewport(0, 0, width, height);
@@ -143,6 +140,8 @@ void IblIrradianceConversionScene::draw() {
     pbrShader->use();
     glm::mat4 view = camera->getViewMatrix();;
     pbrShader->setMat4("view", view);
+    glm::mat4 projection = camera->getProjectionMatrix();;
+    pbrShader->setMat4("projection", projection);
     pbrShader->setVec3("camPos", camera->getPosition());
 
 // render rows*column number of spheres with varying metallic/roughness values scaled by rows and columns respectively
@@ -190,6 +189,7 @@ void IblIrradianceConversionScene::draw() {
 // render skybox (render as last to prevent overdraw)
     backgroundShader->use();
     backgroundShader->setMat4("view", view);
+    backgroundShader->setMat4("projection", projection);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
     renderCube();

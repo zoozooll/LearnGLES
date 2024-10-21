@@ -34,8 +34,6 @@ void IblIrradianceScene::init() {
     backgroundShader->use();
     backgroundShader->setInt("environmentMap", 0);
 
-
-
 // pbr: setup framebuffer
 // ----------------------
     unsigned int captureFBO;
@@ -163,14 +161,8 @@ void IblIrradianceScene::resize(int width, int height) {
 // initialize static shader uniforms before rendering
 // --------------------------------------------------
     BaseScene::resize(width, height);
-    glm::mat4 projection = camera->getProjectionMatrix();;
-    pbrShader->use();
-    pbrShader->setMat4("projection", projection);
-    backgroundShader->use();
-    backgroundShader->setMat4("projection", projection);
 
-// then before rendering, configure the viewport to the original framebuffer's screen dimensions
-    glViewport(0, 0, width, height);
+
 }
 
 void IblIrradianceScene::draw() {
@@ -185,6 +177,8 @@ void IblIrradianceScene::draw() {
     pbrShader->use();
     glm::mat4 view = camera->getViewMatrix();;
     pbrShader->setMat4("view", view);
+    glm::mat4 projection = camera->getProjectionMatrix();;
+    pbrShader->setMat4("projection", projection);
     pbrShader->setVec3("camPos", camera->getPosition());
 
 // bind pre-computed IBL data
@@ -236,6 +230,7 @@ void IblIrradianceScene::draw() {
 // render skybox (render as last to prevent overdraw)
     backgroundShader->use();
     backgroundShader->setMat4("view", view);
+    backgroundShader->setMat4("projection", projection);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
 //glBindTexture(GL_TEXTURE_CUBE_MAP, irradianceMap); // display irradiance map

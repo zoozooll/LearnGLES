@@ -79,8 +79,8 @@ private:
     bool dirty = false;
 
     constexpr static const float CAMERA_FOVY_DEGREE = 60.f;
-    constexpr static const float CAMERA_NEAR = 1.f;
-    constexpr static const float CAMERA_FAR = 15.f;
+    constexpr static const float CAMERA_NEAR = 0.1f;
+    constexpr static const float CAMERA_FAR = 100.f;
     constexpr static const float CAMERA_DEF_RADIUS = 8.f;
     constexpr static const glm::vec3 CAMERA_DEF_TARGET_POSITION = glm::vec3(.0f, 0.f, .0f);
 };

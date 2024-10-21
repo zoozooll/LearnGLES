@@ -10,9 +10,10 @@
 #include "Shader.h"
 #include "Texture.h"
 
+using std::vector;
+using std::any_cast;
+
 void StencilTestingScene::init() {
-
-
     // configure global opengl state
     // -----------------------------
     setStencilTest();
@@ -239,4 +240,31 @@ void StencilTestingScene::setStencilOpDfail(int stencilOpDfail) {
 
 void StencilTestingScene::setStencilDppass(int stencilDppass) {
     StencilTestingScene::stencilDppass = stencilDppass;
+}
+
+std::map<std::string, std::any>
+StencilTestingScene::sendCommand(std::map<std::string, std::any> commands) {
+    auto super_rs = BaseScene::sendCommand(commands);
+    for (const auto& [key, value]: commands) {
+        if ("camera_move" == key && value.type() == typeid(vector<float>)) {
+            auto l_value = any_cast<vector<float>>(value);
+            if (l_value.size() >= 2) {
+                camera->move({l_value[0], -l_value[1]});
+            }
+        } else if ("camera_zoom" == key && value.type() == typeid(float)) {
+            auto l_value = any_cast<float>(value);
+            camera->zoom(l_value);
+        } else if ("camera_yaw_pitch" == key && value.type() == typeid(vector<float>)) {
+            auto l_value = any_cast<vector<float>>(value);
+            if (l_value.size() >= 2) {
+                camera->yawPitch({l_value[0] * -0.5F, l_value[1] * -0.1F});
+            }
+        } else if ("camera_radius" == key && value.type() == typeid(float)) {
+            auto l_value = any_cast<float>(value);
+            camera->setRadius(l_value);
+        } else if ("camera_reset" == key) {
+            camera->reset();
+        }
+    }
+    return super_rs;
 }

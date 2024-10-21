@@ -19,7 +19,7 @@ void GeometryShaderExplodingScene::init() {
 
     // build and compile shaders
     // -------------------------
-    shader = new Shader("4/9.2.geometry_shader->vsh", "4/9.2.geometry_shader->fsh", "4/9.2.geometry_shader->gsh");
+    shader = new Shader("4/9.2.geometry_shader.vsh", "4/9.2.geometry_shader.fsh", "4/9.2.geometry_shader.gsh");
 
     // load models
     // -----------
@@ -35,6 +35,7 @@ void GeometryShaderExplodingScene::resize(int width, int height) {
 void GeometryShaderExplodingScene::draw() {
     // render
     BaseScene::draw();
+    glEnable(GL_DEPTH_TEST);
     // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

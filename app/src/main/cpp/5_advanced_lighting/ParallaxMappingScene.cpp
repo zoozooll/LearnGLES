@@ -17,7 +17,7 @@ void ParallaxMappingScene::init() {
 
     // build and compile shaders
     // -------------------------
-    shader = new Shader("5/5.1.parallax_mapping.vsh", "5/5.1.parallax_mapping.fsh");
+    shader = new Shader("5/5.parallax_mapping.vsh", "5/5.1.parallax_mapping.fsh");
 
     // load textures
     // -------------

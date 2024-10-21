@@ -13,12 +13,9 @@ class Model;
 
 class AsteroidsScene : public BaseScene {
 private:
-
     Model *rock = nullptr;
     Model *planet = nullptr;
     Shader *shader = nullptr;
-
-
     unsigned int amount = 1000;
     glm::mat4* modelMatrices = nullptr;
 public:

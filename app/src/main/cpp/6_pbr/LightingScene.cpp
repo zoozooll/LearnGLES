@@ -9,10 +9,9 @@
 #include "Camera.h"
 #include "Shader.h"
 #include "Texture.h"
+#include "glerror.h"
 
 void LightingScene::init() {
-
-    
 // configure global opengl state
 // -----------------------------
     glEnable(GL_DEPTH_TEST);
@@ -29,11 +28,6 @@ void LightingScene::init() {
 void LightingScene::resize(int width, int height) {
     BaseScene::resize(width, height);
     glViewport(0, 0, width, height);
-    // initialize static shader uniforms before rendering
-// --------------------------------------------------
-    glm::mat4 projection = camera->getProjectionMatrix();;
-    shader->use();
-    shader->setMat4("projection", projection);
 }
 
 void LightingScene::draw() {
@@ -47,6 +41,8 @@ void LightingScene::draw() {
     glm::mat4 view = camera->getViewMatrix();;
     shader->setMat4("view", view);
     shader->setVec3("camPos", camera->getPosition());
+    glm::mat4 projection = camera->getProjectionMatrix();;
+    shader->setMat4("projection", projection);
 
 // render rows*column number of spheres with varying metallic/roughness values scaled by rows and columns respectively
     glm::mat4 model = glm::mat4(1.0f);
@@ -88,6 +84,9 @@ void LightingScene::draw() {
         shader->setMat3("normalMatrix", glm::transpose(glm::inverse(glm::mat3(model))));
         renderSphere();
     }
+
+    LOGI(__FILE_NAME__, "draw a frame");
+    check_gl_error();
 }
 
 void LightingScene::destroy() {

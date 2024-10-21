@@ -19,7 +19,7 @@ void CsmScene::init() {
     // glDepthFunc(GL_ALWAYS); // Set to always pass the depth test (same effect as glDisable(GL_DEPTH_TEST))
 
     // Setup and compile our shaders
-    shader = new Shader("5/csm.vsh", "5/csm.frag");
+    shader = new Shader("5/csm.vsh", "5/csm.fsh");
 
     // Set the object data (buffers, vertex attributes)
     GLfloat cubeVertices[] = {

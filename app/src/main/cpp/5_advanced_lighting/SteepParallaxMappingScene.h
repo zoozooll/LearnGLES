@@ -17,7 +17,6 @@ private:
 
     Shader* shader = nullptr;
 
-
     unsigned int diffuseMap;
     unsigned int normalMap;
     unsigned int heightMap;

@@ -175,10 +175,6 @@ inline Scene* GenSceneByName(const char *tutorial) {
         return new FocalLengthAndFOVScene();
     } else if (!strcmp(tutorial, "camera_circle")) {
         return new CameraCircleScene;
-    } else if (!strcmp(tutorial, "camera_keyboard_dt")) {
-
-    } else if (!strcmp(tutorial, "camera_mouse_zoom")) {
-
     } else if (!strcmp(tutorial, "camera_class")) {
         return new CameraScene;
     } else if (!strcmp(tutorial, "camera_exercise1")) {

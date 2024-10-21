@@ -18,7 +18,7 @@ private:
     void renderSphere();
 
     unsigned int sphereVAO = 0;
-    unsigned int indexCount;
+    unsigned int indexCount = 0;
 
     const int nrRows    = 7;
     const int nrColumns = 7;

@@ -32,8 +32,6 @@ object DataSet {
                     "coordinate_systems_exercise4" to "CoordinateSystemExer4Activity",
                     "Focal Length and FOV" to "FocalLengthAndFOVActivity",
                     "camera_circle" to "GLDetailActivity",
-                    "camera_keyboard_dt" to "GLDetailActivity",
-                    "camera_mouse_zoom" to "GLDetailActivity",
                     "camera_class" to "GLDetailActivity",
                     "camera_exercise1" to "GLDetailActivity",
                     "camera_exercise2" to "GLDetailActivity"
@@ -53,7 +51,7 @@ object DataSet {
                     "light_casters_point" to "TargetCameraExecActivity",
                     "light_casters_spot" to "TargetCameraExecActivity",
                     "light_casters_spot_soft" to "TargetCameraExecActivity",
-                    "multiple_lights" to ""
+                    "multiple_lights" to "TargetCameraExecActivity"
                 ),
         "3.model_loading" to
                 listOf(
@@ -99,7 +97,7 @@ object DataSet {
                     "bloom" to "TargetCameraExecActivity",
                     "deferred_shading" to "TargetCameraExecActivity",
                     "deferred_shading_volumes" to "TargetCameraExecActivity",
-                    "ssao" to "SsaoExerActivity"
+                    "ssao" to "TargetCameraExecActivity"
                 ),
         "6.pbr" to
                 listOf(

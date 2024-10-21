@@ -25,12 +25,12 @@ void IblSpecularTexturedScene::init() {
 
 // build and compile shaders
 // -------------------------
-    pbrShader = new Shader("6/2.2.2.pbr.vs", "6/2.2.2.pbr.fs");
-    equirectangularToCubemapShader = new Shader("6/2.2.2.cubemap.vs", "6/2.2.2.equirectangular_to_cubemap.fs");
-    irradianceShader = new Shader("6/2.2.2.cubemap.vs", "6/2.2.2.irradiance_convolution.fs");
-    prefilterShader = new Shader("6/2.2.2.cubemap.vs", "6/2.2.2.prefilter.fs");
-    brdfShader = new Shader("6/2.2.2.brdf.vs", "6/2.2.2.brdf.fs");
-    backgroundShader = new Shader("6/2.2.2.background.vs", "6/2.2.2.background.fs");
+    pbrShader = new Shader("6/2.2.2.pbr.vsh", "6/2.2.2.pbr.fsh");
+    equirectangularToCubemapShader = new Shader("6/2.2.2.cubemap.vsh", "6/2.2.2.equirectangular_to_cubemap.fsh");
+    irradianceShader = new Shader("6/2.2.2.cubemap.vsh", "6/2.2.2.irradiance_convolution.fsh");
+    prefilterShader = new Shader("6/2.2.2.cubemap.vsh", "6/2.2.2.prefilter.fsh");
+    brdfShader = new Shader("6/2.2.2.brdf.vsh", "6/2.2.2.brdf.fsh");
+    backgroundShader = new Shader("6/2.2.2.background.vsh", "6/2.2.2.background.fsh");
 
     pbrShader->use();
     pbrShader->setInt("irradianceMap", 0);
@@ -292,11 +292,8 @@ void IblSpecularTexturedScene::resize(int width, int height) {
     // initialize static shader uniforms before rendering
     // --------------------------------------------------
     BaseScene::resize(width, height);
-    glm::mat4 projection = camera->getProjectionMatrix();
-    pbrShader->use();
-    pbrShader->setMat4("projection", projection);
-    backgroundShader->use();
-    backgroundShader->setMat4("projection", projection);
+
+
 
     // then before rendering, configure the viewport to the original framebuffer's screen dimensions
     glViewport(0, 0, width, height);
@@ -315,6 +312,8 @@ void IblSpecularTexturedScene::draw() {
     glm::mat4 model = glm::mat4(1.0f);
     glm::mat4 view = camera->getViewMatrix();;
     pbrShader->setMat4("view", view);
+    glm::mat4 projection = camera->getProjectionMatrix();
+    pbrShader->setMat4("projection", projection);
     pbrShader->setVec3("camPos", camera->getPosition());
 
 // bind pre-computed IBL data
@@ -437,6 +436,7 @@ void IblSpecularTexturedScene::draw() {
     backgroundShader->use();
 
     backgroundShader->setMat4("view", view);
+    backgroundShader->setMat4("projection", projection);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
 //glBindTexture(GL_TEXTURE_CUBE_MAP, irradianceMap); // display irradiance map

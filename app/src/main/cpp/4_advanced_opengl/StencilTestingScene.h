@@ -37,6 +37,8 @@ public:
 
     void destroy() override;
 
+    std::map<std::string, std::any> sendCommand(std::map<std::string, std::any> commands) override;
+
     void setStencilTest() const;
 
     void setStencilTesting(bool stencilTesting);

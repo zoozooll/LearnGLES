@@ -98,6 +98,7 @@ void LightingMapsExercise3Scene::resize(int width, int height) {
 
 void LightingMapsExercise3Scene::draw() {
     BaseScene::draw();
+    glEnable(GL_DEPTH_TEST);
 // render
 // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);

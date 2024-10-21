@@ -41,9 +41,7 @@ void LightingTexturedScene::resize(int width, int height) {
     // initialize static shader uniforms before rendering
     // --------------------------------------------------
     BaseScene::resize(width, height);
-    glm::mat4 projection = camera->getProjectionMatrix();;
-    shader->use();
-    shader->setMat4("projection", projection);
+    glViewport(0, 0, width, height);
 }
 
 void LightingTexturedScene::draw() {
@@ -56,6 +54,8 @@ void LightingTexturedScene::draw() {
     shader->use();
     glm::mat4 view = camera->getViewMatrix();;
     shader->setMat4("view", view);
+    glm::mat4 projection = camera->getProjectionMatrix();;
+    shader->setMat4("projection", projection);
     shader->setVec3("camPos", camera->getPosition());
 
     glActiveTexture(GL_TEXTURE0);
