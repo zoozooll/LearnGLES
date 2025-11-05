@@ -23,16 +23,23 @@ unsigned int loadTexture(char const * path)
     data = stbi_load_from_memory(file_data, file_size, &width, &height, &nrComponents, 0);
     if (data)
     {
+        GLint internalFormat;
         GLenum format = 0;
-        if (nrComponents == 1)
+        if (nrComponents == 1) {
+            internalFormat = GL_R8;
             format = GL_RED;
-        else if (nrComponents == 3)
+        }
+        else if (nrComponents == 3) {
+            internalFormat = GL_RGB;
             format = GL_RGB;
-        else if (nrComponents == 4)
+        }
+        else if (nrComponents == 4) {
+            internalFormat = GL_RGBA;
             format = GL_RGBA;
+        }
 
         glBindTexture(GL_TEXTURE_2D, textureID);
-        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+        glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, format == GL_RGBA ? GL_CLAMP_TO_EDGE : GL_REPEAT); // for this tutorial: use GL_CLAMP_TO_EDGE to prevent semi-transparent borders. Due to interpolation it takes texels from next repeat
@@ -66,7 +73,8 @@ unsigned int loadTexture(char const * path, bool gammaCorrection)
         GLenum dataFormat;
         if (nrComponents == 1)
         {
-            internalFormat = dataFormat = GL_RED;
+            internalFormat = GL_R8;
+            dataFormat = GL_RED;
         }
         else if (nrComponents == 3)
         {

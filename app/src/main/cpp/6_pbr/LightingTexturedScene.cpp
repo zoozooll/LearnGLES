@@ -9,27 +9,20 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "Texture.h"
+#include "glerror.h"
 
 void LightingTexturedScene::init() {
-
-
-// configure global opengl state
-// -----------------------------
+    // configure global opengl state
+    // -----------------------------
     glEnable(GL_DEPTH_TEST);
 
-// build and compile shaders
-// -------------------------
+    // build and compile shaders
+    // -------------------------
     shader = new Shader("6/1.2.pbr.vsh", "6/1.2.pbr.fsh");
+    check_gl_error();
 
-    shader->use();
-    shader->setInt("albedoMap", 0);
-    shader->setInt("normalMap", 1);
-    shader->setInt("metallicMap", 2);
-    shader->setInt("roughnessMap", 3);
-    shader->setInt("aoMap", 4);
-
-// load PBR material textures
-// --------------------------
+    // load PBR material textures
+    // --------------------------
     albedo    = loadTexture("textures/pbr/rusted_iron/albedo.png");
     normal    = loadTexture("textures/pbr/rusted_iron/normal.png");
     metallic  = loadTexture("textures/pbr/rusted_iron/metallic.png");
@@ -45,19 +38,23 @@ void LightingTexturedScene::resize(int width, int height) {
 }
 
 void LightingTexturedScene::draw() {
-// render
+    check_gl_error();
+    // render
     BaseScene::draw();
     // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
     shader->use();
+    shader->setInt("albedoMap", 0);
+    shader->setInt("normalMap", 1);
+    shader->setInt("metallicMap", 2);
+    shader->setInt("roughnessMap", 3);
+    shader->setInt("aoMap", 4);
     glm::mat4 view = camera->getViewMatrix();;
     shader->setMat4("view", view);
     glm::mat4 projection = camera->getProjectionMatrix();;
     shader->setMat4("projection", projection);
     shader->setVec3("camPos", camera->getPosition());
-
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, albedo);
     glActiveTexture(GL_TEXTURE1);
@@ -69,7 +66,7 @@ void LightingTexturedScene::draw() {
     glActiveTexture(GL_TEXTURE4);
     glBindTexture(GL_TEXTURE_2D, ao);
 
-// render rows*column number of spheres with material properties defined by textures (they all have the same material properties)
+    // render rows*column number of spheres with material properties defined by textures (they all have the same material properties)
     glm::mat4 model = glm::mat4(1.0f);
     for (int row = 0; row < nrRows; ++row)
     {
@@ -87,9 +84,9 @@ void LightingTexturedScene::draw() {
         }
     }
 
-// render light source (simply re-render sphere at light positions)
-// this looks a bit off as we use the same shader, but it'll make their positions obvious and
-// keeps the codeprint small.
+    // render light source (simply re-render sphere at light positions)
+    // this looks a bit off as we use the same shader, but it'll make their positions obvious and
+    // keeps the codeprint small.
     for (unsigned int i = 0; i < sizeof(lightPositions) / sizeof(lightPositions[0]); ++i)
     {
         glm::vec3 newPos = lightPositions[i] + glm::vec3(5.0, 0.0, 0.0);
@@ -104,6 +101,8 @@ void LightingTexturedScene::draw() {
         shader->setMat3("normalMatrix", glm::transpose(glm::inverse(glm::mat3(model))));
         renderSphere();
     }
+
+    check_gl_error();
 }
 
 void LightingTexturedScene::destroy() {
@@ -164,7 +163,6 @@ void LightingTexturedScene::renderSphere()
                     indices.push_back((y + 1) * (X_SEGMENTS + 1) + x);
                 }
             }
-            else
             {
                 for (int x = X_SEGMENTS; x >= 0; --x)
                 {

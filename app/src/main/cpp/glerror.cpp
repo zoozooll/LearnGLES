@@ -22,11 +22,11 @@ void _check_gl_error(const char *file, int line) {
             case GL_INVALID_FRAMEBUFFER_OPERATION:  error = "INVALID_FRAMEBUFFER_OPERATION";  break;
             default: error = "UNKNOWN"; break;
         }
-#ifdef ANDROID
+//#ifdef ANDROID
         LOGE("GLError", "GL_%s - %s:%d", error.c_str(), file, line);
-#else
-        cerr << "GL_" << error.c_str() << " - " << file << ":" << line << endl;
-#endif
+//#else
+//        cerr << "GL_" << error.c_str() << " - " << file << ":" << line << endl;
+//#endif
         err = glGetError();
     }
 
