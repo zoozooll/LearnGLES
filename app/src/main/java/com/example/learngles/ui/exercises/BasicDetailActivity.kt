@@ -4,6 +4,7 @@ import android.opengl.GLSurfaceView
 import android.opengl.GLSurfaceView.RENDERMODE_WHEN_DIRTY
 import android.opengl.GLSurfaceView.Renderer
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.learngles.MainActivity
 import com.example.learngles.NativeLibHelper
@@ -18,6 +19,7 @@ open class BasicDetailActivity : AppCompatActivity(), Renderer {
     private lateinit var tutorialArg: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         tutorialArg = intent.getStringExtra(MainActivity.KEY_TUTORIAL_TITLE) ?: ""
     }

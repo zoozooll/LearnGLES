@@ -17,6 +17,7 @@ include_directories("../thirdparty/stb")
 option("ASSIMP_ANDROID_JNIIOSYSTEM", ON)
 option("ASSIMP_BUILD_TEST", OFF)
 option("ASSIMP_INJECT_DEBUG_POSTFIX", OFF)
+set(ASSIMP_WARNINGS_AS_ERRORS OFF CACHE BOOL "" FORCE)
 set(ASSIMP_SRC "../thirdparty/assimp")
 
 add_subdirectory(${ASSIMP_SRC} ${CMAKE_CURRENT_BINARY_DIR}/assimp)

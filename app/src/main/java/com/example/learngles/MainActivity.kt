@@ -1,6 +1,7 @@
 package com.example.learngles
 
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         NativeLibHelper.setupNativeAsset(assets)
         NativeLibHelper.setupInternalPath(filesDir.path)
