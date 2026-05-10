@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">tutorial</string>
+    <string name="label_basic">Basic</string>
+    <string name="label_lighting">Lighting</string>
+    <string name="label_pbr">PBR</string>
+    <string name="label_advanced">Advanced</string>
+</resources>
