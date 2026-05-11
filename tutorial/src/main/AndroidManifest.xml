@@ -9,6 +9,57 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LearnGLES">
         <activity
+            android:name=".GLActivity"
+            android:exported="false"
+            android:label="@string/title_activity_glactivity"
+            android:theme="@style/Theme.LearnGLES" />
+
+        <!-- Basic -->
+        <activity android:name=".basic.BasicGlesActivity" android:label="@string/item_basic_gles" android:exported="false" />
+        <activity android:name=".basic.DepthTestingActivity" android:label="@string/item_depth_testing" android:exported="false" />
+        <activity android:name=".basic.StencilTestingActivity" android:label="@string/item_stencil_testing" android:exported="false" />
+        <activity android:name=".basic.BlendingActivity" android:label="@string/item_blending" android:exported="false" />
+        <activity android:name=".basic.CubemapActivity" android:label="@string/item_cubemap" android:exported="false" />
+        <activity android:name=".basic.GeometryShaderActivity" android:label="@string/item_geometry_shader" android:exported="false" />
+        <activity android:name=".basic.TesselationShaderActivity" android:label="@string/item_tesselation_shader" android:exported="false" />
+        <activity android:name=".basic.ComputeShaderActivity" android:label="@string/item_compute_shader" android:exported="false" />
+        <activity android:name=".basic.InstanceActivity" android:label="@string/item_instance" android:exported="false" />
+        <activity android:name=".basic.AsteroidActivity" android:label="@string/item_asteroid" android:exported="false" />
+        <activity android:name=".basic.MsaaActivity" android:label="@string/item_msaa" android:exported="false" />
+        <activity android:name=".basic.ModelActivity" android:label="@string/item_model" android:exported="false" />
+        <activity android:name=".basic.SkeletalAnimationActivity" android:label="@string/item_skeletal_animation" android:exported="false" />
+        <activity android:name=".basic.DebuggingActivity" android:label="@string/item_debugging" android:exported="false" />
+        <activity android:name=".basic.TextRenderingActivity" android:label="@string/item_text_rendering" android:exported="false" />
+        <activity android:name=".basic.FrustumCullingActivity" android:label="@string/item_frustum_culling" android:exported="false" />
+
+        <!-- Lighting -->
+        <activity android:name=".lighting.BasicLightingActivity" android:label="@string/item_basic_lighting" android:exported="false" />
+        <activity android:name=".lighting.LightCasterActivity" android:label="@string/item_light_caster" android:exported="false" />
+        <activity android:name=".lighting.PhongVsBlinnActivity" android:label="@string/item_phong_vs_blinn" android:exported="false" />
+        <activity android:name=".lighting.GammaCorrectionActivity" android:label="@string/item_gamma_correction" android:exported="false" />
+        <activity android:name=".lighting.MultiLightsActivity" android:label="@string/item_multi_lights" android:exported="false" />
+        <activity android:name=".lighting.ShadowActivity" android:label="@string/item_shadow" android:exported="false" />
+        <activity android:name=".lighting.HdrActivity" android:label="@string/item_hdr" android:exported="false" />
+        <activity android:name=".lighting.BloomActivity" android:label="@string/item_bloom" android:exported="false" />
+        <activity android:name=".lighting.SsaoActivity" android:label="@string/item_ssao" android:exported="false" />
+        <activity android:name=".lighting.AreaLightsActivity" android:label="@string/item_area_lights" android:exported="false" />
+        <activity android:name=".lighting.PhysicallyBasedBloomActivity" android:label="@string/item_physically_based_bloom" android:exported="false" />
+
+        <!-- PBR -->
+        <activity android:name=".pbr.NormalMappingActivity" android:label="@string/item_normal_mapping" android:exported="false" />
+        <activity android:name=".pbr.ParallaxMappingActivity" android:label="@string/item_parallax_mapping" android:exported="false" />
+        <activity android:name=".pbr.PbrActivity" android:label="@string/item_pbr" android:exported="false" />
+        <activity android:name=".pbr.PbrTextureActivity" android:label="@string/item_pbr_texture" android:exported="false" />
+        <activity android:name=".pbr.TheoryActivity" android:label="@string/item_theory" android:exported="false" />
+        <activity android:name=".pbr.IblActivity" android:label="@string/item_ibl" android:exported="false" />
+
+        <!-- Advanced -->
+        <activity android:name=".advanced.OitActivity" android:label="@string/item_oit" android:exported="false" />
+        <activity android:name=".advanced.SceneActivity" android:label="@string/item_scene" android:exported="false" />
+        <activity android:name=".advanced.CsmActivity" android:label="@string/item_csm" android:exported="false" />
+        <activity android:name=".advanced.DsaActivity" android:label="@string/item_dsa" android:exported="false" />
+
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"

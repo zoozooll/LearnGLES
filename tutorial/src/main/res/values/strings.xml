@@ -4,4 +4,50 @@
     <string name="label_lighting">Lighting</string>
     <string name="label_pbr">PBR</string>
     <string name="label_advanced">Advanced</string>
+
+    <!-- Basic Items -->
+    <string name="item_basic_gles">Basic GLES</string>
+    <string name="item_depth_testing">Depth Testing</string>
+    <string name="item_stencil_testing">Stencil Testing</string>
+    <string name="item_blending">Blending</string>
+    <string name="item_cubemap">Cubemap</string>
+    <string name="item_geometry_shader">Geometry Shader</string>
+    <string name="item_tesselation_shader">Tessellation Shader</string>
+    <string name="item_compute_shader">Compute Shader</string>
+    <string name="item_instance">Instance</string>
+    <string name="item_asteroid">Asteroid</string>
+    <string name="item_msaa">MSAA</string>
+    <string name="item_model">Model</string>
+    <string name="item_skeletal_animation">Skeletal Animation</string>
+    <string name="item_debugging">Debugging</string>
+    <string name="item_text_rendering">Text Rendering</string>
+    <string name="item_frustum_culling">Frustum Culling</string>
+
+    <!-- Lighting Items -->
+    <string name="item_basic_lighting">Basic Lighting</string>
+    <string name="item_light_caster">Light Caster</string>
+    <string name="item_phong_vs_blinn">Phong vs Blinn</string>
+    <string name="item_gamma_correction">Gamma Correction</string>
+    <string name="item_multi_lights">Multi Lights</string>
+    <string name="item_shadow">Shadow</string>
+    <string name="item_hdr">HDR</string>
+    <string name="item_bloom">Bloom</string>
+    <string name="item_ssao">SSAO</string>
+    <string name="item_area_lights">Area lights</string>
+    <string name="item_physically_based_bloom">Physically Based Bloom</string>
+
+    <!-- PBR Items -->
+    <string name="item_normal_mapping">Normal Mapping</string>
+    <string name="item_parallax_mapping">Parallax Mapping</string>
+    <string name="item_pbr">PBR</string>
+    <string name="item_pbr_texture">PBR Texture</string>
+    <string name="item_theory">Theory</string>
+    <string name="item_ibl">IBL</string>
+
+    <!-- Advanced Items -->
+    <string name="item_oit">OIT</string>
+    <string name="item_scene">Scene</string>
+    <string name="item_csm">CSM</string>
+    <string name="item_dsa">DSA</string>
+    <string name="title_activity_glactivity">GLActivity</string>
 </resources>
