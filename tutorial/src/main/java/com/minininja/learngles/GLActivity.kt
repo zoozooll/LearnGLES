@@ -34,6 +34,8 @@ open class GLActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        NativeHelper.setupNativeAsset(assets)
+        NativeHelper.setupInternalPath(getExternalFilesDir("files")?.path)
         setContent {
             LearnGLESTheme {
                 OpenGLContainer(
@@ -48,15 +50,15 @@ open class GLActivity : ComponentActivity() {
     open fun createRenderer(): GLSurfaceView.Renderer {
         return object : GLSurfaceView.Renderer {
             override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
-                GLES30.glClearColor(0.2f, 0.3f, 0.3f, 1.0f)
+                NativeHelper.nativeOnInit(intent.getStringExtra("tutorial_key"))
             }
 
             override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
-                GLES30.glViewport(0, 0, width, height)
+                NativeHelper.nativeSizeChanged(width, height)
             }
 
             override fun onDrawFrame(gl: GL10?) {
-                GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT or GLES30.GL_DEPTH_BUFFER_BIT)
+                NativeHelper.nativeDraw()
             }
         }
     }

@@ -6,6 +6,7 @@
 
 #include "glerror.h"
 #include "SceneHelper.h"
+#include <memory>
 #include "BaseScene.h"
 #include "SceneTouchEvent.h"
 #include "logutil.h"
@@ -17,7 +18,7 @@ AAssetManager* mgr = nullptr;
 
 char *g_internalPath = nullptr;
 
-Scene *g_scene = nullptr;
+std::unique_ptr<Scene> g_scene = nullptr;
 
 extern "C"
 JNIEXPORT void JNICALL

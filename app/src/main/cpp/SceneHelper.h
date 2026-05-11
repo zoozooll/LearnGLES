@@ -112,217 +112,217 @@
 #include "1_getting_started/CoordinateSystemExercise3Scene.h"
 #include "1_getting_started/CoordinateSystemExercise4Scene.h"
 
-inline Scene* GenSceneByName(const char *tutorial) {
+inline std::unique_ptr<Scene> GenSceneByName(const char *tutorial) {
     if (!strcmp(tutorial, "hello_window")) {
-        return new HelloWindowScene;
+        return std::unique_ptr<Scene>(new HelloWindowScene);
     } else if (!strcmp(tutorial, "hello_window_clear")) {
-        return new HelloWindowClearScene;
+        return std::unique_ptr<Scene>(new HelloWindowClearScene);
     } else if (!strcmp(tutorial, "hello_triangle")) {
-        return new HelloTriangleScene;
+        return std::unique_ptr<Scene>(new HelloTriangleScene);
     } else if (!strcmp(tutorial, "hello_triangle_indexed")) {
-        return new HelloTriangleIndexedScene;
+        return std::unique_ptr<Scene>(new HelloTriangleIndexedScene);
     } else if (!strcmp(tutorial, "hello_triangle_exercise1")) {
-        return new HelloTriangleExercise1Scene;
+        return std::unique_ptr<Scene>(new HelloTriangleExercise1Scene);
     } else if (!strcmp(tutorial, "hello_triangle_exercise2")) {
-        return new HelloTriangleExercise2Scene;
+        return std::unique_ptr<Scene>(new HelloTriangleExercise2Scene);
     } else if (!strcmp(tutorial, "hello_triangle_exercise3")) {
-        return new HelloTriangleExercise3Scene;
+        return std::unique_ptr<Scene>(new HelloTriangleExercise3Scene);
     } else if (!strcmp(tutorial, "shaders_uniform")) {
-        return new ShadersUniformScene;
+        return std::unique_ptr<Scene>(new ShadersUniformScene);
     } else if (!strcmp(tutorial, "shaders_interpolation")) {
-        return new ShadersInterpolationScene;
+        return std::unique_ptr<Scene>(new ShadersInterpolationScene);
     } else if (!strcmp(tutorial, "shaders_class")) {
-        return new ShadersClassScene;
+        return std::unique_ptr<Scene>(new ShadersClassScene);
     } else if (!strcmp(tutorial, "shaders_exercise1")) {
-        return new ShadersExercise1Scene;
+        return std::unique_ptr<Scene>(new ShadersExercise1Scene);
     } else if (!strcmp(tutorial, "shaders_exercise2")) {
-         return new ShadersExercise2Scene;
+         return std::unique_ptr<Scene>(new ShadersExercise2Scene);
     } else if (!strcmp(tutorial, "shaders_exercise3")) {
-         return new ShadersExercise3Scene;
+         return std::unique_ptr<Scene>(new ShadersExercise3Scene);
     } else if (!strcmp(tutorial, "textures")) {
-        return new TexturesScene;
+        return std::unique_ptr<Scene>(new TexturesScene);
     } else if (!strcmp(tutorial, "texture_combined")) {
-        return new TextureCombinedScene;
+        return std::unique_ptr<Scene>(new TextureCombinedScene);
     } else if (!strcmp(tutorial, "transformations")) {
-        return new TransformationsScene;
+        return std::unique_ptr<Scene>(new TransformationsScene);
     } else if (!strcmp(tutorial, "texture_exercise1")) {
-        return new TextureExercise1Scene;
+        return std::unique_ptr<Scene>(new TextureExercise1Scene);
     } else if (!strcmp(tutorial, "texture_exercise2")) {
-        return new TextureExercise2Scene;
+        return std::unique_ptr<Scene>(new TextureExercise2Scene);
     } else if (!strcmp(tutorial, "texture_exercise3")) {
-        return new TextureExercise3Scene;
+        return std::unique_ptr<Scene>(new TextureExercise3Scene);
     } else if (!strcmp(tutorial, "texture_exercise4")) {
-        return new TextureExercise4Scene;
+        return std::unique_ptr<Scene>(new TextureExercise4Scene);
     } else if (!strcmp(tutorial, "transformations_exercise1")) {
-        return new TransformationsExercise1Scene;
+        return std::unique_ptr<Scene>(new TransformationsExercise1Scene);
     } else if (!strcmp(tutorial, "transformations_exercise2")) {
-        return new TransformationsExercise2Scene;
+        return std::unique_ptr<Scene>(new TransformationsExercise2Scene);
     } else if (!strcmp(tutorial, "coordinate_systems")) {
-        return new CoordinateSystemScene;
+        return std::unique_ptr<Scene>(new CoordinateSystemScene);
     } else if (!strcmp(tutorial, "coordinate_systems_depth")) {
-        return new CoordinateSystemDepthScene;
+        return std::unique_ptr<Scene>(new CoordinateSystemDepthScene);
     } else if (!strcmp(tutorial, "coordinate_systems_multiple")) {
-        return new CoordinateSystemMultipleScene;
+        return std::unique_ptr<Scene>(new CoordinateSystemMultipleScene);
     } else if (!strcmp(tutorial, "coordinate_systems_exercise")) {
-        return new CoordinateSystemExercise1Scene;
+        return std::unique_ptr<Scene>(new CoordinateSystemExercise1Scene);
     } else if (!strcmp(tutorial, "coordinate_systems_exercise2")) {
-        return new CoordinateSystemExercise2Scene;
+        return std::unique_ptr<Scene>(new CoordinateSystemExercise2Scene);
     } else if (!strcmp(tutorial, "coordinate_systems_exercise3")) {
-        return new CoordinateSystemExercise3Scene;
+        return std::unique_ptr<Scene>(new CoordinateSystemExercise3Scene);
     } else if (!strcmp(tutorial, "coordinate_systems_exercise4")) {
-        return new CoordinateSystemExercise4Scene;
+        return std::unique_ptr<Scene>(new CoordinateSystemExercise4Scene);
     } else if (!strcmp(tutorial, "Focal Length and FOV")) {
-        return new FocalLengthAndFOVScene();
+        return std::unique_ptr<Scene>(new FocalLengthAndFOVScene());
     } else if (!strcmp(tutorial, "camera_circle")) {
-        return new CameraCircleScene;
+        return std::unique_ptr<Scene>(new CameraCircleScene);
     } else if (!strcmp(tutorial, "camera_class")) {
-        return new CameraScene;
+        return std::unique_ptr<Scene>(new CameraScene);
     } else if (!strcmp(tutorial, "camera_exercise1")) {
-        return new CameraExercise1Scene;
+        return std::unique_ptr<Scene>(new CameraExercise1Scene);
     } else if (!strcmp(tutorial, "camera_exercise2")) {
-        return new CameraExercise2Scene;
+        return std::unique_ptr<Scene>(new CameraExercise2Scene);
     } else if (!strcmp(tutorial, "model_loading")) {
-        return new ModelLoadingScene;
+        return std::unique_ptr<Scene>(new ModelLoadingScene);
     } else if (!strcmp(tutorial, "advanced_lighting")) {
-        return new AdvancedLightingScene;
+        return std::unique_ptr<Scene>(new AdvancedLightingScene);
     } else if (!strcmp(tutorial, "colors" )) {
-        return new ColorScene;
+        return std::unique_ptr<Scene>(new ColorScene);
     } else if (!strcmp(tutorial, "basic_lighting_diffuse" )) {
-        return new BasicLightingDiffuseScene;
+        return std::unique_ptr<Scene>(new BasicLightingDiffuseScene);
     } else if (!strcmp(tutorial, "basic_lighting_specular" )) {
-        return new BasicLightingSpecularScene;
+        return std::unique_ptr<Scene>(new BasicLightingSpecularScene);
     } else if (!strcmp(tutorial, "materials" )) {
-        return new MaterialScene;
+        return std::unique_ptr<Scene>(new MaterialScene);
     } else if (!strcmp(tutorial, "materials_exercise1" )) {
-        return new MaterialExercise1Scene;
+        return std::unique_ptr<Scene>(new MaterialExercise1Scene);
     } else if (!strcmp(tutorial, "lighting_maps_diffuse_map" )) {
-        return new LightingMapsDiffuseMapScene;
+        return std::unique_ptr<Scene>(new LightingMapsDiffuseMapScene);
     } else if (!strcmp(tutorial, "lighting_maps_specular_map")) {
-        return new LightingMapsSpecularMapScene;
+        return std::unique_ptr<Scene>(new LightingMapsSpecularMapScene);
     } else if (!strcmp(tutorial, "lighting_maps_exercise3" )) {
-        return new LightingMapsExercise3Scene;
+        return std::unique_ptr<Scene>(new LightingMapsExercise3Scene);
     } else if (!strcmp(tutorial, "lighting_maps_exercise4" )) {
-        return new LightingMapsExercise4Scene;
+        return std::unique_ptr<Scene>(new LightingMapsExercise4Scene);
     } else if (!strcmp(tutorial, "light_casters_directional" )) {
-        return new LightingCastersDirectionalScene;
+        return std::unique_ptr<Scene>(new LightingCastersDirectionalScene);
     } else if (!strcmp(tutorial, "light_casters_point" )) {
-        return new LightingCastersPointScene;
+        return std::unique_ptr<Scene>(new LightingCastersPointScene);
     } else if (!strcmp(tutorial, "light_casters_spot" )) {
-        return new LightingCastersSpotScene;
+        return std::unique_ptr<Scene>(new LightingCastersSpotScene);
     } else if (!strcmp(tutorial, "light_casters_spot_soft" )) {
-        return new LightingCastersSpotSoftScene;
+        return std::unique_ptr<Scene>(new LightingCastersSpotSoftScene);
     } else if (!strcmp(tutorial, "multiple_lights" )) {
-        return new MultipleLightsScene;
+        return std::unique_ptr<Scene>(new MultipleLightsScene);
     } else if (!strcmp(tutorial, "depth_testing")) {
-        return new DepthTestingScene();
+        return std::unique_ptr<Scene>(new DepthTestingScene());
     } else if (!strcmp(tutorial, "depth_testing_view")) {
-        return new DepthTestingViewScene();
+        return std::unique_ptr<Scene>(new DepthTestingViewScene());
     } else if (!strcmp(tutorial, "stencil_testing")) {
-        return new StencilTestingScene();
+        return std::unique_ptr<Scene>(new StencilTestingScene());
     } else if (!strcmp(tutorial, "blending_discard")) {
-        return new BlendingDiscardScene();
+        return std::unique_ptr<Scene>(new BlendingDiscardScene());
     } else if (!strcmp(tutorial, "blending_sort")) {
-        return new BlenderSortScene();
+        return std::unique_ptr<Scene>(new BlenderSortScene());
     } else if (!strcmp(tutorial, "face_culling_exercise1")) {
-        return new FaceCullingScene;
+        return std::unique_ptr<Scene>(new FaceCullingScene);
     } else if (!strcmp(tutorial, "framebuffers")) {
-        return new FrameBuffersScene;
+        return std::unique_ptr<Scene>(new FrameBuffersScene);
     } else if (!strcmp(tutorial, "framebuffers_exercise1")) {
-        return new FramebuffersExercise1Scene;
+        return std::unique_ptr<Scene>(new FramebuffersExercise1Scene);
     } else if (!strcmp(tutorial, "framebuffers_multi_textures")) {
-        return new FramebuffersMultiTexturesScene;
+        return std::unique_ptr<Scene>(new FramebuffersMultiTexturesScene);
     } else if (!strcmp(tutorial, "cubemap_skybox")) {
-        return new CubemapSkyboxScene;
+        return std::unique_ptr<Scene>(new CubemapSkyboxScene);
     } else if (!strcmp(tutorial, "cubemap_environment_mapping" )) {
-        return new CubemapsEnvironmentMappingScene;
+        return std::unique_ptr<Scene>(new CubemapsEnvironmentMappingScene);
     } else if (!strcmp(tutorial, "advanced_glsl_ubo")) {
-        return new AdvancedGlslUboScene;
+        return std::unique_ptr<Scene>(new AdvancedGlslUboScene);
     } else if (!strcmp(tutorial, "geometry_shader_houses")) {
-        return new GeometryShaderHousesScene;
+        return std::unique_ptr<Scene>(new GeometryShaderHousesScene);
     } else if (!strcmp(tutorial, "geometry_shader_exploding" )) {
-        return new GeometryShaderExplodingScene;
+        return std::unique_ptr<Scene>(new GeometryShaderExplodingScene);
     } else if (!strcmp(tutorial, "geometry_shader_normals")) {
-        return new GeometryShaderNormalsScene;
+        return std::unique_ptr<Scene>(new GeometryShaderNormalsScene);
     } else if (!strcmp(tutorial, "instancing_quads")) {
-        return new InstancingQuadsScene;
+        return std::unique_ptr<Scene>(new InstancingQuadsScene);
     } else if (!strcmp(tutorial, "asteroids")) {
-        return new AsteroidsScene;
+        return std::unique_ptr<Scene>(new AsteroidsScene);
     } else if (!strcmp(tutorial, "asteroids_instanced")) {
-        return new AsteroidInstancedScene;
+        return std::unique_ptr<Scene>(new AsteroidInstancedScene);
     } else if (!strcmp(tutorial, "anti_aliasing_msaa")) {
-        return new AntiAliasingMsaaScene;
+        return std::unique_ptr<Scene>(new AntiAliasingMsaaScene);
     } else if (!strcmp(tutorial, "anti_aliasing_offscreen")) {
-        return new AntiAliasingOffscreenScene;
+        return std::unique_ptr<Scene>(new AntiAliasingOffscreenScene);
     } else if (!strcmp(tutorial, "advanced_lighting")) {
-        return new AdvancedLightingScene;
+        return std::unique_ptr<Scene>(new AdvancedLightingScene);
     } else if (!strcmp(tutorial, "gamma_correction")) {
-        return new GammaCorrectionScene;
+        return std::unique_ptr<Scene>(new GammaCorrectionScene);
     } else if (!strcmp(tutorial, "shadow_mapping_depth")) {
-        return new ShadowMappingDepthScene;
+        return std::unique_ptr<Scene>(new ShadowMappingDepthScene);
     } else if (!strcmp(tutorial, "shadow_mapping_base")) {
-        return new ShadowMappingBaseScene;
+        return std::unique_ptr<Scene>(new ShadowMappingBaseScene);
     } else if (!strcmp(tutorial, "shadow_mapping")) {
-        return new ShadowMappingScene;
+        return std::unique_ptr<Scene>(new ShadowMappingScene);
     } else if (!strcmp(tutorial, "shadow_mapping_exercise1")) {
-        return new ShadowMappingScene;
+        return std::unique_ptr<Scene>(new ShadowMappingScene);
     } else if (!strcmp(tutorial, "point_shadows")) {
-        return new PointShadowsScene;
+        return std::unique_ptr<Scene>(new PointShadowsScene);
     } else if (!strcmp(tutorial, "point_shadow_soft")) {
-        return new PointShadowSoftScene;
+        return std::unique_ptr<Scene>(new PointShadowSoftScene);
     } else if (!strcmp(tutorial, "csm")) {
-        return new CsmScene;
+        return std::unique_ptr<Scene>(new CsmScene);
     } else if (!strcmp(tutorial, "normal_mapping")) {
-        return new NormalMappingScene;
+        return std::unique_ptr<Scene>(new NormalMappingScene);
     } else if (!strcmp(tutorial, "parallax_mapping")) {
-        return new ParallaxMappingScene;
+        return std::unique_ptr<Scene>(new ParallaxMappingScene);
     } else if (!strcmp(tutorial, "steep_parallax_mapping")) {
-        return new SteepParallaxMappingScene;
+        return std::unique_ptr<Scene>(new SteepParallaxMappingScene);
     } else if (!strcmp(tutorial, "parallax_occlusion_mapping")) {
-        return new ParallaxOcclusionMappingScene;
+        return std::unique_ptr<Scene>(new ParallaxOcclusionMappingScene);
     } else if (!strcmp(tutorial, "hdr")) {
-        return new HdrScene;
+        return std::unique_ptr<Scene>(new HdrScene);
     } else if (!strcmp(tutorial, "bloom")) {
-        return new BloomScene;
+        return std::unique_ptr<Scene>(new BloomScene);
     } else if (!strcmp(tutorial, "deferred_shading")) {
-        return new DeferredShadingScene;
+        return std::unique_ptr<Scene>(new DeferredShadingScene);
     } else if (!strcmp(tutorial, "deferred_shading_volumes")) {
-        return new DeferredShadingVolumesScene;
+        return std::unique_ptr<Scene>(new DeferredShadingVolumesScene);
     } else if (!strcmp(tutorial, "ssao")) {
-        return new SsaoScene;
+        return std::unique_ptr<Scene>(new SsaoScene);
     } else if (!strcmp(tutorial, "lighting" )) {
-        return new LightingScene;
+        return std::unique_ptr<Scene>(new LightingScene);
     } else if (!strcmp(tutorial, "lighting_textured" )) {
-        return new LightingTexturedScene;
+        return std::unique_ptr<Scene>(new LightingTexturedScene);
     } else if (!strcmp(tutorial, "ibl_irradiance_conversion" )) {
-        return new IblIrradianceConversionScene;
+        return std::unique_ptr<Scene>(new IblIrradianceConversionScene);
     } else if (!strcmp(tutorial, "ibl_irradiance" )) {
-        return new IblIrradianceScene;
+        return std::unique_ptr<Scene>(new IblIrradianceScene);
     } else if (!strcmp(tutorial, "ibl_specular" )) {
-        return new IblSpecularScene;
+        return std::unique_ptr<Scene>(new IblSpecularScene);
     } else if (!strcmp(tutorial, "ibl_specular_textured" )) {
-        return new IblSpecularTexturedScene;
+        return std::unique_ptr<Scene>(new IblSpecularTexturedScene);
     } else if (!strcmp(tutorial, "debugging" )) {
-        return new DebuggingScene;
+        return std::unique_ptr<Scene>(new DebuggingScene);
     } else if (!strcmp(tutorial, "text_rendering" )) {
-        return new TextRenderingScene;
+        return std::unique_ptr<Scene>(new TextRenderingScene);
     } else if (!strcmp(tutorial, "2d_game" )) {
-        return new Game2dScene;
+        return std::unique_ptr<Scene>(new Game2dScene);
     } else if (!strcmp(tutorial, "oit" )) {
-        return new OitScene;
+        return std::unique_ptr<Scene>(new OitScene);
     } else if (!strcmp(tutorial, "skeletal_animation" )) {
-        return new SkeletalAnimationScene;
+        return std::unique_ptr<Scene>(new SkeletalAnimationScene);
     } else if (!strcmp(tutorial, "scene" )) {
-        return new SceneExercise;
+        return std::unique_ptr<Scene>(new SceneExercise);
     } else if (!strcmp(tutorial, "csm" )) {
-        return new CsmScene;
+        return std::unique_ptr<Scene>(new CsmScene);
     } else if (!strcmp(tutorial, "tessellation" )) {
-        return new TessellationScene;
+        return std::unique_ptr<Scene>(new TessellationScene);
     } else if (!strcmp(tutorial, "dsa" )) {
-        return new DsaScene;
+        return std::unique_ptr<Scene>(new DsaScene);
     } else if (!strcmp(tutorial, "computeshader_helloworld" )) {
-        return new ComputeshaderHelloworld;
+        return std::unique_ptr<Scene>(new ComputeshaderHelloworld);
     } else if (!strcmp(tutorial, "physically_based_bloom")) {
-        return new PhysicallyBasedBloomScene;
+        return std::unique_ptr<Scene>(new PhysicallyBasedBloomScene);
     }
     return nullptr;
 }

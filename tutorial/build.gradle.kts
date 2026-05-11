@@ -21,6 +21,12 @@ android {
     }
 
     buildTypes {
+        debug {
+            ndk {
+                abiFilters.clear()
+                abiFilters.add("arm64-v8a")
+            }
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -35,6 +41,11 @@ android {
     }
     buildFeatures {
         compose = true
+    }
+    externalNativeBuild {
+        cmake {
+            path = File("src/main/cpp/CMakeLists.txt")
+        }
     }
 }
 
