@@ -18,7 +18,7 @@ AAssetManager* mgr = nullptr;
 
 std::string g_internalPath;
 
-std::unique_ptr<Scene> g_scene = nullptr;
+std::unique_ptr<Scene> g_scene;
 
 extern "C"
 JNIEXPORT void JNICALL

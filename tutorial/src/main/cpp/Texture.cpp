@@ -20,6 +20,7 @@ unsigned int loadTexture(char const * path)
     LoadDataFromAsset(path, reinterpret_cast<void **>(&file_data), &file_size);
     unsigned char *data;
     int width, height, nrComponents;
+    stbi_set_flip_vertically_on_load(true);
     data = stbi_load_from_memory(file_data, file_size, &width, &height, &nrComponents, 0);
     if (data)
     {

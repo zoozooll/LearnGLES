@@ -4,94 +4,108 @@
 
 #include "Camera.h"
 
-void Camera::updateCameraVectors()
-{
-    // calculate the new Front vector
-    glm::vec3 front;
-    front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-    front.y = sin(glm::radians(Pitch));
-    front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-    Front = glm::normalize(front);
-    // also re-calculate the Right and Up vector
-    Right = glm::normalize(glm::cross(Front, WorldUp));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
-    Up    = glm::normalize(glm::cross(Right, Front));
+#include <glm/ext.hpp>
+#include <glm/gtx/string_cast.hpp>
+
+#include "logutil.h"
+
+using glm::vec2;
+using glm::vec3;
+using glm::mat3;
+using glm::mat4;
+using glm::radians;
+using glm::perspective;
+
+void Camera::start() {
+    viewDirty = true;
+    projectionDirty = true;
 }
 
-// constructor with vectors
-Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch) :
-    Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
-{
-    Position = position;
-    WorldUp = up;
-    Yaw = yaw;
-    Pitch = pitch;
-    updateCameraVectors();
-}
-// constructor with scalar values
-Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch)
-    : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
-{
-    Position = glm::vec3(posX, posY, posZ);
-    WorldUp = glm::vec3(upX, upY, upZ);
-    Yaw = yaw;
-    Pitch = pitch;
-    updateCameraVectors();
+void Camera::setVdy(float mVdy) {
+    m_vdy = mVdy;
+    projectionDirty = true;
 }
 
-// returns the view matrix calculated using Euler Angles and the LookAt Matrix
-glm::mat4 Camera::GetViewMatrix()
-{
-    return glm::lookAt(Position, Position + Front, Up);
+void Camera::setAspec(float mAspec) {
+    m_aspec = mAspec;
+    projectionDirty = true;
 }
 
-// processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
-void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime)
-{
-    float velocity = MovementSpeed * deltaTime;
-    if (direction == FORWARD)
-        Position += Front * velocity;
-    if (direction == BACKWARD)
-        Position -= Front * velocity;
-    if (direction == LEFT)
-        Position -= Right * velocity;
-    if (direction == RIGHT)
-        Position += Right * velocity;
+void Camera::setNear(float mNear) {
+    m_near = mNear;
+    projectionDirty = true;
 }
 
-// processes input received from a mouse input system. Expects the offset value in both the x and y direction.
-void Camera::ProcessMouseMovement(float xoffset, float yoffset, bool constrainPitch)
-{
-    xoffset *= MouseSensitivity;
-    yoffset *= MouseSensitivity;
+void Camera::setFar(float mFar) {
+    m_far = mFar;
+    projectionDirty = true;
+}
 
-    Yaw   += xoffset;
-    Pitch += yoffset;
+const mat4 &Camera::getViewMatrix() const {
+    return m_viewMatrix;
+}
 
-    // make sure that when pitch is out of bounds, screen doesn't get flipped
-    if (constrainPitch)
-    {
-        if (Pitch > 89.0f)
-            Pitch = 89.0f;
-        if (Pitch < -89.0f)
-            Pitch = -89.0f;
+const mat4 &Camera::getProjectionMatrix() const {
+    return m_projectionMatrix;
+}
+
+const vec3 &Camera::getPosition() const {
+    return m_position;
+}
+
+mat4 Camera::getVPMatrix() const {
+    return m_projectionMatrix * m_viewMatrix;
+}
+
+void Camera::update() {
+    if (viewDirty) {
+        m_viewMatrix = lookAt(m_position, m_targetPosition, m_up);
+        viewDirty = false;
     }
-
-    // update Front, Right and Up Vectors using the updated Euler angles
-    updateCameraVectors();
+    if (projectionDirty) {
+        m_projectionMatrix = glm::perspective(glm::radians(m_vdy), m_aspec, m_near, m_far);
+        projectionDirty = false;
+    }
 }
 
-// processes input received from a mouse scroll-wheel event. Only requires input on the vertical wheel-axis
-void Camera::ProcessMouseScroll(float yoffset)
-{
-    Zoom -= (float)yoffset;
-    if (Zoom < 1.0f)
-        Zoom = 1.0f;
-    if (Zoom > 75.0f)
-        Zoom = 75.0f;
-    updateCameraVectors();
+float Camera::getNear() const {
+    return m_near;
 }
 
-void Camera::ProcessMove(glm::vec3 moving) {
-    Position += moving;
-    updateCameraVectors();
+float Camera::getFar() const {
+    return m_far;
+}
+
+float Camera::getVdy() const {
+    return m_vdy;
+}
+
+void Camera::reset() {
+    m_vdy = CAMERA_FOVY_DEGREE;
+    m_aspec = 0.f;
+    m_near = CAMERA_NEAR;
+    m_far = CAMERA_FAR;
+}
+
+const vec3 &Camera::getTargetPosition() const {
+    return m_targetPosition;
+}
+
+void Camera::setTargetPosition(const vec3 &targetPosition) {
+    m_targetPosition = targetPosition;
+    viewDirty = true;
+}
+
+const vec3 &Camera::getUp() const {
+    return m_up;
+}
+
+void Camera::setUp(const vec3 &up) {
+    m_up = up;
+    viewDirty = true;
+}
+
+void Camera::setPosition(const vec3 &position) {
+    m_position = position;
+    viewDirty = true;
 }

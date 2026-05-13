@@ -147,7 +147,7 @@ float TargetCamera::getVdy() const {
     return m_vdy;
 }
 
-glm::vec3 TargetCamera::getTargetPosition() const {
+const vec3 & TargetCamera::getTargetPosition() const {
     return vec3(m_targetTransform[3][0] / m_targetTransform[3][3], m_targetTransform[3][1] / m_targetTransform[3][3],
                        m_targetTransform[3][2] / m_targetTransform[3][3]);;
 }

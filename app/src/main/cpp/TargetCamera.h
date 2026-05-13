@@ -55,7 +55,7 @@ public:
 
     [[nodiscard]] float getVdy() const;
 
-    [[nodiscard]] glm::vec3 getTargetPosition() const;
+    [[nodiscard]] const glm::vec3 & getTargetPosition() const;
 
     [[nodiscard]] float getFracRadius() const;
 
