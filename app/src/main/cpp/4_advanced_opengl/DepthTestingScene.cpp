@@ -9,6 +9,8 @@
 
 #include "Texture.h"
 #include "Shader.h"
+#include "../../../../../tutorial/src/main/cpp/basic/DepthTestingScene.h"
+
 
 void DepthTestingScene::init() {
     // configure global opengl state
