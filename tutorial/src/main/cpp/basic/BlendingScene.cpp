@@ -27,7 +27,7 @@ void BlendingScene::init() {
 
     // build and compile our shader zprogram
     // ------------------------------------
-    m_pShader = new Shader("3.2.blending.vs", "3.2.blending.fs");
+    m_pShader = new Shader("blending/3.2.blending.vs", "blending/3.2.blending.fs");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -129,9 +129,9 @@ void BlendingScene::init() {
 
     // load textures
     // -------------
-    m_cubeTexture = loadTexture("textures/marble.jpg");
-    m_floorTexture = loadTexture("textures/metal.png");
-    m_transparentTexture = loadTexture("textures/window.png");
+    m_cubeTexture = loadTexture("marble.jpg");
+    m_floorTexture = loadTexture("metal.png");
+    m_transparentTexture = loadTexture("window.png");
 
     // shader configuration
     // --------------------

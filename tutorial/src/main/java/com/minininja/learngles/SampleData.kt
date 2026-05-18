@@ -27,7 +27,7 @@ object SampleData {
         TutorialItem("compute_shader", R.string.item_compute_shader, "images/compute_shader.png", ComputeShaderActivity::class),
         TutorialItem("instance", R.string.item_instance, "images/instance.png", InstanceActivity::class),
         TutorialItem("asteroid", R.string.item_asteroid, "images/asteroid.png", AsteroidActivity::class),
-        TutorialItem("msaa", R.string.item_msaa, "images/msaa.png", MsaaActivity::class),
+//        TutorialItem("msaa", R.string.item_msaa, "images/msaa.png", MsaaActivity::class), // Unsupported in GLES
         TutorialItem("model", R.string.item_model, "images/model.png", ModelActivity::class),
         TutorialItem("skeletal_animation", R.string.item_skeletal_animation, "images/skeletal_animation.png", SkeletalAnimationActivity::class),
         TutorialItem("debugging", R.string.item_debugging, "images/debugging.png", DebuggingActivity::class),

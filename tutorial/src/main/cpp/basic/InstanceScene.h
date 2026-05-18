@@ -3,6 +3,9 @@
 
 #include "Scene.h"
 
+class Shader;
+class Camera;
+
 class InstanceScene : public Scene {
 public :
     InstanceScene();
@@ -16,6 +19,13 @@ public :
     void destroy() override;
 
     virtual ~InstanceScene();
+
+private:
+    Camera* m_camera = nullptr;
+    Shader* m_pShader = nullptr;
+    unsigned int m_quadVAO = 0u;
+    unsigned int m_quadVBO = 0u;
+    unsigned int m_instanceVBO = 0u;
 };
 
 #endif //LEARNGLES_INSTANCESCENE_H

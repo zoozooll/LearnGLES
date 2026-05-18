@@ -65,6 +65,83 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath, const char* geo
         glDeleteShader(geometry);
 }
 
+Shader::Shader(const char* vertexPath, const char* fragmentPath, const char* geometryPath,
+        const char* tessControlPath, const char* tessEvalPath)
+{
+
+    char* vShaderCode;
+    int vSize;
+    LoadStringFromAsset(vertexPath, &vShaderCode, &vSize);
+    char * fShaderCode;
+    int fSize;
+    LoadStringFromAsset(fragmentPath, &fShaderCode, &fSize);
+    // 2. compile shaders
+    unsigned int vertex, fragment;
+    // vertex shader
+    vertex = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertex, 1, &vShaderCode, NULL);
+    glCompileShader(vertex);
+    checkCompileErrors(vertex, "VERTEX");
+    // fragment Shader
+    fragment = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragment, 1, &fShaderCode, NULL);
+    glCompileShader(fragment);
+    checkCompileErrors(fragment, "FRAGMENT");
+    // if geometry shader is given, compile geometry shader
+    unsigned int geometry;
+    if(geometryPath != nullptr)
+    {
+        char * gShaderCode;
+        int gSize;
+        LoadStringFromAsset(geometryPath, &gShaderCode, &gSize);
+        geometry = glCreateShader(GL_GEOMETRY_SHADER);
+        glShaderSource(geometry, 1, &gShaderCode, NULL);
+        glCompileShader(geometry);
+        checkCompileErrors(geometry, "GEOMETRY");
+    }
+    // if tessellation shader is given, compile tessellation shader
+    unsigned int tessControl;
+    if(tessControlPath != nullptr)
+    {
+        char * tcShaderCode;
+        int tcSize;
+        LoadStringFromAsset(tessControlPath, &tcShaderCode, &tcSize);
+        tessControl = glCreateShader(GL_TESS_CONTROL_SHADER);
+        glShaderSource(tessControl, 1, &tcShaderCode, NULL);
+        glCompileShader(tessControl);
+        checkCompileErrors(tessControl, "TESS_CONTROL");
+    }
+    unsigned int tessEval;
+    if(tessEvalPath != nullptr)
+    {
+        char * teShaderCode;
+        int teSize;
+        LoadStringFromAsset(tessEvalPath, &teShaderCode, &teSize);
+        tessEval = glCreateShader(GL_TESS_EVALUATION_SHADER);
+        glShaderSource(tessEval, 1, &teShaderCode, NULL);
+        glCompileShader(tessEval);
+        checkCompileErrors(tessEval, "TESS_EVALUATION");
+    }
+    // shader Program
+    ID = glCreateProgram();
+    glAttachShader(ID, vertex);
+    glAttachShader(ID, fragment);
+    if(geometryPath != nullptr)
+        glAttachShader(ID, geometry);
+    if(tessControlPath != nullptr)
+        glAttachShader(ID, tessControl);
+    if(tessEvalPath != nullptr)
+        glAttachShader(ID, tessEval);
+    glLinkProgram(ID);
+    checkCompileErrors(ID, "PROGRAM");
+    // delete the shaders as they're linked into our program now and no longer necessary
+    glDeleteShader(vertex);
+    glDeleteShader(fragment);
+    if(geometryPath != nullptr)
+        glDeleteShader(geometry);
+
+}
+
 // activate the shader
 // ------------------------------------------------------------------------
 void Shader::use()

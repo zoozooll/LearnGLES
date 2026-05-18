@@ -3,6 +3,9 @@
 
 #include "Scene.h"
 
+class Shader;
+class Camera;
+
 class GeometryShaderScene : public Scene {
 public :
     GeometryShaderScene();
@@ -16,6 +19,12 @@ public :
     void destroy() override;
 
     virtual ~GeometryShaderScene();
+
+private:
+    Camera* m_camera = nullptr;
+    Shader* m_pShader = nullptr;
+    unsigned int m_VAO = 0u;
+    unsigned int m_VBO = 0u;
 };
 
 #endif //LEARNGLES_GEOMETRYSHADERSCENE_H

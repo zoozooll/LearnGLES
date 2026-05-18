@@ -9,18 +9,28 @@
 #include <stb_image.h>
 #include "AssetHelper.h"
 #include "logutil.h"
+#include <cstdlib>
 
 unsigned int loadTexture(char const * path)
 {
-    unsigned int textureID;
-    glGenTextures(1, &textureID);
+    unsigned int textureID = 0u;
+    unsigned char *file_data = nullptr;
+    size_t file_size = 0;
 
-    unsigned char *file_data;
-    size_t file_size;
-    LoadDataFromAsset(path, reinterpret_cast<void **>(&file_data), &file_size);
-    unsigned char *data;
+    if (!LoadDataFromAsset(path, reinterpret_cast<void **>(&file_data), &file_size))
+    {
+        LOGE("Texture", "Texture failed to read from asset: %s", path);
+        free(file_data); // Safe to call on nullptr
+        return 0;
+    }
+
     int width, height, nrComponents;
-    data = stbi_load_from_memory(file_data, file_size, &width, &height, &nrComponents, 0);
+    stbi_set_flip_vertically_on_load(true);
+    unsigned char *data = stbi_load_from_memory(file_data, file_size, &width, &height, &nrComponents, 0);
+
+    // Once decoded by stb_image, the raw file data is no longer needed
+    free(file_data);
+
     if (data)
     {
         GLint internalFormat;
@@ -37,12 +47,14 @@ unsigned int loadTexture(char const * path)
             internalFormat = GL_RGBA;
             format = GL_RGBA;
         }
-
+        glGenTextures(1, &textureID);
         glBindTexture(GL_TEXTURE_2D, textureID);
         glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, format == GL_RGBA ? GL_CLAMP_TO_EDGE : GL_REPEAT); // for this tutorial: use GL_CLAMP_TO_EDGE to prevent semi-transparent borders. Due to interpolation it takes texels from next repeat
+        // for this tutorial: use GL_CLAMP_TO_EDGE to prevent semi-transparent borders for RGBA.
+        // Due to interpolation it takes texels from next repeat if set to REPEAT.
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, format == GL_RGBA ? GL_CLAMP_TO_EDGE : GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, format == GL_RGBA ? GL_CLAMP_TO_EDGE : GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -51,8 +63,7 @@ unsigned int loadTexture(char const * path)
     }
     else
     {
-        LOGE("AdvancedLightingScene", "Texture failed to load at path: %s", path);
-        stbi_image_free(data);
+        LOGE("Texture", "Texture failed to decode at path: %s", path);
     }
 
     return textureID;
@@ -62,11 +73,21 @@ unsigned int loadTexture(char const * path)
 // ---------------------------------------------------
 unsigned int loadTexture(char const * path, bool gammaCorrection)
 {
-    unsigned int textureID;
-    glGenTextures(1, &textureID);
+    unsigned int textureID = 0u;
+    unsigned char *file_data = nullptr;
+    size_t file_size = 0;
+
+    if (!LoadDataFromAsset(path, reinterpret_cast<void **>(&file_data), &file_size))
+    {
+        LOGE("Texture", "Texture failed to read from asset: %s", path);
+        free(file_data);
+        return 0;
+    }
 
     int width, height, nrComponents;
-    unsigned char *data = stbi_load(path, &width, &height, &nrComponents, 0);
+    unsigned char *data = stbi_load_from_memory(file_data, file_size, &width, &height, &nrComponents, 0);
+    free(file_data);
+
     if (data)
     {
         GLenum internalFormat;
@@ -87,6 +108,7 @@ unsigned int loadTexture(char const * path, bool gammaCorrection)
             dataFormat = GL_RGBA;
         }
 
+        glGenTextures(1, &textureID);
         glBindTexture(GL_TEXTURE_2D, textureID);
         glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, dataFormat, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
@@ -100,8 +122,7 @@ unsigned int loadTexture(char const * path, bool gammaCorrection)
     }
     else
     {
-//        std::cout << "Texture failed to load at path: " << path << std::endl;
-        stbi_image_free(data);
+        LOGE("Texture", "Texture failed to decode at path: %s", path);
     }
 
     return textureID;
@@ -119,22 +140,33 @@ unsigned int loadTexture(char const * path, bool gammaCorrection)
 // -------------------------------------------------------
 unsigned int loadCubemap(std::vector<std::string> faces)
 {
-    unsigned int textureID;
+    unsigned int textureID = 0u;
     glGenTextures(1, &textureID);
     glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 
     int width, height, nrChannels;
     for (unsigned int i = 0; i < faces.size(); i++)
     {
-        unsigned char *data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
-        if (data)
+        unsigned char *file_data = nullptr;
+        size_t file_size = 0;
+        if (LoadDataFromAsset(faces[i].c_str(), reinterpret_cast<void **>(&file_data), &file_size))
         {
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-            stbi_image_free(data);
+            unsigned char *data = stbi_load_from_memory(file_data, file_size, &width, &height, &nrChannels, 0);
+            free(file_data);
+            if (data)
+            {
+                glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+                stbi_image_free(data);
+            }
+            else
+            {
+                LOGE("Texture", "Cubemap face failed to decode at path: %s", faces[i].c_str());
+            }
         }
         else
         {
-            stbi_image_free(data);
+            LOGE("Texture", "Cubemap face failed to read from asset: %s", faces[i].c_str());
+            free(file_data);
         }
     }
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);

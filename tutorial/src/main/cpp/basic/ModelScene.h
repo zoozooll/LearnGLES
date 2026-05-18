@@ -3,6 +3,10 @@
 
 #include "Scene.h"
 
+class Shader;
+class Model;
+class Camera;
+
 class ModelScene : public Scene {
 public :
     ModelScene();
@@ -16,6 +20,11 @@ public :
     void destroy() override;
 
     virtual ~ModelScene();
+
+private:
+    Camera* m_camera = nullptr;
+    Shader* m_pShader = nullptr;
+    Model* m_pModel = nullptr;
 };
 
 #endif //LEARNGLES_MODELSCENE_H

@@ -3,6 +3,12 @@
 
 #include "Scene.h"
 
+class Camera;
+class Shader;
+class AnimatedModel;
+class Animation;
+class Animator;
+
 class SkeletalAnimationScene : public Scene {
 public :
     SkeletalAnimationScene();
@@ -16,6 +22,18 @@ public :
     void destroy() override;
 
     virtual ~SkeletalAnimationScene();
+
+private:
+    Camera* m_camera = nullptr;
+    Shader* ourShader = nullptr;
+    AnimatedModel* ourModel = nullptr;
+    Animation* danceAnimation = nullptr;
+    Animator* animator = nullptr;
+
+    int m_width = 0;
+    int m_height = 0;
+    float deltaTime = 0.f;
+    float lastFrame = 0.f;
 };
 
 #endif //LEARNGLES_SKELETALANIMATIONSCENE_H

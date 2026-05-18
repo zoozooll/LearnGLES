@@ -3,6 +3,12 @@
 
 #include "Scene.h"
 
+class Shader;
+
+class ComputeShader;
+
+class Camera;
+
 class ComputeShaderScene : public Scene {
 public :
     ComputeShaderScene();
@@ -16,6 +22,18 @@ public :
     void destroy() override;
 
     virtual ~ComputeShaderScene();
+
+private:
+    Camera *m_camera = nullptr;
+    Shader* m_screenQuadShader = nullptr;
+    ComputeShader* m_computeShader = nullptr;
+    unsigned int m_texture = 0u;
+    unsigned int m_quadVAO = 0u, m_quadVBO = 0u;
+    int m_width = 0u;
+    int m_height = 0u;
+    int m_fCounter = 0u;
+
+    void renderQuad();
 };
 
 #endif //LEARNGLES_COMPUTESHADERSCENE_H

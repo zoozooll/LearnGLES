@@ -21,8 +21,10 @@ void StencilTestingScene::init() {
 
     // build and compile our shader zprogram
     // ------------------------------------
-    m_pShader = new Shader("stencil_testing/2.stencil_testing.vs", "stencil_testing/2.stencil_testing.fs");
-    m_pShaderSingleColor = new Shader("stencil_testing/2.stencil_testing.vs", "stencil_testing/2.stencil_single_color.fs");
+    m_pShader = new Shader("stencil_testing/2.stencil_testing.vs",
+            "stencil_testing/2.stencil_testing.fs");
+    m_pShaderSingleColor = new Shader("stencil_testing/2.stencil_testing.vs",
+            "stencil_testing/2.stencil_single_color.fs");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -105,8 +107,8 @@ void StencilTestingScene::init() {
 
     // load textures
     // -------------
-    m_cubeTexture  = loadTexture("resources/textures/marble.jpg");
-    m_floorTexture = loadTexture("resources/textures/metal.png");
+    m_cubeTexture  = loadTexture("textures/marble.jpg");
+    m_floorTexture = loadTexture("textures/metal.png");
 
     // shader configuration
     // --------------------

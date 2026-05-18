@@ -3,6 +3,9 @@
 
 #include "Scene.h"
 
+class Shader;
+class Camera;
+
 class MsaaScene : public Scene {
 public :
     MsaaScene();
@@ -16,6 +19,12 @@ public :
     void destroy() override;
 
     virtual ~MsaaScene();
+
+private:
+    Camera* m_camera = nullptr;
+    Shader* m_pShader = nullptr;
+    unsigned int m_cubeVAO = 0u;
+    unsigned int m_cubeVBO = 0u;
 };
 
 #endif //LEARNGLES_MSAASCENE_H

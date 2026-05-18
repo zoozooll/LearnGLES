@@ -3,6 +3,20 @@
 
 #include "Scene.h"
 
+#include <map>
+
+class Shader;
+
+class Camera;
+
+struct Character {
+    unsigned int TextureID; // ID handle of the glyph texture
+    glm::ivec2   Size;      // Size of glyph
+    glm::ivec2   Bearing;   // Offset from baseline to left/top of glyph
+    unsigned int Advance;   // Horizontal offset to advance to next glyph
+};
+
+
 class TextRenderingScene : public Scene {
 public :
     TextRenderingScene();
@@ -16,6 +30,16 @@ public :
     void destroy() override;
 
     virtual ~TextRenderingScene();
+
+private:
+    Camera* m_camera = nullptr;
+    Shader* m_pShader = nullptr;
+    std::map<char, Character> Characters;
+    unsigned int m_VAO = 0u, m_VBO = 0u;
+    int m_width = 0;
+    int m_height = 0;
+
+    void RenderText(Shader &shader, std::string text, float x, float y, float scale, glm::vec3 color);
 };
 
 #endif //LEARNGLES_TEXTRENDERINGSCENE_H

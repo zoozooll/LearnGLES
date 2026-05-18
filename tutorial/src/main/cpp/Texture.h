@@ -8,12 +8,14 @@
 #include <vector>
 #include <string>
 
-unsigned int loadTexture(char const * path);
-
 // utility function for loading a 2D texture from file
 // ---------------------------------------------------
-unsigned int loadTexture(char const * path, bool gammaCorrection);
+unsigned int loadTexture(char const * path, bool flip = true, bool gammaCorrection = false);
 
-unsigned int loadCubemap(std::vector<std::string> faces);
+// loads a cubemap texture from 6 individual texture faces
+// -------------------------------------------------------
+unsigned int loadCubemap(std::vector<std::string> faces, bool gammaCorrection = false);
+
+unsigned int genTexture(int width, int height, int channels, const void* data = nullptr);
 
 #endif //LEARNGLES_TEXTURE_H

@@ -16,9 +16,15 @@ bool LoadDataFromAsset(const char *const assetPath, void **buffer, size_t *size)
     }
     *size = AAsset_getLength(file);
     *buffer = malloc(*size);
+    if (!*buffer) {
+        AAsset_close(file);
+        return false;
+    }
     auto rs = AAsset_read(file, *buffer, *size);
     AAsset_close(file);
     if (rs < 0) {
+        free(*buffer);
+        *buffer = nullptr;
         return false;
     }
     return true;
@@ -31,9 +37,15 @@ bool LoadStringFromAsset(const char *const assetPath, char **buffer, int *size) 
     }
     *size = static_cast<int>(AAsset_getLength(file));
     *buffer = static_cast<char *>(calloc(*size + 1, sizeof(char)));
+    if (!*buffer) {
+        AAsset_close(file);
+        return false;
+    }
     auto rs = AAsset_read(file, *buffer, *size);
     AAsset_close(file);
     if (rs < 0) {
+        free(*buffer);
+        *buffer = nullptr;
         return false;
     }
     return true;

@@ -4,7 +4,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -funwind-tables")
 
 project("learngles")
 
-include_directories(".")
+include_directories("." "./model/")
 
 # Add glm library
 add_subdirectory("../thirdparty/glm" ${CMAKE_CURRENT_BINARY_DIR}/glm)
@@ -24,6 +24,7 @@ add_subdirectory(${ASSIMP_SRC} ${CMAKE_CURRENT_BINARY_DIR}/assimp)
 
 file(GLOB learngles_SRC
         "./*.cpp"
+        "./model/*.cpp"
         "./basic/*.cpp"
         "./lighting/*.cpp"
         "./pbr/*.cpp"
