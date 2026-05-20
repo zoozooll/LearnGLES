@@ -17,9 +17,9 @@ void GeometryShaderScene::init() {
 
     // build and compile shaders
     // -------------------------
-    m_pShader = new Shader("geometry_shader/9.1.geometry_shader.vs",
-            "geometry_shader/9.1.geometry_shader.fs",
-            "geometry_shader/9.1.geometry_shader.gs");
+    m_pShader = new Shader("shaders/geometry_shader/9.1.geometry_shader.vs",
+            "shaders/geometry_shader/9.1.geometry_shader.fs",
+            "shaders/geometry_shader/9.1.geometry_shader.gs");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

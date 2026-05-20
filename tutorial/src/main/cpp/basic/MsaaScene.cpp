@@ -10,11 +10,12 @@ void MsaaScene::init() {
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_MULTISAMPLE); // enabled by default on some drivers, but not all so always enable to make sure
+    //TODO not fixed yet in GLES
+    //glEnable(GL_MULTISAMPLE); // enabled by default on some drivers, but not all so always enable to make sure
 
     // build and compile shaders
     // -------------------------
-    m_pShader = new Shader("11.1.anti_aliasing.vs", "11.1.anti_aliasing.fs");
+    m_pShader = new Shader("shaders/11.1.anti_aliasing.vs", "shaders/11.1.anti_aliasing.fs");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

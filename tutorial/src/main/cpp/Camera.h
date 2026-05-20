@@ -55,6 +55,10 @@ public:
 
     virtual void reset();
 
+    virtual const glm::vec3& getFront() const;
+
+    virtual const glm::vec3& getRight() const;
+
 protected:
     float m_vdy = CAMERA_FOVY_DEGREE;
     float m_aspec = 0.f;
@@ -64,6 +68,8 @@ protected:
     glm::vec3 m_position;
     glm::vec3 m_targetPosition;
     glm::vec3 m_up;
+    glm::vec3 m_front;
+    glm::vec3 m_right;
 
     glm::mat4 m_viewMatrix;
     glm::mat4 m_projectionMatrix;

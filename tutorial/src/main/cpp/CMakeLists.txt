@@ -22,6 +22,15 @@ set(ASSIMP_SRC "../thirdparty/assimp")
 
 add_subdirectory(${ASSIMP_SRC} ${CMAKE_CURRENT_BINARY_DIR}/assimp)
 
+# Add Freetype Library
+set(FT_DISABLE_ZLIB TRUE CACHE BOOL "Disable Zlib")
+set(FT_DISABLE_BZIP2 TRUE CACHE BOOL "Disable BZip2")
+set(FT_DISABLE_PNG TRUE CACHE BOOL "Disable PNG")
+set(FT_DISABLE_HARFBUZZ TRUE CACHE BOOL "Disable HarfBuzz")
+set(FT_DISABLE_BROTLI TRUE CACHE BOOL "Disable Brotli")
+
+add_subdirectory("../thirdparty/freetype" ${CMAKE_CURRENT_BINARY_DIR}/freetype)
+
 file(GLOB learngles_SRC
         "./*.cpp"
         "./model/*.cpp"
@@ -44,4 +53,5 @@ target_link_libraries(
         jnigraphics
         glm
         assimp
+        freetype
         ${log-lib})

@@ -23,11 +23,11 @@ void TesselationShaderScene::init() {
 
     // build and compile our shader program
     // ------------------------------------
-    tessHeightMapShader = new Shader("tesselation_shaders/8.3.gpuheight.vs",
-            "tesselation_shaders/8.3.gpuheight.fs",
+    tessHeightMapShader = new Shader("shaders/tesselation_shaders/8.3.gpuheight.vs",
+            "shaders/tesselation_shaders/8.3.gpuheight.fs",
             nullptr,
-            "tesselation_shaders/8.3.gpuheight.tcs",
-            "tesselation_shaders/8.3.gpuheight.tes");
+            "shaders/tesselation_shaders/8.3.gpuheight.tcs",
+            "shaders/tesselation_shaders/8.3.gpuheight.tes");
 
     // load and create a texture
     // -------------------------

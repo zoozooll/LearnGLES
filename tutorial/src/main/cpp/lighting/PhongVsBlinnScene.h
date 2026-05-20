@@ -3,6 +3,11 @@
 
 #include "Scene.h"
 
+#include <glm/glm.hpp>
+
+class Camera;
+class Shader;
+
 class PhongVsBlinnScene : public Scene {
 public :
     PhongVsBlinnScene();
@@ -16,6 +21,20 @@ public :
     void destroy() override;
 
     virtual ~PhongVsBlinnScene();
+
+private:
+    Camera* m_camera = nullptr;
+    Shader* m_pShader = nullptr;
+    unsigned int m_planeVAO = 0u;
+    unsigned int m_planeVBO = 0u;
+    unsigned int m_floorTexture = 0u;
+    glm::vec3 m_lightPos;
+
+    bool blinn = true;
+public:
+    bool isBlinn() const;
+
+    void setBlinn(bool blinn);
 };
 
 #endif //LEARNGLES_PHONGVSBLINNSCENE_H

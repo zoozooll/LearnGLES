@@ -19,7 +19,7 @@ void TextRenderingScene::init() {
 
     // compile and setup the shader
     // ----------------------------
-    m_pShader = new Shader("text.vs", "text.fs");
+    m_pShader = new Shader("shaders/text.vs", "shaders/text.fs");
 
     // FreeType
     // --------
@@ -27,22 +27,22 @@ void TextRenderingScene::init() {
     // All functions return a value different than 0 whenever an error occurred
     if (FT_Init_FreeType(&ft))
     {
-        std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
+        LOGW(__FILE_NAME__, "ERROR::FREETYPE: Could not init FreeType Library");
         return;
     }
 
     // find path to font
-    std::string font_name = FileSystem::getPath("resources/fonts/Antonio-Bold.ttf");
+    std::string font_name = "fonts/Antonio-Bold.ttf";
     if (font_name.empty())
     {
-        std::cout << "ERROR::FREETYPE: Failed to load font_name" << std::endl;
+        LOGW(__FILE_NAME__, "ERROR::FREETYPE: Failed to load font_name");
         return;
     }
 
     // load font as face
     FT_Face face;
     if (FT_New_Face(ft, font_name.c_str(), 0, &face)) {
-        std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
+        LOGW(__FILE_NAME__, "ERROR::FREETYPE: Failed to load font");
         return;
     }
     else {
@@ -58,7 +58,7 @@ void TextRenderingScene::init() {
             // Load character glyph
             if (FT_Load_Char(face, c, FT_LOAD_RENDER))
             {
-                std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
+                LOGW(__FILE_NAME__, "ERROR::FREETYTPE: Failed to load Glyph");
                 continue;
             }
             // generate texture

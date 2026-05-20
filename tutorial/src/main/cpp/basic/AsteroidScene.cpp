@@ -15,8 +15,8 @@ void AsteroidScene::init() {
 
     // build and compile shaders
     // -------------------------
-    m_pAsteroidShader = new Shader("asterioid/10.3.asteroids.vs", "asterioid/10.3.asteroids.fs");
-    m_pPlanetShader = new Shader("asterioid/10.3.planet.vs", "asterioid/10.3.planet.fs");
+    m_pAsteroidShader = new Shader("shaders/asterioid/10.3.asteroids.vs", "shaders/asterioid/10.3.asteroids.fs");
+    m_pPlanetShader = new Shader("shaders/asterioid/10.3.planet.vs", "shaders/asterioid/10.3.planet.fs");
 
     // load models
     // -----------

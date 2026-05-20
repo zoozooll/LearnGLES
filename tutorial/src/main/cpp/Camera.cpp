@@ -60,6 +60,8 @@ mat4 Camera::getVPMatrix() const {
 void Camera::update() {
     if (viewDirty) {
         m_viewMatrix = lookAt(m_position, m_targetPosition, m_up);
+        m_front = normalize(m_targetPosition - m_position);
+        m_right = normalize(cross(m_front, m_up));
         viewDirty = false;
     }
     if (projectionDirty) {
@@ -108,4 +110,12 @@ void Camera::setUp(const vec3 &up) {
 void Camera::setPosition(const vec3 &position) {
     m_position = position;
     viewDirty = true;
+}
+
+const glm::vec3 &Camera::getFront() const {
+    return m_front;
+}
+
+const glm::vec3 &Camera::getRight() const {
+    return m_right;
 }

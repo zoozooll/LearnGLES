@@ -21,10 +21,10 @@ void StencilTestingScene::init() {
 
     // build and compile our shader zprogram
     // ------------------------------------
-    m_pShader = new Shader("stencil_testing/2.stencil_testing.vs",
-            "stencil_testing/2.stencil_testing.fs");
-    m_pShaderSingleColor = new Shader("stencil_testing/2.stencil_testing.vs",
-            "stencil_testing/2.stencil_single_color.fs");
+    m_pShader = new Shader("shaders/stencil_testing/2.stencil_testing.vs",
+            "shaders/stencil_testing/2.stencil_testing.fs");
+    m_pShaderSingleColor = new Shader("shaders/stencil_testing/2.stencil_testing.vs",
+            "shaders/stencil_testing/2.stencil_single_color.fs");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

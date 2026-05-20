@@ -22,7 +22,7 @@ void SkeletalAnimationScene::init() {
 
     // build and compile shaders
     // -------------------------
-    ourShader = new Shader("skeletal_anim/anim_model.vs", "skeletal_anim/anim_model.fs");
+    ourShader = new Shader("shaders/skeletal_anim/anim_model.vs", "shaders/skeletal_anim/anim_model.fs");
 
     // load models
     // -----------

@@ -3,6 +3,9 @@
 
 #include "Scene.h"
 
+class Camera;
+class Shader;
+
 class ShadowScene : public Scene {
 public :
     ShadowScene();
@@ -16,6 +19,28 @@ public :
     void destroy() override;
 
     virtual ~ShadowScene();
+
+private:
+    Camera* camera = nullptr;
+
+    Shader* m_pShader = nullptr;
+    Shader* m_pSimpleDepthShader = nullptr;
+    Shader* m_pDebugDepthQuad = nullptr;
+
+    unsigned int m_cubeVAO = 0u;
+    unsigned int m_cubeVBO = 0u;
+    unsigned int m_planeVAO = 0u;
+    unsigned int m_planeVBO = 0u;
+    unsigned int m_quadVAO = 0u;
+    unsigned int m_quadVBO = 0u;
+
+    unsigned int m_woodTexture = 0u;
+    unsigned int m_depthMapFBO = 0u;
+    unsigned int m_depthMap = 0u;
+
+    void renderQuad();
+    void renderCube();
+    void renderScene(const Shader &shader);
 };
 
 #endif //LEARNGLES_SHADOWSCENE_H

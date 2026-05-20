@@ -12,8 +12,8 @@ ComputeShaderScene::ComputeShaderScene() {
 }
 
 void ComputeShaderScene::init() {
-    m_screenQuadShader = new Shader("compute_shader/screenQuad.vs", "compute_shader/screenQuad.fs");
-    m_computeShader = new ComputeShader("compute_shader/computeShader.cs");
+    m_screenQuadShader = new Shader("shaders/compute_shader/screenQuad.vs", "shaders/compute_shader/screenQuad.fs");
+    m_computeShader = new ComputeShader("shaders/compute_shader/computeShader.cs");
 
     m_screenQuadShader->use();
     m_screenQuadShader->setInt("tex", 0);

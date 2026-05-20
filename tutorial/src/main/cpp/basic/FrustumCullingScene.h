@@ -3,6 +3,10 @@
 
 #include "Scene.h"
 
+class Shader;
+class Camera;
+class Entity;
+
 class FrustumCullingScene : public Scene {
 public :
     FrustumCullingScene();
@@ -16,6 +20,15 @@ public :
     void destroy() override;
 
     virtual ~FrustumCullingScene();
+
+private:
+    Camera* m_camera = nullptr;
+    Camera* m_cameraSpy = nullptr;
+    Shader* ourShader = nullptr;;
+    Entity* ourEntity = nullptr;;
+
+    int m_width = 0;
+    int m_height = 0;
 };
 
 #endif //LEARNGLES_FRUSTUMCULLINGSCENE_H
