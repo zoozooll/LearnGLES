@@ -3,6 +3,13 @@
 
 #include "Scene.h"
 
+#include <vector>
+#include <glm/glm.hpp>
+
+class Camera;
+class Shader;
+class Model;
+
 class SsaoScene : public Scene {
 public :
     SsaoScene();
@@ -16,6 +23,36 @@ public :
     void destroy() override;
 
     virtual ~SsaoScene();
+
+private:
+    void renderQuad();
+    void renderCube();
+    float ourLerp(float a, float b, float f);
+
+    Camera* camera = nullptr;
+    Shader* m_pShaderGeometryPass = nullptr;
+    Shader* m_pShaderLightingPass = nullptr;
+    Shader* m_pShaderSSAO = nullptr;
+    Shader* m_pShaderSSAOBlur = nullptr;
+
+    Model* m_pBackpack = nullptr;
+
+    unsigned int m_gBuffer = 0u;
+    unsigned int m_gPosition = 0u, m_gNormal = 0u, m_gAlbedo = 0u;
+    unsigned int m_ssaoFBO = 0u, m_ssaoBlurFBO = 0u;
+    unsigned int m_ssaoColorBuffer = 0u, m_ssaoColorBufferBlur = 0u;
+    unsigned int m_rboDepth = 0u;
+
+    std::vector<glm::vec3> m_ssaoKernel;
+    unsigned int m_noiseTexture = 0u;
+
+    unsigned int m_cubeVAO = 0u;
+    unsigned int m_cubeVBO = 0u;
+    unsigned int m_quadVAO = 0u;
+    unsigned int m_quadVBO = 0u;
+
+    glm::vec3 m_lightPos;
+    glm::vec3 m_lightColor;
 };
 
 #endif //LEARNGLES_SSAOSCENE_H
