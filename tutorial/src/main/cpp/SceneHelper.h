@@ -117,11 +117,7 @@ inline std::unique_ptr<Scene> GenSceneByName(const std::string& tutorial) {
         return std::make_unique<ParallaxMappingScene>();
     } else if (tutorial == "pbr") {
         return std::make_unique<PbrScene>();
-    } else if (tutorial == "pbr_texture") {
-        return std::make_unique<PbrTextureScene>();
-    } else if (tutorial == "theory") {
-        return std::make_unique<TheoryScene>();
-    } else if (tutorial == "ibl") {
+    }   else if (tutorial == "ibl") {
         return std::make_unique<IblScene>();
     } else if (tutorial == "oit") {
         return std::make_unique<OitScene>();

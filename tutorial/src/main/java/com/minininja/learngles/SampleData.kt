@@ -51,8 +51,6 @@ object SampleData {
         TutorialItem("normal_mapping", R.string.item_normal_mapping, "images/normal_mapping.png", NormalMappingActivity::class),
         TutorialItem("parallax_mapping", R.string.item_parallax_mapping, "images/parallax_mapping.png", ParallaxMappingActivity::class),
         TutorialItem("pbr", R.string.item_pbr, "images/pbr.png", PbrActivity::class),
-        TutorialItem("pbr_texture", R.string.item_pbr_texture, "images/pbr_texture.png", PbrTextureActivity::class),
-        TutorialItem("theory", R.string.item_theory, "images/theory.png", TheoryActivity::class),
         TutorialItem("ibl", R.string.item_ibl, "images/ibl.png", IblActivity::class)
     )
     val advancedItems = listOf(
