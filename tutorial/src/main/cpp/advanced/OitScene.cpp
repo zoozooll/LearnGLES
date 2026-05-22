@@ -11,10 +11,10 @@ OitScene::OitScene() {
 void OitScene::init() {
     // build and compile shaders
     // -------------------------
-    solidShader = new Shader("shaders/oit/solid.vs", "shaders/oit/solid.fs");
-    transparentShader = new Shader("shaders/oit/transparent.vs", "shaders/oit/transparent.fs");
-    compositeShader = new Shader("shaders/oit/composite.vs", "shaders/oit/composite.fs");
-    screenShader = new Shader("shaders/oit/screen.vs", "shaders/oit/screen.fs");
+    solidShader = new Shader("shaders/oit/solid.vert", "shaders/oit/solid.frag");
+    transparentShader = new Shader("shaders/oit/transparent.vert", "shaders/oit/transparent.frag");
+    compositeShader = new Shader("shaders/oit/composite.vert", "shaders/oit/composite.frag");
+    screenShader = new Shader("shaders/oit/screen.vert", "shaders/oit/screen.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

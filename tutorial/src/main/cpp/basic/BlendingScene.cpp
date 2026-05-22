@@ -27,7 +27,7 @@ void BlendingScene::init() {
 
     // build and compile our shader zprogram
     // ------------------------------------
-    m_pShader = new Shader("shaders/blending/3.2.blending.vs", "shaders/blending/3.2.blending.fs");
+    m_pShader = new Shader("shaders/blending/3.2.blending.vert", "shaders/blending/3.2.blending.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

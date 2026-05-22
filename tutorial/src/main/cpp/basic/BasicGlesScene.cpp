@@ -22,7 +22,7 @@ void BasicGlesScene::init() {
 
     // build and compile our shader zprogram
     // ------------------------------------
-    m_pShader = new Shader("shaders/basic_gles/7.4.camera.vs", "shaders/basic_gles/7.4.camera.fs");
+    m_pShader = new Shader("shaders/basic_gles/7.4.camera.vert", "shaders/basic_gles/7.4.camera.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

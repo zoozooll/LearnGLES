@@ -15,10 +15,10 @@ void BloomScene::init() {
 
     // build and compile shaders
     // -------------------------
-    m_pShader = new Shader("7.bloom.vs", "7.bloom.fs");
-    m_pShaderLight = new Shader("7.bloom.vs", "7.light_box.fs");
-    m_pShaderBlur = new Shader("7.blur.vs", "7.blur.fs");
-    m_pShaderBloomFinal = new Shader("7.bloom_final.vs", "7.bloom_final.fs");
+    m_pShader = new Shader("7.bloom.vert", "7.bloom.frag");
+    m_pShaderLight = new Shader("7.bloom.vert", "7.light_box.frag");
+    m_pShaderBlur = new Shader("7.blur.vert", "7.blur.frag");
+    m_pShaderBloomFinal = new Shader("7.bloom_final.vert", "7.bloom_final.frag");
 
     // load textures
     // -------------

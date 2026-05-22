@@ -25,8 +25,8 @@ void LightCasterScene::init() {
 
     // build and compile our shader zprogram
     // ------------------------------------
-    m_pLightingShader = new Shader("shaders/light_caster/5.4.light_casters.vs", "shaders/light_caster/5.4.light_casters.fs");
-    m_pLightCubeShader = new Shader("shaders/light_caster/5.4.light_cube.vs", "shaders/light_caster/5.4.light_cube.fs");
+    m_pLightingShader = new Shader("shaders/light_caster/5.4.light_casters.vert", "shaders/light_caster/5.4.light_casters.frag");
+    m_pLightCubeShader = new Shader("shaders/light_caster/5.4.light_cube.vert", "shaders/light_caster/5.4.light_cube.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

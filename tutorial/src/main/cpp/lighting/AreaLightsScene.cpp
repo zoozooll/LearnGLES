@@ -36,8 +36,8 @@ void AreaLightsScene::init() {
     glEnable(GL_DEPTH_TEST);
     mat1 = loadMTexture();
     mat2 = loadLUTTexture();
-    shaderLTC = new Shader("shaders/area_lights/7.multi_area_light.vs", "shaders/area_lights/7.multi_area_light.fs");
-    shaderLightPlane = new Shader("shaders/area_lights/7.light_plane.vs", "shaders/area_lights/7.light_plane.fs");
+    shaderLTC = new Shader("shaders/area_lights/7.multi_area_light.vert", "shaders/area_lights/7.multi_area_light.frag");
+    shaderLightPlane = new Shader("shaders/area_lights/7.light_plane.vert", "shaders/area_lights/7.light_plane.frag");
     concreteTexture = loadTexture("textures/concreteTexture.png", true);
 
     configurePlane();

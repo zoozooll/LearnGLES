@@ -27,7 +27,7 @@ void DepthTestingScene::init() {
 
     // build and compile our shader zprogram
     // ------------------------------------
-    m_pShader = new Shader("shaders/depth_testing/1.2.depth_testing.vs", "shaders/depth_testing/1.2.depth_testing.fs");
+    m_pShader = new Shader("shaders/depth_testing/1.2.depth_testing.vert", "shaders/depth_testing/1.2.depth_testing.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

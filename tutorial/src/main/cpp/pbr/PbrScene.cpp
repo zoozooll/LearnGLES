@@ -18,7 +18,7 @@ void PbrScene::init() {
 
     // build and compile shaders
     // -------------------------
-    m_pShader = new Shader("shaders/pbr/1.2.pbr.vs", "shaders/pbr/1.2.pbr.fs");
+    m_pShader = new Shader("shaders/pbr/1.2.pbr.vert", "shaders/pbr/1.2.pbr.frag");
 
     m_pShader->use();
     m_pShader->setInt("albedoMap", 0);

@@ -16,8 +16,8 @@ void HdrScene::init() {
 
     // build and compile shaders
     // -------------------------
-    m_pShader = new Shader("shaders/hdr/6.lighting.vs", "shaders/hdr/6.lighting.fs");
-    m_pHdrShader = new Shader("shaders/hdr/6.hdr.vs", "shaders/hdr/6.hdr.fs");
+    m_pShader = new Shader("shaders/hdr/6.lighting.vert", "shaders/hdr/6.lighting.frag");
+    m_pHdrShader = new Shader("shaders/hdr/6.hdr.vert", "shaders/hdr/6.hdr.frag");
 
     // load textures
     // -------------

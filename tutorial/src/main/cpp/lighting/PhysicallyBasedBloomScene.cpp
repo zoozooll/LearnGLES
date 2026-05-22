@@ -36,14 +36,14 @@ PhysicallyBasedBloomScene::PhysicallyBasedBloomScene() {
 void PhysicallyBasedBloomScene::init() {
     camera = new TargetCamera;
     glEnable(GL_DEPTH_TEST);
-    shader = new Shader("shaders/physically_based_bloom/6.bloom.vs",
-            "shaders/physically_based_bloom/6.bloom.fs");
-    shaderLight = new Shader("shaders/physically_based_bloom/6.bloom.vs",
-            "shaders/physically_based_bloom/6.light_box.fs");
-    shaderBlur = new Shader("shaders/physically_based_bloom/6.old_blur.vs",
-            "shaders/physically_based_bloom/6.old_blur.fs");
-    shaderBloomFinal = new Shader("shaders/physically_based_bloom/6.bloom_final.vs",
-            "shaders/physically_based_bloom/6.bloom_final.fs");
+    shader = new Shader("shaders/physically_based_bloom/6.bloom.vert",
+            "shaders/physically_based_bloom/6.bloom.frag");
+    shaderLight = new Shader("shaders/physically_based_bloom/6.bloom.vert",
+            "shaders/physically_based_bloom/6.light_box.frag");
+    shaderBlur = new Shader("shaders/physically_based_bloom/6.old_blur.vert",
+            "shaders/physically_based_bloom/6.old_blur.frag");
+    shaderBloomFinal = new Shader("shaders/physically_based_bloom/6.bloom_final.vert",
+            "shaders/physically_based_bloom/6.bloom_final.frag");
 
     woodTexture = loadTexture("textures/wood.png", true);
     containerTexture = loadTexture("textures/container2.png", true);
@@ -375,8 +375,8 @@ bool BloomRenderer::Init(unsigned int windowWidth, unsigned int windowHeight) {
     const unsigned int num_bloom_mips = 6;
     if (!mFBO.Init(windowWidth, windowHeight, num_bloom_mips))
         return false;
-    mDownsampleShader = new Shader("6.new_downsample.vs", "6.new_downsample.fs");
-    mUpsampleShader = new Shader("6.new_upsample.vs", "6.new_upsample.fs");
+    mDownsampleShader = new Shader("6.new_downsample.vert", "6.new_downsample.frag");
+    mUpsampleShader = new Shader("6.new_upsample.vert", "6.new_upsample.frag");
     mDownsampleShader->use();
     mDownsampleShader->setInt("srcTexture", 0);
     mUpsampleShader->use();

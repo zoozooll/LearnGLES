@@ -29,18 +29,18 @@ void IblScene::init() {
 
     // build and compile shaders
     // -------------------------
-    pbrShader = new Shader("shaders/ibl/2.2.2.pbr.vs",
-            "shaders/ibl/2.2.2.pbr.fs");
-    equirectangularToCubemapShader = new Shader("shaders/ibl/2.2.2.cubemap.vs",
-            "shaders/ibl/2.2.2.equirectangular_to_cubemap.fs");
-    irradianceShader = new Shader("shaders/ibl/2.2.2.cubemap.vs",
-            "shaders/ibl/2.2.2.irradiance_convolution.fs");
-    prefilterShader = new Shader("shaders/ibl/2.2.2.cubemap.vs",
-            "shaders/ibl/2.2.2.prefilter.fs");
-    brdfShader = new Shader("shaders/ibl/2.2.2.brdf.vs",
-            "shaders/ibl/2.2.2.brdf.fs");
-    backgroundShader = new Shader("shaders/ibl/2.2.2.background.vs",
-            "shaders/ibl/2.2.2.background.fs");
+    pbrShader = new Shader("shaders/ibl/2.2.2.pbr.vert",
+            "shaders/ibl/2.2.2.pbr.frag");
+    equirectangularToCubemapShader = new Shader("shaders/ibl/2.2.2.cubemap.vert",
+            "shaders/ibl/2.2.2.equirectangular_to_cubemap.frag");
+    irradianceShader = new Shader("shaders/ibl/2.2.2.cubemap.vert",
+            "shaders/ibl/2.2.2.irradiance_convolution.frag");
+    prefilterShader = new Shader("shaders/ibl/2.2.2.cubemap.vert",
+            "shaders/ibl/2.2.2.prefilter.frag");
+    brdfShader = new Shader("shaders/ibl/2.2.2.brdf.vert",
+            "shaders/ibl/2.2.2.brdf.frag");
+    backgroundShader = new Shader("shaders/ibl/2.2.2.background.vert",
+            "shaders/ibl/2.2.2.background.frag");
 
     pbrShader->use();
     pbrShader->setInt("irradianceMap", 0);

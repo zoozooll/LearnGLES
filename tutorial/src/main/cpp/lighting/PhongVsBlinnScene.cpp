@@ -16,8 +16,8 @@ void PhongVsBlinnScene::init() {
 
     // build and compile our shader zprogram
     // ------------------------------------
-    m_pShader = new Shader("shaders/phong_blinn/1.advanced_lighting.vs",
-            "shaders/phong_blinn/1.advanced_lighting.fs");
+    m_pShader = new Shader("shaders/phong_blinn/1.advanced_lighting.vert",
+            "shaders/phong_blinn/1.advanced_lighting.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

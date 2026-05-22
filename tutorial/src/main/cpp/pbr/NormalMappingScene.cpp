@@ -15,8 +15,8 @@ void NormalMappingScene::init() {
 
     // build and compile shaders
     // -------------------------
-    m_pShader = new Shader("shaders/normal_mapping/4.normal_mapping.vs",
-            "shaders/normal_mapping/4.normal_mapping.fs");
+    m_pShader = new Shader("shaders/normal_mapping/4.normal_mapping.vert",
+            "shaders/normal_mapping/4.normal_mapping.frag");
 
     // load textures
     // -------------

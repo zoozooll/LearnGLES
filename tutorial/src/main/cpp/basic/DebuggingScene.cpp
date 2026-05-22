@@ -26,7 +26,7 @@ void DebuggingScene::init() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
-    m_pShader = new Shader("shaders/debuging/debugging.vs", "shaders/debuging/debugging.fs");
+    m_pShader = new Shader("shaders/debuging/debugging.vert", "shaders/debuging/debugging.frag");
 
     // configure 3D cube
     float vertices[] = {

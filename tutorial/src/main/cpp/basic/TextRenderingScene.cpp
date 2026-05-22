@@ -19,7 +19,7 @@ void TextRenderingScene::init() {
 
     // compile and setup the shader
     // ----------------------------
-    m_pShader = new Shader("shaders/text.vs", "shaders/text.fs");
+    m_pShader = new Shader("shaders/text_rendering/text.vert", "shaders/text_rendering/text.frag");
 
     // FreeType
     // --------

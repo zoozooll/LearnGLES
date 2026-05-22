@@ -15,7 +15,7 @@ void MsaaScene::init() {
 
     // build and compile shaders
     // -------------------------
-    m_pShader = new Shader("shaders/11.1.anti_aliasing.vs", "shaders/11.1.anti_aliasing.fs");
+    m_pShader = new Shader("shaders/11.1.anti_aliasing.vert", "shaders/11.1.anti_aliasing.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

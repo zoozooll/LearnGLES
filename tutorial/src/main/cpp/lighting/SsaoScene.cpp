@@ -18,10 +18,10 @@ void SsaoScene::init() {
 
     // build and compile shaders
     // -------------------------
-    m_pShaderGeometryPass = new Shader("shaders/ssao/9.ssao_geometry.vs", "shaders/ssao/9.ssao_geometry.fs");
-    m_pShaderLightingPass = new Shader("shaders/ssao/9.ssao.vs", "shaders/ssao/9.ssao_lighting.fs");
-    m_pShaderSSAO = new Shader("shaders/ssao/9.ssao.vs", "shaders/ssao/9.ssao.fs");
-    m_pShaderSSAOBlur = new Shader("shaders/ssao/9.ssao.vs", "shaders/ssao/9.ssao_blur.fs");
+    m_pShaderGeometryPass = new Shader("shaders/ssao/9.ssao_geometry.vert", "shaders/ssao/9.ssao_geometry.frag");
+    m_pShaderLightingPass = new Shader("shaders/ssao/9.ssao.vert", "shaders/ssao/9.ssao_lighting.frag");
+    m_pShaderSSAO = new Shader("shaders/ssao/9.ssao.vert", "shaders/ssao/9.ssao.frag");
+    m_pShaderSSAOBlur = new Shader("shaders/ssao/9.ssao.vert", "shaders/ssao/9.ssao_blur.frag");
 
     // load models
     // -----------

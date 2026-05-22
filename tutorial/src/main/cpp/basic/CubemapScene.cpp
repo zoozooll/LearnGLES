@@ -19,8 +19,8 @@ void CubemapScene::init() {
 
     // build and compile shaders
     // -------------------------
-    m_pShader = new Shader("shaders/cubemaps/6.1.cubemaps.vs", "shaders/cubemaps/6.1.cubemaps.fs");
-    m_pSkyboxShader = new Shader("shaders/cubemaps/6.1.skybox.vs", "shaders/cubemaps/6.1.skybox.fs");
+    m_pShader = new Shader("shaders/cubemaps/6.1.cubemaps.vert", "shaders/cubemaps/6.1.cubemaps.frag");
+    m_pSkyboxShader = new Shader("shaders/cubemaps/6.1.skybox.vert", "shaders/cubemaps/6.1.skybox.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

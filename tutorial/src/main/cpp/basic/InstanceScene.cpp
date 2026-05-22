@@ -14,7 +14,7 @@ void InstanceScene::init() {
 
     // build and compile shaders
     // -------------------------
-    m_pShader = new Shader("shaders/instancing/10.1.instancing.vs", "shaders/instancing/10.1.instancing.fs");
+    m_pShader = new Shader("shaders/instancing/10.1.instancing.vert", "shaders/instancing/10.1.instancing.frag");
 
     // generate a list of 100 quad locations/translation-vectors
     // ---------------------------------------------------------

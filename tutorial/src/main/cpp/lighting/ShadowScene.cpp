@@ -14,9 +14,9 @@ void ShadowScene::init() {
 
     // build and compile shaders
     // -------------------------
-    m_pShader = new Shader("3.1.3.shadow_mapping.vs", "shaders/shadow/3.1.3.shadow_mapping.fs");
-    m_pSimpleDepthShader = new Shader("shaders/shadow3.1.3.shadow_mapping_depth.vs", "shaders/shadow/3.1.3.shadow_mapping_depth.fs");
-    m_pDebugDepthQuad = new Shader("shaders/shadow/3.1.3.debug_quad.vs", "shaders/shadow/3.1.3.debug_quad_depth.fs");
+    m_pShader = new Shader("3.1.3.shadow_mapping.vert", "shaders/shadow/3.1.3.shadow_mapping.frag");
+    m_pSimpleDepthShader = new Shader("shaders/shadow3.1.3.shadow_mapping_depth.vert", "shaders/shadow/3.1.3.shadow_mapping_depth.frag");
+    m_pDebugDepthQuad = new Shader("shaders/shadow/3.1.3.debug_quad.vert", "shaders/shadow/3.1.3.debug_quad_depth.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
