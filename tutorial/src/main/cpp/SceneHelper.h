@@ -121,12 +121,8 @@ inline std::unique_ptr<Scene> GenSceneByName(const std::string& tutorial) {
         return std::make_unique<IblScene>();
     } else if (tutorial == "oit") {
         return std::make_unique<OitScene>();
-    } else if (tutorial == "scene") {
-        return std::make_unique<SceneScene>();
-    } else if (tutorial == "csm") {
+    }  else if (tutorial == "csm") {
         return std::make_unique<CsmScene>();
-    } else if (tutorial == "dsa") {
-        return std::make_unique<DsaScene>();
     }
     return nullptr;
 }
