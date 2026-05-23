@@ -46,9 +46,6 @@ protected:
     glm::quat m_targetRotation = glm::quat(1.f, 0.f, 0.f, 0.f);
     float m_radius = CAMERA_DEF_RADIUS;
 
-    constexpr static const float CAMERA_FOVY_DEGREE = 60.f;
-    constexpr static const float CAMERA_NEAR = 0.1f;
-    constexpr static const float CAMERA_FAR = 100.f;
     constexpr static const float CAMERA_DEF_RADIUS = 8.f;
     constexpr static const glm::vec3 CAMERA_DEF_TARGET_POSITION = glm::vec3(.0f, 0.f, .0f);
 };

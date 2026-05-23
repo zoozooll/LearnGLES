@@ -112,8 +112,6 @@ open class GLActivity : ComponentActivity() {
     }
 }
 
-
-
 fun Modifier.layer3DTouch(callback: Layer3DTouchCallback): Modifier = this
     // Block 1: Standard Gestures (Single/Double Tap, Long Press)
     .pointerInput(Unit) {

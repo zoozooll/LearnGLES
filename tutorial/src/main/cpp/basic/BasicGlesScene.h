@@ -28,9 +28,6 @@ public:
 private:
     Camera *camera = nullptr;
 
-    // Timing
-    float deltaTime = 0.f;
-    float lastFrame = 0.f;
     Shader* m_pShader = nullptr;
     unsigned int VBO = 0u, VAO = 0u;
     unsigned int texture1 = 0u, texture2 = 0u;

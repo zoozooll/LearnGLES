@@ -98,9 +98,9 @@ void AreaLightsScene::draw() {
     glActiveTexture(GL_TEXTURE1); glBindTexture(GL_TEXTURE_2D, mat2);
     glActiveTexture(GL_TEXTURE2); glBindTexture(GL_TEXTURE_2D, concreteTexture);
 
-    glBeginQuery(GL_TIME_ELAPSED, timeQuery);
+//    glBeginQuery(GL_TIME_ELAPSED, timeQuery); //TODO Not Support in GLSL
     renderPlane();
-    glEndQuery(GL_TIME_ELAPSED);
+//    glEndQuery(GL_TIME_ELAPSED);
 
     shaderLightPlane->use();
     shaderLightPlane->setMat4("view", view);
@@ -115,7 +115,7 @@ void AreaLightsScene::draw() {
     }
 
     GLuint64 elapsed = 0;
-    glGetQueryObjectui64v(timeQuery, GL_QUERY_RESULT, &elapsed);
+//    glGetQueryObjectui64v(timeQuery, GL_QUERY_RESULT, &elapsed); //TODO Not support in GLSL
     numQueries++;
     totalQueryTimeNs += elapsed;
 }

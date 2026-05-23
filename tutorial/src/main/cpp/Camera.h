@@ -73,8 +73,8 @@ protected:
 
     glm::mat4 m_viewMatrix;
     glm::mat4 m_projectionMatrix;
-    bool viewDirty = false;
-    bool projectionDirty = false;
+    bool viewDirty = true;
+    bool projectionDirty = true;
 
     constexpr static const float CAMERA_FOVY_DEGREE = 60.f;
     constexpr static const float CAMERA_NEAR = 0.1f;

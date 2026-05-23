@@ -12,6 +12,7 @@
 #include "Shader.h"
 #include "Texture.h"
 #include "TimeUtil.h"
+#include "glerror.h"
 
 void BasicGlesScene::init() {
 // configure global opengl state
@@ -22,7 +23,8 @@ void BasicGlesScene::init() {
 
     // build and compile our shader zprogram
     // ------------------------------------
-    m_pShader = new Shader("shaders/basic_gles/7.4.camera.vert", "shaders/basic_gles/7.4.camera.frag");
+    m_pShader = new Shader("shaders/basic_gles/7.4.camera.vert",
+            "shaders/basic_gles/7.4.camera.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -93,15 +95,18 @@ void BasicGlesScene::init() {
     m_pShader->use();
     m_pShader->setInt("texture1", 0);
     m_pShader->setInt("texture2", 1);
+    check_gl_error();
 }
 
 void BasicGlesScene::resize(int width, int height) {
     m_width = width;
     m_height = height;
+    camera->setAspec((float) width / (float) height);
     glViewport(0, 0, width, height);
 }
 
 void BasicGlesScene::draw() {
+    camera->update();
     // render
     // ------
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -151,10 +156,18 @@ void BasicGlesScene::draw() {
 
         glDrawArrays(GL_TRIANGLES, 0, 36);
     }
+    check_gl_error();
 }
 
 void BasicGlesScene::destroy() {
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
 
+    if (m_pShader)
+    {
+        delete m_pShader;
+        m_pShader = nullptr;
+    }
 }
 
 BasicGlesScene::BasicGlesScene() {

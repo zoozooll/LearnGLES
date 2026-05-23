@@ -65,7 +65,7 @@ void FrustumCullingScene::draw() {
 
         // view/projection transformations
         glm::mat4 projection = m_camera->getProjectionMatrix();
-        const Frustum camFrustum = createFrustumFromCamera(*m_camera, (float)m_width / (float)m_height, glm::radians(m_camera->), 0.1f, 100.0f);
+        const Frustum camFrustum = createFrustumFromCamera(*m_camera, (float)m_width / (float)m_height, glm::radians(m_camera->getVdy()), 0.1f, 100.0f);
 
 //        m_cameraSpy->ProcessMouseMovement(2, 0);
         glm::mat4 view = m_camera->getViewMatrix();

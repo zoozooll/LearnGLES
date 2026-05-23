@@ -6,25 +6,26 @@ import android.util.Log
 import androidx.compose.ui.geometry.Offset
 import com.minininja.learngles.GLActivity
 import com.minininja.learngles.Layer3DTouchCallback
+import com.minininja.learngles.NativeHelper
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
 class BasicGlesActivity : GLActivity() {
-    override fun createRenderer(): GLSurfaceView.Renderer {
+/*    override fun createRenderer(): GLSurfaceView.Renderer {
         return object : GLSurfaceView.Renderer {
             override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
-                GLES30.glClearColor(0.1f, 0.2f, 0.3f, 1.0f)
+                NativeHelper.nativeOnInit(intent.getStringExtra("tutorial_key"))
             }
 
             override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
-                GLES30.glViewport(0, 0, width, height)
+                NativeHelper.nativeSizeChanged(width, height)
             }
 
             override fun onDrawFrame(gl: GL10?) {
-                GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT or GLES30.GL_DEPTH_BUFFER_BIT)
+                NativeHelper.nativeDraw()
             }
         }
-    }
+    }*/
 
     override fun createTouchCallback(): Layer3DTouchCallback {
         return object : Layer3DTouchCallback {

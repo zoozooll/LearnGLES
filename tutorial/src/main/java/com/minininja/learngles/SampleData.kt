@@ -17,14 +17,14 @@ data class TutorialItem(
 // Global and Public Data Provider
 object SampleData {
     val basicItems = listOf(
-        TutorialItem("shaders/basic_gles", R.string.item_basic_gles, "images/basic_gles.png", BasicGlesActivity::class),
-        TutorialItem("shaders/depth_testing", R.string.item_depth_testing, "images/depth_testing.png", DepthTestingActivity::class),
-        TutorialItem("shaders/stencil_testing", R.string.item_stencil_testing, "images/stencil_testing.png", StencilTestingActivity::class),
-        TutorialItem("shaders/blending", R.string.item_blending, "images/blending.png", BlendingActivity::class),
+        TutorialItem("basic_gles", R.string.item_basic_gles, "images/basic_gles.png", BasicGlesActivity::class),
+        TutorialItem("depth_testing", R.string.item_depth_testing, "images/depth_testing.png", DepthTestingActivity::class),
+        TutorialItem("stencil_testing", R.string.item_stencil_testing, "images/stencil_testing.png", StencilTestingActivity::class),
+        TutorialItem("blending", R.string.item_blending, "images/blending.png", BlendingActivity::class),
         TutorialItem("cubemap", R.string.item_cubemap, "images/cubemap.png", CubemapActivity::class),
-        TutorialItem("shaders/geometry_shader", R.string.item_geometry_shader, "images/geometry_shader.png", GeometryShaderActivity::class),
+        TutorialItem("geometry_shader", R.string.item_geometry_shader, "images/geometry_shader.png", GeometryShaderActivity::class),
         TutorialItem("tesselation_shader", R.string.item_tesselation_shader, "images/tesselation_shader.png", TesselationShaderActivity::class),
-        TutorialItem("shaders/compute_shader", R.string.item_compute_shader, "images/compute_shader.png", ComputeShaderActivity::class),
+        TutorialItem("compute_shader", R.string.item_compute_shader, "images/compute_shader.png", ComputeShaderActivity::class),
         TutorialItem("instance", R.string.item_instance, "images/instance.png", InstanceActivity::class),
         TutorialItem("asteroid", R.string.item_asteroid, "images/asteroid.png", AsteroidActivity::class),
 //        TutorialItem("msaa", R.string.item_msaa, "images/msaa.png", MsaaActivity::class), // Unsupported in GLES
