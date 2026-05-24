@@ -6,7 +6,7 @@
 #include <array> //std::array
 #include <memory> //std::unique_ptr
 
-#include "model.h"
+#include "Model.h"
 #include "Camera.h"
 
 class Transform
