@@ -4,7 +4,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -funwind-tables")
 
 project("learngles")
 
-include_directories("." "./model/")
+include_directories("." "./model")
 
 # Add glm library
 add_subdirectory("../thirdparty/glm" ${CMAKE_CURRENT_BINARY_DIR}/glm)
