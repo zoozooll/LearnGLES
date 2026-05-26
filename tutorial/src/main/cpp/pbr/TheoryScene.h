@@ -1,9 +1,9 @@
 #ifndef LEARNGLES_THEORYSCENE_H
 #define LEARNGLES_THEORYSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
-class TheoryScene : public Scene {
+class TheoryScene : public TutorialScene {
 public :
     TheoryScene();
 

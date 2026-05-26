@@ -1,12 +1,12 @@
 #ifndef LEARNGLES_GEOMETRYSHADERSCENE_H
 #define LEARNGLES_GEOMETRYSHADERSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 class Shader;
 class Camera;
 
-class GeometryShaderScene : public Scene {
+class GeometryShaderScene : public TutorialScene {
 public :
     GeometryShaderScene();
 

@@ -1,12 +1,12 @@
 #ifndef LEARNGLES_MSAASCENE_H
 #define LEARNGLES_MSAASCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 class Shader;
 class Camera;
 
-class MsaaScene : public Scene {
+class MsaaScene : public TutorialScene {
 public :
     MsaaScene();
 

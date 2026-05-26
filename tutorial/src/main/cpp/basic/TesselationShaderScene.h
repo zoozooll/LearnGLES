@@ -1,13 +1,13 @@
 #ifndef LEARNGLES_TESSELATIONSHADERSCENE_H
 #define LEARNGLES_TESSELATIONSHADERSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 class Camera;
 
 class Shader;
 
-class TesselationShaderScene : public Scene {
+class TesselationShaderScene : public TutorialScene {
 public :
     TesselationShaderScene();
 

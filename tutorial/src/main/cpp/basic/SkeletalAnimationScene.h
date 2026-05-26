@@ -1,7 +1,7 @@
 #ifndef LEARNGLES_SKELETALANIMATIONSCENE_H
 #define LEARNGLES_SKELETALANIMATIONSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 class Camera;
 class Shader;
@@ -9,7 +9,7 @@ class AnimatedModel;
 class Animation;
 class Animator;
 
-class SkeletalAnimationScene : public Scene {
+class SkeletalAnimationScene : public TutorialScene {
 public :
     SkeletalAnimationScene();
 

@@ -1,12 +1,12 @@
 #ifndef LEARNGLES_INSTANCESCENE_H
 #define LEARNGLES_INSTANCESCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 class Shader;
 class Camera;
 
-class InstanceScene : public Scene {
+class InstanceScene : public TutorialScene {
 public :
     InstanceScene();
 

@@ -21,5 +21,5 @@ public class NativeHelper {
 
     public static native void setupInternalPath(String path);
 
-    public static native void sendCommands(Map<String, Object> commands);
+    public static native Map<String, Object> sendCommands(Map<String, Object> commands);
 }

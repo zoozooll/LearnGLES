@@ -1,13 +1,13 @@
 #ifndef LEARNGLES_BASICLIGHTINGSCENE_H
 #define LEARNGLES_BASICLIGHTINGSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 #include <glm/glm.hpp>
 
 class Camera;
 class Shader;
 
-class BasicLightingScene : public Scene {
+class BasicLightingScene : public TutorialScene {
 public :
     BasicLightingScene();
 

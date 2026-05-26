@@ -1,7 +1,7 @@
 #ifndef LEARNGLES_TEXTRENDERINGSCENE_H
 #define LEARNGLES_TEXTRENDERINGSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 #include <map>
 
@@ -17,7 +17,7 @@ struct Character {
 };
 
 
-class TextRenderingScene : public Scene {
+class TextRenderingScene : public TutorialScene {
 public :
     TextRenderingScene();
 

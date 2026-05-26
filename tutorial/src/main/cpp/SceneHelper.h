@@ -5,7 +5,7 @@
 #ifndef LEARNGLES_SCENEHELPER_H
 #define LEARNGLES_SCENEHELPER_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 #include <string>
 #include <memory>
 #include <cstring>
@@ -56,7 +56,7 @@
 #include "advanced/DsaScene.h"
 
 
-inline std::unique_ptr<Scene> GenSceneByName(const std::string& tutorial) {
+inline std::unique_ptr<TutorialScene> GenSceneByName(const std::string& tutorial) {
     if (tutorial == "basic_gles") {
         return std::make_unique<BasicGlesScene>();
     } else if (tutorial == "depth_testing") {

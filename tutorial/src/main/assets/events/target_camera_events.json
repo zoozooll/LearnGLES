@@ -1,0 +1,9 @@
+{
+  "event_id":"string",
+  "active": true,
+  "single_touch": "vec2",
+  "zooming": "vec2",
+  "rotating": "float",
+  "moving": "vec2",
+  "reset":""
+}

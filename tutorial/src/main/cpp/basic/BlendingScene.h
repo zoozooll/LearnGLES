@@ -1,7 +1,7 @@
 #ifndef LEARNGLES_BLENDINGSCENE_H
 #define LEARNGLES_BLENDINGSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 #include <vector>
 
@@ -9,7 +9,7 @@ class Camera;
 
 class Shader;
 
-class BlendingScene : public Scene {
+class BlendingScene : public TutorialScene {
 public :
     BlendingScene();
 

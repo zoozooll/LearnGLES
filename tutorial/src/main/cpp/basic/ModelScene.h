@@ -1,13 +1,13 @@
 #ifndef LEARNGLES_MODELSCENE_H
 #define LEARNGLES_MODELSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 class Shader;
 class Model;
 class Camera;
 
-class ModelScene : public Scene {
+class ModelScene : public TutorialScene {
 public :
     ModelScene();
 

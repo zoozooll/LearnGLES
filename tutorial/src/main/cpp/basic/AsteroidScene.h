@@ -1,13 +1,13 @@
 #ifndef LEARNGLES_ASTEROIDSCENE_H
 #define LEARNGLES_ASTEROIDSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 class Shader;
 class Camera;
 class Model;
 
-class AsteroidScene : public Scene {
+class AsteroidScene : public TutorialScene {
 public :
     AsteroidScene();
 

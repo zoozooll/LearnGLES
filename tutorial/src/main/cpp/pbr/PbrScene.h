@@ -1,12 +1,12 @@
 #ifndef LEARNGLES_PBRSCENE_H
 #define LEARNGLES_PBRSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 class Camera;
 class Shader;
 
-class PbrScene : public Scene {
+class PbrScene : public TutorialScene {
 public :
     PbrScene();
 

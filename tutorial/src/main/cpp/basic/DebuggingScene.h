@@ -1,14 +1,14 @@
 #ifndef LEARNGLES_DEBUGGINGSCENE_H
 #define LEARNGLES_DEBUGGINGSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 #include <GLES3/gl32.h>
 
 class Shader;
 class Camera;
 
-class DebuggingScene : public Scene {
+class DebuggingScene : public TutorialScene {
 public :
     DebuggingScene();
 

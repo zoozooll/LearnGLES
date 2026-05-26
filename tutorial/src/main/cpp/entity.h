@@ -389,7 +389,7 @@ inline Sphere generateSphereBV(const Model& model)
 class Entity
 {
 public:
-	//Scene graph
+	//TutorialScene graph
 	std::list<std::unique_ptr<Entity>> children;
 	Entity* parent = nullptr;
 

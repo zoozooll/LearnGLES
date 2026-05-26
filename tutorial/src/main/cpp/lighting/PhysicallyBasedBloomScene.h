@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 struct bloomMip
 {
@@ -61,7 +61,7 @@ private:
     bool mKarisAverageOnDownsample = true;
 };
 
-class PhysicallyBasedBloomScene : public Scene {
+class PhysicallyBasedBloomScene : public TutorialScene {
 public :
     PhysicallyBasedBloomScene();
 

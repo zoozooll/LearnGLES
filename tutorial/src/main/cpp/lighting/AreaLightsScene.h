@@ -1,7 +1,7 @@
 #ifndef LEARNGLES_AREALIGHTSSCENE_H
 #define LEARNGLES_AREALIGHTSSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 class Shader;
 class Camera;
@@ -20,7 +20,7 @@ struct AreaLight {
     bool twoSided = true;
 };
 
-class AreaLightsScene : public Scene {
+class AreaLightsScene : public TutorialScene {
 public :
     AreaLightsScene();
 

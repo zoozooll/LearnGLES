@@ -1,7 +1,7 @@
 #ifndef LEARNGLES_CUBEMAPSCENE_H
 #define LEARNGLES_CUBEMAPSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 #include <vector>
 #include <string>
@@ -9,7 +9,7 @@
 class Shader;
 class Camera;
 
-class CubemapScene : public Scene {
+class CubemapScene : public TutorialScene {
 public :
     CubemapScene();
 

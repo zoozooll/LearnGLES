@@ -1,7 +1,7 @@
 #ifndef LEARNGLES_COMPUTESHADERSCENE_H
 #define LEARNGLES_COMPUTESHADERSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 class Shader;
 
@@ -9,7 +9,7 @@ class ComputeShader;
 
 class Camera;
 
-class ComputeShaderScene : public Scene {
+class ComputeShaderScene : public TutorialScene {
 public :
     ComputeShaderScene();
 

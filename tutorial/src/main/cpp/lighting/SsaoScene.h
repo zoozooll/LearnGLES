@@ -1,7 +1,7 @@
 #ifndef LEARNGLES_SSAOSCENE_H
 #define LEARNGLES_SSAOSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 #include <vector>
 #include <glm/glm.hpp>
@@ -10,7 +10,7 @@ class Camera;
 class Shader;
 class Model;
 
-class SsaoScene : public Scene {
+class SsaoScene : public TutorialScene {
 public :
     SsaoScene();
 

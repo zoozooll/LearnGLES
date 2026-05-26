@@ -1,12 +1,12 @@
 #ifndef LEARNGLES_SHADOWSCENE_H
 #define LEARNGLES_SHADOWSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 class Camera;
 class Shader;
 
-class ShadowScene : public Scene {
+class ShadowScene : public TutorialScene {
 public :
     ShadowScene();
 

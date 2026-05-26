@@ -1,7 +1,7 @@
 #ifndef LEARNGLES_CSMSCENE_H
 #define LEARNGLES_CSMSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 #include <random>
 #include <vector>
@@ -9,7 +9,7 @@
 class Camera;
 class Shader;
 
-class CsmScene : public Scene {
+class CsmScene : public TutorialScene {
 public :
     CsmScene();
 

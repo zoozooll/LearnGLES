@@ -1,12 +1,12 @@
 #ifndef LEARNGLES_OITSCENE_H
 #define LEARNGLES_OITSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 class Camera;
 class Shader;
 
-class OitScene : public Scene {
+class OitScene : public TutorialScene {
 public :
     OitScene();
 

@@ -5,13 +5,13 @@
 #ifndef LEARNGLES_DEPTHTESTINGSCENE_H
 #define LEARNGLES_DEPTHTESTINGSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 class Shader;
 
 class Camera;
 
-class DepthTestingScene : public Scene {
+class DepthTestingScene : public TutorialScene {
 public :
     DepthTestingScene();
 

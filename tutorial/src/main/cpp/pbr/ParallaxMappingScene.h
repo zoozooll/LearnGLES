@@ -1,12 +1,12 @@
 #ifndef LEARNGLES_PARALLAXMAPPINGSCENE_H
 #define LEARNGLES_PARALLAXMAPPINGSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 class Camera;
 class Shader;
 
-class ParallaxMappingScene : public Scene {
+class ParallaxMappingScene : public TutorialScene {
 public :
     ParallaxMappingScene();
 

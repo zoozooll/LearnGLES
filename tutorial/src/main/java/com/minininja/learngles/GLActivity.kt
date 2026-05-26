@@ -1,18 +1,31 @@
 package com.minininja.learngles
 
-import android.opengl.GLES30
 import android.opengl.GLSurfaceView
+import android.opengl.GLSurfaceView.EGLContextFactory
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.displayCutoutPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,13 +33,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.minininja.learngles.ui.theme.LearnGLESTheme
+import javax.microedition.khronos.egl.EGL10
 import javax.microedition.khronos.egl.EGLConfig
+import javax.microedition.khronos.egl.EGLContext
+import javax.microedition.khronos.egl.EGLDisplay
 import javax.microedition.khronos.opengles.GL10
 import kotlin.math.atan2
+
 
 open class GLActivity : ComponentActivity() {
     protected var glSurfaceView: GLSurfaceView? = null
@@ -41,10 +60,15 @@ open class GLActivity : ComponentActivity() {
                 OpenGLContainer(
                     renderer = createRenderer(),
                     touchCallback = createTouchCallback(),
-                    onViewCreated = { glSurfaceView = it }
+                    onViewCreated = { glSurfaceView = it },
+                    overlay = { ControlPanel() }
                 )
             }
         }
+    }
+
+    @Composable
+    open fun ControlPanel() {
     }
 
     open fun createRenderer(): GLSurfaceView.Renderer {
@@ -204,8 +228,11 @@ fun Modifier.layer3DTouch(callback: Layer3DTouchCallback): Modifier = this
 fun OpenGLContainer(
     renderer: GLSurfaceView.Renderer,
     touchCallback: Layer3DTouchCallback,
-    onViewCreated: (GLSurfaceView) -> Unit = {}
+    onViewCreated: (GLSurfaceView) -> Unit = {},
+    overlay: @Composable () -> Unit = {}
 ) {
+    var isExpanded by remember { mutableStateOf(true) }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -215,6 +242,36 @@ fun OpenGLContainer(
             factory = { context ->
                 GLSurfaceView(context).apply {
                     setEGLContextClientVersion(3)
+                    setEGLContextFactory(object : EGLContextFactory {
+                        private val EGL_CONTEXT_CLIENT_VERSION = 0x3098
+
+                        public override fun createContext(
+                            egl: EGL10,
+                            display: EGLDisplay?,
+                            eglConfig: EGLConfig?
+                        ): EGLContext? {
+                            val attrib_list =
+                                intArrayOf(EGL_CONTEXT_CLIENT_VERSION, 3, EGL10.EGL_NONE)
+                            return egl.eglCreateContext(
+                                display,
+                                eglConfig,
+                                EGL10.EGL_NO_CONTEXT,
+                                attrib_list
+                            )
+                        }
+
+                        public override fun destroyContext(
+                            egl: EGL10,
+                            display: EGLDisplay?,
+                            context: EGLContext?
+                        ) {
+                            // 1. This runs on the GL Thread!
+                            // 2. The context is still alive here!
+                            NativeHelper.nativeDestroy()
+                             // 3. Let EGL destroy the context now that you are done
+                            egl.eglDestroyContext(display, context)
+                        }
+                    })
                     setRenderer(renderer)
                     renderMode = GLSurfaceView.RENDERMODE_WHEN_DIRTY
                     onViewCreated(this)
@@ -222,6 +279,48 @@ fun OpenGLContainer(
             },
             modifier = Modifier.fillMaxSize()
         )
+        Box(
+            modifier = Modifier
+                .displayCutoutPadding()
+                .padding(top = 8.dp, start = 8.dp)
+                .background(Color.Black.copy(alpha = 0.3f), RoundedCornerShape(8.dp))
+                .padding(if (isExpanded) 4.dp else 8.dp)
+                .wrapContentSize()
+        ) {
+            Column(modifier = Modifier.wrapContentSize()) {
+                if (!isExpanded) {
+                    Icon(
+                        imageVector = Icons.Default.Settings,
+                        contentDescription = "Expand",
+                        tint = Color.White,
+                        modifier = Modifier
+                            .size(24.dp)
+                            .clickable { isExpanded = true }
+                    )
+                }
+                AnimatedVisibility(visible = isExpanded) {
+                    Column {
+                        Row(
+                            modifier = Modifier.wrapContentSize(),
+                            horizontalArrangement = Arrangement.End
+                        ) {
+                            IconButton(
+                                onClick = { isExpanded = false },
+                                modifier = Modifier.size(24.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Close,
+                                    contentDescription = "Collapse",
+                                    tint = Color.White,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                            }
+                        }
+                        overlay()
+                    }
+                }
+            }
+        }
     }
 }
 

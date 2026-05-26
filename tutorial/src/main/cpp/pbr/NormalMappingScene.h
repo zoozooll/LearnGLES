@@ -1,12 +1,12 @@
 #ifndef LEARNGLES_NORMALMAPPINGSCENE_H
 #define LEARNGLES_NORMALMAPPINGSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 class Camera;
 class Shader;
 
-class NormalMappingScene : public Scene {
+class NormalMappingScene : public TutorialScene {
 public :
     NormalMappingScene();
 

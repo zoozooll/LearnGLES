@@ -1,14 +1,14 @@
 #ifndef LEARNGLES_HDRSCENE_H
 #define LEARNGLES_HDRSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 #include <vector>
 
 class Shader;
 class Camera;
 
-class HdrScene : public Scene {
+class HdrScene : public TutorialScene {
 public :
     HdrScene();
 

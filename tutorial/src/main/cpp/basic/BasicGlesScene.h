@@ -5,13 +5,13 @@
 #ifndef LEARNGLES_BASICGLESSCENE_H
 #define LEARNGLES_BASICGLESSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 class Camera;
 
 class Shader;
 
-class BasicGlesScene : public Scene {
+class BasicGlesScene : public TutorialScene {
 public:
     BasicGlesScene();
 
@@ -25,6 +25,8 @@ public:
 
     virtual ~BasicGlesScene();
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
 private:
     Camera *camera = nullptr;
 
@@ -34,6 +36,7 @@ private:
     int m_width = 0;
     int m_height = 0;
 
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 

@@ -1,13 +1,13 @@
 #ifndef LEARNGLES_STENCILTESTINGSCENE_H
 #define LEARNGLES_STENCILTESTINGSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 class Shader;
 
 class Camera;
 
-class StencilTestingScene : public Scene {
+class StencilTestingScene : public TutorialScene {
 public :
     StencilTestingScene();
 

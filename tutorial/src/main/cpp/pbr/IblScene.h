@@ -1,12 +1,12 @@
 #ifndef LEARNGLES_IBLSCENE_H
 #define LEARNGLES_IBLSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 class Camera;
 class Shader;
 
-class IblScene : public Scene {
+class IblScene : public TutorialScene {
 public :
     IblScene();
 

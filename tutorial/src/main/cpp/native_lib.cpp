@@ -3,13 +3,13 @@
 #include <GLES3/gl32.h>
 #include <android/asset_manager_jni.h>
 #include <cstdlib>
+#include <memory>
 #include <string>
-
 #include "glerror.h"
 #include "logutil.h"
-#include "Scene.h"
+#include "TutorialScene.h"
 #include "SceneHelper.h"
-#include <memory>
+#include "JNITools.h"
 
 //
 // Created by Aaron Lee on 2023/07/12.
@@ -18,7 +18,7 @@ AAssetManager* mgr = nullptr;
 
 std::string g_internalPath;
 
-std::unique_ptr<Scene> g_scene;
+std::unique_ptr<TutorialScene> g_scene;
 
 extern "C"
 JNIEXPORT void JNICALL
@@ -77,7 +77,12 @@ Java_com_minininja_learngles_NativeHelper_setupInternalPath(JNIEnv *env, jclass 
 }
 
 extern "C"
-JNIEXPORT void JNICALL
-Java_com_minininja_learngles_NativeHelper_sendCommands(JNIEnv *env, jclass clazz, jobject commands) {
-
+JNIEXPORT jobject JNICALL
+Java_com_minininja_learngles_NativeHelper_sendCommands(JNIEnv *env, jclass clazz, jobject jcommands) {
+    if (g_scene) {
+        auto commands = JNITools::convertMapJava2Cpp<std::string>(env, jcommands);
+        auto cppRs = g_scene->propertyEvent(commands);
+        return JNITools::convertCppMapToJavaMap(env, cppRs);
+    }
+    return nullptr;
 }

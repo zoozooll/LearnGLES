@@ -1,12 +1,12 @@
 #ifndef LEARNGLES_GAMMACORRECTIONSCENE_H
 #define LEARNGLES_GAMMACORRECTIONSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 class Camera;
 class Shader;
 
-class GammaCorrectionScene : public Scene {
+class GammaCorrectionScene : public TutorialScene {
 public :
     GammaCorrectionScene();
 

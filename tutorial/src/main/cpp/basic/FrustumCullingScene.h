@@ -1,13 +1,13 @@
 #ifndef LEARNGLES_FRUSTUMCULLINGSCENE_H
 #define LEARNGLES_FRUSTUMCULLINGSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 class Shader;
 class Camera;
 class Entity;
 
-class FrustumCullingScene : public Scene {
+class FrustumCullingScene : public TutorialScene {
 public :
     FrustumCullingScene();
 

@@ -1,14 +1,14 @@
 #ifndef LEARNGLES_LIGHTCASTERSCENE_H
 #define LEARNGLES_LIGHTCASTERSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 #include <glm/glm.hpp>
 
 class Camera;
 class Shader;
 
-class LightCasterScene : public Scene {
+class LightCasterScene : public TutorialScene {
 public :
     LightCasterScene();
 

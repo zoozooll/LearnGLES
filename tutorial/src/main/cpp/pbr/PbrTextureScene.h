@@ -1,9 +1,9 @@
 #ifndef LEARNGLES_PBRTEXTURESCENE_H
 #define LEARNGLES_PBRTEXTURESCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
-class PbrTextureScene : public Scene {
+class PbrTextureScene : public TutorialScene {
 public :
     PbrTextureScene();
 

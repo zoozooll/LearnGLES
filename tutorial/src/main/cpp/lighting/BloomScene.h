@@ -1,14 +1,14 @@
 #ifndef LEARNGLES_BLOOMSCENE_H
 #define LEARNGLES_BLOOMSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 #include <vector>
 
 class Camera;
 class Shader;
 
-class BloomScene : public Scene {
+class BloomScene : public TutorialScene {
 public :
     BloomScene();
 

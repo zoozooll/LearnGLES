@@ -23,8 +23,8 @@ void BasicGlesScene::init() {
 
     // build and compile our shader zprogram
     // ------------------------------------
-    m_pShader = new Shader("shaders/basic_gles/7.4.camera.vert",
-            "shaders/basic_gles/7.4.camera.frag");
+    m_pShader = new Shader("shaders/basic_gles/basic.vert",
+            "shaders/basic_gles/basic.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -122,11 +122,11 @@ void BasicGlesScene::draw() {
     m_pShader->use();
 
     // pass projection matrix to shader (note that in this case it could change every frame)
-    glm::mat4 projection = glm::perspective(glm::radians(60.f), (float)m_width / (float)m_height, 0.1f, 100.0f);
+    glm::mat4 projection = camera->getProjectionMatrix();
     m_pShader->setMat4("projection", projection);
 
     // camera/view transformation
-    glm::mat4 view = glm::lookAt(glm::vec3(0, 0, 10), glm::vec3(0), glm::vec3(0, 1, 0));
+    glm::mat4 view = camera->getViewMatrix();
     m_pShader->setMat4("view", view);
 
     // world space positions of our cubes
@@ -170,9 +170,59 @@ void BasicGlesScene::destroy() {
     }
 }
 
+std::map<std::string, std::any> BasicGlesScene::propertyEvent(std::map<std::string, std::any> &map) {
+    auto eventIdIt = map.find("event_id");
+    if (eventIdIt != map.end()) {
+        auto eventIdStr = std::any_cast<std::string>(eventIdIt->second);
+        if ("target_camera_touching_event" == eventIdStr) {
+            parseTargetCameraEvent(map);
+        }
+    }
+    return {};
+}
+
 BasicGlesScene::BasicGlesScene() {
 }
 
 BasicGlesScene::~BasicGlesScene() {
+}
 
+void BasicGlesScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
+    auto it = event.find("single_touching");
+    if (it != event.end()) {
+        auto eventValue = std::any_cast<glm::vec2>(it->second);
+        auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
+        glm::vec2 director = eventValue;
+        targetCamera->yawPitch(director * 0.5F);
+    }
+
+    it = event.find("zooming");
+    if (it != event.end()) {
+        auto eventValue = std::any_cast<glm::vec2>(it->second);
+        auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
+        if (eventValue.x != 0.f) {
+            auto scale = eventValue.y / eventValue.x;
+            targetCamera->zoom(scale);
+        }
+    }
+
+    it = event.find("rotating");
+    if (it != event.end()) {
+        auto eventValue = std::any_cast<float>(it->second);
+        auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
+        targetCamera->roll(eventValue);
+    }
+
+    it = event.find("moving");
+    if (it != event.end()) {
+        auto eventValue = std::any_cast<glm::vec2>(it->second);
+        auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
+        targetCamera->move(eventValue);
+    }
+
+    it = event.find("reset");
+    if (it != event.end()) {
+        auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
+        targetCamera->reset();
+    }
 }

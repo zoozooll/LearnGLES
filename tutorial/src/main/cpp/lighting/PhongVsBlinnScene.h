@@ -1,14 +1,14 @@
 #ifndef LEARNGLES_PHONGVSBLINNSCENE_H
 #define LEARNGLES_PHONGVSBLINNSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 #include <glm/glm.hpp>
 
 class Camera;
 class Shader;
 
-class PhongVsBlinnScene : public Scene {
+class PhongVsBlinnScene : public TutorialScene {
 public :
     PhongVsBlinnScene();
 

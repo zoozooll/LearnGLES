@@ -1,14 +1,14 @@
 #ifndef LEARNGLES_MULTILIGHTSSCENE_H
 #define LEARNGLES_MULTILIGHTSSCENE_H
 
-#include "Scene.h"
+#include "TutorialScene.h"
 
 #include <vector>
 
 class Shader;
 class Camera;
 
-class MultiLightsScene : public Scene {
+class MultiLightsScene : public TutorialScene {
 public :
     MultiLightsScene();
 
