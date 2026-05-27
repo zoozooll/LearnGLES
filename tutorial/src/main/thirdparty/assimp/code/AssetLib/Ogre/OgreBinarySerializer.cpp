@@ -383,7 +383,7 @@ void OgreBinarySerializer::ReadSubMesh(Mesh *mesh) {
     if (!submesh->usesSharedVertexData) {
         id = ReadHeader();
         if (id != M_GEOMETRY) {
-            throw DeadlyImportError("M_SUBMESH does not contain M_GEOMETRY, but shader geometry is set to false");
+            throw DeadlyImportError("M_SUBMESH does not contain M_GEOMETRY, but paintShader geometry is set to false");
         }
 
         submesh->vertexData = new VertexData();
@@ -926,7 +926,7 @@ void OgreBinarySerializer::ReadSkeletonAnimationTrack(Skeleton * /*skeleton*/, A
     uint16_t boneId = Read<uint16_t>();
     Bone *bone = dest->parentSkeleton->BoneById(boneId);
     if (!bone) {
-        throw DeadlyImportError("Cannot read animation track, m_target bone ", boneId, " not in m_target Skeleton");
+        throw DeadlyImportError("Cannot read animation track, target bone ", boneId, " not in target Skeleton");
     }
 
     VertexAnimationTrack track;

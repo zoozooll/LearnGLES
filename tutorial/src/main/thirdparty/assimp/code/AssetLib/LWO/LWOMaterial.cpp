@@ -321,7 +321,7 @@ void LWOImporter::ConvertMaterial(const LWO::Surface &surf, aiMaterial *pcMat) {
     HandleTextures(pcMat, surf.mOpacityTextures, aiTextureType_OPACITY);
     HandleTextures(pcMat, surf.mReflectionTextures, aiTextureType_REFLECTION);
 
-    // Now we need to know which shader to use .. iterate through the shader list of
+    // Now we need to know which paintShader to use .. iterate through the paintShader list of
     // the surface and  search for a name which we know ...
     for (const auto &shader : surf.mShaders) {
         if (shader.functionName == "LW_SuperCelShader" || shader.functionName == "AH_CelShader") {
@@ -335,7 +335,7 @@ void LWOImporter::ConvertMaterial(const LWO::Surface &surf, aiMaterial *pcMat) {
             m = aiShadingMode_Fresnel;
             break;
         } else {
-            ASSIMP_LOG_WARN("LWO2: Unknown surface shader: ", shader.functionName);
+            ASSIMP_LOG_WARN("LWO2: Unknown surface paintShader: ", shader.functionName);
         }
     }
     if (surf.mMaximumSmoothAngle <= 0.0)
@@ -664,7 +664,7 @@ void LWOImporter::LoadLWO2ShaderBlock(LE_NCONST IFF::SubChunkHeader * /*head*/, 
         const IFF::SubChunkHeader head = IFF::LoadSubChunk(mFileBuffer);
 
         if (mFileBuffer + head.length > end)
-            throw DeadlyImportError("LWO2: Invalid shader header chunk length");
+            throw DeadlyImportError("LWO2: Invalid paintShader header chunk length");
 
         uint8_t *const next = mFileBuffer + head.length;
         switch (head.type) {
@@ -678,7 +678,7 @@ void LWOImporter::LoadLWO2ShaderBlock(LE_NCONST IFF::SubChunkHeader * /*head*/, 
         mFileBuffer = next;
     }
 
-    // now attach the shader to the parent surface - sort by ordinal string
+    // now attach the paintShader to the parent surface - sort by ordinal string
     for (ShaderList::iterator it = surf.mShaders.begin(); it != surf.mShaders.end(); ++it) {
         if (::strcmp(shader.ordinal.c_str(), (*it).ordinal.c_str()) < 0) {
             surf.mShaders.insert(it, shader);

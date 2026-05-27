@@ -144,7 +144,7 @@ private:
             unsigned int size);
 
     // -------------------------------------------------------------------
-    /** Loads a shader block from a LWO2 file.
+    /** Loads a paintShader block from a LWO2 file.
      *  @param size Maximum size to be read, in bytes.
      *  @param head Header of the SUF.BLOK header
      */

@@ -134,6 +134,10 @@ OPTION ( ASSIMP_IGNORE_GIT_HASH
    OFF
 )
 
+MESSAGE("ASSIMP_ANDROID_JNIIOSYSTEM: ${ASSIMP_ANDROID_JNIIOSYSTEM}")
+MESSAGE("ASSIMP_BUILD_TESTS: ${ASSIMP_BUILD_TESTS}")
+MESSAGE("ASSIMP_INJECT_DEBUG_POSTFIX: ${ASSIMP_INJECT_DEBUG_POSTFIX}")
+
 IF (WIN32)
   # Use subset of Windows.h
   ADD_DEFINITIONS( -DWIN32_LEAN_AND_MEAN )
@@ -359,7 +363,7 @@ ELSE()
   SET(ASSIMP_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY} CACHE STRING "Path for runtime output files")
 ENDIF()
 
-# Macro used to set the output directories of a m_target to the
+# Macro used to set the output directories of a target to the
 # respective Assimp output directories.
 MACRO(TARGET_USE_COMMON_OUTPUT_DIRECTORY target)
   set_target_properties(${target} PROPERTIES
@@ -377,7 +381,7 @@ ELSE()
   SET(CMAKE_DEBUG_POSTFIX "" CACHE STRING "Debug Postfix for lib, samples and tools")
 ENDIF()
 
-# Only generate this m_target if no higher-level project already has
+# Only generate this target if no higher-level project already has
 IF (NOT TARGET uninstall AND ASSIMP_INSTALL)
   # add make uninstall capability
   CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules/cmake_uninstall.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake" IMMEDIATE @ONLY)

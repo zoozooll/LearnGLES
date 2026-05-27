@@ -47,7 +47,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *  Sources:
  *     http://www.gamers.org/dEngine/quake3/UQ3S
  *     http://linux.ucla.edu/~phaethon/q3/formats/md3format.html
- *     http://www.heppler.com/shader/shader/
+ *     http://www.heppler.com/paintShader/paintShader/
  */
 
 #ifndef ASSIMP_BUILD_NO_MD3_IMPORTER
@@ -84,7 +84,7 @@ static const aiImporterDesc desc = {
 };
 
 // ------------------------------------------------------------------------------------------------
-// Convert a Q3 shader blend function to the appropriate enum value
+// Convert a Q3 paintShader blend function to the appropriate enum value
 Q3Shader::BlendFunc StringToBlendFunc(const std::string &m) {
     if (m == "GL_ONE") {
         return Q3Shader::BLEND_GL_ONE;
@@ -106,13 +106,13 @@ Q3Shader::BlendFunc StringToBlendFunc(const std::string &m) {
 }
 
 // ------------------------------------------------------------------------------------------------
-// Load a Quake 3 shader
+// Load a Quake 3 paintShader
 bool Q3Shader::LoadShader(ShaderData &fill, const std::string &pFile, IOSystem *io) {
     std::unique_ptr<IOStream> file(io->Open(pFile, "rt"));
     if (!file.get())
         return false; // if we can't access the file, don't worry and return
 
-    ASSIMP_LOG_INFO("Loading Quake3 shader file ", pFile);
+    ASSIMP_LOG_INFO("Loading Quake3 paintShader file ", pFile);
 
     // read file in memory
     const size_t s = file->FileSize();
@@ -135,7 +135,7 @@ bool Q3Shader::LoadShader(ShaderData &fill, const std::string &pFile, IOSystem *
 
             // append to last section, if any
             if (!curData) {
-                ASSIMP_LOG_ERROR("Q3Shader: Unexpected shader section token \'{\'");
+                ASSIMP_LOG_ERROR("Q3Shader: Unexpected paintShader section token \'{\'");
                 return true; // still no failure, the file is there
             }
 
@@ -265,7 +265,7 @@ void Q3Shader::ConvertShaderToMaterial(aiMaterial *out, const ShaderDataBlock &s
 
     /*  IMPORTANT: This is not a real conversion. Actually we're just guessing and
      *  hacking around to build an aiMaterial that looks nearly equal to the
-     *  original Quake 3 shader. We're missing some important features like
+     *  original Quake 3 paintShader. We're missing some important features like
      *  animatable material properties in our material system, but at least
      *  multiple textures should be handled correctly.
      */
@@ -407,7 +407,7 @@ void MD3Importer::ValidateSurfaceHeaderOffsets(const MD3::Surface *pcSurf) {
     }
 
     if (pcSurf->NUM_SHADER > AI_MD3_MAX_SHADERS) {
-        ASSIMP_LOG_WARN("MD3: Quake III shader limit exceeded");
+        ASSIMP_LOG_WARN("MD3: Quake III paintShader limit exceeded");
     }
 
     if (pcSurf->NUM_VERTICES > AI_MD3_MAX_VERTS) {
@@ -469,7 +469,7 @@ void MD3Importer::ReadSkin(Q3Shader::SkinData &fill) const {
 }
 
 // ------------------------------------------------------------------------------------------------
-// Try to read the shader for a MD3 file
+// Try to read the paintShader for a MD3 file
 void MD3Importer::ReadShader(Q3Shader::ShaderData &fill) const {
     // Determine Q3 model name from given path
     const std::string::size_type s = path.find_last_of("\\/", path.length() - 2);
@@ -478,8 +478,8 @@ void MD3Importer::ReadShader(Q3Shader::ShaderData &fill) const {
     // If no specific dir or file is given, use our default search behaviour
     if (!configShaderFile.length()) {
         const char sep = mIOHandler->getOsSeparator();
-        if (!Q3Shader::LoadShader(fill, path + ".." + sep + ".." + sep + ".." + sep + "scripts" + sep + model_file + ".shader", mIOHandler)) {
-             Q3Shader::LoadShader(fill, path + ".." + sep + ".." + sep + ".." + sep + "scripts" + sep + filename + ".shader", mIOHandler);
+        if (!Q3Shader::LoadShader(fill, path + ".." + sep + ".." + sep + ".." + sep + "scripts" + sep + model_file + ".paintShader", mIOHandler)) {
+             Q3Shader::LoadShader(fill, path + ".." + sep + ".." + sep + ".." + sep + "scripts" + sep + filename + ".paintShader", mIOHandler);
         }
     } else {
         // If the given string specifies a file, load this file.
@@ -487,8 +487,8 @@ void MD3Importer::ReadShader(Q3Shader::ShaderData &fill) const {
         const std::string::size_type st = configShaderFile.find_last_of('.');
         if (st == std::string::npos) {
 
-            if (!Q3Shader::LoadShader(fill, configShaderFile + model_file + ".shader", mIOHandler)) {
-                Q3Shader::LoadShader(fill, configShaderFile + filename + ".shader", mIOHandler);
+            if (!Q3Shader::LoadShader(fill, configShaderFile + model_file + ".paintShader", mIOHandler)) {
+                Q3Shader::LoadShader(fill, configShaderFile + filename + ".paintShader", mIOHandler);
             }
         } else {
             Q3Shader::LoadShader(fill, configShaderFile, mIOHandler);
@@ -773,13 +773,13 @@ void MD3Importer::InternReadFile(const std::string &pFile, aiScene *pScene, IOSy
     Q3Shader::SkinData skins;
     ReadSkin(skins);
 
-    // And check whether we can locate a shader file for this model
+    // And check whether we can locate a paintShader file for this model
     Q3Shader::ShaderData shaders;
     if (configLoadShaders){
         ReadShader(shaders);
     }
 
-    // Adjust all texture paths in the shader
+    // Adjust all texture paths in the paintShader
     const char *header_name = pcHeader->NAME;
     if (!shaders.blocks.empty()) {
         for (std::list<Q3Shader::ShaderDataBlock>::iterator dit = shaders.blocks.begin(); dit != shaders.blocks.end(); ++dit) {
@@ -825,7 +825,7 @@ void MD3Importer::InternReadFile(const std::string &pFile, aiScene *pScene, IOSy
         // Navigate to the texture coordinate list of the surface
         BE_NCONST MD3::TexCoord *pcUVs = (BE_NCONST MD3::TexCoord *)(((uint8_t *)pcSurfaces) + pcSurfaces->OFS_ST);
 
-        // Navigate to the shader list of the surface
+        // Navigate to the paintShader list of the surface
         BE_NCONST MD3::Shader *pcShaders = (BE_NCONST MD3::Shader *)(((uint8_t *)pcSurfaces) + pcSurfaces->OFS_SHADERS);
 
         // If the submesh is empty ignore it
@@ -852,7 +852,7 @@ void MD3Importer::InternReadFile(const std::string &pFile, aiScene *pScene, IOSy
             (*it).resolved = true; // mark entry as resolved
         }
 
-        // Get the first shader (= texture?) assigned to the surface
+        // Get the first paintShader (= texture?) assigned to the surface
         if (!texture_name && pcSurfaces->NUM_SHADER) {
             texture_name = pcShaders->NAME;
         }
@@ -869,7 +869,7 @@ void MD3Importer::InternReadFile(const std::string &pFile, aiScene *pScene, IOSy
 
         const Q3Shader::ShaderDataBlock *shader = nullptr;
 
-        // Now search the current shader for a record with this name (
+        // Now search the current paintShader for a record with this name (
         // excluding texture file extension)
         if (!shaders.blocks.empty()) {
             std::string::size_type sh = convertedPath.find_last_of('.');
@@ -882,9 +882,9 @@ void MD3Importer::InternReadFile(const std::string &pFile, aiScene *pScene, IOSy
             if (dit != shaders.blocks.end()) {
                 // We made it!
                 shader = &*dit;
-                ASSIMP_LOG_INFO("Found shader record for ", without_ext);
+                ASSIMP_LOG_INFO("Found paintShader record for ", without_ext);
             } else {
-                ASSIMP_LOG_WARN("Unable to find shader record for ", without_ext);
+                ASSIMP_LOG_WARN("Unable to find paintShader record for ", without_ext);
             }
         }
 
@@ -987,7 +987,7 @@ void MD3Importer::InternReadFile(const std::string &pFile, aiScene *pScene, IOSy
                 pcMesh->mTextureCoords[0][iCurrent].x = pcUVs[index].U;
                 pcMesh->mTextureCoords[0][iCurrent].y = 1.0f - pcUVs[index].V;
             }
-            // Flip face order normally, unless shader is backfacing
+            // Flip face order normally, unless paintShader is backfacing
             if (!(shader && shader->cull == Q3Shader::CULL_CCW)) {
                 std::swap(pcMesh->mFaces[i].mIndices[2], pcMesh->mFaces[i].mIndices[1]);
             }

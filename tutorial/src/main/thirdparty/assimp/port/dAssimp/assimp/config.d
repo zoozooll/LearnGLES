@@ -605,18 +605,18 @@ extern ( C ) {
    const char* AI_CONFIG_IMPORT_MD3_SKIN_NAME = "IMPORT_MD3_SKIN_NAME";
 
    /**
-    * Specify the Quake 3 shader file to be used for a particular MD3 file.
+    * Specify the Quake 3 paintShader file to be used for a particular MD3 file.
     * This can also be a search path.
     *
     * By default Assimp's behaviour is as follows: If a MD3 file
     * <code>[any_path]/models/[any_q3_subdir]/[model_name]/[file_name].md3</code>
-    * is loaded, the library tries to locate the corresponding shader file in
-    * <code>[any_path]/scripts/[model_name].shader</code>. This property
-    * overrides this behaviour. It can either specify a full path to the shader
+    * is loaded, the library tries to locate the corresponding paintShader file in
+    * <code>[any_path]/scripts/[model_name].paintShader</code>. This property
+    * overrides this behaviour. It can either specify a full path to the paintShader
     * to be loaded or alternatively the path (relative or absolute) to the
     * directory where the shaders for all MD3s to be loaded reside. Assimp
-    * attempts to open <code>[dir]/[model_name].shader</code> first,
-    * <code>[dir]/[file_name].shader</code> is the fallback file. Note that
+    * attempts to open <code>[dir]/[model_name].paintShader</code> first,
+    * <code>[dir]/[file_name].paintShader</code> is the fallback file. Note that
     * <code>[dir]</code> should have a terminal (back)slash.
     *
     * Default value: n/a.

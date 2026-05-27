@@ -124,7 +124,7 @@ bool C4DImporter::CanRead( const std::string& pFile, IOSystem* /*pIOHandler*/, b
     } else if ((!extension.length() || checkSig) && pIOHandler)   {
         // TODO
     }
-    
+
     return false;
 }
 
@@ -217,7 +217,7 @@ bool C4DImporter::ReadShader(aiMaterial* out, BaseShader* shader) {
             iBlendDataType* blend_list = reinterpret_cast<iBlendDataType*>(blend.GetCustomDataType(CUSTOMDATA_BLEND_LIST));
             if (!blend_list)
             {
-                LogWarn("ignoring XLayer shader: no blend list given");
+                LogWarn("ignoring XLayer paintShader: no blend list given");
                 continue;
             }
 
@@ -255,7 +255,7 @@ bool C4DImporter::ReadShader(aiMaterial* out, BaseShader* shader) {
             out->AddProperty(&path, AI_MATKEY_TEXTURE_DIFFUSE(0));
             return true;
         } else {
-            LogWarn("ignoring shader type: ", GetObjectTypeName(shader->GetType()));
+            LogWarn("ignoring paintShader type: ", GetObjectTypeName(shader->GetType()));
         }
         shader = shader->GetNext();
     }

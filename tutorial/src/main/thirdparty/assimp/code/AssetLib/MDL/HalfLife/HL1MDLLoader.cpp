@@ -1019,7 +1019,7 @@ void HL1MDLLoader::read_animations() {
 
                     position_key->mTime = rotation_key->mTime = static_cast<double>(frame);
                     /* The Half-Life engine uses X as forward, Y as left, Z as up. Therefore,
-                       pitch,yaw,roll is represented as (YZX). */
+                       pitch,yaw,yawPitch is represented as (YZX). */
                     rotation_key->mValue = aiQuaternion(angle1.y, angle1.z, angle1.x);
                     rotation_key->mValue.Normalize();
                 }

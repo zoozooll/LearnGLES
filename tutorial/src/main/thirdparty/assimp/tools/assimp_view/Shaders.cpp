@@ -50,27 +50,27 @@ std::string g_szNormalsShader = std::string(
         "float4x4 WorldViewProjection	: WORLDVIEWPROJECTION;\n"
         "float4 OUTPUT_COLOR;\n"
 
-        // Vertex shader input structure
+        // Vertex paintShader input structure
         "struct VS_INPUT\n"
         "{\n"
         "// Position\n"
         "float3 Position : POSITION;\n"
         "};\n"
 
-        // Vertex shader output structure for pixel shader usage
+        // Vertex paintShader output structure for pixel paintShader usage
         "struct VS_OUTPUT\n"
         "{\n"
         "float4 Position : POSITION;\n"
         "};\n"
 
-        // Vertex shader output structure for FixedFunction usage
+        // Vertex paintShader output structure for FixedFunction usage
         "struct VS_OUTPUT_FF\n"
         "{\n"
         "float4 Position : POSITION;\n"
         "float4 Color : COLOR;\n"
         "};\n"
 
-        // Vertex shader for rendering normals using pixel shader
+        // Vertex paintShader for rendering normals using pixel paintShader
         "VS_OUTPUT RenderNormalsVS(VS_INPUT IN)\n"
         "{\n"
         "// Initialize the output structure with zero\n"
@@ -82,7 +82,7 @@ std::string g_szNormalsShader = std::string(
         "return Out;\n"
         "}\n"
 
-        // Vertex shader for rendering normals using fixed function pipeline
+        // Vertex paintShader for rendering normals using fixed function pipeline
         "VS_OUTPUT_FF RenderNormalsVS_FF(VS_INPUT IN)\n"
         "{\n"
         "VS_OUTPUT_FF Out;\n"
@@ -91,7 +91,7 @@ std::string g_szNormalsShader = std::string(
         "return Out;\n"
         "}\n"
 
-        // Pixel shader
+        // Pixel paintShader
         "float4 RenderNormalsPS() : COLOR\n"
         "{\n"
         "return OUTPUT_COLOR;\n"
@@ -142,21 +142,21 @@ std::string g_szSkyboxShader = std::string(
         // NOTE: Assume that the material uses a WorldViewProjection matrix\n"
         "float4x4 WorldViewProjection	: WORLDVIEWPROJECTION;\n"
 
-        // Vertex shader input structure
+        // Vertex paintShader input structure
         "struct VS_INPUT\n"
         "{\n"
         "float3 Position : POSITION;\n"
         "float3 Texture0 : TEXCOORD0;\n"
         "};\n"
 
-        // Vertex shader output structure
+        // Vertex paintShader output structure
         "struct VS_OUTPUT\n"
         "{\n"
         "float4 Position : POSITION;\n"
         "float3 Texture0 : TEXCOORD0;\n"
         "};\n"
 
-        // Vertex shader
+        // Vertex paintShader
         "VS_OUTPUT RenderSkyBoxVS(VS_INPUT IN)\n"
         "{\n"
         "VS_OUTPUT Out;\n"
@@ -173,14 +173,14 @@ std::string g_szSkyboxShader = std::string(
         "return Out;\n"
         "}\n"
 
-        // Pixel shader
+        // Pixel paintShader
         "float4 RenderSkyBoxPS(float3 Texture0 : TEXCOORD0) : COLOR\n"
         "{\n"
         // Lookup the skybox texture
         "return texCUBE(EnvironmentMapSampler,Texture0) ;\n"
         "}\n"
 
-        // Technique for the skybox shader (ps_2_0)
+        // Technique for the skybox paintShader (ps_2_0)
         "technique RenderSkyBox\n"
         "{\n"
         "pass p0\n"
@@ -223,7 +223,7 @@ std::string g_szSkyboxShader = std::string(
         "return tex2D(TEXTURE_SAMPLER,IN);\n"
         "}\n"
 
-        // Technique for the background image shader (ps_2_0)
+        // Technique for the background image paintShader (ps_2_0)
         "technique RenderImage2D\n"
         "{\n"
         "pass p0\n"
@@ -258,7 +258,7 @@ std::string g_szDefaultShader = std::string(
         "float4x3 gBoneMatrix[60]; \n"
         //	"#endif // AV_SKINNING \n"
 
-        // Vertex shader input structure
+        // Vertex paintShader input structure
         "struct VS_INPUT\n"
         "{\n"
         "float3 Position : POSITION;\n"
@@ -269,7 +269,7 @@ std::string g_szDefaultShader = std::string(
         //		"#endif // AV_SKINNING \n"
         "};\n"
 
-        // Vertex shader output structure for pixel shader usage
+        // Vertex paintShader output structure for pixel paintShader usage
         "struct VS_OUTPUT\n"
         "{\n"
         "float4 Position : POSITION;\n"
@@ -277,14 +277,14 @@ std::string g_szDefaultShader = std::string(
         "float3 Normal : TEXCOORD1;\n"
         "};\n"
 
-        // Vertex shader output structure for fixed function
+        // Vertex paintShader output structure for fixed function
         "struct VS_OUTPUT_FF\n"
         "{\n"
         "float4 Position : POSITION;\n"
         "float4 Color : COLOR;\n"
         "};\n"
 
-        // Vertex shader for pixel shader usage
+        // Vertex paintShader for pixel paintShader usage
         "VS_OUTPUT DefaultVShader(VS_INPUT IN)\n"
         "{\n"
         "VS_OUTPUT Out;\n"
@@ -310,7 +310,7 @@ std::string g_szDefaultShader = std::string(
         "return Out;\n"
         "}\n"
 
-        // Vertex shader for fixed function pipeline
+        // Vertex paintShader for fixed function pipeline
         "VS_OUTPUT_FF DefaultVShader_FF(VS_INPUT IN)\n"
         "{\n"
         "VS_OUTPUT_FF Out;\n"
@@ -339,7 +339,7 @@ std::string g_szDefaultShader = std::string(
         "return Out;\n"
         "}\n"
 
-        // Pixel shader for one light
+        // Pixel paintShader for one light
         "float4 DefaultPShaderSpecular_D1(VS_OUTPUT IN) : COLOR\n"
         "{\n"
         "float4 OUT = float4(0.0f,0.0f,0.0f,1.0f);\n"
@@ -357,7 +357,7 @@ std::string g_szDefaultShader = std::string(
         "return OUT;\n"
         "}\n"
 
-        // Pixel shader for two lights
+        // Pixel paintShader for two lights
         "float4 DefaultPShaderSpecular_D2(VS_OUTPUT IN) : COLOR\n"
         "{\n"
         "float4 OUT = float4(0.0f,0.0f,0.0f,1.0f);\n"
@@ -612,7 +612,7 @@ std::string g_szMaterialShader = std::string(
         "};\n"
         "#endif // AV_SKYBOX_LOOKUP\n"
 
-        // Vertex shader input structure
+        // Vertex paintShader input structure
         "struct VS_INPUT\n"
         "{\n"
         "float3 Position : POSITION;\n"
@@ -630,7 +630,7 @@ std::string g_szMaterialShader = std::string(
         "#endif // AV_SKINNING \n"
         "};\n"
 
-        // Vertex shader output structure for pixel shader usage
+        // Vertex paintShader output structure for pixel paintShader usage
         "struct VS_OUTPUT\n"
         "{\n"
         "float4 Position : POSITION;\n"
@@ -653,7 +653,7 @@ std::string g_szMaterialShader = std::string(
         "#endif\n"
         "};\n"
 
-        // Vertex shader output structure for fixed function pixel pipeline
+        // Vertex paintShader output structure for fixed function pixel pipeline
         "struct VS_OUTPUT_FF\n"
         "{\n"
         "float4 Position : POSITION;\n"
@@ -665,7 +665,7 @@ std::string g_szMaterialShader = std::string(
         // Selective SuperSampling in screenspace for reflection lookups
         "#define GetSSSCubeMap(_refl) (texCUBElod(EnvironmentMapSampler,float4(_refl,0.0f)).rgb) \n"
 
-        // Vertex shader for pixel shader usage and one light
+        // Vertex paintShader for pixel paintShader usage and one light
         "VS_OUTPUT MaterialVShader_D1(VS_INPUT IN)\n"
         "{\n"
         "VS_OUTPUT Out = (VS_OUTPUT)0;\n"
@@ -705,7 +705,7 @@ std::string g_szMaterialShader = std::string(
         "return Out;\n"
         "}\n"
 
-        // Vertex shader for pixel shader usage and two lights
+        // Vertex paintShader for pixel paintShader usage and two lights
         "VS_OUTPUT MaterialVShader_D2(VS_INPUT IN)\n"
         "{\n"
         "VS_OUTPUT Out = (VS_OUTPUT)0;\n"
@@ -746,7 +746,7 @@ std::string g_szMaterialShader = std::string(
         "return Out;\n"
         "}\n"
 
-        // Vertex shader for zero to five lights using the fixed function pixel pipeline
+        // Vertex paintShader for zero to five lights using the fixed function pixel pipeline
         "VS_OUTPUT_FF MaterialVShader_FF(VS_INPUT IN)\n"
         "{\n"
         "VS_OUTPUT_FF Out = (VS_OUTPUT_FF)0;\n"
@@ -793,7 +793,7 @@ std::string g_szMaterialShader = std::string(
         "return Out;\n"
         "}\n"
 
-        // Pixel shader - one light
+        // Pixel paintShader - one light
         "float4 MaterialPShaderSpecular_D1(VS_OUTPUT IN) : COLOR\n"
         "{\n"
         "float4 OUT = float4(0.0f,0.0f,0.0f,1.0f);\n"
@@ -871,7 +871,7 @@ std::string g_szMaterialShader = std::string(
         "#undef AV_LIGHT_0\n"
         "}\n"
 
-        // Pixel shader - two lights
+        // Pixel paintShader - two lights
         "float4 MaterialPShaderSpecular_D2(VS_OUTPUT IN) : COLOR\n"
         "{\n"
         "float4 OUT = float4(0.0f,0.0f,0.0f,1.0f);\n"
@@ -987,7 +987,7 @@ std::string g_szMaterialShader = std::string(
         "#undef AV_LIGHT_1\n"
         "}\n"
 
-        // Same pixel shader again, one light
+        // Same pixel paintShader again, one light
         "float4 MaterialPShaderSpecular_PS20_D1(VS_OUTPUT IN) : COLOR\n"
         "{\n"
         "float4 OUT = float4(0.0f,0.0f,0.0f,1.0f);\n"
@@ -1042,7 +1042,7 @@ std::string g_szMaterialShader = std::string(
         "return OUT;\n"
         "}\n"
 
-        // Same pixel shader again, two lights
+        // Same pixel paintShader again, two lights
         "float4 MaterialPShaderSpecular_PS20_D2(VS_OUTPUT IN) : COLOR\n"
         "{\n"
         "float4 OUT = float4(0.0f,0.0f,0.0f,1.0f);\n"
@@ -1243,14 +1243,14 @@ std::string g_szPassThroughShader = std::string(
         "MagFilter = POINT;\n"
         "};\n"
 
-        // Vertex Shader output for pixel shader usage
+        // Vertex Shader output for pixel paintShader usage
         "struct VS_OUTPUT\n"
         "{\n"
         "float4 Position : POSITION;\n"
         "float2 TexCoord0 : TEXCOORD0;\n"
         "};\n"
 
-        // vertex shader for pixel shader usage
+        // vertex paintShader for pixel paintShader usage
         "VS_OUTPUT DefaultVShader(float4 INPosition : POSITION, float2 INTexCoord0 : TEXCOORD0 )\n"
         "{\n"
         "VS_OUTPUT Out;\n"
@@ -1354,13 +1354,13 @@ std::string g_szCheckerBackgroundShader = std::string(
         // size of a square in both x and y direction
         "float SQUARE_SIZE = 10.0f;\n"
 
-        // vertex shader output structure
+        // vertex paintShader output structure
         "struct VS_OUTPUT\n"
         "{\n"
         "float4 Position : POSITION;\n"
         "};\n"
 
-        // vertex shader
+        // vertex paintShader
         "VS_OUTPUT DefaultVShader(float4 INPosition : POSITION, float2 INTexCoord0 : TEXCOORD0 )\n"
         "{\n"
         "VS_OUTPUT Out;\n"
@@ -1369,7 +1369,7 @@ std::string g_szCheckerBackgroundShader = std::string(
         "return Out;\n"
         "}\n"
 
-        // pixel shader
+        // pixel paintShader
         "float4 MakePattern_PS(float2 IN : VPOS) : COLOR\n"
         "{\n"
         "float2 fDiv = IN / SQUARE_SIZE;\n"

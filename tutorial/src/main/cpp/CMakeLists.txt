@@ -14,12 +14,12 @@ include_directories("${glm_SOURCE_DIR}")
 include_directories("../thirdparty/stb")
 
 # Add assimp library
-option("ASSIMP_ANDROID_JNIIOSYSTEM", ON)
-option("ASSIMP_BUILD_TEST", OFF)
-option("ASSIMP_INJECT_DEBUG_POSTFIX", OFF)
+set(ASSIMP_ANDROID_JNIIOSYSTEM ON CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(ASSIMP_INJECT_DEBUG_POSTFIX OFF CACHE BOOL "" FORCE)
 set(ASSIMP_WARNINGS_AS_ERRORS OFF CACHE BOOL "" FORCE)
-set(ASSIMP_SRC "../thirdparty/assimp")
 
+set(ASSIMP_SRC "../thirdparty/assimp")
 add_subdirectory(${ASSIMP_SRC} ${CMAKE_CURRENT_BINARY_DIR}/assimp)
 
 # Add Freetype Library

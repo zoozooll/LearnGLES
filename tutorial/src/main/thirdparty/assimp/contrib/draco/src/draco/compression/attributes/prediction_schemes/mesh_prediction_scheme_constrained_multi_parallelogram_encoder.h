@@ -254,7 +254,7 @@ bool MeshPredictionSchemeConstrainedMultiParallelogramEncoder<
       }
     }
 
-    // Offset to the m_target (destination) vertex.
+    // Offset to the target (destination) vertex.
     const int dst_offset = p * num_components;
     Error error;
 

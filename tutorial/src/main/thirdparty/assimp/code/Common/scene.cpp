@@ -133,4 +133,3 @@ void aiNode::addChildren(unsigned int numChildren, aiNode **children) {
         mNumChildren = numChildren;
     }
 }
-

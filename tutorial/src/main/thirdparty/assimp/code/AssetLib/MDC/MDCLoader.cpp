@@ -265,12 +265,12 @@ void MDCImporter::InternReadFile(
         // store the name of the surface for use as node name.
         pcMesh->mName.Set(std::string(pcSurface->ucName, strnlen(pcSurface->ucName, AI_MDC_MAXQPATH - 1)));
 
-        // go to the first shader in the file. ignore the others.
+        // go to the first paintShader in the file. ignore the others.
         if (pcSurface->ulNumShaders) {
             const MDC::Shader *pcShader = (const MDC::Shader *)((int8_t *)pcSurface + pcSurface->ulOffsetShaders);
             pcMesh->mMaterialIndex = (unsigned int)aszShaders.size();
 
-            // create a new shader
+            // create a new paintShader
             aszShaders.push_back(std::string(pcShader->ucName,
                     ::strnlen(pcShader->ucName, sizeof(pcShader->ucName))));
         }

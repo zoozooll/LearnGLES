@@ -96,7 +96,7 @@ unsigned int ppsteps = aiProcess_CalcTangentSpace | // calculate tangents and bi
                        aiProcess_FindInstances | // search for instanced meshes and remove them by references to one master
                        aiProcess_LimitBoneWeights | // limit bone weights to 4 per vertex
                        aiProcess_OptimizeMeshes | // join small meshes, if possible;
-                       aiProcess_SplitByBoneCount | // split meshes with too many bones. Necessary for our (limited) hardware skinning shader
+                       aiProcess_SplitByBoneCount | // split meshes with too many bones. Necessary for our (limited) hardware skinning paintShader
                        0;
 
 unsigned int ppstepsdefault = ppsteps;
@@ -913,7 +913,7 @@ int CreateDevice(bool p_bMultiSample, bool p_bSuperSample, bool bHW /*= true*/) 
         sParams.MultiSampleType = sMSOut;
     }
 
-    // get the device capabilities. If the hardware vertex shader is too old, we prefer software vertex processing
+    // get the device capabilities. If the hardware vertex paintShader is too old, we prefer software vertex processing
     g_piD3D->GetDeviceCaps(0, D3DDEVTYPE_HAL, &g_sCaps);
     DWORD creationFlags = D3DCREATE_MULTITHREADED;
     if (g_sCaps.VertexShaderVersion >= D3DVS_VERSION(2, 0))
@@ -942,7 +942,7 @@ int CreateDevice(bool p_bMultiSample, bool p_bSuperSample, bool bHW /*= true*/) 
         EnableWindow(GetDlgItem(g_hDlg, IDC_LOWQUALITY), FALSE);
     }
 
-    // compile the default material shader (gray gouraud/phong)
+    // compile the default material paintShader (gray gouraud/phong)
     ID3DXBuffer *piBuffer = nullptr;
     if (FAILED(D3DXCreateEffect(g_piDevice,
                 g_szDefaultShader.c_str(),
@@ -967,7 +967,7 @@ int CreateDevice(bool p_bMultiSample, bool p_bSuperSample, bool bHW /*= true*/) 
     if (g_sCaps.PixelShaderVersion < D3DPS_VERSION(2, 0))
         g_piDefaultEffect->SetTechnique("DefaultFXSpecular_FF");
 
-    // create the shader used to draw the HUD
+    // create the paintShader used to draw the HUD
     if (FAILED(D3DXCreateEffect(g_piDevice,
                 g_szPassThroughShader.c_str(), (UINT)g_szPassThroughShader.length(),
                 nullptr, nullptr, AI_SHADER_COMPILE_FLAGS, nullptr, &g_piPassThroughEffect, &piBuffer))) {
@@ -986,7 +986,7 @@ int CreateDevice(bool p_bMultiSample, bool p_bSuperSample, bool bHW /*= true*/) 
     if (g_sCaps.PixelShaderVersion < D3DPS_VERSION(2, 0))
         g_piPassThroughEffect->SetTechnique("PassThrough_FF");
 
-    // create the shader used to visualize normal vectors
+    // create the paintShader used to visualize normal vectors
     if (FAILED(D3DXCreateEffect(g_piDevice,
                 g_szNormalsShader.c_str(), (UINT)g_szNormalsShader.length(),
                 nullptr, nullptr, AI_SHADER_COMPILE_FLAGS, nullptr, &g_piNormalsEffect, &piBuffer))) {

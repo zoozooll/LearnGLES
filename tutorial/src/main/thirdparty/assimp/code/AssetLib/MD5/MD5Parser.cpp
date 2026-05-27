@@ -273,8 +273,8 @@ MD5MeshParser::MD5MeshParser(SectionList &mSections) {
             for (const auto &elem : (*iter).mElements) {
                 const char *sz = elem.szStart;
 
-                // shader attribute
-                if (TokenMatch(sz, "shader", 6)) {
+                // paintShader attribute
+                if (TokenMatch(sz, "paintShader", 6)) {
                     AI_MD5_SKIP_SPACES();
                     AI_MD5_PARSE_STRING_IN_QUOTATION(desc.mShader);
                 }

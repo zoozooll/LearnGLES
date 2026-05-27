@@ -245,7 +245,7 @@ struct MeshDesc
     //! Faces of the mesh
     FaceList mFaces;
 
-    //! Name of the shader (=texture) to be assigned to the mesh
+    //! Name of the paintShader (=texture) to be assigned to the mesh
     aiString mShader;
 };
 

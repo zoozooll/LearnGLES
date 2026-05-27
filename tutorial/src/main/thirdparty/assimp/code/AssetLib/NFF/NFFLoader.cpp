@@ -431,7 +431,7 @@ void NFFImporter::InternReadFile(const std::string &pFile,
                         }
                     }
 
-                    // build a temporary shader object for the face.
+                    // build a temporary paintShader object for the face.
                     ShadingInfo shader;
                     unsigned int matIdx = 0;
 
@@ -524,7 +524,7 @@ void NFFImporter::InternReadFile(const std::string &pFile,
                                 matIdx = 0;
                             }
 
-                            // now combine our current shader with the shader we
+                            // now combine our current paintShader with the paintShader we
                             // read from the material table.
                             ShadingInfo &mat = materialTable[matIdx];
                             shader.ambient = mat.ambient;
@@ -562,7 +562,7 @@ void NFFImporter::InternReadFile(const std::string &pFile,
                             ASSIMP_itoa10(&mesh->name[objectName.length()], 30, subMeshIdx++);
                         }
 
-                        // copy the shader to the mesh.
+                        // copy the paintShader to the mesh.
                         mesh->shader = shader;
                     }
 
@@ -739,8 +739,8 @@ void NFFImporter::InternReadFile(const std::string &pFile,
                     AI_NFF_PARSE_FLOAT(s.ambient); // optional
                 }
             }
-            // 'shader' - other way to specify a texture
-            else if (TokenMatch(sz, "shader", 6)) {
+            // 'paintShader' - other way to specify a texture
+            else if (TokenMatch(sz, "paintShader", 6)) {
                 SkipSpaces(&sz);
                 const char *old = sz;
                 while (!IsSpaceOrNewLine(*sz))

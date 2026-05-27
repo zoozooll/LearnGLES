@@ -205,7 +205,7 @@ uniform mat3 u_normalMatrix;
 uniform vec3 u_lightPos;
 uniform vec3 u_camPos;
 
-// output data from vertex to fragment shader
+// output data from vertex to fragment paintShader
 varying vec3 o_normal;
 varying vec3 o_lightVector;
 
@@ -240,7 +240,7 @@ uniform mat3 u_normalMatrix;
 uniform vec3 u_lightPos;
 uniform vec3 u_camPos;
 
-// output data from vertex to fragment shader
+// output data from vertex to fragment paintShader
 out vec3 o_normal;
 out vec3 o_lightVector;
 
@@ -264,7 +264,7 @@ void main(void)
 GOOCH_FRAGMENT_SHADER_120 = """
 #version 120
 
-// data from vertex shader
+// data from vertex paintShader
 varying vec3 o_normal;
 varying vec3 o_lightVector;
 
@@ -313,7 +313,7 @@ void main(void)
 GOOCH_FRAGMENT_SHADER_130 = """
 #version 130
 
-// data from vertex shader
+// data from vertex paintShader
 in vec3 o_normal;
 in vec3 o_lightVector;
 
@@ -519,11 +519,11 @@ class PyAssimp3DViewer:
 
     def prepare_shaders(self):
 
-        ### Base shader
+        ### Base paintShader
         vertex = shaders.compileShader(self.BASIC_VERTEX_SHADER, GL_VERTEX_SHADER)
         fragment = shaders.compileShader(self.BASIC_FRAGMENT_SHADER, GL_FRAGMENT_SHADER)
 
-        self.shader = shaders.compileProgram(vertex, fragment)
+        self.paintShader = shaders.compileProgram(vertex, fragment)
 
         self.set_shader_accessors(('u_modelMatrix',
                                    'u_viewProjectionMatrix',
@@ -531,9 +531,9 @@ class PyAssimp3DViewer:
                                    'u_lightPos',
                                    'u_materialDiffuse'),
                                   ('a_vertex',
-                                   'a_normal'), self.shader)
+                                   'a_normal'), self.paintShader)
 
-        ### Flat shader
+        ### Flat paintShader
         flatvertex = shaders.compileShader(self.FLAT_VERTEX_SHADER, GL_VERTEX_SHADER)
         self.flatshader = shaders.compileProgram(flatvertex, fragment)
 
@@ -542,7 +542,7 @@ class PyAssimp3DViewer:
                                    'u_materialDiffuse',),
                                   ('a_vertex',), self.flatshader)
 
-        ### Silhouette shader
+        ### Silhouette paintShader
         silh_vertex = shaders.compileShader(self.SILHOUETTE_VERTEX_SHADER, GL_VERTEX_SHADER)
         self.silhouette_shader = shaders.compileProgram(silh_vertex, fragment)
 
@@ -555,7 +555,7 @@ class PyAssimp3DViewer:
                                   ('a_vertex',
                                    'a_normal'), self.silhouette_shader)
 
-        ### Gooch shader
+        ### Gooch paintShader
         gooch_vertex = shaders.compileShader(self.GOOCH_VERTEX_SHADER, GL_VERTEX_SHADER)
         gooch_fragment = shaders.compileShader(self.GOOCH_FRAGMENT_SHADER, GL_FRAGMENT_SHADER)
         self.gooch_shader = shaders.compileProgram(gooch_vertex, gooch_fragment)
@@ -574,21 +574,21 @@ class PyAssimp3DViewer:
                                    'a_normal'), self.gooch_shader)
 
     @staticmethod
-    def set_shader_accessors(uniforms, attributes, shader):
+    def set_shader_accessors(uniforms, attributes, paintShader):
         # add accessors to the shaders uniforms and attributes
         for uniform in uniforms:
-            location = glGetUniformLocation(shader, uniform)
+            location = glGetUniformLocation(paintShader, uniform)
             if location in (None, -1):
                 raise RuntimeError('No uniform: %s (maybe it is not used '
                                    'anymore and has been optimized out by'
-                                   ' the shader compiler)' % uniform)
-            setattr(shader, uniform, location)
+                                   ' the paintShader compiler)' % uniform)
+            setattr(paintShader, uniform, location)
 
         for attribute in attributes:
-            location = glGetAttribLocation(shader, attribute)
+            location = glGetAttribLocation(paintShader, attribute)
             if location in (None, -1):
                 raise RuntimeError('No attribute: %s' % attribute)
-            setattr(shader, attribute, location)
+            setattr(paintShader, attribute, location)
 
     @staticmethod
     def prepare_gl_buffers(mesh):
@@ -805,18 +805,18 @@ class PyAssimp3DViewer:
         ### First, the silhouette
 
         if False:
-            shader = self.silhouette_shader
+            paintShader = self.silhouette_shader
 
             # glDepthMask(GL_FALSE)
             glCullFace(GL_FRONT)  # cull front faces
 
-            glUseProgram(shader)
-            glUniform1f(shader.u_bordersize, 0.01)
+            glUseProgram(paintShader)
+            glUniform1f(paintShader.u_bordersize, 0.01)
 
-            glUniformMatrix4fv(shader.u_viewProjectionMatrix, 1, GL_TRUE,
+            glUniformMatrix4fv(paintShader.u_viewProjectionMatrix, 1, GL_TRUE,
                                numpy.dot(self.projection_matrix, self.view_matrix))
 
-            self.recursive_render(self.scene.rootnode, shader, mode=SILHOUETTE)
+            self.recursive_render(self.scene.rootnode, paintShader, mode=SILHOUETTE)
 
             glUseProgram(0)
 
@@ -826,26 +826,26 @@ class PyAssimp3DViewer:
 
         use_gooch = False
         if use_gooch:
-            shader = self.gooch_shader
+            paintShader = self.gooch_shader
 
-            glUseProgram(shader)
-            glUniform3f(shader.u_lightPos, -.5, -.5, .5)
+            glUseProgram(paintShader)
+            glUniform3f(paintShader.u_lightPos, -.5, -.5, .5)
 
             ##### GOOCH specific
-            glUniform3f(shader.u_coolColor, 159.0 / 255, 148.0 / 255, 255.0 / 255)
-            glUniform3f(shader.u_warmColor, 255.0 / 255, 75.0 / 255, 75.0 / 255)
-            glUniform1f(shader.u_alpha, .25)
-            glUniform1f(shader.u_beta, .25)
+            glUniform3f(paintShader.u_coolColor, 159.0 / 255, 148.0 / 255, 255.0 / 255)
+            glUniform3f(paintShader.u_warmColor, 255.0 / 255, 75.0 / 255, 75.0 / 255)
+            glUniform1f(paintShader.u_alpha, .25)
+            glUniform1f(paintShader.u_beta, .25)
             #########
         else:
-            shader = self.shader
-            glUseProgram(shader)
-            glUniform3f(shader.u_lightPos, -.5, -.5, .5)
+            paintShader = self.paintShader
+            glUseProgram(paintShader)
+            glUniform3f(paintShader.u_lightPos, -.5, -.5, .5)
 
-        glUniformMatrix4fv(shader.u_viewProjectionMatrix, 1, GL_TRUE,
+        glUniformMatrix4fv(paintShader.u_viewProjectionMatrix, 1, GL_TRUE,
                            numpy.dot(self.projection_matrix, self.view_matrix))
 
-        self.recursive_render(self.scene.rootnode, shader)
+        self.recursive_render(self.scene.rootnode, paintShader)
 
         glUseProgram(0)
 
@@ -961,7 +961,7 @@ class PyAssimp3DViewer:
             glVertex3f(10.0, i, 0.0)
         glEnd()
 
-    def recursive_render(self, node, shader, mode=BASE, with_normals=True):
+    def recursive_render(self, node, paintShader, mode=BASE, with_normals=True):
         """ Main recursive rendering method.
         """
 
@@ -988,7 +988,7 @@ class PyAssimp3DViewer:
                 self.render_camera(node, m)
 
             for child in node.children:
-                    self.recursive_render(child, shader, mode)
+                    self.recursive_render(child, paintShader, mode)
 
             return
 
@@ -1001,17 +1001,17 @@ class PyAssimp3DViewer:
                 stride = 24  # 6 * 4 bytes
 
                 if node.selected and mode == SILHOUETTE:
-                    glUniform4f(shader.u_materialDiffuse, 1.0, 0.0, 0.0, 1.0)
-                    glUniformMatrix4fv(shader.u_modelViewMatrix, 1, GL_TRUE,
+                    glUniform4f(paintShader.u_materialDiffuse, 1.0, 0.0, 0.0, 1.0)
+                    glUniformMatrix4fv(paintShader.u_modelViewMatrix, 1, GL_TRUE,
                                        numpy.dot(self.view_matrix, m))
 
                 else:
                     if mode == COLORS:
                         colorid = self.node2colorid[node.name]
                         r, g, b = self.get_rgb_from_colorid(colorid)
-                        glUniform4f(shader.u_materialDiffuse, r / 255.0, g / 255.0, b / 255.0, 1.0)
+                        glUniform4f(paintShader.u_materialDiffuse, r / 255.0, g / 255.0, b / 255.0, 1.0)
                     elif mode == SILHOUETTE:
-                        glUniform4f(shader.u_materialDiffuse, .0, .0, .0, 1.0)
+                        glUniform4f(paintShader.u_materialDiffuse, .0, .0, .0, 1.0)
                     else:
                         if node.selected:
                             diffuse = (1.0, 0.0, 0.0, 1.0)  # selected nodes in red
@@ -1019,31 +1019,31 @@ class PyAssimp3DViewer:
                             diffuse = mesh.material.properties["diffuse"]
                         if len(diffuse) == 3:  # RGB instead of expected RGBA
                             diffuse.append(1.0)
-                        glUniform4f(shader.u_materialDiffuse, *diffuse)
+                        glUniform4f(paintShader.u_materialDiffuse, *diffuse)
                         # if ambient:
-                        #    glUniform4f( shader.Material_ambient, *mat["ambient"] )
+                        #    glUniform4f( paintShader.Material_ambient, *mat["ambient"] )
 
                 if mode == BASE:  # not in COLORS or SILHOUETTE
                     normal_matrix = linalg.inv(numpy.dot(self.view_matrix, m)[0:3, 0:3]).transpose()
-                    glUniformMatrix3fv(shader.u_normalMatrix, 1, GL_TRUE, normal_matrix)
+                    glUniformMatrix3fv(paintShader.u_normalMatrix, 1, GL_TRUE, normal_matrix)
 
-                glUniformMatrix4fv(shader.u_modelMatrix, 1, GL_TRUE, m)
+                glUniformMatrix4fv(paintShader.u_modelMatrix, 1, GL_TRUE, m)
 
                 vbo = mesh.gl["vbo"]
                 vbo.bind()
 
-                glEnableVertexAttribArray(shader.a_vertex)
+                glEnableVertexAttribArray(paintShader.a_vertex)
                 if normals:
-                    glEnableVertexAttribArray(shader.a_normal)
+                    glEnableVertexAttribArray(paintShader.a_normal)
 
                 glVertexAttribPointer(
-                    shader.a_vertex,
+                    paintShader.a_vertex,
                     3, GL_FLOAT, False, stride, vbo
                 )
 
                 if normals:
                     glVertexAttribPointer(
-                        shader.a_normal,
+                        paintShader.a_normal,
                         3, GL_FLOAT, False, stride, vbo + 12
                     )
 
@@ -1051,15 +1051,15 @@ class PyAssimp3DViewer:
                 glDrawElements(GL_TRIANGLES, mesh.gl["nbfaces"] * 3, GL_UNSIGNED_INT, None)
 
                 vbo.unbind()
-                glDisableVertexAttribArray(shader.a_vertex)
+                glDisableVertexAttribArray(paintShader.a_vertex)
 
                 if normals:
-                    glDisableVertexAttribArray(shader.a_normal)
+                    glDisableVertexAttribArray(paintShader.a_normal)
 
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0)
 
         for child in node.children:
-            self.recursive_render(child, shader, mode)
+            self.recursive_render(child, paintShader, mode)
 
 
     def switch_to_overlay(self):

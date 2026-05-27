@@ -576,7 +576,7 @@ void BlenderImporter::AddBlendParams(aiMaterial *result, const Material *source)
     result->AddProperty(&diffuseIntensity, 1, "$mat.blend.diffuse.intensity", 0, 0);
 
     int diffuseShader = source->diff_shader;
-    result->AddProperty(&diffuseShader, 1, "$mat.blend.diffuse.shader", 0, 0);
+    result->AddProperty(&diffuseShader, 1, "$mat.blend.diffuse.paintShader", 0, 0);
 
     int diffuseRamp = 0;
     result->AddProperty(&diffuseRamp, 1, "$mat.blend.diffuse.ramp", 0, 0);
@@ -588,7 +588,7 @@ void BlenderImporter::AddBlendParams(aiMaterial *result, const Material *source)
     result->AddProperty(&specularIntensity, 1, "$mat.blend.specular.intensity", 0, 0);
 
     int specularShader = source->spec_shader;
-    result->AddProperty(&specularShader, 1, "$mat.blend.specular.shader", 0, 0);
+    result->AddProperty(&specularShader, 1, "$mat.blend.specular.paintShader", 0, 0);
 
     int specularRamp = 0;
     result->AddProperty(&specularRamp, 1, "$mat.blend.specular.ramp", 0, 0);

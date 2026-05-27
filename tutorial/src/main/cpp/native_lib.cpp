@@ -80,9 +80,9 @@ extern "C"
 JNIEXPORT jobject JNICALL
 Java_com_minininja_learngles_NativeHelper_sendCommands(JNIEnv *env, jclass clazz, jobject jcommands) {
     if (g_scene) {
-        auto commands = JNITools::convertMapJava2Cpp<std::string>(env, jcommands);
+        auto commands = converMapJava2Cpp(env, jcommands);
         auto cppRs = g_scene->propertyEvent(commands);
-        return JNITools::convertCppMapToJavaMap(env, cppRs);
+        return convertCppMapToJavaMap(env, cppRs);
     }
     return nullptr;
 }

@@ -323,7 +323,7 @@ aiProcess_GenUVCoords = 0x40000
 # transformations, so you will probably want to specify this step.
 #
 # @note UV transformations are usually implemented in real-time apps by 
-# transforming texture coordinates at vertex shader stage with a 3x3
+# transforming texture coordinates at vertex paintShader stage with a 3x3
 # (homogenous) transformation matrix.
 #
 aiProcess_TransformUVCoords = 0x80000

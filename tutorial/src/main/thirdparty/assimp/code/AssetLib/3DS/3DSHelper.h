@@ -654,11 +654,11 @@ struct Node {
     //! Scaling keys loaded from the file
     std::vector<aiVectorKey> aScalingKeys;
 
-    // For m_target lights (spot lights and directional lights):
-    // The position of the m_target
+    // For target lights (spot lights and directional lights):
+    // The position of the target
     std::vector<aiVectorKey> aTargetPositionKeys;
 
-    // For cameras: the camera roll angle
+    // For cameras: the camera yawPitch angle
     std::vector<aiFloatKey> aCameraRollKeys;
 
     //! Pivot position loaded from the file

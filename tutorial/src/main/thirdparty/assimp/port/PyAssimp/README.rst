@@ -15,7 +15,7 @@ Complete example: 3D viewer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``pyassimp`` comes with a simple 3D viewer that shows how to load and
-display a 3D model using a shader-based OpenGL pipeline.
+display a 3D model using a paintShader-based OpenGL pipeline.
 
 .. figure:: 3d_viewer_screenshot.png
    :alt: Screenshot

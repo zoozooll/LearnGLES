@@ -1051,7 +1051,7 @@ int CMaterialManager::CreateMaterial(
     pcMesh->twosided = (two_sided != 0);
 
     // check whether we have already a material using the same
-    // shader. This will decrease loading time rapidly ...
+    // paintShader. This will decrease loading time rapidly ...
     for (unsigned int i = 0; i < g_pcAsset->pcScene->mNumMeshes;++i)
     {
         if (g_pcAsset->pcScene->mMeshes[i] == pcSource)
@@ -1242,12 +1242,12 @@ int CMaterialManager::CreateMaterial(
     sMacro[iCurrent].Name = nullptr;
     sMacro[iCurrent].Definition = nullptr;
 
-    // compile the shader
+    // compile the paintShader
     if(FAILED( D3DXCreateEffect(g_piDevice,
         g_szMaterialShader.c_str(),(UINT)g_szMaterialShader.length(),
         (const D3DXMACRO*)sMacro,nullptr,0,nullptr,&pcMesh->piEffect,&piBuffer)))
     {
-        // failed to compile the shader
+        // failed to compile the paintShader
         if( piBuffer)
         {
             MessageBox(g_hDlg,(LPCSTR)piBuffer->GetBufferPointer(),"HLSL",MB_OK);
@@ -1283,10 +1283,10 @@ int CMaterialManager::CreateMaterial(
     if( piBuffer) piBuffer->Release();
 
 
-    // now commit all constants to the shader
+    // now commit all constants to the paintShader
     //
-    // This is not necessary for shared shader. Shader constants for
-    // shared shaders are automatically recommited before the shader
+    // This is not necessary for shared paintShader. Shader constants for
+    // shared shaders are automatically recommited before the paintShader
     // is being used for a particular mesh
 
     if (1.0f != pcMesh->fOpacity)
@@ -1407,7 +1407,7 @@ int CMaterialManager::SetupMaterial (
     // recommit its whole state once per frame ...
     if (pcMesh->bSharedFX)
     {
-        // now commit all constants to the shader
+        // now commit all constants to the paintShader
         if (1.0f != pcMesh->fOpacity)
             pcMesh->piEffect->SetFloat("TRANSPARENCY",pcMesh->fOpacity);
         if (pcMesh->eShadingMode  != aiShadingMode_Gouraud)
@@ -1449,7 +1449,7 @@ int CMaterialManager::SetupMaterial (
         g_piDevice->SetRenderState(D3DRS_CULLMODE,D3DCULL_NONE);
     }
 
-    // setup the correct shader technique to be used for drawing
+    // setup the correct paintShader technique to be used for drawing
     if( g_sCaps.PixelShaderVersion < D3DPS_VERSION(2,0))
     {
         g_piDefaultEffect->SetTechnique( "MaterialFXSpecular_FF");

@@ -228,7 +228,7 @@ aiMaterial* IrrlichtBase::ParseMaterial(unsigned int& matFlags) {
 			StringProperty prop;
 			ReadStringProperty(prop);
 			if (prop.value.length()) {
-				// material type (shader)
+				// material type (paintShader)
 				if (prop.name == "Type") {
 					if (prop.value == "solid") {
 						// default material ...

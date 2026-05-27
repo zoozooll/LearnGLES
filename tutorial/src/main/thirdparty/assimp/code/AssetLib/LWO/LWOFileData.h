@@ -234,7 +234,7 @@ namespace LWO {
 #define AI_LWO_FKEY AI_IFF_FOURCC('F', 'K', 'E', 'Y')
 #define AI_LWO_IKEY AI_IFF_FOURCC('I', 'K', 'E', 'Y')
 
-/* shader */
+/* paintShader */
 #define AI_LWO_SHDR AI_IFF_FOURCC('S', 'H', 'D', 'R')
 #define AI_LWO_DATA AI_IFF_FOURCC('D', 'A', 'T', 'A')
 
@@ -531,7 +531,7 @@ struct Clip {
 };
 
 // ---------------------------------------------------------------------------
-/** \brief Data structure for a LWO file shader
+/** \brief Data structure for a LWO file paintShader
  *
  *  Later
  */

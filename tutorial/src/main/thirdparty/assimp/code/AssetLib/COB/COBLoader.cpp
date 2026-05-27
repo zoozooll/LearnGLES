@@ -529,7 +529,7 @@ void COBImporter::ReadMat1_Ascii(Scene &out, LineSplitter &splitter, const Chunk
     mat.matnum = strtoul10(splitter[1]);
     ++splitter;
 
-    if (!splitter.match_start("shader: ")) {
+    if (!splitter.match_start("paintShader: ")) {
         ASSIMP_LOG_WARN("Expected `mat#` line in `Mat1` chunk ", nfo.id);
         return;
     }
@@ -541,7 +541,7 @@ void COBImporter::ReadMat1_Ascii(Scene &out, LineSplitter &splitter, const Chunk
     } else if (shader == "phong") {
         mat.shader = Material::PHONG;
     } else if (shader != "flat") {
-        ASSIMP_LOG_WARN("Unknown value for `shader` in `Mat1` chunk ", nfo.id);
+        ASSIMP_LOG_WARN("Unknown value for `paintShader` in `Mat1` chunk ", nfo.id);
     }
 
     ++splitter;
@@ -1024,7 +1024,7 @@ void COBImporter::ReadMat1_Binary(COB::Scene &out, StreamReaderLE &reader, const
         mat.type = Material::METAL;
         break;
     default:
-        ASSIMP_LOG_ERROR("Unrecognized shader type in `Mat1` chunk with id ", nfo.id);
+        ASSIMP_LOG_ERROR("Unrecognized paintShader type in `Mat1` chunk with id ", nfo.id);
         mat.type = Material::FLAT;
     }
 

@@ -298,7 +298,7 @@ void CBackgroundPainter::OnPreRender() {
         }
         return;
     }
-    // clear both the render m_target and the z-buffer
+    // clear both the render target and the z-buffer
     g_piDevice->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
             clrColor, 1.0f, 0);
 }
@@ -439,19 +439,19 @@ void CBackgroundPainter::RecreateNativeResource() {
                     AI_SHADER_COMPILE_FLAGS,
                     nullptr,
                     &piSkyBoxEffect, &piBuffer))) {
-            // failed to compile the shader
+            // failed to compile the paintShader
             if (piBuffer) {
                 MessageBox(g_hDlg, (LPCSTR)piBuffer->GetBufferPointer(), "HLSL", MB_OK);
                 piBuffer->Release();
             }
 
-            CLogDisplay::Instance().AddEntry("[ERROR] Unable to compile skybox shader",
+            CLogDisplay::Instance().AddEntry("[ERROR] Unable to compile skybox paintShader",
                     D3DCOLOR_ARGB(0xFF, 0xFF, 0, 0));
             eMode = SIMPLE_COLOR;
             return;
         }
     }
-    // commit the correct textures to the shader
+    // commit the correct textures to the paintShader
     if (TEXTURE_CUBE == eMode) {
         piSkyBoxEffect->SetTexture("lw_tex_envmap", pcTexture);
         piSkyBoxEffect->SetTechnique("RenderSkyBox");

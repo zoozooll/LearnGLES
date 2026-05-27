@@ -48,10 +48,10 @@ extern std::string  g_szSkyboxShader;
 // Shader used for visualizing normal vectors
 extern std::string  g_szNormalsShader;
 
-// Default shader
+// Default paintShader
 extern std::string  g_szDefaultShader;
 
-// Material shader
+// Material paintShader
 extern std::string  g_szMaterialShader;
 
 // Shader used to draw the yellow circle on top of everything

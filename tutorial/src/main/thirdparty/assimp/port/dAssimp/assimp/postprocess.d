@@ -406,7 +406,7 @@ extern ( C ) {
        * will probably want to specify this step.
        *
        * Note: UV transformations are usually implemented in realtime apps by
-       *    transforming texture coordinates at vertex shader stage with a 3x3
+       *    transforming texture coordinates at vertex paintShader stage with a 3x3
        *    (homogenous) transformation matrix.
        */
       TransformUVCoords = 0x80000,

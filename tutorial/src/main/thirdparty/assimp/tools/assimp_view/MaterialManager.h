@@ -69,8 +69,8 @@ public:
 
     /// @brief  Create the material for a mesh.
     ///
-    /// The function checks whether an identical shader is already in use.
-    /// A shader is considered to be identical if it has the same input
+    /// The function checks whether an identical paintShader is already in use.
+    /// A paintShader is considered to be identical if it has the same input
     /// signature and takes the same number of texture channels.
     int CreateMaterial(AssetHelper::MeshHelper *pcMesh, const aiMesh *pcSource);
     
@@ -185,7 +185,7 @@ private:
 
     // Specifies the number of different shaders generated for
     // the current asset. This number is incremented by CreateMaterial()
-    // each time a shader isn't found in cache and needs to be created
+    // each time a paintShader isn't found in cache and needs to be created
     unsigned int m_iShaderCount;
     IDirect3DTexture9 *sDefaultTexture;
     using TextureCache = std::map<std::string, IDirect3DTexture9 *>;

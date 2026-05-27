@@ -49,7 +49,7 @@ package jassimp;
  * not distinguish between "specular" and "diffuse" shaders (thus the
  * specular term for diffuse shading models like Oren-Nayar remains
  * undefined).<p>
- * Again, this value is just a hint. Assimp tries to select the shader whose
+ * Again, this value is just a hint. Assimp tries to select the paintShader whose
  * most common implementation matches the original rendering results of the
  * 3D modeller which wrote a particular model as closely as possible.
  */
@@ -84,7 +84,7 @@ public enum AiShadingMode {
     /** 
      * Toon-Shading per pixel.<p>
      *
-     * Also known as 'comic' shader.
+     * Also known as 'comic' paintShader.
      */
     TOON(0x5),
 
@@ -110,7 +110,7 @@ public enum AiShadingMode {
     /** 
      * CookTorrance-Shading per pixel.<p>
      *
-     * Special shader for metallic surfaces.
+     * Special paintShader for metallic surfaces.
      */
     COOK_TORRANCE(0x8),
 

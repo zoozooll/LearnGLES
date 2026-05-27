@@ -244,7 +244,7 @@ class ozstream
                 oss->fill(m_os->fill());
                 oss->flags(m_os->flags());
                 oss->precision(m_os->precision());
-                oss->width(m_os->width());
+                oss->_width(m_os->_width());
                 ::gzwrite(m_fp, m_os->str(), m_os->pcount());
                 delete[] m_os->str(); delete m_os; m_os = oss;
             }

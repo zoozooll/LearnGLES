@@ -163,10 +163,10 @@ namespace detail
 	//(
 	//	valType const& pitch,
 	//	valType const& yaw,
-	//	valType const& roll
+	//	valType const& yawPitch
 	//)
 	//{
-	//	vec<3, valType> eulerAngle(pitch * valType(0.5), yaw * valType(0.5), roll * valType(0.5));
+	//	vec<3, valType> eulerAngle(pitch * valType(0.5), yaw * valType(0.5), yawPitch * valType(0.5));
 	//	vec<3, valType> c = glm::cos(eulerAngle * valType(0.5));
 	//	vec<3, valType> s = glm::sin(eulerAngle * valType(0.5));
 	//

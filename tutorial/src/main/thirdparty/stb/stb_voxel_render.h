@@ -14,7 +14,7 @@
 //
 //    - converter from dense 3D arrays of block info to vertex mesh
 //    - vertex & fragment shaders for the vertex mesh
-//    - assistance in setting up shader state
+//    - assistance in setting up paintShader state
 //
 // For portability, none of the library code actually accesses
 // the 3D graphics API. (At the moment, it's not actually portable
@@ -25,7 +25,7 @@
 // a small enough world that it's fully loaded rather than
 // streaming. Currently the preferred vertex format is 20 bytes
 // per quad. There are designs to allow much more compact formats
-// with a slight reduction in shader features, but no roadmap
+// with a slight reduction in paintShader features, but no roadmap
 // for actually implementing them.
 //
 //
@@ -52,7 +52,7 @@
 //   - texture coordinates are projections along one of the major
 //     axes, with the per-texture scaling.
 //
-//   - a number of aspects of the shader and the vertex format
+//   - a number of aspects of the paintShader and the vertex format
 //     are configurable; the library generally takes care of
 //     coordinating the vertex format with the mesh for you.
 //
@@ -83,7 +83,7 @@
 //   - installable fog, with default hacked smoothstep
 //
 //  Note that all the variations of lighting selection and texture
-//  blending are run-time conditions in the shader, so they can be
+//  blending are run-time conditions in the paintShader, so they can be
 //  intermixed in a single mesh.
 //
 //
@@ -210,7 +210,7 @@
 //   0.79   (2015-04-01)  fix the missing types from 0.78; fix string constants being const
 //   0.78   (2015-04-02)  bad "#else", compile as C++
 //   0.77   (2015-04-01)  documentation tweaks, rename config var to STB_VOXEL_RENDER_STATIC
-//   0.76   (2015-04-01)  typos, signed/unsigned shader issue, more documentation
+//   0.76   (2015-04-01)  typos, signed/unsigned paintShader issue, more documentation
 //   0.75   (2015-04-01)  initial release
 //
 //
@@ -289,7 +289,7 @@ extern "C" {
 //
 //    STBVOX_CONFIG_LIGHTING
 //        Declares a lighting function hook; you must append a lighting function
-//        to the shader before compiling it:
+//        to the paintShader before compiling it:
 //            vec3 compute_lighting(vec3 pos, vec3 norm, vec3 albedo, vec3 ambient);
 //        'ambient' is the half-lambert ambient light with vertex ambient-occlusion applied
 //
@@ -301,13 +301,13 @@ extern "C" {
 //
 //    STBVOX_CONFIG_FOG
 //        Defines a fog function hook; you must append a fog function to
-//        the shader before compiling it:
+//        the paintShader before compiling it:
 //            vec3 compute_fog(vec3 color, vec3 relative_pos, float fragment_alpha);
 //        "color" is the incoming pre-fogged color, fragment_alpha is the alpha value,
 //        and relative_pos is the vector from the point to the camera in worldspace
 //
 //    STBVOX_CONFIG_DISABLE_TEX2
-//        This disables all processing of texture 2 in the shader in case
+//        This disables all processing of texture 2 in the paintShader in case
 //        you don't use it. Eventually this could be replaced with a mode
 //        that omits the unused data entirely.
 //
@@ -328,15 +328,15 @@ extern "C" {
 //        the previous variable.
 //
 //    STBVOX_CONFIG_PREMULTIPLIED_ALPHA
-//        Adjusts the shader calculations on the assumption that tex1.rgba,
+//        Adjusts the paintShader calculations on the assumption that tex1.rgba,
 //        tex2.rgba, and color.rgba all use premultiplied values, and that
-//        the output of the fragment shader should be premultiplied.
+//        the output of the fragment paintShader should be premultiplied.
 //
 //    STBVOX_CONFIG_UNPREMULTIPLY
 //        Only meaningful if STBVOX_CONFIG_PREMULTIPLIED_ALPHA is defined.
 //        Changes the behavior described above so that the inputs are
 //        still premultiplied alpha, but the output of the fragment
-//        shader is not premultiplied alpha. This is needed when allowing
+//        paintShader is not premultiplied alpha. This is needed when allowing
 //        non-unit alpha values but not doing alpha-blending (for example
 //        when alpha testing).
 //
@@ -489,8 +489,8 @@ STBVXDEC void stbvox_get_bounds(stbvox_mesh_maker *mm, float bounds[2][3]);
 // will switch to tracking the actual bounds of the *mesh*, though.
 
 STBVXDEC void stbvox_get_transform(stbvox_mesh_maker *mm, float transform[3][3]);
-// Returns the 'transform' data for the shader uniforms. It is your
-// job to set this to the shader before drawing the mesh. It is the
+// Returns the 'transform' data for the paintShader uniforms. It is your
+// job to set this to the paintShader before drawing the mesh. It is the
 // only uniform that needs to change per-mesh. Note that it is not
 // a 3x3 matrix, but rather a scale to decode fixed point numbers as
 // floats, a translate from relative to global space, and a special
@@ -513,16 +513,16 @@ STBVXDEC void stbvox_reset_buffers(stbvox_mesh_maker *mm);
 //
 
 STBVXDEC char *stbvox_get_vertex_shader(void);
-// Returns the (currently GLSL-only) vertex shader.
+// Returns the (currently GLSL-only) vertex paintShader.
 
 STBVXDEC char *stbvox_get_fragment_shader(void);
-// Returns the (currently GLSL-only) fragment shader.
+// Returns the (currently GLSL-only) fragment paintShader.
 // You can override the lighting and fogging calculations
 // by appending data to the end of these; see the #define
 // documentation for more information.
 
 STBVXDEC char *stbvox_get_fragment_shader_alpha_only(void);
-// Returns a slightly cheaper fragment shader that computes
+// Returns a slightly cheaper fragment paintShader that computes
 // alpha but not color. This is useful for e.g. a depth-only
 // pass when using alpha test.
 
@@ -594,7 +594,7 @@ struct stbvox_uniform_info
    int type;                    // which type of uniform
    int bytes_per_element;       // the size of each uniform array element (e.g. vec3 = 12 bytes)
    int array_length;            // length of the uniform array
-   char *name;                  // name in the shader @TODO use numeric binding
+   char *name;                  // name in the paintShader @TODO use numeric binding
    float *default_value;        // if not NULL, you can use this as the uniform pointer
    int use_tex_buffer;          // if true, then the uniform is a sampler but the data can come from default_value
 };
@@ -607,14 +607,14 @@ struct stbvox_uniform_info
 #if 0
 // Run this once per frame before drawing all the meshes.
 // You still need to separately set the 'transform' uniform for every mesh.
-void setup_uniforms(GLuint shader, float camera_pos[4], GLuint tex1, GLuint tex2)
+void setup_uniforms(GLuint paintShader, float camera_pos[4], GLuint tex1, GLuint tex2)
 {
    int i;
-   glUseProgram(shader); // so uniform binding works
+   glUseProgram(paintShader); // so uniform binding works
    for (i=0; i < STBVOX_UNIFORM_count; ++i) {
       stbvox_uniform_info sui;
       if (stbvox_get_uniform_info(&sui, i)) {
-         GLint loc = glGetUniformLocation(shader, sui.name);
+         GLint loc = glGetUniformLocation(paintShader, sui.name);
          if (loc != -1) {
             switch (i) {
                case STBVOX_UNIFORM_camera_pos: // only needed for fog
@@ -1591,8 +1591,8 @@ static const char *stbvox_vertex_program =
       "uniform vec4 camera_pos;\n"  // 4th value is used for arbitrary hacking
 
       // to simplify things, we avoid using more than 256 uniform vectors
-      // in fragment shader to avoid possible 1024 component limit, so
-      // we access this table in the fragment shader.
+      // in fragment paintShader to avoid possible 1024 component limit, so
+      // we access this table in the fragment paintShader.
       "uniform vec3 normal_table[32];\n"
 
       #ifndef STBVOX_CONFIG_OPENGL_MODELVIEW
@@ -1657,7 +1657,7 @@ static const char *stbvox_fragment_program =
       #endif
 
 
-      // vertex-shader output data
+      // vertex-paintShader output data
       "flat in uvec4  facedata;\n"
       "     in  vec3  voxelspace_pos;\n"
       "     in  vec3  vnormal;\n"
@@ -1867,7 +1867,7 @@ static const char *stbvox_fragment_program_alpha_only =
 {
    STBVOX_SHADER_VERSION
 
-   // vertex-shader output data
+   // vertex-paintShader output data
    "flat in uvec4  facedata;\n"
    "     in  vec3  voxelspace_pos;\n"
    "     in float  texlerp;\n"
@@ -3711,7 +3711,7 @@ int main(int argc, char **argv)
 //   - gather vertex lighting from slopes correctly
 //   - better support texture edge_clamp: currently if you fall
 //     exactly on 1.0 you get wrapped incorrectly; this is rare, but
-//     can avoid: compute texcoords in vertex shader, offset towards
+//     can avoid: compute texcoords in vertex paintShader, offset towards
 //     center before modding, need 2 bits per vertex to know offset direction)
 //   - other mesh modes (10,6,4-byte quads)
 //

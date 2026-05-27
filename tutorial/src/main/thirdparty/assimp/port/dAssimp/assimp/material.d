@@ -305,7 +305,7 @@ extern ( C ) {
     * "specular" and "diffuse" shaders (thus the specular term for diffuse
     * shading models like Oren-Nayar remains undefined).
     *
-    * Again, this value is just a hint. Assimp tries to select the shader whose
+    * Again, this value is just a hint. Assimp tries to select the paintShader whose
     * most common implementation matches the original rendering results of the
     * 3D modeller which wrote a particular model as closely as possible.
     */
@@ -359,7 +359,7 @@ extern ( C ) {
       /**
        * Per-pixel Cook-Torrance shading.
        *
-       * Special shader for metallic surfaces.
+       * Special paintShader for metallic surfaces.
        */
       CookTorrance = 0x8,
 

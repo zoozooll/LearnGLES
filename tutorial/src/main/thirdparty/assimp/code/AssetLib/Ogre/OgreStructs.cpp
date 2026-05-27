@@ -489,7 +489,7 @@ aiMesh *SubMesh::ConvertToAssimpMesh(Mesh *parent) {
     if (materialIndex != -1)
         dest->mMaterialIndex = materialIndex;
 
-    // Pick source vertex data from shader geometry or from internal geometry.
+    // Pick source vertex data from paintShader geometry or from internal geometry.
     VertexData *src = (!usesSharedVertexData ? vertexData : parent->sharedVertexData);
 
     VertexElement *positionsElement = src->GetVertexElement(VertexElement::VES_POSITION);
@@ -1014,7 +1014,7 @@ VertexAnimationTrack::VertexAnimationTrack() :
 
 aiNodeAnim *VertexAnimationTrack::ConvertToAssimpAnimationNode(Skeleton *skeleton) {
     if (boneName.empty() || type != VAT_TRANSFORM) {
-        throw DeadlyImportError("VertexAnimationTrack::ConvertToAssimpAnimationNode: Cannot convert track that has no m_target bone name or is not type of VAT_TRANSFORM");
+        throw DeadlyImportError("VertexAnimationTrack::ConvertToAssimpAnimationNode: Cannot convert track that has no target bone name or is not type of VAT_TRANSFORM");
     }
 
     aiNodeAnim *nodeAnim = new aiNodeAnim();

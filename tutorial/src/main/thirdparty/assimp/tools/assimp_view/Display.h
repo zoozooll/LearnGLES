@@ -421,7 +421,7 @@ namespace AssimpView
     private:
 
         //------------------------------------------------------------------
-        // Render a screen-filling square using the checker pattern shader
+        // Render a screen-filling square using the checker pattern paintShader
         int RenderPatternBG();
 
         //------------------------------------------------------------------

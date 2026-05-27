@@ -48,7 +48,7 @@ class GeometryAttribute {
     COLOR,
     TEX_COORD,
     // A special id used to mark attributes that are not assigned to any known
-    // predefined use case. Such attributes are often used for a shader specific
+    // predefined use case. Such attributes are often used for a paintShader specific
     // data.
     GENERIC,
     // Total number of different attribute types.

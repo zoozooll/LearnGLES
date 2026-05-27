@@ -82,7 +82,7 @@ struct SkinData {
 };
 
 // ---------------------------------------------------------------------------
-/** @brief Specifies cull modi for Quake shader files.
+/** @brief Specifies cull modi for Quake paintShader files.
  */
 enum ShaderCullMode {
     CULL_NONE,
@@ -91,7 +91,7 @@ enum ShaderCullMode {
 };
 
 // ---------------------------------------------------------------------------
-/** @brief Specifies alpha blend modi (src + dest) for Quake shader files
+/** @brief Specifies alpha blend modi (src + dest) for Quake paintShader files
  */
 enum BlendFunc {
     BLEND_NONE,
@@ -114,7 +114,7 @@ enum AlphaTestFunc {
 };
 
 // ---------------------------------------------------------------------------
-/** @brief Tiny utility data structure to hold a .shader map data block
+/** @brief Tiny utility data structure to hold a .paintShader map data block
  */
 struct ShaderMapBlock {
     ShaderMapBlock() AI_NO_EXCEPT
@@ -136,7 +136,7 @@ struct ShaderMapBlock {
 };
 
 // ---------------------------------------------------------------------------
-/** @brief Tiny utility data structure to hold a .shader data block
+/** @brief Tiny utility data structure to hold a .paintShader data block
  */
 struct ShaderDataBlock {
     ShaderDataBlock() AI_NO_EXCEPT
@@ -148,7 +148,7 @@ struct ShaderDataBlock {
     //! Cull mode for the element
     ShaderCullMode cull;
 
-    //! Maps defined in the shader
+    //! Maps defined in the paintShader
     std::list<ShaderMapBlock> maps;
 
     //! For std::find()
@@ -158,7 +158,7 @@ struct ShaderDataBlock {
 };
 
 // ---------------------------------------------------------------------------
-/** @brief Tiny utility data structure to hold the data of a .shader file
+/** @brief Tiny utility data structure to hold the data of a .paintShader file
  */
 struct ShaderData {
     //! Shader data blocks
@@ -166,7 +166,7 @@ struct ShaderData {
 };
 
 // ---------------------------------------------------------------------------
-/** @brief Load a shader file
+/** @brief Load a paintShader file
  *
  *  Generally, parsing is error tolerant. There's no failure.
  *  @param fill Receives output data
@@ -180,7 +180,7 @@ bool LoadShader(ShaderData &fill, const std::string &file, IOSystem *io);
 /** @brief Convert a Q3Shader to an aiMaterial
  *
  *  @param[out] out Material structure to be filled.
- *  @param[in] shader Input shader
+ *  @param[in] shader Input paintShader
  */
 void ConvertShaderToMaterial(aiMaterial *out, const ShaderDataBlock &shader);
 
@@ -251,7 +251,7 @@ protected:
     void ReadSkin(Q3Shader::SkinData &fill) const;
 
     // -------------------------------------------------------------------
-    /** Try to read the shader for a MD3 file
+    /** Try to read the paintShader for a MD3 file
      *  @param fill Receives output information
      */
     void ReadShader(Q3Shader::ShaderData &fill) const;
@@ -278,7 +278,7 @@ protected:
     /** Configuration option: whether to load shaders */
     bool configLoadShaders;
 
-    /** Configuration option: name or path of shader */
+    /** Configuration option: name or path of paintShader */
     std::string configShaderFile;
 
     /** Configuration option: speed flag was set? */

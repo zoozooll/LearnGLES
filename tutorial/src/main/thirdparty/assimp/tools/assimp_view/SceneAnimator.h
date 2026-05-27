@@ -165,7 +165,7 @@ public:
      *
      * Each bone matrix transforms from mesh space in bind pose to mesh space in
      * skinned pose, it does not contain the mesh's world matrix. Thus the usual
-     * matrix chain for using in the vertex shader is
+     * matrix chain for using in the vertex paintShader is
      * @code
      * boneMatrix * worldMatrix * viewMatrix * projMatrix
      * @endcode

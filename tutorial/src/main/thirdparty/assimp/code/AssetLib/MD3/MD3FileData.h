@@ -189,7 +189,7 @@ struct Surface {
     //! offset to the triangle data
     uint32_t OFS_TRIANGLES;
 
-    //! offset to the shader data
+    //! offset to the paintShader data
     uint32_t OFS_SHADERS;
 
     //! offset to the texture coordinate data
@@ -203,13 +203,13 @@ struct Surface {
 } /*PACK_STRUCT*/;
 
 // -------------------------------------------------------------------------------
-/** @brief Data structure for a shader defined in there
+/** @brief Data structure for a paintShader defined in there
  */
 struct Shader {
-    //! filename of the shader
+    //! filename of the paintShader
     char NAME[ AI_MD3_MAXQPATH ];
 
-    //! index of the shader
+    //! index of the paintShader
     uint32_t SHADER_INDEX;
 } /*PACK_STRUCT*/;
 

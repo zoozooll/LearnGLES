@@ -994,7 +994,7 @@ int CDisplay::OnSetupTextureView(TextureInfo* pcNew)
     // check whether the pattern background effect is supported
     if (g_sCaps.PixelShaderVersion < D3DPS_VERSION(3,0))
     {
-        CLogDisplay::Instance().AddEntry("[WARN] The background shader won't work "
+        CLogDisplay::Instance().AddEntry("[WARN] The background paintShader won't work "
             "on your system, it required PS 3.0 hardware. A default color is used ...",
             D3DCOLOR_ARGB(0xFF,0xFF,0x00,0));
     }
@@ -1623,7 +1623,7 @@ int CDisplay::HandleInputEmptyScene()
 // Draw the HUD on top of the scene
 int CDisplay::DrawHUD()
 {
-  // HACK: (thom) can't get the effect to work on non-shader cards, therefore deactivated for the moment
+  // HACK: (thom) can't get the effect to work on non-paintShader cards, therefore deactivated for the moment
   if( g_sCaps.PixelShaderVersion < D3DPS_VERSION(2,0))
     return 1;
 
@@ -1633,11 +1633,11 @@ int CDisplay::DrawHUD()
     sRect.right -= sRect.left;
     sRect.bottom -= sRect.top;
 
-    // commit the texture to the shader
-    // FIX: Necessary because the texture view is also using this shader
+    // commit the texture to the paintShader
+    // FIX: Necessary because the texture view is also using this paintShader
     g_piPassThroughEffect->SetTexture("TEXTURE_2D",g_pcTexture);
 
-    // NOTE: The shader might be used for other purposes, too.
+    // NOTE: The paintShader might be used for other purposes, too.
     // So ensure the right technique is there
     if( g_sCaps.PixelShaderVersion < D3DPS_VERSION(2,0))
         g_piPassThroughEffect->SetTechnique( "PassThrough_FF");
@@ -1890,7 +1890,7 @@ int CDisplay::RenderNode (aiNode* piNode,const aiMatrix4x4& piMatrix,
         // this is very similar to the code in SetupMaterial()
         ID3DXEffect* piEnd = g_piDefaultEffect;
 
-        // commit transformation matrices to the shader
+        // commit transformation matrices to the paintShader
         piEnd->SetMatrix("WorldViewProjection",
             (const D3DXMATRIX*)&pcProj);
 
@@ -1906,7 +1906,7 @@ int CDisplay::RenderNode (aiNode* piNode,const aiMatrix4x4& piMatrix,
             piEnd->SetMatrix("InvViewProj",(const D3DXMATRIX*)&pcCam);
         }
 
-        // commit light colors and direction to the shader
+        // commit light colors and direction to the paintShader
         D3DXVECTOR4 apcVec[5];
         apcVec[0].x = g_avLightDirs[0].x;
         apcVec[0].y = g_avLightDirs[0].y;
@@ -2096,7 +2096,7 @@ int CDisplay::RenderPatternBG()
         // the pattern effect won't work on ps_2_0 cards
         if (g_sCaps.PixelShaderVersion >= D3DPS_VERSION(3,0))
         {
-            // seems we have not yet compiled this shader.
+            // seems we have not yet compiled this paintShader.
             // and NOW is the best time to do that ...
             ID3DXBuffer* piBuffer = nullptr;
             if(FAILED( D3DXCreateEffect(g_piDevice,
@@ -2140,7 +2140,7 @@ int CDisplay::RenderPatternBG()
     g_piPatternEffect->SetVector("COLOR_ONE",&m_avCheckerColors[0]);
     g_piPatternEffect->SetVector("COLOR_TWO",&m_avCheckerColors[1]);
 
-    // setup the shader
+    // setup the paintShader
     UINT dw;
     g_piPatternEffect->Begin(&dw,0);
     g_piPatternEffect->BeginPass(0);
@@ -2212,7 +2212,7 @@ int CDisplay::RenderTextureView()
     sRect.right -= sRect.left;
     sRect.bottom -= sRect.top;
 
-    // commit the texture to the shader
+    // commit the texture to the paintShader
     g_piPassThroughEffect->SetTexture("TEXTURE_2D",*m_pcCurrentTexture->piTexture);
 
     if (aiTextureType_OPACITY == m_pcCurrentTexture->iType)

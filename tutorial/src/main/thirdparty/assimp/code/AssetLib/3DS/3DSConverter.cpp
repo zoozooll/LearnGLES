@@ -534,9 +534,9 @@ void Discreet3DSImporter::AddNodeToGraph(aiScene *pcSOut, aiNode *pcOut,
         ai_assert(nullptr != anim);
 
         if (pcIn->aCameraRollKeys.size() > 1) {
-            ASSIMP_LOG_VERBOSE_DEBUG("3DS: Converting camera roll track ...");
+            ASSIMP_LOG_VERBOSE_DEBUG("3DS: Converting camera yawPitch track ...");
 
-            // Camera roll keys - in fact they're just rotations
+            // Camera yawPitch keys - in fact they're just rotations
             // around the camera's z axis. The angles are given
             // in degrees (and they're clockwise).
             pcIn->aRotationKeys.resize(pcIn->aCameraRollKeys.size());
@@ -553,10 +553,10 @@ void Discreet3DSImporter::AddNodeToGraph(aiScene *pcSOut, aiNode *pcOut,
 #if 0
         if (pcIn->aTargetPositionKeys.size() > 1)
         {
-            ASSIMP_LOG_VERBOSE_DEBUG("3DS: Converting m_target track ...");
+            ASSIMP_LOG_VERBOSE_DEBUG("3DS: Converting target track ...");
 
             // Camera or spot light - need to convert the separate
-            // m_target position channel to our representation
+            // target position channel to our representation
             TargetAnimationHelper helper;
 
             if (pcIn->aPositionKeys.empty())
@@ -573,7 +573,7 @@ void Discreet3DSImporter::AddNodeToGraph(aiScene *pcSOut, aiNode *pcOut,
 
             // Now add a new node as child, name it <ourName>.Target
             // and assign the distance track to it. This is that the
-            // information where the m_target is and how it moves is
+            // information where the target is and how it moves is
             // not lost
             D3DS::Node* nd = new D3DS::Node();
             pcIn->push_back(nd);
@@ -666,7 +666,7 @@ void CountTracks(D3DS::Node *node, unsigned int &cnt) {
             node->aTargetPositionKeys.size() > 1) {
         ++cnt;
 
-        // account for the additional channel for the camera/spotlight m_target position
+        // account for the additional channel for the camera/spotlight target position
         if (node->aTargetPositionKeys.size() > 1) ++cnt;
     }
 

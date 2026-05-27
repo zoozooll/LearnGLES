@@ -1100,7 +1100,7 @@ def euler_from_quaternion(quaternion, axes='sxyz'):
 def quaternion_from_euler(ai, aj, ak, axes='sxyz'):
     """Return quaternion from Euler angles and axis sequence.
 
-    ai, aj, ak : Euler's roll, pitch and yaw angles
+    ai, aj, ak : Euler's yawPitch, pitch and yaw angles
     axes : One of 24 axis sequences as string or encoded tuple
 
     >>> q = quaternion_from_euler(1, 2, 3, 'ryxz')

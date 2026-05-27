@@ -80,7 +80,7 @@ public:
     //---------------------------------------------------------------
     // default vertex data structure
     // (even if tangents, bitangents or normals aren't
-    // required by the shader they will be committed to the GPU)
+    // required by the paintShader they will be committed to the GPU)
     //---------------------------------------------------------------
     struct Vertex {
         aiVector3D vPosition;
@@ -92,7 +92,7 @@ public:
         aiVector2D vTextureUV;
         aiVector2D vTextureUV2;
         unsigned char mBoneIndices[4];
-        unsigned char mBoneWeights[4]; // last Weight not used, calculated inside the vertex shader
+        unsigned char mBoneWeights[4]; // last Weight not used, calculated inside the vertex paintShader
 
         /** Returns the vertex declaration elements to create a declaration from. */
         static D3DVERTEXELEMENT9 *GetDeclarationElements() {
@@ -174,7 +174,7 @@ public:
         // (vertex normals are generated in every case)
         IDirect3DVertexBuffer9 *piVBNormals;
 
-        // shader to be used
+        // paintShader to be used
         ID3DXEffect *piEffect;
         bool bSharedFX;
 

@@ -185,7 +185,7 @@ struct CompressedVertex {
 } PACK_STRUCT;
 
 // ---------------------------------------------------------------------------
-/** \brief Data structure for a MDC shader
+/** \brief Data structure for a MDC paintShader
  */
 struct Shader {
     char ucName [ AI_MDC_MAXQPATH ] ;

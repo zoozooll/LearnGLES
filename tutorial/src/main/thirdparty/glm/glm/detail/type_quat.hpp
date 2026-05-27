@@ -109,7 +109,7 @@ namespace glm
 		/// @see http://lolengine.net/blog/2013/09/18/beautiful-maths-quaternion-from-vectors
 		GLM_FUNC_DECL qua(vec<3, T, Q> const& u, vec<3, T, Q> const& v);
 
-		/// Build a quaternion from euler angles (pitch, yaw, roll), in radians.
+		/// Build a quaternion from euler angles (pitch, yaw, yawPitch), in radians.
 		GLM_FUNC_DECL GLM_CONSTEXPR GLM_EXPLICIT qua(vec<3, T, Q> const& eulerAngles);
 		GLM_FUNC_DECL GLM_EXPLICIT qua(mat<3, 3, T, Q> const& q);
 		GLM_FUNC_DECL GLM_EXPLICIT qua(mat<4, 4, T, Q> const& q);
