@@ -172,7 +172,7 @@ void BasicGlesScene::destroy() {
 
 std::map<std::string, std::any> BasicGlesScene::propertyEvent(std::map<std::string, std::any> &map) {
     auto eventIdIt = map.find("event_id");
-    if (eventIdIt != map.end()) {
+    if (eventIdIt != map.end() && eventIdIt->second.type() == typeid(std::string)) {
         auto eventIdStr = std::any_cast<std::string>(eventIdIt->second);
         if ("target_camera_touching_event" == eventIdStr) {
             parseTargetCameraEvent(map);
@@ -189,35 +189,41 @@ BasicGlesScene::~BasicGlesScene() {
 
 void BasicGlesScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
     auto it = event.find("single_touching");
-    if (it != event.end()) {
-        auto eventValue = std::any_cast<glm::vec2>(it->second);
-        auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
-        glm::vec2 director = eventValue;
-        targetCamera->yawPitch(director * 0.5F);
+    if (it != event.end() && it->second.type() == typeid(std::vector<float>)) {
+        auto eventValue = std::any_cast<std::vector<float>>(it->second);
+        if (eventValue.size() >= 2) {
+            auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
+            glm::vec2 director = glm::vec2(eventValue[0], eventValue[1]);
+            targetCamera->yawPitch(director * 0.5F);
+        }
     }
 
     it = event.find("zooming");
-    if (it != event.end()) {
-        auto eventValue = std::any_cast<glm::vec2>(it->second);
-        auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
-        if (eventValue.x != 0.f) {
-            auto scale = eventValue.y / eventValue.x;
-            targetCamera->zoom(scale);
+    if (it != event.end() && it->second.type() == typeid(std::vector<float>)) {
+        auto eventValue = std::any_cast<std::vector<float>>(it->second);
+        if (eventValue.size() >= 2) {
+            auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
+            if (eventValue[0] != 0.f) {
+                auto scale = eventValue[1] / eventValue[0];
+                targetCamera->zoom(scale);
+            }
         }
     }
 
     it = event.find("rotating");
-    if (it != event.end()) {
+    if (it != event.end() && it->second.type() == typeid(float)) {
         auto eventValue = std::any_cast<float>(it->second);
         auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
         targetCamera->roll(eventValue);
     }
 
     it = event.find("moving");
-    if (it != event.end()) {
-        auto eventValue = std::any_cast<glm::vec2>(it->second);
-        auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
-        targetCamera->move(eventValue);
+    if (it != event.end() && it->second.type() == typeid(std::vector<float>)) {
+        auto eventValue = std::any_cast<std::vector<float>>(it->second);
+        if (eventValue.size() >= 2) {
+            auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
+            targetCamera->move(glm::vec2(eventValue[0], eventValue[1]));
+        }
     }
 
     it = event.find("reset");
