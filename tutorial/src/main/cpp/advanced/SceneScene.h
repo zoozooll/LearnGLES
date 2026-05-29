@@ -22,7 +22,7 @@ public :
     virtual ~SceneScene();
 
 private:
-    Camera* camera = nullptr;
+    Camera* m_camera = nullptr;
 
     void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };

@@ -14,9 +14,9 @@ CsmScene::CsmScene() {
 }
 
 void CsmScene::init() {
-    camera = new TargetCamera;
-    shadowCascadeLevels = { camera->getFar() / 50.0f, camera->getFar() / 25.0f, camera->getFar() / 10.0f,
-            camera->getFar() / 2.0f };
+    m_camera = new TargetCamera;
+    shadowCascadeLevels = { m_camera->getFar() / 50.0f, m_camera->getFar() / 25.0f, m_camera->getFar() / 10.0f,
+            m_camera->getFar() / 2.0f };
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
@@ -102,14 +102,14 @@ void CsmScene::init() {
 }
 
 void CsmScene::resize(int width, int height) {
-    camera->setAspec((float) width / (float) height);
+    m_camera->setAspec((float) width / (float) height);
     m_width = width;
     m_height = height;
     glViewport(0, 0, width, height);
 }
 
 void CsmScene::draw() {
-    camera->update();
+    m_camera->update();
     // render
     // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -143,14 +143,14 @@ void CsmScene::draw() {
     // 2. render scene as normal using the generated depth/shadow map
     // --------------------------------------------------------------
     shader->use();
-    const glm::mat4 projection = camera->getProjectionMatrix();
-    const glm::mat4 view = camera->getViewMatrix();
+    const glm::mat4 projection = m_camera->getProjectionMatrix();
+    const glm::mat4 view = m_camera->getViewMatrix();
     shader->setMat4("projection", projection);
     shader->setMat4("view", view);
     // set light uniforms
-    shader->setVec3("viewPos", camera->getPosition());
+    shader->setVec3("viewPos", m_camera->getPosition());
     shader->setVec3("lightDir", lightDir);
-    shader->setFloat("farPlane", camera->getFar());
+    shader->setFloat("farPlane", m_camera->getFar());
     shader->setInt("cascadeCount", shadowCascadeLevels.size());
     for (size_t i = 0; i < shadowCascadeLevels.size(); ++i)
     {
@@ -201,7 +201,7 @@ void CsmScene::destroy() {
     glDeleteTextures(1, &lightDepthMaps);
     glDeleteFramebuffers(1, &lightFBO);
     glDeleteBuffers(1, &matricesUBO);
-    delete camera;
+    delete m_camera;
 }
 
 CsmScene::~CsmScene() {
@@ -220,7 +220,7 @@ std::map<std::string, std::any> CsmScene::propertyEvent(std::map<std::string, st
 }
 
 void CsmScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
-    auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
+    auto* targetCamera = dynamic_cast<TargetCamera*>(m_camera);
     if (!targetCamera) return;
 
     if (auto it = event.find("single_touching"); it != event.end()) {
@@ -248,8 +248,8 @@ void CsmScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
 }
 
 glm::mat4 CsmScene::getLightSpaceMatrix(const float nearPlane, const float farPlane) {
-    const auto proj = camera->getProjectionMatrix();
-    const auto corners = getFrustumCornersWorldSpace(proj * camera->getViewMatrix());
+    const auto proj = m_camera->getProjectionMatrix();
+    const auto corners = getFrustumCornersWorldSpace(proj * m_camera->getViewMatrix());
 
     glm::vec3 center = glm::vec3(0, 0, 0);
     for (const auto& v : corners)
@@ -411,9 +411,9 @@ std::vector<glm::mat4> CsmScene::getLightSpaceMatrices() {
     std::vector<glm::mat4> ret;
     for (size_t i = 0; i < shadowCascadeLevels.size() + 1; ++i)
     {
-        if (i == 0) ret.push_back(getLightSpaceMatrix(camera->getNear(), shadowCascadeLevels[i]));
+        if (i == 0) ret.push_back(getLightSpaceMatrix(m_camera->getNear(), shadowCascadeLevels[i]));
         else if (i < shadowCascadeLevels.size()) ret.push_back(getLightSpaceMatrix(shadowCascadeLevels[i - 1], shadowCascadeLevels[i]));
-        else ret.push_back(getLightSpaceMatrix(shadowCascadeLevels[i - 1], camera->getFar()));
+        else ret.push_back(getLightSpaceMatrix(shadowCascadeLevels[i - 1], m_camera->getFar()));
     }
     return ret;
 }

@@ -12,7 +12,7 @@ PbrScene::PbrScene() {
 }
 
 void PbrScene::init() {
-    camera = new TargetCamera;
+    m_camera = new TargetCamera;
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
@@ -38,14 +38,14 @@ void PbrScene::init() {
 }
 
 void PbrScene::resize(int width, int height) {
-    camera->setAspec((float) width / (float) height);
+    m_camera->setAspec((float) width / (float) height);
     m_width = width;
     m_height = height;
     glViewport(0, 0, width, height);
 }
 
 void PbrScene::draw() {
-    camera->update();
+    m_camera->update();
     // render
     // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -54,11 +54,11 @@ void PbrScene::draw() {
     if(m_pShader)
     {
         m_pShader->use();
-        glm::mat4 projection = camera->getProjectionMatrix();
-        glm::mat4 view = camera->getViewMatrix();
+        glm::mat4 projection = m_camera->getProjectionMatrix();
+        glm::mat4 view = m_camera->getViewMatrix();
         m_pShader->setMat4("projection", projection);
         m_pShader->setMat4("view", view);
-        m_pShader->setVec3("camPos", camera->getPosition());
+        m_pShader->setVec3("camPos", m_camera->getPosition());
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, albedo);
@@ -120,7 +120,7 @@ void PbrScene::destroy() {
         glDeleteVertexArrays(1, &sphereVAO);
         sphereVAO = 0;
     }
-    delete camera;
+    delete m_camera;
 }
 
 PbrScene::~PbrScene() {
@@ -139,7 +139,7 @@ std::map<std::string, std::any> PbrScene::propertyEvent(std::map<std::string, st
 }
 
 void PbrScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
-    auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
+    auto* targetCamera = dynamic_cast<TargetCamera*>(m_camera);
     if (!targetCamera) return;
 
     if (auto it = event.find("single_touching"); it != event.end()) {

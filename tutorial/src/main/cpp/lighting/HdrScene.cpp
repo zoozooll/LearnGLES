@@ -10,7 +10,7 @@ HdrScene::HdrScene() {
 }
 
 void HdrScene::init() {
-    camera = new TargetCamera;
+    m_camera = new TargetCamera;
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
@@ -67,12 +67,12 @@ void HdrScene::init() {
 }
 
 void HdrScene::resize(int width, int height) {
-    camera->setAspec((float) width / (float) height);
+    m_camera->setAspec((float) width / (float) height);
     glViewport(0, 0, width, height);
 }
 
 void HdrScene::draw() {
-    camera->update();
+    m_camera->update();
     // render
     // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -82,8 +82,8 @@ void HdrScene::draw() {
     // -----------------------------------------------
     glBindFramebuffer(GL_FRAMEBUFFER, m_hdrFBO);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glm::mat4 projection = camera->getProjectionMatrix();
-    glm::mat4 view = camera->getViewMatrix();
+    glm::mat4 projection = m_camera->getProjectionMatrix();
+    glm::mat4 view = m_camera->getViewMatrix();
     if(m_pShader)
     {
         m_pShader->use();
@@ -97,7 +97,7 @@ void HdrScene::draw() {
             m_pShader->setVec3("lights[" + std::to_string(i) + "].Position", m_lightPositions[i]);
             m_pShader->setVec3("lights[" + std::to_string(i) + "].Color", m_lightColors[i]);
         }
-        m_pShader->setVec3("viewPos", camera->getPosition());
+        m_pShader->setVec3("viewPos", m_camera->getPosition());
         // render tunnel
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(0.0f, 0.0f, 25.0));
@@ -140,7 +140,7 @@ void HdrScene::destroy() {
         delete m_pHdrShader;
         m_pHdrShader = nullptr;
     }
-    delete camera;
+    delete m_camera;
 }
 
 HdrScene::~HdrScene() {
@@ -159,7 +159,7 @@ std::map<std::string, std::any> HdrScene::propertyEvent(std::map<std::string, st
 }
 
 void HdrScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
-    auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
+    auto* targetCamera = dynamic_cast<TargetCamera*>(m_camera);
     if (!targetCamera) return;
 
     if (auto it = event.find("single_touching"); it != event.end()) {

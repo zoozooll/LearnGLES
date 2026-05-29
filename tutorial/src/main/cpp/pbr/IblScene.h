@@ -23,7 +23,7 @@ public :
     virtual ~IblScene();
 
 private:
-    Camera* camera = nullptr;
+    Camera* m_camera = nullptr;
     Shader* pbrShader = nullptr;
     Shader* equirectangularToCubemapShader = nullptr;
     Shader* irradianceShader = nullptr;

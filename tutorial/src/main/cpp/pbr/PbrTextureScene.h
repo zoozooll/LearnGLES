@@ -3,6 +3,8 @@
 
 #include "TutorialScene.h"
 
+class Camera;
+
 class PbrTextureScene : public TutorialScene {
 public :
     PbrTextureScene();
@@ -15,7 +17,14 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~PbrTextureScene();
+
+private:
+    Camera* m_camera = nullptr;
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_PBRTEXTURESCENE_H

@@ -25,7 +25,7 @@ public :
 private:
     void renderQuad();
 
-    Camera* camera;
+    Camera* m_camera;
     Shader* m_pShader;
     unsigned int m_quadVAO;
     unsigned int m_quadVBO;

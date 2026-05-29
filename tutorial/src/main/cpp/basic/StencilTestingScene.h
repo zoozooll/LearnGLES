@@ -19,6 +19,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~StencilTestingScene();
 
 private:
@@ -31,6 +33,8 @@ private:
     unsigned int m_planeVBO = 0u;
     unsigned int m_cubeTexture = 0u;
     unsigned int m_floorTexture = 0u;
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_STENCILTESTINGSCENE_H

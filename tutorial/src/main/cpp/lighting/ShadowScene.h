@@ -23,7 +23,7 @@ public :
     virtual ~ShadowScene();
 
 private:
-    Camera* camera = nullptr;
+    Camera* m_camera = nullptr;
 
     Shader* m_pShader = nullptr;
     Shader* m_pSimpleDepthShader = nullptr;

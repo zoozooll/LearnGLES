@@ -23,7 +23,7 @@ public :
     virtual ~OitScene();
 
 private:
-    Camera* camera = nullptr;
+    Camera* m_camera = nullptr;
     Shader* solidShader = nullptr;;
     Shader* transparentShader = nullptr;;
     Shader* compositeShader = nullptr;;

@@ -23,7 +23,7 @@ public :
     virtual ~PbrScene();
 
 private:
-    Camera* camera = nullptr;
+    Camera* m_camera = nullptr;
     Shader* m_pShader = nullptr;
 
     unsigned int sphereVAO = 0u;

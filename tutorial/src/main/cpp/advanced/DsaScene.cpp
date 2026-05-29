@@ -2,6 +2,7 @@
 
 #include "GLES3/gl32.h"
 #include "logutil.h"
+#include "TargetCamera.h"
 
 const char* vertexShaderSource = R"(#version 330 core
 layout (location = 0) in vec3 aPos;
@@ -22,6 +23,7 @@ DsaScene::DsaScene() {
 }
 
 void DsaScene::init() {
+    m_camera = new TargetCamera;
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
     glCompileShader(vertexShader);
@@ -81,12 +83,14 @@ void DsaScene::init() {
 }
 
 void DsaScene::resize(int width, int height) {
+    m_camera->setAspec((float) width / (float) height);
     m_width = width;
     m_height = height;
     glViewport(0, 0, width, height);
 }
 
 void DsaScene::draw() {
+    m_camera->update();
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     glUseProgram(m_shaderProgram);
@@ -99,8 +103,48 @@ void DsaScene::destroy() {
     glDeleteBuffers(1, &m_vbo);
     glDeleteBuffers(1, &m_ebo);
     glDeleteProgram(m_shaderProgram);
+    delete m_camera;
 }
 
 DsaScene::~DsaScene() {
 
+}
+
+std::map<std::string, std::any> DsaScene::propertyEvent(std::map<std::string, std::any> &map) {
+    auto eventIdIt = map.find("event_id");
+    if (eventIdIt != map.end() && eventIdIt->second.type() == typeid(std::string)) {
+        auto eventIdStr = std::any_cast<std::string>(eventIdIt->second);
+        if ("target_camera_touching_event" == eventIdStr) {
+            parseTargetCameraEvent(map);
+        }
+    }
+    return {};
+}
+
+void DsaScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
+    auto* targetCamera = dynamic_cast<TargetCamera*>(m_camera);
+    if (!targetCamera) return;
+
+    if (auto it = event.find("single_touching"); it != event.end()) {
+        if (it->second.type() == typeid(std::vector<float>)) {
+            const auto& val = std::any_cast<const std::vector<float>&>(it->second);
+            if (val.size() >= 4) {
+                targetCamera->onSingleTouching(glm::vec2(val[0], val[1]), glm::vec2(val[2], val[3]));
+            }
+        }
+    }
+
+    if (auto it = event.find("double_touching"); it != event.end()) {
+        if (it->second.type() == typeid(std::vector<float>)) {
+            const auto& val = std::any_cast<const std::vector<float>&>(it->second);
+            if (val.size() >= 8) {
+                targetCamera->onDoubleTouching(glm::vec2(val[0], val[1]), glm::vec2(val[2], val[3]),
+                                               glm::vec2(val[4], val[5]), glm::vec2(val[6], val[7]));
+            }
+        }
+    }
+
+    if (event.find("reset") != event.end()) {
+        targetCamera->reset();
+    }
 }

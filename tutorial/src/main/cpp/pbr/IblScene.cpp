@@ -20,7 +20,7 @@ IblScene::IblScene() {
 }
 
 void IblScene::init() {
-    camera = new TargetCamera;
+    m_camera = new TargetCamera;
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
@@ -273,14 +273,14 @@ void IblScene::init() {
 }
 
 void IblScene::resize(int width, int height) {
-    camera->setAspec((float) width / (float) height);
+    m_camera->setAspec((float) width / (float) height);
     m_width = width;
     m_height = height;
     glViewport(0, 0, width, height);
 }
 
 void IblScene::draw() {
-    camera->update();
+    m_camera->update();
     // render
     // ------
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -292,11 +292,11 @@ void IblScene::draw() {
         // ------------------------------------------------------------------------------------------
         pbrShader->use();
         glm::mat4 model = glm::mat4(1.0f);
-        glm::mat4 projection = camera->getProjectionMatrix();
-        glm::mat4 view = camera->getViewMatrix();
+        glm::mat4 projection = m_camera->getProjectionMatrix();
+        glm::mat4 view = m_camera->getViewMatrix();
         pbrShader->setMat4("projection", projection);
         pbrShader->setMat4("view", view);
-        pbrShader->setVec3("camPos", camera->getPosition());
+        pbrShader->setVec3("camPos", m_camera->getPosition());
 
         // bind pre-computed IBL data
         glActiveTexture(GL_TEXTURE0);
@@ -434,7 +434,7 @@ void IblScene::destroy() {
     if (sphereVAO != 0) glDeleteVertexArrays(1, &sphereVAO);
     if (cubeVAO != 0) glDeleteVertexArrays(1, &cubeVAO);
     if (quadVAO != 0) glDeleteVertexArrays(1, &quadVAO);
-    delete camera;
+    delete m_camera;
 }
 
 IblScene::~IblScene() {
@@ -453,7 +453,7 @@ std::map<std::string, std::any> IblScene::propertyEvent(std::map<std::string, st
 }
 
 void IblScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
-    auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
+    auto* targetCamera = dynamic_cast<TargetCamera*>(m_camera);
     if (!targetCamera) return;
 
     if (auto it = event.find("single_touching"); it != event.end()) {

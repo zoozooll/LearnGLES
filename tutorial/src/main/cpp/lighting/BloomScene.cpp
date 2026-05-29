@@ -8,7 +8,7 @@ BloomScene::BloomScene() {
 }
 
 void BloomScene::init() {
-    camera = new TargetCamera;
+    m_camera = new TargetCamera;
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
@@ -97,12 +97,12 @@ void BloomScene::init() {
 }
 
 void BloomScene::resize(int width, int height) {
-    camera->setAspec((float) width / (float) height);
+    m_camera->setAspec((float) width / (float) height);
     glViewport(0, 0, width, height);
 }
 
 void BloomScene::draw() {
-    camera->update();
+    m_camera->update();
     // render
     // ------
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -112,8 +112,8 @@ void BloomScene::draw() {
     // -----------------------------------------------
     glBindFramebuffer(GL_FRAMEBUFFER, m_hdrFBO);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glm::mat4 projection = camera->getProjectionMatrix();
-    glm::mat4 view = camera->getViewMatrix();
+    glm::mat4 projection = m_camera->getProjectionMatrix();
+    glm::mat4 view = m_camera->getViewMatrix();
     glm::mat4 model = glm::mat4(1.0f);
     if(m_pShader)
     {
@@ -128,7 +128,7 @@ void BloomScene::draw() {
             m_pShader->setVec3("lights[" + std::to_string(i) + "].Position", m_lightPositions[i]);
             m_pShader->setVec3("lights[" + std::to_string(i) + "].Color", m_lightColors[i]);
         }
-        m_pShader->setVec3("viewPos", camera->getPosition());
+        m_pShader->setVec3("viewPos", m_camera->getPosition());
         // create one large cube that acts as the floor
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0));
@@ -266,7 +266,7 @@ void BloomScene::destroy() {
     glDeleteRenderbuffers(1, &m_rboDepth);
     glDeleteFramebuffers(2, m_pingpongFBO);
     glDeleteTextures(2, m_pingpongColorbuffers);
-    delete camera;
+    delete m_camera;
 }
 
 BloomScene::~BloomScene() {
@@ -285,7 +285,7 @@ std::map<std::string, std::any> BloomScene::propertyEvent(std::map<std::string, 
 }
 
 void BloomScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
-    auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
+    auto* targetCamera = dynamic_cast<TargetCamera*>(m_camera);
     if (!targetCamera) return;
 
     if (auto it = event.find("single_touching"); it != event.end()) {

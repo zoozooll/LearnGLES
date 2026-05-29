@@ -10,7 +10,7 @@ ParallaxMappingScene::ParallaxMappingScene() {
 }
 
 void ParallaxMappingScene::init() {
-    camera = new TargetCamera;
+    m_camera = new TargetCamera;
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
@@ -35,12 +35,12 @@ void ParallaxMappingScene::init() {
 }
 
 void ParallaxMappingScene::resize(int width, int height) {
-    camera->setAspec((float) width / (float) height);
+    m_camera->setAspec((float) width / (float) height);
     glViewport(0, 0, width, height);
 }
 
 void ParallaxMappingScene::draw() {
-    camera->update();
+    m_camera->update();
     // render
     // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -49,8 +49,8 @@ void ParallaxMappingScene::draw() {
     // configure view/projection matrices
     if(m_pShader)
     {
-        glm::mat4 projection = camera->getProjectionMatrix();
-        glm::mat4 view = camera->getViewMatrix();
+        glm::mat4 projection = m_camera->getProjectionMatrix();
+        glm::mat4 view = m_camera->getViewMatrix();
         m_pShader->use();
         m_pShader->setMat4("projection", projection);
         m_pShader->setMat4("view", view);
@@ -58,7 +58,7 @@ void ParallaxMappingScene::draw() {
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::rotate(model, glm::radians(GetEscapeSecs() * -10.0f), glm::normalize(glm::vec3(1.0, 0.0, 1.0))); // rotate the quad to show parallax mapping from multiple directions
         m_pShader->setMat4("model", model);
-        m_pShader->setVec3("viewPos", camera->getPosition());
+        m_pShader->setVec3("viewPos", m_camera->getPosition());
         m_pShader->setVec3("lightPos", m_lightPos);
         m_pShader->setFloat("heightScale", heightScale); // adjust with Q and E keys
         glActiveTexture(GL_TEXTURE0);
@@ -86,7 +86,7 @@ void ParallaxMappingScene::destroy() {
         delete m_pShader;
         m_pShader = nullptr;
     }
-    delete camera;
+    delete m_camera;
 }
 
 ParallaxMappingScene::~ParallaxMappingScene() {
@@ -105,7 +105,7 @@ std::map<std::string, std::any> ParallaxMappingScene::propertyEvent(std::map<std
 }
 
 void ParallaxMappingScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
-    auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
+    auto* targetCamera = dynamic_cast<TargetCamera*>(m_camera);
     if (!targetCamera) return;
 
     if (auto it = event.find("single_touching"); it != event.end()) {

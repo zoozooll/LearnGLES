@@ -34,7 +34,7 @@ PhysicallyBasedBloomScene::PhysicallyBasedBloomScene() {
 }
 
 void PhysicallyBasedBloomScene::init() {
-    camera = new TargetCamera;
+    m_camera = new TargetCamera;
     glEnable(GL_DEPTH_TEST);
     shader = new Shader("shaders/physically_based_bloom/6.bloom.vert",
             "shaders/physically_based_bloom/6.bloom.frag");
@@ -104,20 +104,21 @@ void PhysicallyBasedBloomScene::init() {
 }
 
 void PhysicallyBasedBloomScene::resize(int width, int height) {
+    m_camera->setAspec((float) width / (float) height);
     m_width = width;
     m_height = height;
     glViewport(0, 0, width, height);
 }
 
 void PhysicallyBasedBloomScene::draw() {
-    camera->update();
+    m_camera->update();
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glBindFramebuffer(GL_FRAMEBUFFER, hdrFBO);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glm::mat4 projection = camera->getProjectionMatrix();
-    glm::mat4 view = camera->getViewMatrix();
+    glm::mat4 projection = m_camera->getProjectionMatrix();
+    glm::mat4 view = m_camera->getViewMatrix();
     shader->use();
     shader->setMat4("projection", projection);
     shader->setMat4("view", view);
@@ -128,7 +129,7 @@ void PhysicallyBasedBloomScene::draw() {
         shader->setVec3("lights[" + std::to_string(i) + "].Position", lightPositions[i]);
         shader->setVec3("lights[" + std::to_string(i) + "].Color", lightColors[i]);
     }
-    shader->setVec3("viewPos", camera->getPosition());
+    shader->setVec3("viewPos", m_camera->getPosition());
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0));
     model = glm::scale(model, glm::vec3(12.5f, 0.5f, 12.5f));
@@ -235,7 +236,7 @@ void PhysicallyBasedBloomScene::destroy() {
     glDeleteVertexArrays(1, &quadVAO);
     glDeleteBuffers(1, &cubeVBO);
     glDeleteVertexArrays(1, &cubeVAO);
-    delete camera;
+    delete m_camera;
 }
 
 PhysicallyBasedBloomScene::~PhysicallyBasedBloomScene() {
@@ -254,7 +255,7 @@ std::map<std::string, std::any> PhysicallyBasedBloomScene::propertyEvent(std::ma
 }
 
 void PhysicallyBasedBloomScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
-    auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
+    auto* targetCamera = dynamic_cast<TargetCamera*>(m_camera);
     if (!targetCamera) return;
 
     if (auto it = event.find("single_touching"); it != event.end()) {

@@ -9,22 +9,22 @@ SceneScene::SceneScene() {
 }
 
 void SceneScene::init() {
-    camera = new TargetCamera;
+    m_camera = new TargetCamera;
 }
 
 void SceneScene::resize(int width, int height) {
-    camera->setAspec((float) width / (float) height);
+    m_camera->setAspec((float) width / (float) height);
     glViewport(0, 0, width, height);
 }
 
 void SceneScene::draw() {
-    camera->update();
+    m_camera->update();
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void SceneScene::destroy() {
-    delete camera;
+    delete m_camera;
 }
 
 SceneScene::~SceneScene() {
@@ -43,7 +43,7 @@ std::map<std::string, std::any> SceneScene::propertyEvent(std::map<std::string, 
 }
 
 void SceneScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
-    auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
+    auto* targetCamera = dynamic_cast<TargetCamera*>(m_camera);
     if (!targetCamera) return;
 
     if (auto it = event.find("single_touching"); it != event.end()) {

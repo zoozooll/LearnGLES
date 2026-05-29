@@ -33,7 +33,7 @@ AreaLightsScene::AreaLightsScene() {
 }
 
 void AreaLightsScene::init() {
-    camera = new TargetCamera;
+    m_camera = new TargetCamera;
     glEnable(GL_DEPTH_TEST);
     mat1 = loadMTexture();
     mat2 = loadLUTTexture();
@@ -76,14 +76,14 @@ void AreaLightsScene::init() {
 }
 
 void AreaLightsScene::resize(int width, int height) {
-    camera->setAspec((float) width / (float) height);
+    m_camera->setAspec((float) width / (float) height);
     m_width = width;
     m_height = height;
     glViewport(0, 0, width, height);
 }
 
 void AreaLightsScene::draw() {
-    camera->update();
+    m_camera->update();
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -91,11 +91,11 @@ void AreaLightsScene::draw() {
     glm::mat4 model(1.0f);
     shaderLTC->setMat4("model", model);
     shaderLTC->setMat3("normalMatrix", glm::mat3(model));
-    glm::mat4 view = camera->getViewMatrix();
+    glm::mat4 view = m_camera->getViewMatrix();
     shaderLTC->setMat4("view", view);
-    glm::mat4 projection = camera->getProjectionMatrix();
+    glm::mat4 projection = m_camera->getProjectionMatrix();
     shaderLTC->setMat4("projection", projection);
-    shaderLTC->setVec3("viewPosition", camera->getPosition());
+    shaderLTC->setVec3("viewPosition", m_camera->getPosition());
 
     glActiveTexture(GL_TEXTURE0); glBindTexture(GL_TEXTURE_2D, mat1);
     glActiveTexture(GL_TEXTURE1); glBindTexture(GL_TEXTURE_2D, mat2);
@@ -138,7 +138,7 @@ void AreaLightsScene::destroy() {
     glDeleteTextures(1, &mat1);
     glDeleteTextures(1, &mat2);
     glDeleteTextures(1, &concreteTexture);
-    delete camera;
+    delete m_camera;
 }
 
 AreaLightsScene::~AreaLightsScene() {
@@ -157,7 +157,7 @@ std::map<std::string, std::any> AreaLightsScene::propertyEvent(std::map<std::str
 }
 
 void AreaLightsScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
-    auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
+    auto* targetCamera = dynamic_cast<TargetCamera*>(m_camera);
     if (!targetCamera) return;
 
     if (auto it = event.find("single_touching"); it != event.end()) {

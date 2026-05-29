@@ -31,7 +31,7 @@ private:
     void renderCube();
     float ourLerp(float a, float b, float f);
 
-    Camera* camera = nullptr;
+    Camera* m_camera = nullptr;
     Shader* m_pShaderGeometryPass = nullptr;
     Shader* m_pShaderLightingPass = nullptr;
     Shader* m_pShaderSSAO = nullptr;

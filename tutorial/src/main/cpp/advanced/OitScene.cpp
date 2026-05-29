@@ -10,7 +10,7 @@ OitScene::OitScene() {
 }
 
 void OitScene::init() {
-    camera = new TargetCamera;
+    m_camera = new TargetCamera;
     // build and compile shaders
     // -------------------------
     solidShader = new Shader("shaders/oit/solid.vert", "shaders/oit/solid.frag");
@@ -100,7 +100,7 @@ void OitScene::init() {
 }
 
 void OitScene::resize(int width, int height) {
-    camera->setAspec((float) width / (float) height);
+    m_camera->setAspec((float) width / (float) height);
     m_width = width;
     m_height = height;
     glViewport(0, 0, width, height);
@@ -121,10 +121,10 @@ void OitScene::resize(int width, int height) {
 }
 
 void OitScene::draw() {
-    camera->update();
+    m_camera->update();
     // camera matrices
-    glm::mat4 projection = camera->getProjectionMatrix();
-    glm::mat4 view = camera->getViewMatrix();
+    glm::mat4 projection = m_camera->getProjectionMatrix();
+    glm::mat4 view = m_camera->getViewMatrix();
     glm::mat4 vp = projection * view;
 
     // transformation matrices
@@ -254,7 +254,7 @@ void OitScene::destroy() {
     glDeleteTextures(1, &revealTexture);
     glDeleteFramebuffers(1, &opaqueFBO);
     glDeleteFramebuffers(1, &transparentFBO);
-    delete camera;
+    delete m_camera;
 }
 
 OitScene::~OitScene() {
@@ -273,7 +273,7 @@ std::map<std::string, std::any> OitScene::propertyEvent(std::map<std::string, st
 }
 
 void OitScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
-    auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
+    auto* targetCamera = dynamic_cast<TargetCamera*>(m_camera);
     if (!targetCamera) return;
 
     if (auto it = event.find("single_touching"); it != event.end()) {

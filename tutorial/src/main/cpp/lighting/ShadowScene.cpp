@@ -9,7 +9,7 @@ ShadowScene::ShadowScene() {
 }
 
 void ShadowScene::init() {
-    camera = new TargetCamera;
+    m_camera = new TargetCamera;
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
@@ -80,12 +80,12 @@ void ShadowScene::init() {
 }
 
 void ShadowScene::resize(int width, int height) {
-    camera->setAspec((float) width / (float) height);
+    m_camera->setAspec((float) width / (float) height);
     glViewport(0, 0, width, height);
 }
 
 void ShadowScene::draw() {
-    camera->update();
+    m_camera->update();
     // 1. render depth of scene to texture (from light's perspective)
     // --------------------------------------------------------------
     glm::vec3 lightPos(-2.0f, 4.0f, -1.0f);
@@ -119,12 +119,12 @@ void ShadowScene::draw() {
     if(m_pShader)
     {
         m_pShader->use();
-        glm::mat4 projection = camera->getProjectionMatrix();
-        glm::mat4 view = camera->getViewMatrix();
+        glm::mat4 projection = m_camera->getProjectionMatrix();
+        glm::mat4 view = m_camera->getViewMatrix();
         m_pShader->setMat4("projection", projection);
         m_pShader->setMat4("view", view);
         // set light uniforms
-        m_pShader->setVec3("viewPos", camera->getPosition());
+        m_pShader->setVec3("viewPos", m_camera->getPosition());
         m_pShader->setVec3("lightPos", lightPos);
         m_pShader->setMat4("lightSpaceMatrix", lightSpaceMatrix);
         glActiveTexture(GL_TEXTURE0);
@@ -171,7 +171,7 @@ void ShadowScene::destroy() {
         delete m_pDebugDepthQuad;
         m_pDebugDepthQuad = nullptr;
     }
-    delete camera;
+    delete m_camera;
 }
 
 ShadowScene::~ShadowScene() {
@@ -190,7 +190,7 @@ std::map<std::string, std::any> ShadowScene::propertyEvent(std::map<std::string,
 }
 
 void ShadowScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
-    auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
+    auto* targetCamera = dynamic_cast<TargetCamera*>(m_camera);
     if (!targetCamera) return;
 
     if (auto it = event.find("single_touching"); it != event.end()) {

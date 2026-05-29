@@ -26,7 +26,7 @@ public :
     virtual ~CsmScene();
 
 private:
-    Camera* camera = nullptr;
+    Camera* m_camera = nullptr;
     Shader* shader = nullptr;
     Shader* simpleDepthShader = nullptr;
     Shader* debugDepthQuad = nullptr;

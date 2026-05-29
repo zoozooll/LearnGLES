@@ -37,7 +37,7 @@ public :
     virtual ~AreaLightsScene();
 
 private:
-    Camera* camera = nullptr;
+    Camera* m_camera = nullptr;
     Shader* shaderLTC = nullptr;
     Shader* shaderLightPlane = nullptr;
 

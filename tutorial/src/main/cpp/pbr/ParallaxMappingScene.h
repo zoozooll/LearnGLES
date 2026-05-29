@@ -25,7 +25,7 @@ public :
 private:
     void renderQuad();
 
-    Camera* camera = nullptr;
+    Camera* m_camera = nullptr;
     Shader* m_pShader = nullptr;
     unsigned int m_quadVAO = 0u;
     unsigned int m_quadVBO = 0u;

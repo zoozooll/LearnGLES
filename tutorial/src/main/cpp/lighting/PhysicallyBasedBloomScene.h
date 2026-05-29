@@ -78,7 +78,7 @@ public :
     virtual ~PhysicallyBasedBloomScene();
 
 private:
-    Camera* camera = nullptr;
+    Camera* m_camera = nullptr;
     Shader* shader = nullptr;
     Shader* shaderLight = nullptr;
     Shader* shaderBlur = nullptr;
