@@ -36,38 +36,29 @@ class BasicGlesActivity : GLActivity() {
     override fun createTouchCallback(): Layer3DTouchCallback {
 
         return object : Layer3DTouchCallback {
-            override fun onSingleTouch(disX: Float, disY: Float) {
+            override fun onSingleTouch(
+                prevPoint: Offset,
+                point: Offset
+            ) {
                 if (!active) return
-                Log.d("BasicGlesActivity", "Custom SingleTouch: $disX, $disY")
+                Log.d("BasicGlesActivity", "onSingleTouch: $prevPoint, $point")
                 val event = mapOf("event_id" to "target_camera_touching_event",
-                    "single_touching" to floatArrayOf(disX, disY))
+                    "single_touching" to floatArrayOf(prevPoint.x, prevPoint.y, point.x, point.y))
                 NativeHelper.sendCommands(event)
                 glSurfaceView?.requestRender()
             }
 
-            override fun onZooming(prevDistance: Float, distance: Float) {
+            override fun onDoubleTouch(
+                prevPoint: Offset,
+                point: Offset,
+                prevPoint1: Offset,
+                point1: Offset
+            ) {
                 if (!active) return
-                Log.d("BasicGlesActivity", "Custom Zooming: $distance")
+                Log.d("BasicGlesActivity", "onDoubleTouch: $prevPoint -> $point, $prevPoint1 -> $point1")
                 val event = mapOf("event_id" to "target_camera_touching_event",
-                    "zooming" to floatArrayOf(prevDistance, distance))
-                NativeHelper.sendCommands(event)
-                glSurfaceView?.requestRender()
-            }
-
-            override fun onTwoFingersRotating(angle: Float) {
-                if (!active) return
-                Log.d("BasicGlesActivity", "Custom Rotating: $angle")
-                val event = mapOf("event_id" to "target_camera_touching_event",
-                    "rotating" to angle)
-                NativeHelper.sendCommands(event)
-                glSurfaceView?.requestRender()
-            }
-
-            override fun onMoving(prevCenter: Offset, centerPoint: Offset) {
-                if (!active) return
-                Log.d("BasicGlesActivity", "Custom Moving: $centerPoint")
-                val event = mapOf("event_id" to "target_camera_touching_event",
-                    "moving" to centerPoint - prevCenter)
+                    "double_touching" to floatArrayOf(prevPoint.x, prevPoint.y, point.x, point.y,
+                        prevPoint1.x, prevPoint1.y, point1.x, point1.y))
                 NativeHelper.sendCommands(event)
                 glSurfaceView?.requestRender()
             }

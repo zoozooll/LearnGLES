@@ -12,14 +12,6 @@
 
 class TargetCamera : public Camera {
 public:
-    void move(const glm::vec2 &move);
-
-    void zoom(const float &zoom);
-
-    void yawPitch(const glm::vec2 &director);
-
-    void roll(const float &angle);
-
     void setRadius(float mRadius);
 
     void update() override;
@@ -38,9 +30,21 @@ public:
 
     float calculateScaleFactor(const float &distanceFromCamera, const float &desiredObjectSize) const;
 
-    float getFracRadius() const;
+    //region Events
+    void move(const glm::vec2 &move);
+
+    void zoom(const float &zoom);
+
+    void yawPitch(const glm::vec2 &director);
+
+    void roll(const float &angle);
+
+    void onSingleTouching(glm::vec2 prevPoint, glm::vec2 point);
+
+    void onDoubleTouching(glm::vec2 prevPoint0, glm::vec2 point0, glm::vec2 prevPoint1, glm::vec2 point1);
 
     void reset() override;
+    //endregion
 
 protected:
     glm::quat m_targetRotation = glm::quat(1.f, 0.f, 0.f, 0.f);

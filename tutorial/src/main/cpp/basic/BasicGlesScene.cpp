@@ -14,6 +14,8 @@
 #include "TimeUtil.h"
 #include "glerror.h"
 
+using namespace glm;
+
 void BasicGlesScene::init() {
 // configure global opengl state
     // -----------------------------
@@ -191,38 +193,22 @@ void BasicGlesScene::parseTargetCameraEvent(std::map<std::string, std::any> &eve
     auto it = event.find("single_touching");
     if (it != event.end() && it->second.type() == typeid(std::vector<float>)) {
         auto eventValue = std::any_cast<std::vector<float>>(it->second);
-        if (eventValue.size() >= 2) {
+        if (eventValue.size() >= 4) {
             auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
-            glm::vec2 director = glm::vec2(eventValue[0], eventValue[1]);
-            targetCamera->yawPitch(director * 0.5F);
+            targetCamera->onSingleTouching(vec2(eventValue[0], eventValue[1]),
+                    vec2(eventValue[2], eventValue[3]));
         }
     }
 
-    it = event.find("zooming");
+    it = event.find("double_touching");
     if (it != event.end() && it->second.type() == typeid(std::vector<float>)) {
         auto eventValue = std::any_cast<std::vector<float>>(it->second);
-        if (eventValue.size() >= 2) {
+        if (eventValue.size() >= 8) {
             auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
-            if (eventValue[0] != 0.f) {
-                auto scale = eventValue[1] / eventValue[0];
-                targetCamera->zoom(scale);
-            }
-        }
-    }
-
-    it = event.find("rotating");
-    if (it != event.end() && it->second.type() == typeid(float)) {
-        auto eventValue = std::any_cast<float>(it->second);
-        auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
-        targetCamera->roll(eventValue);
-    }
-
-    it = event.find("moving");
-    if (it != event.end() && it->second.type() == typeid(std::vector<float>)) {
-        auto eventValue = std::any_cast<std::vector<float>>(it->second);
-        if (eventValue.size() >= 2) {
-            auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
-            targetCamera->move(glm::vec2(eventValue[0], eventValue[1]));
+            targetCamera->onDoubleTouching(vec2(eventValue[0], eventValue[1]),
+                    vec2(eventValue[2], eventValue[3]),
+                    vec2(eventValue[4], eventValue[5]),
+                    vec2(eventValue[6], eventValue[7]));
         }
     }
 
