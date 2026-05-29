@@ -1,4 +1,4 @@
-#version 410 core
+#version 320 es
 layout(quads, fractional_odd_spacing, ccw) in;
 
 uniform sampler2D heightMap;

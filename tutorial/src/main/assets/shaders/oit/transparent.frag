@@ -1,4 +1,5 @@
-#version 420 core
+#version 320 es
+precision mediump float;
 
 // shader outputs
 layout (location = 0) out vec4 accum;

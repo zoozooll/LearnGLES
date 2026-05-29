@@ -1,4 +1,4 @@
-#version 420 core
+#version 320 es
 
 // shader inputs
 layout (location = 0) in vec3 position;

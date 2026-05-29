@@ -1,4 +1,5 @@
-#version 330 core
+#version 320 es
+precision mediump float;
 
 // This shader performs upsampling on a texture,
 // as taken from Call Of Duty method, presented at ACM Siggraph 2014.

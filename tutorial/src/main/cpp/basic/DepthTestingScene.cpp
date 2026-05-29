@@ -15,9 +15,9 @@
 #include "Texture.h"
 #include "Camera.h"
 #include "TargetCamera.h"
+#include "glerror.h"
 
 DepthTestingScene::DepthTestingScene() {
-
 }
 
 void DepthTestingScene::init() {
@@ -28,7 +28,8 @@ void DepthTestingScene::init() {
 
     // build and compile our shader zprogram
     // ------------------------------------
-    m_pShader = new Shader("shaders/depth_testing/1.2.depth_testing.vert", "shaders/depth_testing/1.2.depth_testing.frag");
+    m_pShader = new Shader("shaders/depth_testing/depth_testing.vert",
+            "shaders/depth_testing/depth_testing.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -119,6 +120,7 @@ void DepthTestingScene::init() {
     m_pShader->use();
     m_pShader->setInt("texture1", 0);
 
+    check_gl_error();
     m_camera = new TargetCamera();
 }
 
@@ -157,6 +159,7 @@ void DepthTestingScene::draw() {
     m_pShader->setMat4("model", glm::mat4(1.0f));
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glBindVertexArray(0);
+    check_gl_error();
 }
 
 void DepthTestingScene::destroy() {
@@ -170,6 +173,7 @@ void DepthTestingScene::destroy() {
         m_pShader = nullptr;
     }
     delete m_camera;
+    check_gl_error();
 }
 
 DepthTestingScene::~DepthTestingScene() {

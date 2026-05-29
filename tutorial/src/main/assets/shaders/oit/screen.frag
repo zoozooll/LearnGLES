@@ -1,4 +1,5 @@
-#version 420 core
+#version 320 es
+precision mediump float;
 
 // shader inputs
 in vec2 texture_coords;
