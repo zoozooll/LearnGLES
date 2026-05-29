@@ -19,6 +19,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~TesselationShaderScene();
 
 private:
@@ -30,6 +32,8 @@ private:
 
     int m_width = 0;
     int m_height = 0;
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_TESSELATIONSHADERSCENE_H

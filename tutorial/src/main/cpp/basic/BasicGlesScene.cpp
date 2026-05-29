@@ -190,31 +190,29 @@ BasicGlesScene::~BasicGlesScene() {
 }
 
 void BasicGlesScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
-    auto it = event.find("single_touching");
-    if (it != event.end() && it->second.type() == typeid(std::vector<float>)) {
-        auto eventValue = std::any_cast<std::vector<float>>(it->second);
-        if (eventValue.size() >= 4) {
-            auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
-            targetCamera->onSingleTouching(vec2(eventValue[0], eventValue[1]),
-                    vec2(eventValue[2], eventValue[3]));
+    auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
+    if (!targetCamera) return;
+
+    if (auto it = event.find("single_touching"); it != event.end()) {
+        if (it->second.type() == typeid(std::vector<float>)) {
+            const auto& val = std::any_cast<const std::vector<float>&>(it->second);
+            if (val.size() >= 4) {
+                targetCamera->onSingleTouching(vec2(val[0], val[1]), vec2(val[2], val[3]));
+            }
         }
     }
 
-    it = event.find("double_touching");
-    if (it != event.end() && it->second.type() == typeid(std::vector<float>)) {
-        auto eventValue = std::any_cast<std::vector<float>>(it->second);
-        if (eventValue.size() >= 8) {
-            auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
-            targetCamera->onDoubleTouching(vec2(eventValue[0], eventValue[1]),
-                    vec2(eventValue[2], eventValue[3]),
-                    vec2(eventValue[4], eventValue[5]),
-                    vec2(eventValue[6], eventValue[7]));
+    if (auto it = event.find("double_touching"); it != event.end()) {
+        if (it->second.type() == typeid(std::vector<float>)) {
+            const auto& val = std::any_cast<const std::vector<float>&>(it->second);
+            if (val.size() >= 8) {
+                targetCamera->onDoubleTouching(vec2(val[0], val[1]), vec2(val[2], val[3]),
+                                               vec2(val[4], val[5]), vec2(val[6], val[7]));
+            }
         }
     }
 
-    it = event.find("reset");
-    if (it != event.end()) {
-        auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
+    if (event.find("reset") != event.end()) {
         targetCamera->reset();
     }
 }

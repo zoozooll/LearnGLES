@@ -1,6 +1,7 @@
 #include "OitScene.h"
 
 #include "Shader.h"
+#include "Camera.h"
 #include "TargetCamera.h"
 #include "Texture.h"
 
@@ -9,6 +10,7 @@ OitScene::OitScene() {
 }
 
 void OitScene::init() {
+    camera = new TargetCamera;
     // build and compile shaders
     // -------------------------
     solidShader = new Shader("shaders/oit/solid.vert", "shaders/oit/solid.frag");
@@ -98,6 +100,7 @@ void OitScene::init() {
 }
 
 void OitScene::resize(int width, int height) {
+    camera->setAspec((float) width / (float) height);
     m_width = width;
     m_height = height;
     glViewport(0, 0, width, height);
@@ -118,6 +121,7 @@ void OitScene::resize(int width, int height) {
 }
 
 void OitScene::draw() {
+    camera->update();
     // camera matrices
     glm::mat4 projection = camera->getProjectionMatrix();
     glm::mat4 view = camera->getViewMatrix();
@@ -255,6 +259,45 @@ void OitScene::destroy() {
 
 OitScene::~OitScene() {
 
+}
+
+std::map<std::string, std::any> OitScene::propertyEvent(std::map<std::string, std::any> &map) {
+    auto eventIdIt = map.find("event_id");
+    if (eventIdIt != map.end() && eventIdIt->second.type() == typeid(std::string)) {
+        auto eventIdStr = std::any_cast<std::string>(eventIdIt->second);
+        if ("target_camera_touching_event" == eventIdStr) {
+            parseTargetCameraEvent(map);
+        }
+    }
+    return {};
+}
+
+void OitScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
+    auto* targetCamera = dynamic_cast<TargetCamera*>(camera);
+    if (!targetCamera) return;
+
+    if (auto it = event.find("single_touching"); it != event.end()) {
+        if (it->second.type() == typeid(std::vector<float>)) {
+            const auto& val = std::any_cast<const std::vector<float>&>(it->second);
+            if (val.size() >= 4) {
+                targetCamera->onSingleTouching(glm::vec2(val[0], val[1]), glm::vec2(val[2], val[3]));
+            }
+        }
+    }
+
+    if (auto it = event.find("double_touching"); it != event.end()) {
+        if (it->second.type() == typeid(std::vector<float>)) {
+            const auto& val = std::any_cast<const std::vector<float>&>(it->second);
+            if (val.size() >= 8) {
+                targetCamera->onDoubleTouching(glm::vec2(val[0], val[1]), glm::vec2(val[2], val[3]),
+                                               glm::vec2(val[4], val[5]), glm::vec2(val[6], val[7]));
+            }
+        }
+    }
+
+    if (event.find("reset") != event.end()) {
+        targetCamera->reset();
+    }
 }
 
 glm::mat4 OitScene::calculate_model_matrix(const glm::vec3 &position,

@@ -21,6 +21,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~CsmScene();
 
 private:
@@ -63,6 +65,8 @@ private:
     glm::mat4 getLightSpaceMatrix(const float nearPlane, const float farPlane);
     std::vector<glm::vec4> getFrustumCornersWorldSpace(const glm::mat4& projview);
     void drawCascadeVolumeVisualizers(const std::vector<glm::mat4>& lightMatrices, Shader* shader);
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_CSMSCENE_H

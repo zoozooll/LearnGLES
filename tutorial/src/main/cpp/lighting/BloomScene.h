@@ -20,6 +20,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~BloomScene();
 
 private:
@@ -52,6 +54,8 @@ private:
 
     bool bloom = false;
     float exposure = 0.f;
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_BLOOMSCENE_H

@@ -20,6 +20,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~HdrScene();
 
 private:
@@ -45,6 +47,8 @@ private:
 
     bool hdr = false;
     float exposure = 0.f;
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_HDRSCENE_H

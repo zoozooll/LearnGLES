@@ -18,6 +18,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~NormalMappingScene();
 
 private:
@@ -32,6 +34,8 @@ private:
     unsigned int m_normalMap;
 
     glm::vec3 m_lightPos;
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_NORMALMAPPINGSCENE_H

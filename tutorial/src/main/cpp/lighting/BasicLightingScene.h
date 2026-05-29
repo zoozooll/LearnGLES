@@ -19,6 +19,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~BasicLightingScene();
 
 private:
@@ -33,6 +35,8 @@ private:
     unsigned int m_specularMap = 0u;
     unsigned int m_emissionMap = 0u;
     glm::vec3 m_lightPos;
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_BASICLIGHTINGSCENE_H

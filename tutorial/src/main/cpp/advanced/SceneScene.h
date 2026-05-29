@@ -3,6 +3,8 @@
 
 #include "TutorialScene.h"
 
+class Camera;
+
 class SceneScene : public TutorialScene {
 public :
     SceneScene();
@@ -15,7 +17,14 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~SceneScene();
+
+private:
+    Camera* camera = nullptr;
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_SCENESCENE_H

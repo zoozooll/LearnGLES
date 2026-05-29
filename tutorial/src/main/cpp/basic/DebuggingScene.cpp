@@ -3,6 +3,7 @@
 #include "logutil.h"
 #include "Shader.h"
 #include "Camera.h"
+#include "TargetCamera.h"
 #include "Texture.h"
 
 DebuggingScene::DebuggingScene() {
@@ -10,7 +11,7 @@ DebuggingScene::DebuggingScene() {
 }
 
 void DebuggingScene::init() {
-    m_camera = new Camera;
+    m_camera = new TargetCamera;
     // enable OpenGL debug context if context allows for debug context
     int flags; glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
     if (flags & GL_CONTEXT_FLAG_DEBUG_BIT)
@@ -94,12 +95,14 @@ void DebuggingScene::init() {
 }
 
 void DebuggingScene::resize(int width, int height) {
+    m_camera->setAspec((float) width / (float) height);
     m_width = width;
     m_height = height;
     glViewport(0, 0, width, height);
 }
 
 void DebuggingScene::draw() {
+    m_camera->update();
     // render
     // ------
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -152,6 +155,45 @@ void DebuggingScene::destroy() {
 
 DebuggingScene::~DebuggingScene() {
 
+}
+
+std::map<std::string, std::any> DebuggingScene::propertyEvent(std::map<std::string, std::any> &map) {
+    auto eventIdIt = map.find("event_id");
+    if (eventIdIt != map.end() && eventIdIt->second.type() == typeid(std::string)) {
+        auto eventIdStr = std::any_cast<std::string>(eventIdIt->second);
+        if ("target_camera_touching_event" == eventIdStr) {
+            parseTargetCameraEvent(map);
+        }
+    }
+    return {};
+}
+
+void DebuggingScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
+    auto* targetCamera = dynamic_cast<TargetCamera*>(m_camera);
+    if (!targetCamera) return;
+
+    if (auto it = event.find("single_touching"); it != event.end()) {
+        if (it->second.type() == typeid(std::vector<float>)) {
+            const auto& val = std::any_cast<const std::vector<float>&>(it->second);
+            if (val.size() >= 4) {
+                targetCamera->onSingleTouching(glm::vec2(val[0], val[1]), glm::vec2(val[2], val[3]));
+            }
+        }
+    }
+
+    if (auto it = event.find("double_touching"); it != event.end()) {
+        if (it->second.type() == typeid(std::vector<float>)) {
+            const auto& val = std::any_cast<const std::vector<float>&>(it->second);
+            if (val.size() >= 8) {
+                targetCamera->onDoubleTouching(glm::vec2(val[0], val[1]), glm::vec2(val[2], val[3]),
+                                               glm::vec2(val[4], val[5]), glm::vec2(val[6], val[7]));
+            }
+        }
+    }
+
+    if (event.find("reset") != event.end()) {
+        targetCamera->reset();
+    }
 }
 
 void DebuggingScene::glDebugOutput(GLenum source,

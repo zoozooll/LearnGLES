@@ -18,6 +18,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~OitScene();
 
 private:
@@ -40,6 +42,8 @@ private:
     glm::mat4 calculate_model_matrix(const glm::vec3& position,
             const glm::vec3& rotation = glm::vec3(0.0f),
             const glm::vec3& scale = glm::vec3(1.0f));
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_OITSCENE_H

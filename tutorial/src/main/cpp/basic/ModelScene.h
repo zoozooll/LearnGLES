@@ -19,12 +19,16 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~ModelScene();
 
 private:
     Camera* m_camera = nullptr;
     Shader* m_pShader = nullptr;
     Model* m_pModel = nullptr;
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_MODELSCENE_H

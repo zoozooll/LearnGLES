@@ -3,6 +3,8 @@
 #include <glm/ext.hpp>
 
 #include "Shader.h"
+#include "Camera.h"
+#include "TargetCamera.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -11,6 +13,7 @@ TextRenderingScene::TextRenderingScene() {
 }
 
 void TextRenderingScene::init() {
+    m_camera = new TargetCamera;
     // OpenGL state
     // ------------
     glEnable(GL_CULL_FACE);
@@ -111,12 +114,14 @@ void TextRenderingScene::init() {
 }
 
 void TextRenderingScene::resize(int width, int height) {
+    m_camera->setAspec((float) width / (float) height);
     m_width = width;
     m_height = height;
     glViewport(0, 0, width, height);
 }
 
 void TextRenderingScene::draw() {
+    m_camera->update();
     // render
     // ------
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -158,6 +163,45 @@ void TextRenderingScene::destroy() {
 
 TextRenderingScene::~TextRenderingScene() {
 
+}
+
+std::map<std::string, std::any> TextRenderingScene::propertyEvent(std::map<std::string, std::any> &map) {
+    auto eventIdIt = map.find("event_id");
+    if (eventIdIt != map.end() && eventIdIt->second.type() == typeid(std::string)) {
+        auto eventIdStr = std::any_cast<std::string>(eventIdIt->second);
+        if ("target_camera_touching_event" == eventIdStr) {
+            parseTargetCameraEvent(map);
+        }
+    }
+    return {};
+}
+
+void TextRenderingScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
+    auto* targetCamera = dynamic_cast<TargetCamera*>(m_camera);
+    if (!targetCamera) return;
+
+    if (auto it = event.find("single_touching"); it != event.end()) {
+        if (it->second.type() == typeid(std::vector<float>)) {
+            const auto& val = std::any_cast<const std::vector<float>&>(it->second);
+            if (val.size() >= 4) {
+                targetCamera->onSingleTouching(glm::vec2(val[0], val[1]), glm::vec2(val[2], val[3]));
+            }
+        }
+    }
+
+    if (auto it = event.find("double_touching"); it != event.end()) {
+        if (it->second.type() == typeid(std::vector<float>)) {
+            const auto& val = std::any_cast<const std::vector<float>&>(it->second);
+            if (val.size() >= 8) {
+                targetCamera->onDoubleTouching(glm::vec2(val[0], val[1]), glm::vec2(val[2], val[3]),
+                                               glm::vec2(val[4], val[5]), glm::vec2(val[6], val[7]));
+            }
+        }
+    }
+
+    if (event.find("reset") != event.end()) {
+        targetCamera->reset();
+    }
 }
 
 void TextRenderingScene::RenderText(Shader &shader, std::string text, float x, float y, float scale, glm::vec3 color) {

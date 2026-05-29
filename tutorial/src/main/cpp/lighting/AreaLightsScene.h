@@ -32,6 +32,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~AreaLightsScene();
 
 private:
@@ -62,6 +64,8 @@ private:
     unsigned int loadMTexture();
     unsigned int loadLUTTexture();
     void incrementRoughness(float step);
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_AREALIGHTSSCENE_H

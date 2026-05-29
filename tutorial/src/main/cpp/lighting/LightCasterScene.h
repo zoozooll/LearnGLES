@@ -20,6 +20,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~LightCasterScene();
 
 private:
@@ -33,6 +35,8 @@ private:
     unsigned int m_diffuseMap = 0u;
     unsigned int m_specularMap = 0u;
     glm::vec3 m_cubePositions[10];
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_LIGHTCASTERSCENE_H

@@ -64,13 +64,9 @@ class BasicGlesActivity : GLActivity() {
             }
 
             override fun onLongPress(event: Offset) {
-                if (!active) return
-                Log.d("BasicGlesActivity", "Custom LongPress at: $event")
             }
 
             override fun onSingleClick(event: Offset) {
-                if (!active) return
-                Log.d("BasicGlesActivity", "Custom SingleClick at: $event")
             }
 
             override fun onDoubleClick(event: Offset) {
@@ -82,18 +78,12 @@ class BasicGlesActivity : GLActivity() {
             }
 
             override fun onActionUp(event: Offset) {
-                if (!active) return
-                Log.d("BasicGlesActivity", "Custom ActionUp")
             }
 
             override fun onTwoFingersClick() {
-                if (!active) return
-                Log.d("BasicGlesActivity", "Custom TwoFingersClick")
             }
 
             override fun onThreeFingersClick() {
-                if (!active) return
-                Log.d("BasicGlesActivity", "Custom ThreeFingersClick")
             }
         }
     }

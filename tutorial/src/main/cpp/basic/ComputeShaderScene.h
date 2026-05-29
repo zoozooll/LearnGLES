@@ -21,6 +21,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~ComputeShaderScene();
 
 private:
@@ -34,6 +36,8 @@ private:
     int m_fCounter = 0u;
 
     void renderQuad();
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_COMPUTESHADERSCENE_H

@@ -22,6 +22,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~SsaoScene();
 
 private:
@@ -53,6 +55,8 @@ private:
 
     glm::vec3 m_lightPos;
     glm::vec3 m_lightColor;
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_SSAOSCENE_H

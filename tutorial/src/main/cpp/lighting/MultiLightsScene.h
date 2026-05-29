@@ -20,6 +20,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~MultiLightsScene();
 
 private:
@@ -34,6 +36,8 @@ private:
     unsigned int m_specularMap = 0u;
     glm::vec3 m_cubePositions[10];
     glm::vec3 m_pointLightPositions[4];
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_MULTILIGHTSSCENE_H

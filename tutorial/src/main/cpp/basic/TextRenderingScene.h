@@ -29,6 +29,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~TextRenderingScene();
 
 private:
@@ -40,6 +42,7 @@ private:
     int m_height = 0;
 
     void RenderText(Shader &shader, std::string text, float x, float y, float scale, glm::vec3 color);
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_TEXTRENDERINGSCENE_H

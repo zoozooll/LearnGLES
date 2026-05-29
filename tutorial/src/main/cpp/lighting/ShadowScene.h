@@ -18,6 +18,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~ShadowScene();
 
 private:
@@ -41,6 +43,8 @@ private:
     void renderQuad();
     void renderCube();
     void renderScene(const Shader &shader);
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_SHADOWSCENE_H

@@ -18,6 +18,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~ParallaxMappingScene();
 
 private:
@@ -36,6 +38,8 @@ private:
 
     // Properties
     float heightScale = 0.f;
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_PARALLAXMAPPINGSCENE_H

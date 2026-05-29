@@ -73,6 +73,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~PhysicallyBasedBloomScene();
 
 private:
@@ -110,6 +112,7 @@ private:
 
     void renderCube();
     void renderQuad();
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_PHYSICALLYBASEDBLOOMSCENE_H

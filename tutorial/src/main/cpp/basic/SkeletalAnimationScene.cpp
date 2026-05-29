@@ -4,6 +4,7 @@
 
 #include "Shader.h"
 #include "Camera.h"
+#include "TargetCamera.h"
 #include "AnimatedModel.h"
 #include "Animation.h"
 #include "Animator.h"
@@ -13,6 +14,7 @@ SkeletalAnimationScene::SkeletalAnimationScene() {
 }
 
 void SkeletalAnimationScene::init() {
+    m_camera = new TargetCamera;
 // tell stb_image.h to flip loaded texture's on the y-axis (before loading model).
     stbi_set_flip_vertically_on_load(true);
 
@@ -32,12 +34,14 @@ void SkeletalAnimationScene::init() {
 }
 
 void SkeletalAnimationScene::resize(int width, int height) {
+    m_camera->setAspec((float) width / (float) height);
     m_width = width;
     m_height = height;
     glViewport(0, 0, width, height);
 }
 
 void SkeletalAnimationScene::draw() {
+    m_camera->update();
     // per-frame time logic
     // --------------------
     float currentFrame = static_cast<float>(GetEscapeSecs());
@@ -86,4 +90,43 @@ void SkeletalAnimationScene::destroy() {
 
 SkeletalAnimationScene::~SkeletalAnimationScene() {
 
+}
+
+std::map<std::string, std::any> SkeletalAnimationScene::propertyEvent(std::map<std::string, std::any> &map) {
+    auto eventIdIt = map.find("event_id");
+    if (eventIdIt != map.end() && eventIdIt->second.type() == typeid(std::string)) {
+        auto eventIdStr = std::any_cast<std::string>(eventIdIt->second);
+        if ("target_camera_touching_event" == eventIdStr) {
+            parseTargetCameraEvent(map);
+        }
+    }
+    return {};
+}
+
+void SkeletalAnimationScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
+    auto* targetCamera = dynamic_cast<TargetCamera*>(m_camera);
+    if (!targetCamera) return;
+
+    if (auto it = event.find("single_touching"); it != event.end()) {
+        if (it->second.type() == typeid(std::vector<float>)) {
+            const auto& val = std::any_cast<const std::vector<float>&>(it->second);
+            if (val.size() >= 4) {
+                targetCamera->onSingleTouching(glm::vec2(val[0], val[1]), glm::vec2(val[2], val[3]));
+            }
+        }
+    }
+
+    if (auto it = event.find("double_touching"); it != event.end()) {
+        if (it->second.type() == typeid(std::vector<float>)) {
+            const auto& val = std::any_cast<const std::vector<float>&>(it->second);
+            if (val.size() >= 8) {
+                targetCamera->onDoubleTouching(glm::vec2(val[0], val[1]), glm::vec2(val[2], val[3]),
+                                               glm::vec2(val[4], val[5]), glm::vec2(val[6], val[7]));
+            }
+        }
+    }
+
+    if (event.find("reset") != event.end()) {
+        targetCamera->reset();
+    }
 }

@@ -18,6 +18,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~IblScene();
 
 private:
@@ -62,6 +64,7 @@ private:
     void renderSphere();
     void renderCube();
     void renderQuad();
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_IBLSCENE_H

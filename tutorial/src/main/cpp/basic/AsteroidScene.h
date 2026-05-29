@@ -19,6 +19,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~AsteroidScene();
 
 private:
@@ -29,6 +31,8 @@ private:
     Model* m_pPlanetModel = nullptr;
     unsigned int m_instanceBuffer = 0u;
     unsigned int m_amount = 0u;
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_ASTEROIDSCENE_H

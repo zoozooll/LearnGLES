@@ -18,6 +18,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~GammaCorrectionScene();
 
 private:
@@ -31,6 +33,8 @@ private:
     glm::vec3 m_lightPositions[4];
     glm::vec3 m_lightColors[4];
     bool gammaEnabled = false;
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 public:
     bool isGammaEnabled() const;
 

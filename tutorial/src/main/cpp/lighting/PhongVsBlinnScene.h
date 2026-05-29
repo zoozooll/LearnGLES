@@ -20,6 +20,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~PhongVsBlinnScene();
 
 private:
@@ -31,6 +33,8 @@ private:
     glm::vec3 m_lightPos;
 
     bool blinn = true;
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 public:
     bool isBlinn() const;
 

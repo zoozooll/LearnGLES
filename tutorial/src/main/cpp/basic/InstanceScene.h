@@ -18,6 +18,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~InstanceScene();
 
 private:
@@ -26,6 +28,8 @@ private:
     unsigned int m_quadVAO = 0u;
     unsigned int m_quadVBO = 0u;
     unsigned int m_instanceVBO = 0u;
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_INSTANCESCENE_H

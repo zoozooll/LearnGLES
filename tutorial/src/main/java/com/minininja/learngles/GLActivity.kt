@@ -14,11 +14,14 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.displayCutoutPadding
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -31,6 +34,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -230,7 +234,7 @@ fun OpenGLContainer(
                 .padding(if (isExpanded) 4.dp else 8.dp)
                 .wrapContentSize()
         ) {
-            Column(modifier = Modifier.wrapContentSize()) {
+            Column(modifier = Modifier.width(IntrinsicSize.Max)) {
                 if (!isExpanded) {
                     Icon(
                         imageVector = Icons.Default.Settings,
@@ -244,20 +248,20 @@ fun OpenGLContainer(
                 AnimatedVisibility(visible = isExpanded) {
                     Column {
                         Row(
-                            modifier = Modifier.wrapContentSize(),
-                            horizontalArrangement = Arrangement.End
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { isExpanded = false },
+                            horizontalArrangement = Arrangement.End,
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            IconButton(
-                                onClick = { isExpanded = false },
-                                modifier = Modifier.size(24.dp)
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Close,
-                                    contentDescription = "Collapse",
-                                    tint = Color.White,
-                                    modifier = Modifier.size(16.dp)
-                                )
-                            }
+                            Icon(
+                                imageVector = Icons.Default.Close,
+                                contentDescription = "Collapse",
+                                tint = Color.White,
+                                modifier = Modifier
+                                    .padding(4.dp)
+                                    .size(16.dp)
+                            )
                         }
                         overlay()
                     }

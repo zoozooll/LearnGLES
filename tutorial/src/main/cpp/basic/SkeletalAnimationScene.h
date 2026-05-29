@@ -21,6 +21,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~SkeletalAnimationScene();
 
 private:
@@ -34,6 +36,8 @@ private:
     int m_height = 0;
     float deltaTime = 0.f;
     float lastFrame = 0.f;
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_SKELETALANIMATIONSCENE_H

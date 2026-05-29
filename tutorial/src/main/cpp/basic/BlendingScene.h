@@ -21,6 +21,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~BlendingScene();
 
 private:
@@ -38,6 +40,8 @@ private:
     unsigned int m_transparentTexture = 0u;
 
     std::vector<glm::vec3> m_windows;
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_BLENDINGSCENE_H

@@ -18,6 +18,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~GeometryShaderScene();
 
 private:
@@ -25,6 +27,8 @@ private:
     Shader* m_pShader = nullptr;
     unsigned int m_VAO = 0u;
     unsigned int m_VBO = 0u;
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_GEOMETRYSHADERSCENE_H

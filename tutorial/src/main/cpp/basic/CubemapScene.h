@@ -21,6 +21,8 @@ public :
 
     void destroy() override;
 
+    std::map<std::string, std::any> propertyEvent(std::map<std::string, std::any> &map) override;
+
     virtual ~CubemapScene();
 
 private:
@@ -35,6 +37,8 @@ private:
 
     unsigned int m_cubeTexture = 0u;
     unsigned int m_cubemapTexture = 0u;
+
+    void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
 #endif //LEARNGLES_CUBEMAPSCENE_H
