@@ -189,6 +189,7 @@ fun OpenGLContainer(
             factory = { context ->
                 GLSurfaceView(context).apply {
                     setEGLContextClientVersion(3)
+                    setEGLConfigChooser(8, 8, 8, 8, 16, 8)
                     setEGLContextFactory(object : EGLContextFactory {
                         private val EGL_CONTEXT_CLIENT_VERSION = 0x3098
 
