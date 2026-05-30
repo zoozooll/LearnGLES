@@ -23,6 +23,10 @@ public :
 
     virtual ~StencilTestingScene();
 
+    bool isStencilTestOn() const;
+
+    void setStencilTestOn(bool stencilTestOn);
+
 private:
     Camera* m_camera = nullptr;
     Shader* m_pShader = nullptr;
@@ -34,7 +38,13 @@ private:
     unsigned int m_cubeTexture = 0u;
     unsigned int m_floorTexture = 0u;
 
+    //region properties
+    bool stencilTestOn = true;
+    //endregion
+
     void parseTargetCameraEvent(std::map<std::string, std::any> &event);
+
+    void parseStencilTestEvent(std::map<std::string, std::any> &map);
 };
 
 #endif //LEARNGLES_STENCILTESTINGSCENE_H

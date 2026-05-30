@@ -23,6 +23,8 @@ import com.minininja.learngles.NativeHelper
 class StencilTestingActivity : GLActivity() {
     private var active by mutableStateOf(true)
 
+    private var stencilTestOn by mutableStateOf(true)
+
     override fun createTouchCallback(): Layer3DTouchCallback {
         return object : Layer3DTouchCallback {
             override fun onSingleTouch(
@@ -75,9 +77,23 @@ class StencilTestingActivity : GLActivity() {
     @Composable
     override fun ControlPanel() {
         ControlPanelContent(
+            title = "Target Camera Events",
             active = active,
             onActiveChange = {
                 active = it
+            },
+        )
+
+        ControlPanelContent(
+            title = "Stencil Test",
+            active = stencilTestOn,
+            onActiveChange = {
+                stencilTestOn = it
+                val event = mapOf("event_id" to "stenciltest_event", "on" to it)
+                glSurfaceView?.queueEvent {
+                    NativeHelper.sendCommands(event)
+                    glSurfaceView?.requestRender()
+                }
             },
         )
     }
@@ -85,6 +101,7 @@ class StencilTestingActivity : GLActivity() {
 
 @Composable
 private fun ControlPanelContent(
+    title: String,
     active: Boolean,
     onActiveChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
@@ -94,7 +111,7 @@ private fun ControlPanelContent(
     ) {
         Row(verticalAlignment = Alignment.CenterVertically,
             modifier = modifier.padding(8.dp)) {
-            Text(text = "Target Camera Events", color = Color.White)
+            Text(text = title, color = Color.White)
             Checkbox(
                 checked = active,
                 onCheckedChange = onActiveChange
