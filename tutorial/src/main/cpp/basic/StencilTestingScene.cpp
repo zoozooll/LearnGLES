@@ -13,8 +13,9 @@ StencilTestingScene::StencilTestingScene() {
 
 void StencilTestingScene::init() {
     m_camera = new TargetCamera;
-// configure global opengl state
+    // configure global opengl state
     // -----------------------------
+    glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     glEnable(GL_STENCIL_TEST);
@@ -23,10 +24,10 @@ void StencilTestingScene::init() {
 
     // build and compile our shader zprogram
     // ------------------------------------
-    m_pShader = new Shader("shaders/stencil_testing/2.stencil_testing.vert",
-            "shaders/stencil_testing/2.stencil_testing.frag");
-    m_pShaderSingleColor = new Shader("shaders/stencil_testing/2.stencil_testing.vert",
-            "shaders/stencil_testing/2.stencil_single_color.frag");
+    m_pShader = new Shader("shaders/stencil_testing/stencil_testing.vert",
+            "shaders/stencil_testing/stencil_testing.frag");
+    m_pShaderSingleColor = new Shader("shaders/stencil_testing/stencil_testing.vert",
+            "shaders/stencil_testing/stencil_single_color.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -128,10 +129,11 @@ void StencilTestingScene::resize(int width, int height) {
 
 void StencilTestingScene::draw() {
     m_camera->update();
-// render
+    // render
     // ------
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT); // don't forget to clear the stencil buffer!
+    glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
+    // don't forget to clear the stencil buffer!
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
     // set uniforms
     glm::mat4 view = m_camera->getViewMatrix();
@@ -151,7 +153,9 @@ void StencilTestingScene::draw() {
         m_pShader->setMat4("projection", projection);
     }
 
-    // draw floor as normal, but don't write the floor to the stencil buffer, we only care about the containers. We set its mask to 0x00 to not write to the stencil buffer.
+    // draw floor as normal, but don't write the floor to the stencil buffer,
+    // we only care about the containers.
+    // We set its mask to 0x00 to not write to the stencil buffer.
     glStencilMask(0x00);
     // floor
     glBindVertexArray(m_planeVAO);
@@ -180,10 +184,12 @@ void StencilTestingScene::draw() {
         m_pShader->setMat4("model", model);
     glDrawArrays(GL_TRIANGLES, 0, 36);
 
-    // 2nd. render pass: now draw slightly scaled versions of the objects, this time disabling stencil writing.
-    // Because the stencil buffer is now filled with several 1s. The parts of the buffer that are 1 are not drawn, thus only drawing
+    // 2nd. render pass: now draw slightly scaled versions of the objects,
+    // this time disabling stencil writing.
+    // Because the stencil buffer is now filled with several 1s.
+    // The parts of the buffer that are 1 are not drawn, thus only drawing
     // the objects' size differences, making it look like borders.
-    // -----------------------------------------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------
     glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
     glStencilMask(0x00);
     glDisable(GL_DEPTH_TEST);
@@ -252,7 +258,8 @@ void StencilTestingScene::parseTargetCameraEvent(std::map<std::string, std::any>
         if (it->second.type() == typeid(std::vector<float>)) {
             const auto& val = std::any_cast<const std::vector<float>&>(it->second);
             if (val.size() >= 4) {
-                targetCamera->onSingleTouching(glm::vec2(val[0], val[1]), glm::vec2(val[2], val[3]));
+                targetCamera->onSingleTouching(glm::vec2(val[0], val[1]),
+                        glm::vec2(val[2], val[3]));
             }
         }
     }
@@ -261,8 +268,10 @@ void StencilTestingScene::parseTargetCameraEvent(std::map<std::string, std::any>
         if (it->second.type() == typeid(std::vector<float>)) {
             const auto& val = std::any_cast<const std::vector<float>&>(it->second);
             if (val.size() >= 8) {
-                targetCamera->onDoubleTouching(glm::vec2(val[0], val[1]), glm::vec2(val[2], val[3]),
-                                               glm::vec2(val[4], val[5]), glm::vec2(val[6], val[7]));
+                targetCamera->onDoubleTouching(glm::vec2(val[0], val[1]),
+                        glm::vec2(val[2], val[3]),
+                        glm::vec2(val[4], val[5]),
+                        glm::vec2(val[6], val[7]));
             }
         }
     }
