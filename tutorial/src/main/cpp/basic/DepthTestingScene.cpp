@@ -132,6 +132,8 @@ void DepthTestingScene::init() {
 
     check_gl_error();
     m_camera = new TargetCamera();
+    m_camera->setNear(3.f);
+    m_camera->setFar(10.f);
 }
 
 void DepthTestingScene::resize(int width, int height) {
@@ -215,6 +217,9 @@ std::map<std::string, std::any> DepthTestingScene::propertyEvent(std::map<std::s
         }
         if ("cullface_event" == eventIdStr) {
             parseCullFaceEvent(map);
+        }
+        if ("show_depth_event" == eventIdStr) {
+            parseShowDepthEvent(map);
         }
     }
     return {};
@@ -318,6 +323,14 @@ void DepthTestingScene::parseCullFaceEvent(std::map<std::string, std::any> &even
                 cullFace = false;
                 glDisable(GL_CULL_FACE);
             }
+        }
+    }
+}
+
+void DepthTestingScene::parseShowDepthEvent(std::map<std::string, std::any> &event) {
+    if (auto it = event.find("on"); it != event.end()) {
+        if (it->second.type() == typeid(bool)) {
+            showDepth = std::any_cast<bool>(it->second);
         }
     }
 }

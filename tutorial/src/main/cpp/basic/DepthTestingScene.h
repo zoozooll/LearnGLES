@@ -69,6 +69,8 @@ private:
     void parseDepthFuncEvent(std::map<std::string, std::any> &map);
 
     void parseCullFaceEvent(std::map<std::string, std::any> &map);
+
+    void parseShowDepthEvent(std::map<std::string, std::any> &map);
 };
 
 
