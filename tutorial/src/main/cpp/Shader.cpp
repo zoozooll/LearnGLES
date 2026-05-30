@@ -4,26 +4,25 @@
 
 #include "Shader.h"
 
-static const char* const TAG = "Shader";
+static const char *const TAG = "Shader";
 
-Shader::Shader(const char* vertexPath, const char* fragmentPath, const char* geometryPath )
-{
+Shader::Shader(const char *vertexPath, const char *fragmentPath, const char *geometryPath) {
     // 1. retrieve the vertex/fragment source code from filePath
-    char* vShaderCode;
+    char *vShaderCode;
     int vSize;
     LoadStringFromAsset(vertexPath, &vShaderCode, &vSize);
 //    LOGI(__FILE_NAME__, "vertexPath ==> %s", vShaderCode);
 //    std::string vString(vShaderCode, vSize);
 //    auto vertexString = vString.data();
 
-    char * fShaderCode;
+    char *fShaderCode;
     int fSize;
     LoadStringFromAsset(fragmentPath, &fShaderCode, &fSize);
 //    LOGI(__FILE_NAME__, "fragmentPath ==> %s", fShaderCode);
 //    std::string fString(fShaderCode, fSize);
 //    auto fragmentString = fString.data();
 
-    char * gShaderCode;
+    char *gShaderCode;
     int gShaderSize;
     if (geometryPath != nullptr) {
         LoadStringFromAsset(geometryPath, &gShaderCode, &gShaderSize);
@@ -43,8 +42,7 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath, const char* geo
     checkCompileErrors(fragment, "FRAGMENT");
     // if geometry shader is given, compile geometry shader
     unsigned int geometry;
-    if(geometryPath != nullptr)
-    {
+    if (geometryPath != nullptr) {
         geometry = glCreateShader(GL_GEOMETRY_SHADER);
         glShaderSource(geometry, 1, &gShaderCode, NULL);
         glCompileShader(geometry);
@@ -54,25 +52,24 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath, const char* geo
     ID = glCreateProgram();
     glAttachShader(ID, vertex);
     glAttachShader(ID, fragment);
-    if(geometryPath != nullptr)
+    if (geometryPath != nullptr)
         glAttachShader(ID, geometry);
     glLinkProgram(ID);
     checkCompileErrors(ID, "PROGRAM");
     // delete the shaders as they're linked into our program now and no longer necessary
     glDeleteShader(vertex);
     glDeleteShader(fragment);
-    if(geometryPath != nullptr)
+    if (geometryPath != nullptr)
         glDeleteShader(geometry);
 }
 
-Shader::Shader(const char* vertexPath, const char* fragmentPath, const char* geometryPath,
-        const char* tessControlPath, const char* tessEvalPath)
-{
+Shader::Shader(const char *vertexPath, const char *fragmentPath, const char *geometryPath,
+        const char *tessControlPath, const char *tessEvalPath) {
 
-    char* vShaderCode;
+    char *vShaderCode;
     int vSize;
     LoadStringFromAsset(vertexPath, &vShaderCode, &vSize);
-    char * fShaderCode;
+    char *fShaderCode;
     int fSize;
     LoadStringFromAsset(fragmentPath, &fShaderCode, &fSize);
     // 2. compile shaders
@@ -89,9 +86,8 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath, const char* geo
     checkCompileErrors(fragment, "FRAGMENT");
     // if geometry shader is given, compile geometry shader
     unsigned int geometry;
-    if(geometryPath != nullptr)
-    {
-        char * gShaderCode;
+    if (geometryPath != nullptr) {
+        char *gShaderCode;
         int gSize;
         LoadStringFromAsset(geometryPath, &gShaderCode, &gSize);
         geometry = glCreateShader(GL_GEOMETRY_SHADER);
@@ -101,9 +97,8 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath, const char* geo
     }
     // if tessellation shader is given, compile tessellation shader
     unsigned int tessControl;
-    if(tessControlPath != nullptr)
-    {
-        char * tcShaderCode;
+    if (tessControlPath != nullptr) {
+        char *tcShaderCode;
         int tcSize;
         LoadStringFromAsset(tessControlPath, &tcShaderCode, &tcSize);
         tessControl = glCreateShader(GL_TESS_CONTROL_SHADER);
@@ -112,9 +107,8 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath, const char* geo
         checkCompileErrors(tessControl, "TESS_CONTROL");
     }
     unsigned int tessEval;
-    if(tessEvalPath != nullptr)
-    {
-        char * teShaderCode;
+    if (tessEvalPath != nullptr) {
+        char *teShaderCode;
         int teSize;
         LoadStringFromAsset(tessEvalPath, &teShaderCode, &teSize);
         tessEval = glCreateShader(GL_TESS_EVALUATION_SHADER);
@@ -126,108 +120,98 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath, const char* geo
     ID = glCreateProgram();
     glAttachShader(ID, vertex);
     glAttachShader(ID, fragment);
-    if(geometryPath != nullptr)
+    if (geometryPath != nullptr)
         glAttachShader(ID, geometry);
-    if(tessControlPath != nullptr)
+    if (tessControlPath != nullptr)
         glAttachShader(ID, tessControl);
-    if(tessEvalPath != nullptr)
+    if (tessEvalPath != nullptr)
         glAttachShader(ID, tessEval);
     glLinkProgram(ID);
     checkCompileErrors(ID, "PROGRAM");
     // delete the shaders as they're linked into our program now and no longer necessary
     glDeleteShader(vertex);
     glDeleteShader(fragment);
-    if(geometryPath != nullptr)
+    if (geometryPath != nullptr)
         glDeleteShader(geometry);
 
 }
 
-// activate the shader
-// ------------------------------------------------------------------------
-void Shader::use()
-{
+void Shader::use() {
     glUseProgram(ID);
 }
-// utility uniform functions
-// ------------------------------------------------------------------------
-void Shader::setBool(const std::string &name, bool value) const
-{
-    glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
+
+void Shader::setBool(const std::string &name, bool value) const {
+    glUniform1i(glGetUniformLocation(ID, name.c_str()), (int) value);
 }
-// ------------------------------------------------------------------------
-void Shader::setInt(const std::string &name, int value) const
-{
+
+void Shader::setInt(const std::string &name, int value) const {
     glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
 }
-// ------------------------------------------------------------------------
-void Shader::setFloat(const std::string &name, float value) const
-{
+
+void Shader::setUInt(const std::string &name, unsigned int value) const {
+    glUniform1ui(glGetUniformLocation(ID, name.c_str()), value);
+}
+
+void Shader::setFloat(const std::string &name, float value) const {
     glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 }
 
-// ------------------------------------------------------------------------
-void Shader::setVec2(const std::string &name, const glm::vec2 &value) const
-{
+void Shader::setVec2(const std::string &name, const glm::vec2 &value) const {
     glUniform2fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
 }
-void Shader::setVec2(const std::string &name, float x, float y) const
-{
+
+void Shader::setVec2(const std::string &name, float x, float y) const {
     glUniform2f(glGetUniformLocation(ID, name.c_str()), x, y);
 }
-// ------------------------------------------------------------------------
-void Shader::setVec3(const std::string &name, const glm::vec3 &value) const
-{
+
+void Shader::setVec3(const std::string &name, const glm::vec3 &value) const {
     glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
 }
-void Shader::setVec3(const std::string &name, float x, float y, float z) const
-{
+
+void Shader::setVec3(const std::string &name, float x, float y, float z) const {
     glUniform3f(glGetUniformLocation(ID, name.c_str()), x, y, z);
 }
-// ------------------------------------------------------------------------
-void Shader::setVec4(const std::string &name, const glm::vec4 &value) const
-{
+
+void Shader::setVec4(const std::string &name, const glm::vec4 &value) const {
     glUniform4fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
 }
-void Shader::setVec4(const std::string &name, float x, float y, float z, float w)
-{
+
+void Shader::setVec4(const std::string &name, float x, float y, float z, float w) {
     glUniform4f(glGetUniformLocation(ID, name.c_str()), x, y, z, w);
 }
-// ------------------------------------------------------------------------
-void Shader::setMat2(const std::string &name, const glm::mat2 &mat) const
-{
+
+void Shader::setMat2(const std::string &name, const glm::mat2 &mat) const {
     glUniformMatrix2fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
-// ------------------------------------------------------------------------
-void Shader::setMat3(const std::string &name, const glm::mat3 &mat) const
-{
+
+void Shader::setMat3(const std::string &name, const glm::mat3 &mat) const {
     glUniformMatrix3fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
-// ------------------------------------------------------------------------
-void Shader::setMat4(const std::string &name, const glm::mat4 &mat) const
-{
+
+void Shader::setMat4(const std::string &name, const glm::mat4 &mat) const {
     glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
 
-void Shader::checkCompileErrors(unsigned int shader, std::string type)
-{
+void Shader::checkCompileErrors(unsigned int shader, std::string type) {
     int success;
     char infoLog[1024];
-    if (type != "PROGRAM")
-    {
+    if (type != "PROGRAM") {
         glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-        if (!success)
-        {
+        if (!success) {
             glGetShaderInfoLog(shader, 1024, NULL, infoLog);
-            LOGE("Shader", "ERROR::SHADER_COMPILATION_ERROR of type: %s: %s", type.c_str(),  infoLog);
+            LOGE("Shader", "ERROR::SHADER_COMPILATION_ERROR of type: %s: %s", type.c_str(), infoLog);
         }
-    }
-    else
-    {
+    } else {
         glGetProgramiv(shader, GL_LINK_STATUS, &success);
-        if (!success)
-        {
+        if (!success) {
             glGetProgramInfoLog(shader, 1024, NULL, infoLog);
-            LOGE("Shader", "ERROR::PROGRAM_LINKING_ERROR of type: %s: %s", type.c_str(),  infoLog);
+            LOGE("Shader", "ERROR::PROGRAM_LINKING_ERROR of type: %s: %s", type.c_str(), infoLog);
         }
     }
+}
+
+void Shader::setTexture(const std::string &name, const unsigned int textId, const int texNum) const {
+    glActiveTexture(GL_TEXTURE0 + texNum);
+    glBindTexture(GL_TEXTURE_2D, textId);
+    setInt(name, (int)texNum);
 }

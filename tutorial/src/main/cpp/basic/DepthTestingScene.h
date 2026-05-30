@@ -6,6 +6,7 @@
 #define LEARNGLES_DEPTHTESTINGSCENE_H
 
 #include "TutorialScene.h"
+#include <GLES3/gl32.h>
 
 class Shader;
 
@@ -27,8 +28,25 @@ public :
 
     virtual ~DepthTestingScene();
 
+    bool isCullFace() const;
+
+    void setCullFace(bool cullFace);
+
+    bool isDepthTest() const;
+
+    void setDepthTest(bool depthTest);
+
+    bool isShowDepth() const;
+
+    void setShowDepth(bool showDepth);
+
+    GLenum getDepthFunc() const;
+
+    void setDepthFunc(GLenum depthFunc);
+
 private:
     Shader* m_pShader = nullptr;
+    Shader* m_DepthShader = nullptr;
     Camera* m_camera = nullptr;
     unsigned int m_cubeVAO = 0u;
     unsigned int m_cubeVBO = 0u;
@@ -37,7 +55,20 @@ private:
     unsigned int m_cubeTexture = 0u;
     unsigned int m_floorTexture = 0u;
 
+    //Region Properties
+    bool cullFace = true;
+    bool depthTest = true;
+    bool showDepth = false;
+    GLenum depthFunc = GL_LESS;
+    //EndRegion
+
     void parseTargetCameraEvent(std::map<std::string, std::any> &event);
+
+    void parseDepthtestEvent(std::map<std::string, std::any> &map);
+
+    void parseDepthFuncEvent(std::map<std::string, std::any> &map);
+
+    void parseCullFaceEvent(std::map<std::string, std::any> &map);
 };
 
 
