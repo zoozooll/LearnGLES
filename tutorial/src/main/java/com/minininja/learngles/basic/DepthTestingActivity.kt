@@ -36,6 +36,8 @@ class DepthTestingActivity : GLActivity() {
 
     private var depthTestOn by mutableStateOf(true)
 
+    private var showDepthOn by mutableStateOf(false)
+
     private var depthFuncIndex by mutableStateOf(1) // Default to GL_LESS (index 1)
 
     private val depthFuncs = listOf(
@@ -127,6 +129,19 @@ class DepthTestingActivity : GLActivity() {
             onActiveChange = {
                 depthTestOn = it
                 val event = mapOf("event_id" to "depthtest_event", "on" to it)
+                glSurfaceView?.queueEvent {
+                    NativeHelper.sendCommands(event)
+                    glSurfaceView?.requestRender()
+                }
+            },
+        )
+
+        ControlPanelContent(
+            title = "Show Depth",
+            active = showDepthOn,
+            onActiveChange = {
+                showDepthOn = it
+                val event = mapOf("event_id" to "show_depth_event", "on" to it)
                 glSurfaceView?.queueEvent {
                     NativeHelper.sendCommands(event)
                     glSurfaceView?.requestRender()
