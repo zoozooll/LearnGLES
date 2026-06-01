@@ -100,6 +100,8 @@ void TargetCamera::update() {
              glm::to_string(m_up).c_str());
 
         m_viewMatrix = glm::lookAt(m_position, m_targetPosition, m_up);
+        m_front = glm::normalize(m_targetPosition - m_position);
+        m_right = glm::normalize(glm::cross(m_front, m_up));
         viewDirty = false;
     }
     if (projectionDirty) {

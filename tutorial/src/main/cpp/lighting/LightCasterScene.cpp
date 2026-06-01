@@ -25,8 +25,10 @@ void LightCasterScene::init() {
 
     // build and compile our shader zprogram
     // ------------------------------------
-    m_pLightingShader = new Shader("shaders/light_caster/5.4.light_casters.vert", "shaders/light_caster/5.4.light_casters.frag");
-    m_pLightCubeShader = new Shader("shaders/light_caster/5.4.light_cube.vert", "shaders/light_caster/5.4.light_cube.frag");
+    m_pLightingShader = new Shader("shaders/light_caster/light_casters.vert",
+            "shaders/light_caster/light_casters.frag");
+    m_pLightCubeShader = new Shader("shaders/light_caster/light_cube.vert",
+            "shaders/light_caster/light_cube.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -126,12 +128,12 @@ void LightCasterScene::draw() {
         m_pLightingShader->use();
         m_pLightingShader->setVec3("light.position", m_camera->getPosition());
         m_pLightingShader->setVec3("light.direction", m_camera->getFront());
-        m_pLightingShader->setFloat("light.cutOff", glm::cos(glm::radians(12.5f)));
-        m_pLightingShader->setFloat("light.outerCutOff", glm::cos(glm::radians(17.5f)));
+        m_pLightingShader->setFloat("light.cutOff", glm::cos(glm::radians(6.5f)));
+        m_pLightingShader->setFloat("light.outerCutOff", glm::cos(glm::radians(9.5f)));
         m_pLightingShader->setVec3("viewPos", m_camera->getPosition());
 
         // light properties
-        m_pLightingShader->setVec3("light.ambient", 0.1f, 0.1f, 0.1f);
+        m_pLightingShader->setVec3("light.ambient", 0.35f, 0.35f, 0.35f);
         m_pLightingShader->setVec3("light.diffuse", 0.8f, 0.8f, 0.8f);
         m_pLightingShader->setVec3("light.specular", 1.0f, 1.0f, 1.0f);
         m_pLightingShader->setFloat("light.constant", 1.0f);
