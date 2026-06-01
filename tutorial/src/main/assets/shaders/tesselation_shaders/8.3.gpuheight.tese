@@ -33,7 +33,7 @@ void main()
 
     vec4 uVec = p01 - p00;
     vec4 vVec = p10 - p00;
-    vec4 normal = normalize( vec4(cross(vVec.xyz, uVec.xyz), 0) );
+    vec4 normal = normalize( vec4(cross(vVec.xyz, uVec.xyz), 0.) );
 
     vec4 p0 = (p01 - p00) * u + p00;
     vec4 p1 = (p11 - p10) * u + p10;

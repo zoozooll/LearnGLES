@@ -22,79 +22,80 @@ void BlendingScene::init() {
     m_camera = new TargetCamera;
     // configure global opengl state
     // -----------------------------
+    glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // build and compile our shader zprogram
     // ------------------------------------
-    m_pShader = new Shader("shaders/blending/3.2.blending.vert", "shaders/blending/3.2.blending.frag");
+    m_pShader = new Shader("shaders/blending/blending.vert", "shaders/blending/blending.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
     float cubeVertices[] = {
-            // positions          // texture Coords
-            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-            0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-            -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-            -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-            -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+        // back face
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, // bottom-left
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right
+         0.5f, -0.5f, -0.5f,  1.0f, 0.0f, // bottom-right
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, // bottom-left
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, // top-left
+        // front face
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-left
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f, // bottom-right
+         0.5f,  0.5f,  0.5f,  1.0f, 1.0f, // top-right
+         0.5f,  0.5f,  0.5f,  1.0f, 1.0f, // top-right
+        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f, // top-left
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-left
+        // left face
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-right
+        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-left
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-left
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-left
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-right
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-right
+        // right face
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-left
+         0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-right
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right
+         0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-right
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-left
+         0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-left
+        // bottom face
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // top-right
+         0.5f, -0.5f, -0.5f,  1.0f, 1.0f, // top-left
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f, // bottom-left
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f, // bottom-left
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-right
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // top-right
+        // top face
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, // top-left
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // bottom-right
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // bottom-right
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, // top-left
+        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f  // bottom-left
     };
     float planeVertices[] = {
-            // positions          // texture Coords
-            5.0f, -0.5f,  5.0f,  2.0f, 0.0f,
-            -5.0f, -0.5f,  5.0f,  0.0f, 0.0f,
-            -5.0f, -0.5f, -0.5f,  0.0f, 2.0f,
+        // positions          // texture Coords
+        5.0f, -0.5f,  5.0f,  2.0f, 0.0f,
+        -5.0f, -0.5f, -5.0f,  0.0f, 2.0f,
+        -5.0f, -0.5f,  5.0f,  0.0f, 0.0f,
 
-            5.0f, -0.5f,  5.0f,  2.0f, 0.0f,
-            -5.0f, -0.5f, -5.0f,  0.0f, 2.0f,
-            5.0f, -0.5f, -5.0f,  2.0f, 2.0f
+        5.0f, -0.5f,  5.0f,  2.0f, 0.0f,
+        5.0f, -0.5f, -5.0f,  2.0f, 2.0f,
+        -5.0f, -0.5f, -5.0f,  0.0f, 2.0f
     };
     float transparentVertices[] = {
-            // positions         // texture Coords (swapped y coordinates because texture is flipped upside down)
-            0.0f,  0.5f,  0.0f,  0.0f,  0.0f,
-            0.0f, -0.5f,  0.0f,  0.0f,  1.0f,
-            1.0f, -0.5f,  0.0f,  1.0f,  1.0f,
+        // positions         // texture Coords (swapped y coordinates because texture is flipped upside down)
+        -0.5f,  0.5f,  0.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f,  0.0f,  0.0f,  1.0f,
+         0.5f, -0.5f,  0.0f,  1.0f,  1.0f,
 
-            0.0f,  0.5f,  0.0f,  0.0f,  0.0f,
-            1.0f, -0.5f,  0.0f,  1.0f,  1.0f,
-            1.0f,  0.5f,  0.0f,  1.0f,  0.0f
+        -0.5f,  0.5f,  0.0f,  0.0f,  0.0f,
+         0.5f, -0.5f,  0.0f,  1.0f,  1.0f,
+         0.5f,  0.5f,  0.0f,  1.0f,  0.0f
     };
     // cube VAO
     glGenVertexArrays(1, &m_cubeVAO);
@@ -130,9 +131,9 @@ void BlendingScene::init() {
 
     // load textures
     // -------------
-    m_cubeTexture = loadTexture("marble.jpg");
-    m_floorTexture = loadTexture("metal.png");
-    m_transparentTexture = loadTexture("window.png");
+    m_cubeTexture = loadTexture("textures/marble.jpg");
+    m_floorTexture = loadTexture("textures/metal.png");
+    m_transparentTexture = loadTexture("textures/window.png");
 
     // shader configuration
     // --------------------
@@ -147,7 +148,17 @@ void BlendingScene::resize(int width, int height) {
 
 void BlendingScene::draw() {
     m_camera->update();
-// sort the transparent windows before rendering
+
+    if (blendOn) {
+        LOGI(__FILE_NAME__, "blend properties %x, %x, %x", srcFactor, dstFactor, blendEquationMode);
+        glEnable(GL_BLEND);
+        glBlendFunc(srcFactor, dstFactor);
+        glBlendEquation(blendEquationMode);
+    } else {
+        glDisable(GL_BLEND);
+    }
+
+    // sort the transparent windows before rendering
     // ---------------------------------------------
     std::map<float, glm::vec3> sorted;
     for (unsigned int i = 0; i < m_windows.size(); i++)
@@ -216,7 +227,6 @@ void BlendingScene::destroy() {
 }
 
 BlendingScene::~BlendingScene() {
-
 }
 
 std::map<std::string, std::any> BlendingScene::propertyEvent(std::map<std::string, std::any> &map) {
@@ -226,8 +236,76 @@ std::map<std::string, std::any> BlendingScene::propertyEvent(std::map<std::strin
         if ("target_camera_touching_event" == eventIdStr) {
             parseTargetCameraEvent(map);
         }
+        if ("blend_on_event" == eventIdStr) {
+            parseBlendOnEvent(map);
+        }
+        if ("src_factor_event" == eventIdStr) {
+            parseSrcFactorEvent(map);
+        }
+        if ("dst_factor_event" == eventIdStr) {
+            parseDstFactorEvent(map);
+        }
+        if ("blend_equation_event" == eventIdStr) {
+            parseBlendEquationEvent(map);
+        }
     }
     return {};
+}
+
+void BlendingScene::parseBlendOnEvent(std::map<std::string, std::any> &event) {
+    if (auto it = event.find("on"); it != event.end()) {
+        if (it->second.type() == typeid(bool)) {
+            blendOn = std::any_cast<bool>(it->second);
+        }
+    }
+}
+
+void BlendingScene::parseSrcFactorEvent(std::map<std::string, std::any> &event) {
+    if (auto it = event.find("factor"); it != event.end()) {
+        if (it->second.type() == typeid(int)) {
+            const auto& val = std::any_cast<int>(it->second);
+            const GLenum factors[] = {
+                GL_ZERO, GL_ONE, GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR,
+                GL_DST_COLOR, GL_ONE_MINUS_DST_COLOR, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,
+                GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA, GL_CONSTANT_COLOR, GL_ONE_MINUS_CONSTANT_COLOR,
+                GL_CONSTANT_ALPHA, GL_ONE_MINUS_CONSTANT_ALPHA
+            };
+            if (val >= 0 && val < sizeof(factors)/sizeof(factors[0])) {
+                srcFactor = factors[val];
+            }
+        }
+    }
+}
+
+void BlendingScene::parseDstFactorEvent(std::map<std::string, std::any> &event) {
+    if (auto it = event.find("factor"); it != event.end()) {
+        if (it->second.type() == typeid(int)) {
+            const auto& val = std::any_cast<int>(it->second);
+            const GLenum factors[] = {
+                GL_ZERO, GL_ONE, GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR,
+                GL_DST_COLOR, GL_ONE_MINUS_DST_COLOR, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,
+                GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA, GL_CONSTANT_COLOR, GL_ONE_MINUS_CONSTANT_COLOR,
+                GL_CONSTANT_ALPHA, GL_ONE_MINUS_CONSTANT_ALPHA
+            };
+            if (val >= 0 && val < sizeof(factors)/sizeof(factors[0])) {
+                dstFactor = factors[val];
+            }
+        }
+    }
+}
+
+void BlendingScene::parseBlendEquationEvent(std::map<std::string, std::any> &event) {
+    if (auto it = event.find("mode"); it != event.end()) {
+        if (it->second.type() == typeid(int)) {
+            const auto& val = std::any_cast<int>(it->second);
+            const GLenum modes[] = {
+                GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX
+            };
+            if (val >= 0 && val < sizeof(modes)/sizeof(modes[0])) {
+                blendEquationMode = modes[val];
+            }
+        }
+    }
 }
 
 void BlendingScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
@@ -247,8 +325,10 @@ void BlendingScene::parseTargetCameraEvent(std::map<std::string, std::any> &even
         if (it->second.type() == typeid(std::vector<float>)) {
             const auto& val = std::any_cast<const std::vector<float>&>(it->second);
             if (val.size() >= 8) {
-                targetCamera->onDoubleTouching(glm::vec2(val[0], val[1]), glm::vec2(val[2], val[3]),
-                                               glm::vec2(val[4], val[5]), glm::vec2(val[6], val[7]));
+                targetCamera->onDoubleTouching(glm::vec2(val[0], val[1]),
+                    glm::vec2(val[2], val[3]),
+                        glm::vec2(val[4], val[5]),
+                        glm::vec2(val[6], val[7]));
             }
         }
     }

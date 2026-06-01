@@ -18,7 +18,7 @@ void StencilTestingScene::init() {
     glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
-    glEnable(GL_STENCIL_TEST);
+    if (stencilTestOn) glEnable(GL_STENCIL_TEST); else glDisable(GL_STENCIL_TEST);
     glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
     glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
@@ -135,6 +135,8 @@ void StencilTestingScene::draw() {
     // don't forget to clear the stencil buffer!
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
+    if (stencilTestOn) glEnable(GL_STENCIL_TEST); else glDisable(GL_STENCIL_TEST);
+
     // set uniforms
     glm::mat4 view = m_camera->getViewMatrix();
     glm::mat4 projection = m_camera->getProjectionMatrix();
@@ -190,31 +192,33 @@ void StencilTestingScene::draw() {
     // The parts of the buffer that are 1 are not drawn, thus only drawing
     // the objects' size differences, making it look like borders.
     // ------------------------------------------------------------------------------
-    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-    glStencilMask(0x00);
-    glDisable(GL_DEPTH_TEST);
-    if(m_pShaderSingleColor)
-    {
-        m_pShaderSingleColor->use();
-        float scale = 1.1f;
-        // cubes
-        glBindVertexArray(m_cubeVAO);
-        glBindTexture(GL_TEXTURE_2D, m_cubeTexture);
-        model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
-        model = glm::scale(model, glm::vec3(scale, scale, scale));
-        m_pShaderSingleColor->setMat4("model", model);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-        model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
-        model = glm::scale(model, glm::vec3(scale, scale, scale));
-        m_pShaderSingleColor->setMat4("model", model);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+    if (stencilTestOn) {
+        glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+        glStencilMask(0x00);
+        glDisable(GL_DEPTH_TEST);
+        if(m_pShaderSingleColor)
+        {
+            m_pShaderSingleColor->use();
+            float scale = 1.1f;
+            // cubes
+            glBindVertexArray(m_cubeVAO);
+            glBindTexture(GL_TEXTURE_2D, m_cubeTexture);
+            model = glm::mat4(1.0f);
+            model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
+            model = glm::scale(model, glm::vec3(scale, scale, scale));
+            m_pShaderSingleColor->setMat4("model", model);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+            model = glm::mat4(1.0f);
+            model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+            model = glm::scale(model, glm::vec3(scale, scale, scale));
+            m_pShaderSingleColor->setMat4("model", model);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
+        glBindVertexArray(0);
+        glStencilMask(0xFF);
+        glStencilFunc(GL_ALWAYS, 0, 0xFF);
+        glEnable(GL_DEPTH_TEST);
     }
-    glBindVertexArray(0);
-    glStencilMask(0xFF);
-    glStencilFunc(GL_ALWAYS, 0, 0xFF);
-    glEnable(GL_DEPTH_TEST);
 }
 
 void StencilTestingScene::destroy() {
@@ -245,6 +249,9 @@ std::map<std::string, std::any> StencilTestingScene::propertyEvent(std::map<std:
         auto eventIdStr = std::any_cast<std::string>(eventIdIt->second);
         if ("target_camera_touching_event" == eventIdStr) {
             parseTargetCameraEvent(map);
+        }
+        if ("stenciltest_event" == eventIdStr) {
+            parseStencilTestEvent(map);
         }
     }
     return {};
@@ -278,5 +285,28 @@ void StencilTestingScene::parseTargetCameraEvent(std::map<std::string, std::any>
 
     if (event.find("reset") != event.end()) {
         targetCamera->reset();
+    }
+}
+
+bool StencilTestingScene::isStencilTestOn() const {
+    return stencilTestOn;
+}
+
+void StencilTestingScene::setStencilTestOn(bool stencilTestOn) {
+    StencilTestingScene::stencilTestOn = stencilTestOn;
+}
+
+void StencilTestingScene::parseStencilTestEvent(std::map<std::string, std::any> &event) {
+    if (auto it = event.find("on"); it != event.end()) {
+        if (it->second.type() == typeid(bool)) {
+            const auto& val = std::any_cast<bool>(it->second);
+            if (val) {
+                stencilTestOn = true;
+                glEnable(GL_STENCIL_TEST);
+            } else {
+                stencilTestOn = false;
+                glDisable(GL_STENCIL_TEST);
+            }
+        }
     }
 }
