@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.displayCutoutPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -37,9 +38,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.boundsInRoot
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.minininja.learngles.ui.theme.LearnGLESTheme
@@ -117,7 +124,8 @@ fun Modifier.layer3DTouch(callback: Layer3DTouchCallback?): Modifier = this
                 while (true) {
                     val event = awaitPointerEvent()
                     val changes = event.changes
-                    val pressedChanges = changes.filter { it.pressed }
+                    // Only process changes that haven't been consumed by layers above (like ControlPanel)
+                    val pressedChanges = changes.filter { it.pressed && !it.isConsumed }
                     val currentPointerCount = pressedChanges.size
 
                     // --- MULTI-FINGER TAP DETECTION ---
@@ -179,14 +187,19 @@ fun OpenGLContainer(
     overlay: @Composable () -> Unit = {}
 ) {
     var isExpanded by remember { mutableStateOf(true) }
+    var panelBounds by remember { mutableStateOf(Rect.Zero) }
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .layer3DTouch(touchCallback) // Apply the callback here
+        modifier = Modifier.fillMaxSize()
     ) {
-        AndroidView(
-            factory = { context ->
+        // Camera Layer (Bottom)
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .layer3DTouch(touchCallback)
+        ) {
+            AndroidView(
+                factory = { context ->
                 GLSurfaceView(context).apply {
                     setEGLContextClientVersion(3)
                     setEGLConfigChooser(8, 8, 8, 8, 16, 8)
@@ -227,14 +240,39 @@ fun OpenGLContainer(
             },
             modifier = Modifier.fillMaxSize()
         )
+    }
+
+    // Shield Layer (Middle) - Catch events on ControlPanel's background
+    if (panelBounds != Rect.Zero) {
+        val density = LocalDensity.current
         Box(
             modifier = Modifier
-                .displayCutoutPadding()
-                .padding(top = 8.dp, start = 8.dp)
-                .background(Color.Black.copy(alpha = 0.3f), RoundedCornerShape(8.dp))
-                .padding(if (isExpanded) 4.dp else 8.dp)
-                .wrapContentSize()
-        ) {
+                .offset { IntOffset(panelBounds.left.toInt(), panelBounds.top.toInt()) }
+                .size(
+                    width = with(density) { panelBounds.width.toDp() },
+                    height = with(density) { panelBounds.height.toDp() }
+                )
+                .pointerInput(Unit) {
+                    awaitPointerEventScope {
+                        while (true) {
+                            awaitPointerEvent().changes.forEach { it.consume() }
+                        }
+                    }
+                }
+        )
+    }
+
+    Box(
+        modifier = Modifier
+            .onGloballyPositioned { coordinates ->
+                panelBounds = coordinates.boundsInRoot()
+            }
+            .displayCutoutPadding()
+            .padding(top = 8.dp, start = 8.dp)
+            .background(Color.Black.copy(alpha = 0.3f), RoundedCornerShape(8.dp))
+            .padding(if (isExpanded) 4.dp else 8.dp)
+            .wrapContentSize()
+    ) {
             Column(modifier = Modifier.width(IntrinsicSize.Max)) {
                 if (!isExpanded) {
                     Icon(
