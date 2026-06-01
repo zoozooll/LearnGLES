@@ -24,15 +24,15 @@ void TesselationShaderScene::init() {
 
     // build and compile our shader program
     // ------------------------------------
-    tessHeightMapShader = new Shader("shaders/tesselation_shaders/8.3.gpuheight.vert",
-            "shaders/tesselation_shaders/8.3.gpuheight.frag",
+    tessHeightMapShader = new Shader("shaders/tesselation_shaders/gpuheight.vert",
+            "shaders/tesselation_shaders/gpuheight.frag",
             nullptr,
-            "shaders/tesselation_shaders/8.3.gpuheight.tesc",
-            "shaders/tesselation_shaders/8.3.gpuheight.tese");
+            "shaders/tesselation_shaders/gpuheight.tesc",
+            "shaders/tesselation_shaders/gpuheight.tese");
 
     // load and create a texture
     // -------------------------
-    texture = loadTexture("heightmaps/iceland_heightmap.png");
+    texture = loadTexture("textures/heightmaps/iceland_heightmap.png");
     tessHeightMapShader->use();
     tessHeightMapShader->setInt("heightMap", 0);
 
@@ -48,33 +48,31 @@ void TesselationShaderScene::resize(int width, int height) {
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
     std::vector<float> vertices;
-    for(unsigned i = 0; i <= rez-1; i++)
-    {
-        for(unsigned j = 0; j <= rez-1; j++)
-        {
-            vertices.push_back(-width/2.0f + width*i/(float)rez); // v.x
+    for (unsigned i = 0; i <= rez - 1; i++) {
+        for (unsigned j = 0; j <= rez - 1; j++) {
+            vertices.push_back(-width / 2.0f + width * i / (float) rez); // v.x
             vertices.push_back(0.0f); // v.y
-            vertices.push_back(-height/2.0f + height*j/(float)rez); // v.z
-            vertices.push_back(i / (float)rez); // u
-            vertices.push_back(j / (float)rez); // v
+            vertices.push_back(-height / 2.0f + height * j / (float) rez); // v.z
+            vertices.push_back(i / (float) rez); // u
+            vertices.push_back(j / (float) rez); // v
 
-            vertices.push_back(-width/2.0f + width*(i+1)/(float)rez); // v.x
+            vertices.push_back(-width / 2.0f + width * (i + 1) / (float) rez); // v.x
             vertices.push_back(0.0f); // v.y
-            vertices.push_back(-height/2.0f + height*j/(float)rez); // v.z
-            vertices.push_back((i+1) / (float)rez); // u
-            vertices.push_back(j / (float)rez); // v
+            vertices.push_back(-height / 2.0f + height * j / (float) rez); // v.z
+            vertices.push_back((i + 1) / (float) rez); // u
+            vertices.push_back(j / (float) rez); // v
 
-            vertices.push_back(-width/2.0f + width*i/(float)rez); // v.x
+            vertices.push_back(-width / 2.0f + width * i / (float) rez); // v.x
             vertices.push_back(0.0f); // v.y
-            vertices.push_back(-height/2.0f + height*(j+1)/(float)rez); // v.z
-            vertices.push_back(i / (float)rez); // u
-            vertices.push_back((j+1) / (float)rez); // v
+            vertices.push_back(-height / 2.0f + height * (j + 1) / (float) rez); // v.z
+            vertices.push_back(i / (float) rez); // u
+            vertices.push_back((j + 1) / (float) rez); // v
 
-            vertices.push_back(-width/2.0f + width*(i+1)/(float)rez); // v.x
+            vertices.push_back(-width / 2.0f + width * (i + 1) / (float) rez); // v.x
             vertices.push_back(0.0f); // v.y
-            vertices.push_back(-height/2.0f + height*(j+1)/(float)rez); // v.z
-            vertices.push_back((i+1) / (float)rez); // u
-            vertices.push_back((j+1) / (float)rez); // v
+            vertices.push_back(-height / 2.0f + height * (j + 1) / (float) rez); // v.z
+            vertices.push_back((i + 1) / (float) rez); // u
+            vertices.push_back((j + 1) / (float) rez); // v
         }
     }
 
@@ -83,9 +81,9 @@ void TesselationShaderScene::resize(int width, int height) {
     glGenBuffers(1, &terrainVBO);
     glBindBuffer(GL_ARRAY_BUFFER, terrainVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *) 0);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(sizeof(float) * 3));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *) (sizeof(float) * 3));
     glEnableVertexAttribArray(1);
 
     glPatchParameteri(GL_PATCH_VERTICES, NUM_PATCH_PTS);
@@ -93,7 +91,7 @@ void TesselationShaderScene::resize(int width, int height) {
 
 void TesselationShaderScene::draw() {
     m_camera->update();
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+    glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     if (tessHeightMapShader) {
@@ -104,7 +102,7 @@ void TesselationShaderScene::draw() {
         tessHeightMapShader->setMat4("view", view);
         glm::mat4 model = glm::mat4(1.0f);
         tessHeightMapShader->setMat4("model", model);
-
+        tessHeightMapShader->setTexture("heightMap", texture, 0);
         glBindVertexArray(terrainVAO);
         glDrawArrays(GL_PATCHES, 0, NUM_PATCH_PTS * rez * rez);
     }
@@ -134,12 +132,12 @@ std::map<std::string, std::any> TesselationShaderScene::propertyEvent(std::map<s
 }
 
 void TesselationShaderScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
-    auto* targetCamera = dynamic_cast<TargetCamera*>(m_camera);
+    auto *targetCamera = dynamic_cast<TargetCamera *>(m_camera);
     if (!targetCamera) return;
 
     if (auto it = event.find("single_touching"); it != event.end()) {
         if (it->second.type() == typeid(std::vector<float>)) {
-            const auto& val = std::any_cast<const std::vector<float>&>(it->second);
+            const auto &val = std::any_cast<const std::vector<float> &>(it->second);
             if (val.size() >= 4) {
                 targetCamera->onSingleTouching(glm::vec2(val[0], val[1]), glm::vec2(val[2], val[3]));
             }
@@ -148,10 +146,10 @@ void TesselationShaderScene::parseTargetCameraEvent(std::map<std::string, std::a
 
     if (auto it = event.find("double_touching"); it != event.end()) {
         if (it->second.type() == typeid(std::vector<float>)) {
-            const auto& val = std::any_cast<const std::vector<float>&>(it->second);
+            const auto &val = std::any_cast<const std::vector<float> &>(it->second);
             if (val.size() >= 8) {
                 targetCamera->onDoubleTouching(glm::vec2(val[0], val[1]), glm::vec2(val[2], val[3]),
-                                               glm::vec2(val[4], val[5]), glm::vec2(val[6], val[7]));
+                        glm::vec2(val[4], val[5]), glm::vec2(val[6], val[7]));
             }
         }
     }

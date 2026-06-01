@@ -22,8 +22,8 @@ void AsteroidScene::init() {
 
     // load models
     // -----------
-    m_pRockModel = new Model("models/rock/rock.obj");
-    m_pPlanetModel = new Model("models/planet/planet.obj");
+    m_pRockModel = new Model("objects/rock/rock.obj");
+    m_pPlanetModel = new Model("objects/planet/planet.obj");
 
     // generate a large list of semi-random model transformation matrices
     // ------------------------------------------------------------------
