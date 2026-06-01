@@ -17,8 +17,10 @@ void BasicLightingScene::init() {
 
     // build and compile our shader zprogram
     // ------------------------------------
-    m_pLightingShader = new Shader("shaders/basic_lighting/4.4.lighting_maps.vert", "shaders/basic_lighting/4.4.lighting_maps.frag");
-    m_pLightCubeShader = new Shader("shaders/basic_lighting/4.4.light_cube.vert", "shaders/basic_lighting/4.4.light_cube.frag");
+    m_pLightingShader = new Shader("shaders/basic_lighting/lighting_maps.vert",
+            "shaders/basic_lighting/lighting_maps.frag");
+    m_pLightCubeShader = new Shader("shaders/basic_lighting/light_cube.vert",
+            "shaders/basic_lighting/light_cube.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

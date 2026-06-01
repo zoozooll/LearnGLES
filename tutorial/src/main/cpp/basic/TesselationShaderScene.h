@@ -28,7 +28,7 @@ private:
     Shader* tessHeightMapShader = nullptr;
     unsigned int terrainVAO = 0u, terrainVBO = 0u;
     unsigned int texture = 0u;
-    unsigned int rez = 0u;
+    unsigned int rez = 20u;
 
     int m_width = 0;
     int m_height = 0;

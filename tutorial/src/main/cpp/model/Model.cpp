@@ -12,7 +12,7 @@
 using std::string;
 using std::vector;
 
-extern char *g_internalPath;
+extern std::string g_internalPath;
 extern AAssetManager* mgr;
 
 // constructor, expects a filepath to a 3D model.
@@ -33,7 +33,7 @@ void Model::loadModel(string const &path)
 {
     // read file via ASSIMP
     Assimp::Importer importer;
-    Assimp::AndroidJNIIOSystem *ioSystem = new Assimp::AndroidJNIIOSystem (g_internalPath, mgr);
+    Assimp::AndroidJNIIOSystem *ioSystem = new Assimp::AndroidJNIIOSystem (g_internalPath.data(), mgr);
     importer.SetIOHandler(ioSystem);
 
     const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
@@ -191,6 +191,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType type,
 
 unsigned int TextureFromFile(const char *path, const string &directory, bool gamma)
 {
+    stbi_set_flip_vertically_on_load(1);
     string filename = string(path);
     filename = directory + '/' + filename;
 

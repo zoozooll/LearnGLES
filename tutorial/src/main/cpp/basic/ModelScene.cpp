@@ -12,6 +12,7 @@ void ModelScene::init() {
     m_camera = new TargetCamera;
     // configure global opengl state
     // -----------------------------
+    glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
 
     // build and compile our shader zprogram

@@ -58,7 +58,7 @@ open class GLActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         NativeHelper.setupNativeAsset(assets)
-        NativeHelper.setupInternalPath(getExternalFilesDir("files")?.path)
+        NativeHelper.setupInternalPath(filesDir.path)
         setContent {
             LearnGLESTheme {
                 OpenGLContainer(
