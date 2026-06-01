@@ -191,6 +191,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType type,
 
 unsigned int TextureFromFile(const char *path, const string &directory, bool gamma)
 {
+    stbi_set_flip_vertically_on_load(1);
     string filename = string(path);
     filename = directory + '/' + filename;
 
