@@ -46,5 +46,5 @@ void main()
     vec3 emission = texture(material.emission, TexCoords).rgb;
         
     vec3 result = ambient + diffuse + specular + emission;
-    FragColor = vec4(specular, 1.0);
-} 
+    FragColor = vec4(result, 1.0);
+}
