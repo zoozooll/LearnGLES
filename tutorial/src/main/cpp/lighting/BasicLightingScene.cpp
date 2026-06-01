@@ -4,8 +4,10 @@
 #include "Camera.h"
 #include "TargetCamera.h"
 #include "Texture.h"
+#include "glerror.h"
 
 BasicLightingScene::BasicLightingScene() {
+    m_lightPos = glm::vec3(1.2f, 1.0f, 2.0f);
 }
 
 void BasicLightingScene::init() {
@@ -17,27 +19,30 @@ void BasicLightingScene::init() {
 
     // build and compile our shader zprogram
     // ------------------------------------
-    m_pLightingShader = new Shader("shaders/basic_lighting/4.4.lighting_maps.vert", "shaders/basic_lighting/4.4.lighting_maps.frag");
-    m_pLightCubeShader = new Shader("shaders/basic_lighting/4.4.light_cube.vert", "shaders/basic_lighting/4.4.light_cube.frag");
+    m_pLightingShader = new Shader("shaders/basic_lighting/lighting_maps.vert", "shaders/basic_lighting/lighting_maps.frag");
+    m_pLightCubeShader = new Shader("shaders/basic_lighting/light_cube.vert", "shaders/basic_lighting/light_cube.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
     float vertices[] = {
             // positions          // normals           // texture coords
-            -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
-            0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  0.0f,
-            0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  1.0f,
-            0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  1.0f,
-            -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
-
+            // front face
             -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  0.0f,
-            0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  0.0f,
-            0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  1.0f,
-            0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  1.0f,
+             0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  0.0f,
+             0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  1.0f,
+             0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  1.0f,
             -0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  1.0f,
             -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  0.0f,
 
+            // back face
+            -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
+             0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  0.0f,
+             0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  1.0f,
+             0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  1.0f,
+            -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  1.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
+
+            // left face
             -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
             -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
             -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
@@ -45,24 +50,27 @@ void BasicLightingScene::init() {
             -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
             -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
 
-            0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
-            0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
-            0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
-            0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
-            0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
+            // right face
+             0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
+             0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
+             0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+             0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+             0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
+             0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
 
+            // bottom face
             -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  1.0f,
-            0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  1.0f,
-            0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
-            0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
+             0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  1.0f,
+             0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
+             0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
             -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  0.0f,
             -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  1.0f,
 
+            // top face
             -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f,
-            0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  1.0f,
-            0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
-            0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
+             0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  1.0f,
+             0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
+             0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
             -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  0.0f,
             -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f
     };
@@ -74,11 +82,11 @@ void BasicLightingScene::init() {
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
     glBindVertexArray(m_cubeVAO);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) 0);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) (3 * sizeof(float)));
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) (6 * sizeof(float)));
     glEnableVertexAttribArray(2);
 
     // second, configure the light's VAO (VBO stays the same; the vertices are the same for the light object which is also a 3D cube)
@@ -87,7 +95,7 @@ void BasicLightingScene::init() {
 
     glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
     // note that we update the lamp's position attribute's stride to reflect the updated buffer data
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) 0);
     glEnableVertexAttribArray(0);
 
     // load textures
@@ -100,6 +108,8 @@ void BasicLightingScene::init() {
     m_pLightingShader->setInt("material.diffuse", 0);
     m_pLightingShader->setInt("material.specular", 1);
     m_pLightingShader->setInt("material.emission", 2);
+
+    check_gl_error();
 }
 
 void BasicLightingScene::resize(int width, int height) {
@@ -111,23 +121,22 @@ void BasicLightingScene::draw() {
     m_camera->update();
     // render
     // ------
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+    glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // be sure to activate shader when setting uniforms/drawing objects
-    if(m_pLightingShader)
-    {
+    if (m_pLightingShader) {
         m_pLightingShader->use();
         m_pLightingShader->setVec3("light.position", m_lightPos);
         m_pLightingShader->setVec3("viewPos", m_camera->getPosition());
 
         // light properties
-        m_pLightingShader->setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
-        m_pLightingShader->setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
+        m_pLightingShader->setVec3("light.ambient", 0.5f, 0.5f, 0.5f);
+        m_pLightingShader->setVec3("light.diffuse", 1.f, 1.f, 1.f);
         m_pLightingShader->setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
         // material properties
-        m_pLightingShader->setFloat("material.shininess", 64.0f);
+        m_pLightingShader->setFloat("material.shininess", 64.f * 64.f);
 
         // view/projection transformations
         glm::mat4 projection = m_camera->getProjectionMatrix();
@@ -154,8 +163,7 @@ void BasicLightingScene::draw() {
         glDrawArrays(GL_TRIANGLES, 0, 36);
 
         // also draw the lamp object
-        if(m_pLightCubeShader)
-        {
+        if (m_pLightCubeShader) {
             m_pLightCubeShader->use();
             m_pLightCubeShader->setMat4("projection", projection);
             m_pLightCubeShader->setMat4("view", view);
@@ -168,27 +176,26 @@ void BasicLightingScene::draw() {
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
     }
+    check_gl_error();
 }
 
 void BasicLightingScene::destroy() {
     glDeleteVertexArrays(1, &m_cubeVAO);
     glDeleteVertexArrays(1, &m_lightCubeVAO);
     glDeleteBuffers(1, &m_VBO);
-    if (m_pLightingShader)
-    {
+    if (m_pLightingShader) {
         delete m_pLightingShader;
         m_pLightingShader = nullptr;
     }
-    if (m_pLightCubeShader)
-    {
+    if (m_pLightCubeShader) {
         delete m_pLightCubeShader;
         m_pLightCubeShader = nullptr;
     }
     delete m_camera;
+    check_gl_error();
 }
 
 BasicLightingScene::~BasicLightingScene() {
-
 }
 
 std::map<std::string, std::any> BasicLightingScene::propertyEvent(std::map<std::string, std::any> &map) {
@@ -203,12 +210,12 @@ std::map<std::string, std::any> BasicLightingScene::propertyEvent(std::map<std::
 }
 
 void BasicLightingScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
-    auto* targetCamera = dynamic_cast<TargetCamera*>(m_camera);
+    auto *targetCamera = dynamic_cast<TargetCamera *>(m_camera);
     if (!targetCamera) return;
 
     if (auto it = event.find("single_touching"); it != event.end()) {
         if (it->second.type() == typeid(std::vector<float>)) {
-            const auto& val = std::any_cast<const std::vector<float>&>(it->second);
+            const auto &val = std::any_cast<const std::vector<float> &>(it->second);
             if (val.size() >= 4) {
                 targetCamera->onSingleTouching(glm::vec2(val[0], val[1]), glm::vec2(val[2], val[3]));
             }
@@ -217,10 +224,10 @@ void BasicLightingScene::parseTargetCameraEvent(std::map<std::string, std::any> 
 
     if (auto it = event.find("double_touching"); it != event.end()) {
         if (it->second.type() == typeid(std::vector<float>)) {
-            const auto& val = std::any_cast<const std::vector<float>&>(it->second);
+            const auto &val = std::any_cast<const std::vector<float> &>(it->second);
             if (val.size() >= 8) {
                 targetCamera->onDoubleTouching(glm::vec2(val[0], val[1]), glm::vec2(val[2], val[3]),
-                                               glm::vec2(val[4], val[5]), glm::vec2(val[6], val[7]));
+                        glm::vec2(val[4], val[5]), glm::vec2(val[6], val[7]));
             }
         }
     }

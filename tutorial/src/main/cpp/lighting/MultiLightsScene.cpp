@@ -30,8 +30,8 @@ void MultiLightsScene::init() {
 
     // build and compile our shader zprogram
     // ------------------------------------
-    m_pLightingShader = new Shader("shaders/multiple_lights/6.multiple_lights.vert", "shaders/multiple_lights/6.multiple_lights.frag");
-    m_pLightCubeShader = new Shader("shaders/multiple_lights/6.light_cube.vert", "shaders/multiple_lights/6.light_cube.frag");
+    m_pLightingShader = new Shader("shaders/multiple_lights/multiple_lights.vert", "shaders/multiple_lights/multiple_lights.frag");
+    m_pLightCubeShader = new Shader("shaders/multiple_lights/light_cube.vert", "shaders/multiple_lights/light_cube.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
