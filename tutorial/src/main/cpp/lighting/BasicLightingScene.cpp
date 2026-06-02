@@ -134,9 +134,9 @@ void BasicLightingScene::draw() {
         m_pLightingShader->setVec3("viewPos", m_camera->getPosition());
 
         // light properties
-        m_pLightingShader->setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
-        m_pLightingShader->setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
-        m_pLightingShader->setVec3("light.specular", 1.0f, 1.0f, 1.0f);
+        m_pLightingShader->setVec3("light.ambient", ambientFactor, ambientFactor, ambientFactor);
+        m_pLightingShader->setVec3("light.diffuse", diffuseFactor, diffuseFactor, diffuseFactor);
+        m_pLightingShader->setVec3("light.specular", specularFactor, specularFactor, specularFactor);
 
         // material properties
         m_pLightingShader->setFloat("material.shininess", 64.f * 64.f);
@@ -210,6 +210,29 @@ std::map<std::string, std::any> BasicLightingScene::propertyEvent(std::map<std::
             parseTargetCameraEvent(map);
         }
     }
+
+    if (auto it = map.find("ambientFactor"); it != map.end()) {
+        if (it->second.type() == typeid(float)) {
+            ambientFactor = std::any_cast<float>(it->second);
+        } else if (it->second.type() == typeid(double)) {
+            ambientFactor = (float)std::any_cast<double>(it->second);
+        }
+    }
+    if (auto it = map.find("diffuseFactor"); it != map.end()) {
+        if (it->second.type() == typeid(float)) {
+            diffuseFactor = std::any_cast<float>(it->second);
+        } else if (it->second.type() == typeid(double)) {
+            diffuseFactor = (float)std::any_cast<double>(it->second);
+        }
+    }
+    if (auto it = map.find("specularFactor"); it != map.end()) {
+        if (it->second.type() == typeid(float)) {
+            specularFactor = std::any_cast<float>(it->second);
+        } else if (it->second.type() == typeid(double)) {
+            specularFactor = (float)std::any_cast<double>(it->second);
+        }
+    }
+
     return {};
 }
 

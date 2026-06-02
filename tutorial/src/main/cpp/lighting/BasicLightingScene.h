@@ -36,6 +36,12 @@ private:
     unsigned int m_emissionMap = 0u;
     glm::vec3 m_lightPos;
 
+    //region Properties
+    float ambientFactor = 0.35f;
+    float diffuseFactor = 0.5f;
+    float specularFactor = 1.0f;
+    //endregion
+
     void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
 
