@@ -66,6 +66,7 @@ class PhongVsBlinnActivity : GLActivity() {
                 val event = mapOf("event_id" to "target_camera_touching_event",
                     "reset" to 1)
                 NativeHelper.sendCommands(event)
+                glSurfaceView?.requestRender()
                 Log.d("PhongVsBlinnActivity", "Custom DoubleClick at: $event")
             }
 

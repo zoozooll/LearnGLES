@@ -10,12 +10,13 @@ PhongVsBlinnScene::PhongVsBlinnScene() {
 
 void PhongVsBlinnScene::init() {
     m_camera = new TargetCamera;
+    m_lightPos = glm::vec3(0.0f, 0.0f, 0.0f);
     // configure global opengl state
     // -----------------------------
     glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//    glEnable(GL_BLEND);
+//    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // build and compile our shader zprogram
     // ------------------------------------
@@ -26,13 +27,13 @@ void PhongVsBlinnScene::init() {
     // ------------------------------------------------------------------
     float planeVertices[] = {
             // positions            // normals         // texcoords
-            10.0f, -0.5f, 10.0f, 0.0f, 1.0f, 0.0f, 10.0f, 0.0f,
-            -10.0f, -0.5f, 10.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-            -10.0f, -0.5f, -10.0f, 0.0f, 1.0f, 0.0f, 0.0f, 10.0f,
+            -10.0f, -0.5f,  10.0f,  0.0f, 1.0f, 0.0f,  0.0f,  0.0f,
+             10.0f, -0.5f,  10.0f,  0.0f, 1.0f, 0.0f, 10.0f,  0.0f,
+             10.0f, -0.5f, -10.0f,  0.0f, 1.0f, 0.0f, 10.0f, 10.0f,
 
-            10.0f, -0.5f, 10.0f, 0.0f, 1.0f, 0.0f, 10.0f, 0.0f,
-            -10.0f, -0.5f, -10.0f, 0.0f, 1.0f, 0.0f, 0.0f, 10.0f,
-            10.0f, -0.5f, -10.0f, 0.0f, 1.0f, 0.0f, 10.0f, 10.0f
+            -10.0f, -0.5f,  10.0f,  0.0f, 1.0f, 0.0f,  0.0f,  0.0f,
+             10.0f, -0.5f, -10.0f,  0.0f, 1.0f, 0.0f, 10.0f, 10.0f,
+            -10.0f, -0.5f, -10.0f,  0.0f, 1.0f, 0.0f,  0.0f, 10.0f
     };
     // plane VAO
     glGenVertexArrays(1, &m_planeVAO);
@@ -54,8 +55,8 @@ void PhongVsBlinnScene::init() {
 
     // shader configuration
     // --------------------
-    m_pShader->use();
-    m_pShader->setInt("texture1", 0);
+//    m_pShader->use();
+//    m_pShader->setInt("texture1", 0);
 }
 
 void PhongVsBlinnScene::resize(int width, int height) {
@@ -83,8 +84,7 @@ void PhongVsBlinnScene::draw() {
         m_pShader->setInt("blinn", blinn);
         // floor
         glBindVertexArray(m_planeVAO);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, m_floorTexture);
+        m_pShader->setTexture("floorTexture", m_floorTexture, 0);
         glDrawArrays(GL_TRIANGLES, 0, 6);
     }
 }

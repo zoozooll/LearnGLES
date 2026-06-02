@@ -126,6 +126,10 @@ void BasicLightingScene::draw() {
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    // view/projection transformations
+    glm::mat4 projection = m_camera->getProjectionMatrix();
+    glm::mat4 view = m_camera->getViewMatrix();
+
     // be sure to activate shader when setting uniforms/drawing objects
     if(m_pLightingShader)
     {
@@ -141,9 +145,7 @@ void BasicLightingScene::draw() {
         // material properties
         m_pLightingShader->setFloat("material.shininess", 64.f * 64.f);
 
-        // view/projection transformations
-        glm::mat4 projection = m_camera->getProjectionMatrix();
-        glm::mat4 view = m_camera->getViewMatrix();
+
         m_pLightingShader->setMat4("projection", projection);
         m_pLightingShader->setMat4("view", view);
 
@@ -164,20 +166,20 @@ void BasicLightingScene::draw() {
         // render the cube
         glBindVertexArray(m_cubeVAO);
         glDrawArrays(GL_TRIANGLES, 0, 36);
+    }
 
-        // also draw the lamp object
-        if (m_pLightCubeShader) {
-            m_pLightCubeShader->use();
-            m_pLightCubeShader->setMat4("projection", projection);
-            m_pLightCubeShader->setMat4("view", view);
-            model = glm::mat4(1.0f);
-            model = glm::translate(model, m_lightPos);
-            model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
-            m_pLightCubeShader->setMat4("model", model);
+    // also draw the lamp object
+    if (m_pLightCubeShader) {
+        m_pLightCubeShader->use();
+        m_pLightCubeShader->setMat4("projection", projection);
+        m_pLightCubeShader->setMat4("view", view);
+        glm::mat model = glm::mat4(1.0f);
+        model = glm::translate(model, m_lightPos);
+        model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
+        m_pLightCubeShader->setMat4("model", model);
 
-            glBindVertexArray(m_lightCubeVAO);
-            glDrawArrays(GL_TRIANGLES, 0, 36);
-        }
+        glBindVertexArray(m_lightCubeVAO);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
     }
     check_gl_error();
 }
