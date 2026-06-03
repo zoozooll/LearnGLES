@@ -13,24 +13,25 @@ void ShadowScene::init() {
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
 
     // build and compile shaders
     // -------------------------
-    m_pShader = new Shader("3.1.3.shadow_mapping.vert", "shaders/shadow/3.1.3.shadow_mapping.frag");
-    m_pSimpleDepthShader = new Shader("shaders/shadow3.1.3.shadow_mapping_depth.vert", "shaders/shadow/3.1.3.shadow_mapping_depth.frag");
-    m_pDebugDepthQuad = new Shader("shaders/shadow/3.1.3.debug_quad.vert", "shaders/shadow/3.1.3.debug_quad_depth.frag");
+    m_pShader = new Shader("shaders/shadow/shadow_mapping.vert", "shaders/shadow/shadow_mapping.frag");
+    m_pSimpleDepthShader = new Shader("shaders/shadow/shadow_mapping_depth.vert", "shaders/shadow/shadow_mapping_depth.frag");
+    m_pDebugDepthQuad = new Shader("shaders/shadow/debug_quad.vert", "shaders/shadow/debug_quad_depth.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
     float planeVertices[] = {
             // positions            // normals         // texcoords
-            25.0f, -0.5f,  25.0f,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
             -25.0f, -0.5f,  25.0f,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,
-            -25.0f, -0.5f, -25.0f,  0.0f, 1.0f, 0.0f,   0.0f, 25.0f,
+             25.0f, -0.5f,  25.0f,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
+             25.0f, -0.5f, -25.0f,  0.0f, 1.0f, 0.0f,  25.0f, 25.0f,
 
-            25.0f, -0.5f,  25.0f,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
-            -25.0f, -0.5f, -25.0f,  0.0f, 1.0f, 0.0f,   0.0f, 25.0f,
-            25.0f, -0.5f, -25.0f,  0.0f, 1.0f, 0.0f,  25.0f, 25.0f
+            -25.0f, -0.5f,  25.0f,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,
+             25.0f, -0.5f, -25.0f,  0.0f, 1.0f, 0.0f,  25.0f, 25.0f,
+            -25.0f, -0.5f, -25.0f,  0.0f, 1.0f, 0.0f,   0.0f, 25.0f
     };
     // plane VAO
     glGenVertexArrays(1, &m_planeVAO);
@@ -56,18 +57,22 @@ void ShadowScene::init() {
     // create depth texture
     glGenTextures(1, &m_depthMap);
     glBindTexture(GL_TEXTURE_2D, m_depthMap);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, 1024, 1024, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, 1024, 1024, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-    float borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
-    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     // attach depth texture as FBO's depth buffer
     glBindFramebuffer(GL_FRAMEBUFFER, m_depthMapFBO);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_depthMap, 0);
-    //glDrawBuffer(GL_NONE); //TODO Not support in GLSL
+    // glDrawBuffer(GL_NONE); //TODO Not support in GLSL
+    GLenum none = GL_NONE;
+    glDrawBuffers(1, &none);
     glReadBuffer(GL_NONE);
+
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        LOGE("ShadowScene", "ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
+
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     // shader configuration
@@ -81,6 +86,8 @@ void ShadowScene::init() {
 
 void ShadowScene::resize(int width, int height) {
     m_camera->setAspec((float) width / (float) height);
+    m_width = width;
+    m_height = height;
     glViewport(0, 0, width, height);
 }
 
@@ -111,7 +118,8 @@ void ShadowScene::draw() {
     }
 
     // reset viewport
-    glViewport(0, 0, 800, 600);
+    glViewport(0, 0, m_width, m_height);
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // 2. render scene as normal using the generated depth/shadow map

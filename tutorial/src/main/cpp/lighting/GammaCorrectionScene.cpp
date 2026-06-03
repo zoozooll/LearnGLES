@@ -18,8 +18,8 @@ void GammaCorrectionScene::init() {
 
     // build and compile shaders
     // -------------------------
-    m_pShader = new Shader("shaders/gamma_correction/2.gamma_correction.vert",
-            "shaders/gamma_correction/2.gamma_correction.frag");
+    m_pShader = new Shader("shaders/gamma_correction/gamma_correction.vert",
+            "shaders/gamma_correction/gamma_correction.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

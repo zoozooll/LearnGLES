@@ -32,7 +32,10 @@ private:
 
     glm::vec3 m_lightPositions[4];
     glm::vec3 m_lightColors[4];
+
+    //region properties
     bool gammaEnabled = false;
+    //endregion
 
     void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 public:
