@@ -99,7 +99,8 @@ void PbrScene::draw() {
 //        for (unsigned int i = 0; i < 4; ++i) {
 //            glm::vec3 newPos = lightPositions[i];
 //            m_pShader->setVec3("lightPositions[" + std::to_string(i) + "]", newPos);
-//            m_pShader->setVec3("lightColors[" + std::to_string(i) + "]", lightColors[i]);
+//            m_pShader->setVec3("lightC
+//            olors[" + std::to_string(i) + "]", lightColors[i]);
 //
 //            model = glm::mat4(1.0f);
 //            model = glm::translate(model, newPos);

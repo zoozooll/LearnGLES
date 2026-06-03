@@ -1,5 +1,8 @@
 #version 320 es
 precision mediump float;
+precision mediump int;
+precision mediump sampler2DArray;
+
 out vec4 FragColor;
 
 in vec2 TexCoords;
