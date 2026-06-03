@@ -24,6 +24,9 @@ public :
 
     virtual ~BloomScene();
 
+    static constexpr unsigned int SCR_WIDTH = 800;
+    static constexpr unsigned int SCR_HEIGHT = 600;
+
 private:
     void renderQuad();
     void renderCube();
@@ -51,9 +54,10 @@ private:
 
     std::vector<glm::vec3> m_lightPositions;
     std::vector<glm::vec3> m_lightColors;
+    int m_width = 0, m_height = 0;
 
     bool bloom = false;
-    float exposure = 0.f;
+    float exposure = 1.0f;
 
     void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };
