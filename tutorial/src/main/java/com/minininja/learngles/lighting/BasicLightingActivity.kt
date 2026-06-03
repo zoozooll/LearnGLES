@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,12 +17,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import com.minininja.learngles.GLActivity
 import com.minininja.learngles.Layer3DTouchCallback
 import com.minininja.learngles.NativeHelper
+import com.minininja.learngles.ui.theme.LearnGLESTheme
 
 class BasicLightingActivity : GLActivity() {
     private var active by mutableStateOf(true)
+
+    private var ambientFactor by mutableStateOf(0.35f)
+    private var diffuseFactor by mutableStateOf(0.5f)
+    private var specularFactor by mutableStateOf(1.0f)
 
     override fun createTouchCallback(): Layer3DTouchCallback {
 
@@ -85,7 +92,33 @@ class BasicLightingActivity : GLActivity() {
             onActiveChange = {
                 active = it
             },
+            ambientFactor = ambientFactor,
+            onAmbientFactorChange = {
+                Log.i(TAG, "onAmbientFactorChange [curr $it ] <=> [prev $ambientFactor]")
+                ambientFactor = it
+                updateProperty("ambientFactor", it)
+            },
+            diffuseFactor = diffuseFactor,
+            onDiffuseFactorChange = {
+                diffuseFactor = it
+                updateProperty("diffuseFactor", it)
+            },
+            specularFactor = specularFactor,
+            onSpecularFactorChange = {
+                specularFactor = it
+                updateProperty("specularFactor", it)
+            }
         )
+    }
+
+    private fun updateProperty(name: String, value: Float) {
+        val event = mapOf(name to value)
+        NativeHelper.sendCommands(event)
+        glSurfaceView?.requestRender()
+    }
+
+    companion object {
+        private const val TAG = "BasicLightingActivity"
     }
 }
 
@@ -93,18 +126,61 @@ class BasicLightingActivity : GLActivity() {
 private fun ControlPanelContent(
     active: Boolean,
     onActiveChange: (Boolean) -> Unit,
+    ambientFactor: Float,
+    onAmbientFactorChange: (Float) -> Unit,
+    diffuseFactor: Float,
+    onDiffuseFactorChange: (Float) -> Unit,
+    specularFactor: Float,
+    onSpecularFactorChange: (Float) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.wrapContentSize()
+        modifier = modifier.wrapContentSize().padding(8.dp)
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically,
-            modifier = modifier.padding(8.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Text(text = "Target Camera Events", color = Color.White)
             Checkbox(
                 checked = active,
                 onCheckedChange = onActiveChange
             )
         }
+
+        FactorSlider(label = "Ambient Factor", value = ambientFactor, onValueChange = onAmbientFactorChange)
+        FactorSlider(label = "Diffuse Factor", value = diffuseFactor, onValueChange = onDiffuseFactorChange)
+        FactorSlider(label = "Specular Factor", value = specularFactor, onValueChange = onSpecularFactorChange)
+    }
+}
+
+@Composable
+private fun FactorSlider(
+    label: String,
+    value: Float,
+    onValueChange: (Float) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier.padding(vertical = 4.dp)) {
+        Text(text = "$label: ${"%.2f".format(value)}", color = Color.White)
+        Slider(
+            value = value,
+            onValueChange = onValueChange,
+            valueRange = 0f..1f
+        )
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFF000000)
+@Composable
+private fun ControlPanelPreview() {
+    LearnGLESTheme {
+        ControlPanelContent(
+            active = true,
+            onActiveChange = {},
+            ambientFactor = 0.35f,
+            onAmbientFactorChange = {},
+            diffuseFactor = 0.5f,
+            onDiffuseFactorChange = {},
+            specularFactor = 1.0f,
+            onSpecularFactorChange = {}
+        )
     }
 }

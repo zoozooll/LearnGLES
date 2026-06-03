@@ -40,6 +40,9 @@ private:
     unsigned int m_depthMapFBO = 0u;
     unsigned int m_depthMap = 0u;
 
+    int m_width = 0;
+    int m_height = 0;
+
     void renderQuad();
     void renderCube();
     void renderScene(const Shader &shader);

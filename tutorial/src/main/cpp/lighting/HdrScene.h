@@ -25,6 +25,9 @@ public :
     virtual ~HdrScene();
 
 private:
+    static constexpr unsigned int SCR_WIDTH = 800;
+    static constexpr unsigned int SCR_HEIGHT = 600;
+
     void renderQuad();
     void renderCube();
 
@@ -47,6 +50,9 @@ private:
 
     bool hdr = false;
     float exposure = 0.f;
+
+    float m_cameraZ = 0.0f;
+    int m_width = 0, m_height = 0;
 
     void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };

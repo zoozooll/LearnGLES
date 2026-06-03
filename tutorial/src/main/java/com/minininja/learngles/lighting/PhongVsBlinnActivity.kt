@@ -23,6 +23,8 @@ import com.minininja.learngles.NativeHelper
 class PhongVsBlinnActivity : GLActivity() {
     private var active by mutableStateOf(true)
 
+    private var blinnOn by mutableStateOf(true)
+
     override fun createTouchCallback(): Layer3DTouchCallback {
 
         return object : Layer3DTouchCallback {
@@ -64,6 +66,7 @@ class PhongVsBlinnActivity : GLActivity() {
                 val event = mapOf("event_id" to "target_camera_touching_event",
                     "reset" to 1)
                 NativeHelper.sendCommands(event)
+                glSurfaceView?.requestRender()
                 Log.d("PhongVsBlinnActivity", "Custom DoubleClick at: $event")
             }
 
@@ -81,9 +84,23 @@ class PhongVsBlinnActivity : GLActivity() {
     @Composable
     override fun ControlPanel() {
         ControlPanelContent(
+            title = "Target Camera Events",
             active = active,
             onActiveChange = {
                 active = it
+            },
+        )
+
+        ControlPanelContent(
+            title = "Blinn On",
+            active = blinnOn,
+            onActiveChange = {
+                blinnOn = it
+                val event = mapOf("event_id" to "blinn_on_event", "on" to it)
+                glSurfaceView?.queueEvent {
+                    NativeHelper.sendCommands(event)
+                    glSurfaceView?.requestRender()
+                }
             },
         )
     }
@@ -91,6 +108,7 @@ class PhongVsBlinnActivity : GLActivity() {
 
 @Composable
 private fun ControlPanelContent(
+    title: String,
     active: Boolean,
     onActiveChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
@@ -100,7 +118,7 @@ private fun ControlPanelContent(
     ) {
         Row(verticalAlignment = Alignment.CenterVertically,
             modifier = modifier.padding(8.dp)) {
-            Text(text = "Target Camera Events", color = Color.White)
+            Text(text = title, color = Color.White)
             Checkbox(
                 checked = active,
                 onCheckedChange = onActiveChange

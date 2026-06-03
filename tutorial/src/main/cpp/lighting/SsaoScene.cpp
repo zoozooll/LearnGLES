@@ -19,10 +19,10 @@ void SsaoScene::init() {
 
     // build and compile shaders
     // -------------------------
-    m_pShaderGeometryPass = new Shader("shaders/ssao/9.ssao_geometry.vert", "shaders/ssao/9.ssao_geometry.frag");
-    m_pShaderLightingPass = new Shader("shaders/ssao/9.ssao.vert", "shaders/ssao/9.ssao_lighting.frag");
-    m_pShaderSSAO = new Shader("shaders/ssao/9.ssao.vert", "shaders/ssao/9.ssao.frag");
-    m_pShaderSSAOBlur = new Shader("shaders/ssao/9.ssao.vert", "shaders/ssao/9.ssao_blur.frag");
+    m_pShaderGeometryPass = new Shader("shaders/ssao/ssao_geometry.vert", "shaders/ssao/ssao_geometry.frag");
+    m_pShaderLightingPass = new Shader("shaders/ssao/ssao.vert", "shaders/ssao/ssao_lighting.frag");
+    m_pShaderSSAO = new Shader("shaders/ssao/ssao.vert", "shaders/ssao/ssao.frag");
+    m_pShaderSSAOBlur = new Shader("shaders/ssao/ssao.vert", "shaders/ssao/ssao_blur.frag");
 
     // load models
     // -----------
@@ -35,7 +35,7 @@ void SsaoScene::init() {
     // position color buffer
     glGenTextures(1, &m_gPosition);
     glBindTexture(GL_TEXTURE_2D, m_gPosition);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, 800, 600, 0, GL_RGBA, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGBA, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -44,14 +44,14 @@ void SsaoScene::init() {
     // normal color buffer
     glGenTextures(1, &m_gNormal);
     glBindTexture(GL_TEXTURE_2D, m_gNormal);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, 800, 600, 0, GL_RGBA, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGBA, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, m_gNormal, 0);
     // color + specular color buffer
     glGenTextures(1, &m_gAlbedo);
     glBindTexture(GL_TEXTURE_2D, m_gAlbedo);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 800, 600, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, m_gAlbedo, 0);
@@ -61,7 +61,7 @@ void SsaoScene::init() {
     // create and attach depth buffer (renderbuffer)
     glGenRenderbuffers(1, &m_rboDepth);
     glBindRenderbuffer(GL_RENDERBUFFER, m_rboDepth);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 800, 600);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, SCR_WIDTH, SCR_HEIGHT);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_rboDepth);
     // finally check if framebuffer is complete
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
@@ -75,7 +75,7 @@ void SsaoScene::init() {
     // SSAO color buffer
     glGenTextures(1, &m_ssaoColorBuffer);
     glBindTexture(GL_TEXTURE_2D, m_ssaoColorBuffer);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, 800, 600, 0, GL_RED, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, SCR_WIDTH, SCR_HEIGHT, 0, GL_RED, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_ssaoColorBuffer, 0);
@@ -85,7 +85,7 @@ void SsaoScene::init() {
     glBindFramebuffer(GL_FRAMEBUFFER, m_ssaoBlurFBO);
     glGenTextures(1, &m_ssaoColorBufferBlur);
     glBindTexture(GL_TEXTURE_2D, m_ssaoColorBufferBlur);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, 800, 600, 0, GL_RED, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, SCR_WIDTH, SCR_HEIGHT, 0, GL_RED, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_ssaoColorBufferBlur, 0);
@@ -120,7 +120,7 @@ void SsaoScene::init() {
     }
     glGenTextures(1, &m_noiseTexture);
     glBindTexture(GL_TEXTURE_2D, m_noiseTexture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, 4, 4, 0, GL_RGB, GL_FLOAT, &ssaoNoise[0]);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, 4, 4, 0, GL_RGB, GL_FLOAT, &ssaoNoise[0]);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -142,6 +142,7 @@ void SsaoScene::init() {
         m_pShaderSSAO->setInt("gPosition", 0);
         m_pShaderSSAO->setInt("gNormal", 1);
         m_pShaderSSAO->setInt("texNoise", 2);
+        m_pShaderSSAO->setVec2("noiseScale", glm::vec2(SCR_WIDTH / 4.0f, SCR_HEIGHT / 4.0f));
     }
     if(m_pShaderSSAOBlur)
     {
@@ -153,6 +154,8 @@ void SsaoScene::init() {
 void SsaoScene::resize(int width, int height) {
     m_camera->setAspec((float) width / (float) height);
     glViewport(0, 0, width, height);
+    m_width = width;
+    m_height = height;
 }
 
 void SsaoScene::draw() {
@@ -166,6 +169,7 @@ void SsaoScene::draw() {
     // -----------------------------------------------------------------
     glBindFramebuffer(GL_FRAMEBUFFER, m_gBuffer);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
     glm::mat4 projection = m_camera->getProjectionMatrix();
     glm::mat4 view = m_camera->getViewMatrix();
     glm::mat4 model = glm::mat4(1.0f);
@@ -198,6 +202,7 @@ void SsaoScene::draw() {
     // ------------------------
     glBindFramebuffer(GL_FRAMEBUFFER, m_ssaoFBO);
     glClear(GL_COLOR_BUFFER_BIT);
+    glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
     if(m_pShaderSSAO)
     {
         m_pShaderSSAO->use();
@@ -220,6 +225,7 @@ void SsaoScene::draw() {
     // ------------------------------------
     glBindFramebuffer(GL_FRAMEBUFFER, m_ssaoBlurFBO);
     glClear(GL_COLOR_BUFFER_BIT);
+    glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
     if(m_pShaderSSAOBlur)
     {
         m_pShaderSSAOBlur->use();
@@ -233,6 +239,7 @@ void SsaoScene::draw() {
     // 4. lighting pass: traditional deferred Blinn-Phong lighting with added screen-space ambient occlusion
     // -----------------------------------------------------------------------------------------------------
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glViewport(0, 0, m_width, m_height);
     if(m_pShaderLightingPass)
     {
         m_pShaderLightingPass->use();
@@ -307,7 +314,6 @@ void SsaoScene::destroy() {
 }
 
 SsaoScene::~SsaoScene() {
-
 }
 
 std::map<std::string, std::any> SsaoScene::propertyEvent(std::map<std::string, std::any> &map) {

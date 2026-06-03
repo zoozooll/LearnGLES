@@ -12,6 +12,9 @@ class Model;
 
 class SsaoScene : public TutorialScene {
 public :
+    static constexpr int SCR_WIDTH = 800;
+    static constexpr int SCR_HEIGHT = 600;
+
     SsaoScene();
 
     void init() override;
@@ -52,9 +55,10 @@ private:
     unsigned int m_cubeVBO = 0u;
     unsigned int m_quadVAO = 0u;
     unsigned int m_quadVBO = 0u;
+    int m_width = 0, m_height = 0;
 
-    glm::vec3 m_lightPos;
-    glm::vec3 m_lightColor;
+    glm::vec3 m_lightPos = glm::vec3(2.0, 4.0, -2.0);
+    glm::vec3 m_lightColor = glm::vec3(0.7 , 0.2, 0.7);
 
     void parseTargetCameraEvent(std::map<std::string, std::any> &event);
 };

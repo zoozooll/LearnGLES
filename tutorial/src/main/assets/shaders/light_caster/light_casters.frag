@@ -58,9 +58,9 @@ void main()
     // attenuation
     float distance    = length(light.position - FragPos);
     float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));    
-    ambient  *= attenuation; 
+    ambient  *= attenuation;
     diffuse   *= attenuation;
-    specular *= attenuation;   
+    specular *= attenuation;
         
     vec3 result = ambient + diffuse + specular;
     FragColor = vec4(result, 1.0);
