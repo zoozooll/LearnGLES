@@ -10,15 +10,22 @@ HdrScene::HdrScene() {
 }
 
 void HdrScene::init() {
-    m_camera = new TargetCamera;
+    m_camera = new Camera;
+    m_cameraZ = 0.0f;
+    m_camera->setPosition(glm::vec3(0.0f, 0.0f, m_cameraZ));
+    m_camera->setTargetPosition(glm::vec3(0.0f, 0.0f, -50.0f));
+    m_camera->setUp(glm::vec3(0.0f, 1.0f, 0.0f));
+    m_camera->start();
+
     // configure global opengl state
     // -----------------------------
+    glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
 
     // build and compile shaders
     // -------------------------
-    m_pShader = new Shader("shaders/hdr/6.lighting.vert", "shaders/hdr/6.lighting.frag");
-    m_pHdrShader = new Shader("shaders/hdr/6.hdr.vert", "shaders/hdr/6.hdr.frag");
+    m_pShader = new Shader("shaders/hdr/lighting.vert", "shaders/hdr/lighting.frag");
+    m_pHdrShader = new Shader("shaders/hdr/hdr.vert", "shaders/hdr/hdr.frag");
 
     // load textures
     // -------------
@@ -30,13 +37,13 @@ void HdrScene::init() {
     // create floating point color buffer
     glGenTextures(1, &m_colorBuffer);
     glBindTexture(GL_TEXTURE_2D, m_colorBuffer);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, 800, 600, 0, GL_RGBA, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGBA, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // create depth buffer (renderbuffer)
     glGenRenderbuffers(1, &m_rboDepth);
     glBindRenderbuffer(GL_RENDERBUFFER, m_rboDepth);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 800, 600);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, SCR_WIDTH, SCR_HEIGHT);
     // attach buffers
     glBindFramebuffer(GL_FRAMEBUFFER, m_hdrFBO);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_colorBuffer, 0);
@@ -48,7 +55,7 @@ void HdrScene::init() {
     // lighting info
     // -------------
     // positions
-    m_lightPositions.push_back(glm::vec3( 0.0f,  0.0f, 49.5f)); // back light
+    m_lightPositions.push_back(glm::vec3( 0.0f,  0.0f, 25.0f));
     m_lightPositions.push_back(glm::vec3(-1.4f, -1.9f, 9.0f));
     m_lightPositions.push_back(glm::vec3( 0.0f, -1.8f, 4.0f));
     m_lightPositions.push_back(glm::vec3( 0.8f, -1.7f, 6.0f));
@@ -69,19 +76,24 @@ void HdrScene::init() {
 void HdrScene::resize(int width, int height) {
     m_camera->setAspec((float) width / (float) height);
     glViewport(0, 0, width, height);
+    m_width = width;
+    m_height = height;
 }
 
 void HdrScene::draw() {
+    m_camera->setPosition(glm::vec3(0.0f, 0.0f, m_cameraZ));
+    m_camera->setTargetPosition(glm::vec3(0.0f, 0.0f, m_cameraZ - 1.0f));
     m_camera->update();
     // render
     // ------
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // 1. render scene into floating point framebuffer
     // -----------------------------------------------
     glBindFramebuffer(GL_FRAMEBUFFER, m_hdrFBO);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
     glm::mat4 projection = m_camera->getProjectionMatrix();
     glm::mat4 view = m_camera->getViewMatrix();
     if(m_pShader)
@@ -111,6 +123,7 @@ void HdrScene::draw() {
     // 2. now render floating point color buffer to 2D quad and tonemap HDR colors to default framebuffer's (clamped) color range
     // --------------------------------------------------------------------------------------------------------------------------
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glViewport(0, 0, m_width, m_height);
     if(m_pHdrShader)
     {
         m_pHdrShader->use();
@@ -152,37 +165,23 @@ std::map<std::string, std::any> HdrScene::propertyEvent(std::map<std::string, st
     if (eventIdIt != map.end() && eventIdIt->second.type() == typeid(std::string)) {
         auto eventIdStr = std::any_cast<std::string>(eventIdIt->second);
         if ("target_camera_touching_event" == eventIdStr) {
-            parseTargetCameraEvent(map);
+            if (auto it = map.find("single_touching"); it != map.end()) {
+                if (it->second.type() == typeid(std::vector<float>)) {
+                    const auto& val = std::any_cast<const std::vector<float>&>(it->second);
+                    if (val.size() >= 4) {
+                        float dy = val[3] - val[1];
+                        m_cameraZ -= dy * 0.05f; // Adjust sensitivity as needed
+                    }
+                }
+            }
         }
     }
     return {};
 }
 
 void HdrScene::parseTargetCameraEvent(std::map<std::string, std::any> &event) {
-    auto* targetCamera = dynamic_cast<TargetCamera*>(m_camera);
-    if (!targetCamera) return;
-
-    if (auto it = event.find("single_touching"); it != event.end()) {
-        if (it->second.type() == typeid(std::vector<float>)) {
-            const auto& val = std::any_cast<const std::vector<float>&>(it->second);
-            if (val.size() >= 4) {
-                targetCamera->onSingleTouching(glm::vec2(val[0], val[1]), glm::vec2(val[2], val[3]));
-            }
-        }
-    }
-
-    if (auto it = event.find("double_touching"); it != event.end()) {
-        if (it->second.type() == typeid(std::vector<float>)) {
-            const auto& val = std::any_cast<const std::vector<float>&>(it->second);
-            if (val.size() >= 8) {
-                targetCamera->onDoubleTouching(glm::vec2(val[0], val[1]), glm::vec2(val[2], val[3]),
-                                               glm::vec2(val[4], val[5]), glm::vec2(val[6], val[7]));
-            }
-        }
-    }
-
     if (event.find("reset") != event.end()) {
-        targetCamera->reset();
+        m_cameraZ = 0.0f;
     }
 }
 
@@ -191,10 +190,10 @@ void HdrScene::renderQuad() {
     {
         float quadVertices[] = {
                 // positions        // texture Coords
-                -1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
                 -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
-                1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
-                1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+                 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+                -1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+                 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
         };
         // setup plane VAO
         glGenVertexArrays(1, &m_quadVAO);
@@ -217,48 +216,48 @@ void HdrScene::renderCube() {
     if (m_cubeVAO == 0)
     {
         float vertices[] = {
-                // back face
-                -1.0f, -1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f, // bottom-left
-                1.0f,  1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f, // top-right
-                1.0f, -1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 0.0f, // bottom-right
-                1.0f,  1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f, // top-right
-                -1.0f, -1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f, // bottom-left
-                -1.0f,  1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 1.0f, // top-left
-                // front face
-                -1.0f, -1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f, // bottom-left
-                1.0f, -1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f, 0.0f, // bottom-right
-                1.0f,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f, 1.0f, // top-right
-                1.0f,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f, 1.0f, // top-right
-                -1.0f,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f, 1.0f, // top-left
-                -1.0f, -1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f, // bottom-left
-                // left face
-                -1.0f,  1.0f,  1.0f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-right
-                -1.0f,  1.0f, -1.0f, -1.0f,  0.0f,  0.0f, 1.0f, 1.0f, // top-left
-                -1.0f, -1.0f, -1.0f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-left
-                -1.0f, -1.0f, -1.0f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-left
-                -1.0f, -1.0f,  1.0f, -1.0f,  0.0f,  0.0f, 0.0f, 0.0f, // bottom-right
-                -1.0f,  1.0f,  1.0f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-right
-                // right face
-                1.0f,  1.0f,  1.0f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-left
-                1.0f, -1.0f, -1.0f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-right
-                1.0f,  1.0f, -1.0f,  1.0f,  0.0f,  0.0f, 1.0f, 1.0f, // top-right
-                1.0f, -1.0f, -1.0f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-right
-                1.0f,  1.0f,  1.0f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-left
-                1.0f, -1.0f,  1.0f,  1.0f,  0.0f,  0.0f, 0.0f, 0.0f, // bottom-left
-                // bottom face
-                -1.0f, -1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f, // top-right
-                1.0f, -1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 1.0f, // top-left
-                1.0f, -1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f, // bottom-left
-                1.0f, -1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f, // bottom-left
-                -1.0f, -1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 0.0f, // bottom-right
-                -1.0f, -1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f, // top-right
-                // top face
-                -1.0f,  1.0f, -1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f, // top-left
-                1.0f,  1.0f , 1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f, // bottom-right
-                1.0f,  1.0f, -1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 1.0f, // top-right
-                1.0f,  1.0f,  1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f, // bottom-right
-                -1.0f,  1.0f, -1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f, // top-left
-                -1.0f,  1.0f,  1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 0.0f  // bottom-left
+                // back face (viewed from inside)
+                -1.0f, -1.0f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f, // bottom-left
+                 1.0f, -1.0f, -1.0f,  0.0f,  0.0f,  1.0f, 1.0f, 0.0f, // bottom-right
+                 1.0f,  1.0f, -1.0f,  0.0f,  0.0f,  1.0f, 1.0f, 1.0f, // top-right
+                 1.0f,  1.0f, -1.0f,  0.0f,  0.0f,  1.0f, 1.0f, 1.0f, // top-right
+                -1.0f,  1.0f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f, 1.0f, // top-left
+                -1.0f, -1.0f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f, // bottom-left
+                // front face (viewed from inside)
+                -1.0f, -1.0f,  1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f, // bottom-left
+                 1.0f,  1.0f,  1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f, // top-right
+                 1.0f, -1.0f,  1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 0.0f, // bottom-right
+                 1.0f,  1.0f,  1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f, // top-right
+                -1.0f, -1.0f,  1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f, // bottom-left
+                -1.0f,  1.0f,  1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 1.0f, // top-left
+                // left face (viewed from inside)
+                -1.0f,  1.0f,  1.0f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-right
+                -1.0f,  1.0f, -1.0f,  1.0f,  0.0f,  0.0f, 1.0f, 1.0f, // top-left
+                -1.0f, -1.0f, -1.0f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-left
+                -1.0f, -1.0f, -1.0f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-left
+                -1.0f, -1.0f,  1.0f,  1.0f,  0.0f,  0.0f, 0.0f, 0.0f, // bottom-right
+                -1.0f,  1.0f,  1.0f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-right
+                // right face (viewed from inside)
+                 1.0f,  1.0f,  1.0f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-left
+                 1.0f, -1.0f, -1.0f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-right
+                 1.0f,  1.0f, -1.0f, -1.0f,  0.0f,  0.0f, 1.0f, 1.0f, // top-right
+                 1.0f, -1.0f, -1.0f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-right
+                 1.0f,  1.0f,  1.0f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-left
+                 1.0f, -1.0f,  1.0f, -1.0f,  0.0f,  0.0f, 0.0f, 0.0f, // bottom-left
+                // top face (viewed from inside)
+                -1.0f,  1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f, // top-left
+                 1.0f,  1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f, // bottom-right
+                 1.0f,  1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 1.0f, // top-right
+                 1.0f,  1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f, // bottom-right
+                -1.0f,  1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f, // top-left
+                -1.0f,  1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 0.0f, // bottom-left
+                // bottom face (viewed from inside)
+                -1.0f, -1.0f, -1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f, // top-right
+                 1.0f, -1.0f,  1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f, // bottom-left
+                 1.0f, -1.0f, -1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 1.0f, // top-left
+                 1.0f, -1.0f,  1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f, // bottom-left
+                -1.0f, -1.0f, -1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f  // top-right
+                -1.0f, -1.0f,  1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 0.0f, // bottom-right
         };
         glGenVertexArrays(1, &m_cubeVAO);
         glGenBuffers(1, &m_cubeVBO);
