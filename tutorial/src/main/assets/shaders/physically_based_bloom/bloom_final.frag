@@ -7,7 +7,7 @@ in vec2 TexCoords;
 uniform sampler2D scene;
 uniform sampler2D bloomBlur;
 uniform float exposure;
-uniform float bloomStrength = 0.04f;
+uniform float bloomStrength;
 uniform int programChoice;
 
 vec3 bloom_none()
