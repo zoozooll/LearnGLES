@@ -1,4 +1,6 @@
 #version 320 es
+precision mediump float;
+precision mediump int;
 
 layout(triangles, invocations = 5) in;
 layout(triangle_strip, max_vertices = 3) out;

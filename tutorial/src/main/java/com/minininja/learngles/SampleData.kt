@@ -55,7 +55,7 @@ object SampleData {
     )
     val advancedItems = listOf(
         TutorialItem("oit", R.string.item_oit, "images/oit.png", OitActivity::class),
-        TutorialItem("scene", R.string.item_scene, "images/scene.png", SceneActivity::class),
+//        TutorialItem("scene", R.string.item_scene, "images/scene.png", SceneActivity::class),
         TutorialItem("csm", R.string.item_csm, "images/csm.png", CsmActivity::class),
 //        TutorialItem("dsa", R.string.item_dsa, "images/dsa.png", DsaActivity::class)
     )

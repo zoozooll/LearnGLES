@@ -44,7 +44,7 @@ Shader::Shader(const char *vertexPath, const char *fragmentPath, const char *geo
     unsigned int geometry;
     if (geometryPath != nullptr) {
         geometry = glCreateShader(GL_GEOMETRY_SHADER);
-        glShaderSource(geometry, 1, &gShaderCode, NULL);
+        glShaderSource(geometry, 1, &gShaderCode, &gShaderSize);
         glCompileShader(geometry);
         checkCompileErrors(geometry, "GEOMETRY");
     }

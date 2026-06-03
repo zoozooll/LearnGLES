@@ -32,11 +32,11 @@ private:
 
     unsigned int albedo = 0u, normal = 0u, metallic = 0u, roughness = 0u, ao = 0u;
 
-    glm::vec3 lightPositions[1];
-    glm::vec3 lightColors[1];
-    int nrRows = 0;
-    int nrColumns = 0;
-    float spacing = 0.f;
+    glm::vec3 lightPositions[4];
+    glm::vec3 lightColors[4];
+    int nrRows = 7;
+    int nrColumns = 7;
+    float spacing = 2.5f;
 
     int m_width = 0;
     int m_height = 0;

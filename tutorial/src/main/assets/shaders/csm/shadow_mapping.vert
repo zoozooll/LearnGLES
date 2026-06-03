@@ -12,7 +12,7 @@ out VS_OUT {
 } vs_out;
 
 uniform mat4 projection;
-uniform mat4 view;
+uniform mediump mat4 view;
 uniform mat4 model;
 
 void main()

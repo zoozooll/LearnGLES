@@ -17,8 +17,8 @@ void ParallaxMappingScene::init() {
 
     // build and compile shaders
     // -------------------------
-    m_pShader = new Shader("shaders/parallax_mapping/5.1.parallax_mapping.vert",
-            "shaders/parallax_mapping/5.1.parallax_mapping.frag");
+    m_pShader = new Shader("shaders/parallax_mapping/parallax_mapping.vert",
+            "shaders/parallax_mapping/parallax_mapping.frag");
 
     // load textures
     // -------------
@@ -56,7 +56,7 @@ void ParallaxMappingScene::draw() {
         m_pShader->setMat4("view", view);
         // render parallax-mapped quad
         glm::mat4 model = glm::mat4(1.0f);
-        model = glm::rotate(model, glm::radians(GetEscapeSecs() * -10.0f), glm::normalize(glm::vec3(1.0, 0.0, 1.0))); // rotate the quad to show parallax mapping from multiple directions
+
         m_pShader->setMat4("model", model);
         m_pShader->setVec3("viewPos", m_camera->getPosition());
         m_pShader->setVec3("lightPos", m_lightPos);
@@ -70,11 +70,11 @@ void ParallaxMappingScene::draw() {
         renderQuad();
 
         // render light source (simply re-renders a smaller plane at the light's position for debugging/visualization)
-        model = glm::mat4(1.0f);
-        model = glm::translate(model, m_lightPos);
-        model = glm::scale(model, glm::vec3(0.1f));
-        m_pShader->setMat4("model", model);
-        renderQuad();
+//        model = glm::mat4(1.0f);
+//        model = glm::translate(model, m_lightPos);
+//        model = glm::scale(model, glm::vec3(0.1f));
+//        m_pShader->setMat4("model", model);
+//        renderQuad();
     }
 }
 
@@ -133,5 +133,67 @@ void ParallaxMappingScene::parseTargetCameraEvent(std::map<std::string, std::any
 }
 
 void ParallaxMappingScene::renderQuad() {
+    if (m_quadVAO == 0)
+    {
+        // positions
+        glm::vec3 pos1(-1.0f, -1.0f, 0.0f); // Bottom-Left
+        glm::vec3 pos2( 1.0f, -1.0f, 0.0f); // Bottom-Right
+        glm::vec3 pos3( 1.0f,  1.0f, 0.0f); // Top-Right
+        glm::vec3 pos4(-1.0f,  1.0f, 0.0f); // Top-Left
+        // texture coordinates
+        glm::vec2 uv1(0.0f, 0.0f);
+        glm::vec2 uv2(1.0f, 0.0f);
+        glm::vec2 uv3(1.0f, 1.0f);
+        glm::vec2 uv4(0.0f, 1.0f);
+        // normal vector
+        glm::vec3 nm(0.0f, 0.0f, 1.0f);
 
+        // calculate tangent/bitangent vectors
+        glm::vec3 tangent, bitangent;
+        // triangle 1
+        glm::vec3 edge1 = pos2 - pos1;
+        glm::vec3 edge2 = pos3 - pos1;
+        glm::vec2 deltaUV1 = uv2 - uv1;
+        glm::vec2 deltaUV2 = uv3 - uv1;
+
+        float f = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
+
+        tangent.x = f * (deltaUV2.y * edge1.x - deltaUV1.y * edge2.x);
+        tangent.y = f * (deltaUV2.y * edge1.y - deltaUV1.y * edge2.y);
+        tangent.z = f * (deltaUV2.y * edge1.z - deltaUV1.y * edge2.z);
+
+        bitangent.x = f * (-deltaUV2.x * edge1.x + deltaUV1.x * edge2.x);
+        bitangent.y = f * (-deltaUV2.x * edge1.y + deltaUV1.x * edge2.y);
+        bitangent.z = f * (-deltaUV2.x * edge1.z + deltaUV1.x * edge2.z);
+
+        float quadVertices[] = {
+                // positions            // normal         // texcoords  // tangent                          // bitangent
+                pos1.x, pos1.y, pos1.z, nm.x, nm.y, nm.z, uv1.x, uv1.y, tangent.x, tangent.y, tangent.z, bitangent.x, bitangent.y, bitangent.z,
+                pos2.x, pos2.y, pos2.z, nm.x, nm.y, nm.z, uv2.x, uv2.y, tangent.x, tangent.y, tangent.z, bitangent.x, bitangent.y, bitangent.z,
+                pos3.x, pos3.y, pos3.z, nm.x, nm.y, nm.z, uv3.x, uv3.y, tangent.x, tangent.y, tangent.z, bitangent.x, bitangent.y, bitangent.z,
+
+                pos1.x, pos1.y, pos1.z, nm.x, nm.y, nm.z, uv1.x, uv1.y, tangent.x, tangent.y, tangent.z, bitangent.x, bitangent.y, bitangent.z,
+                pos3.x, pos3.y, pos3.z, nm.x, nm.y, nm.z, uv3.x, uv3.y, tangent.x, tangent.y, tangent.z, bitangent.x, bitangent.y, bitangent.z,
+                pos4.x, pos4.y, pos4.z, nm.x, nm.y, nm.z, uv4.x, uv4.y, tangent.x, tangent.y, tangent.z, bitangent.x, bitangent.y, bitangent.z
+        };
+        // configure plane VAO
+        glGenVertexArrays(1, &m_quadVAO);
+        glGenBuffers(1, &m_quadVBO);
+        glBindVertexArray(m_quadVAO);
+        glBindBuffer(GL_ARRAY_BUFFER, m_quadVBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 14 * sizeof(float), (void*)0);
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 14 * sizeof(float), (void*)(3 * sizeof(float)));
+        glEnableVertexAttribArray(2);
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 14 * sizeof(float), (void*)(6 * sizeof(float)));
+        glEnableVertexAttribArray(3);
+        glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 14 * sizeof(float), (void*)(8 * sizeof(float)));
+        glEnableVertexAttribArray(4);
+        glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 14 * sizeof(float), (void*)(11 * sizeof(float)));
+    }
+    glBindVertexArray(m_quadVAO);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glBindVertexArray(0);
 }

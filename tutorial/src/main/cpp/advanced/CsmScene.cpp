@@ -23,10 +23,11 @@ void CsmScene::init() {
 
     // build and compile shaders
     // -------------------------
-    shader = new Shader("shaders/csm/10.shadow_mapping.vert", "shaders/csm/10.shadow_mapping.frag");
-    simpleDepthShader = new Shader("shaders/csm/10.shadow_mapping_depth.vert", "shaders/csm/10.shadow_mapping_depth.frag", "10.shadow_mapping_depth.geom");
-    debugDepthQuad = new Shader("shaders/csm/10.debug_quad.vert", "shaders/csm/10.debug_quad_depth.frag");
-    debugCascadeShader = new Shader("shaders/csm/10.debug_cascade.vert", "shaders/csm/10.debug_cascade.frag");
+    shader = new Shader("shaders/csm/shadow_mapping.vert", "shaders/csm/shadow_mapping.frag");
+    simpleDepthShader = new Shader("shaders/csm/shadow_mapping_depth.vert", "shaders/csm/shadow_mapping_depth.frag",
+            "shaders/csm/shadow_mapping_depth.geom");
+    debugDepthQuad = new Shader("shaders/csm/debug_quad.vert", "shaders/csm/debug_quad_depth.frag");
+    debugCascadeShader = new Shader("shaders/csm/debug_cascade.vert", "shaders/csm/debug_cascade.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

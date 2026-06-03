@@ -1,5 +1,8 @@
 #version 320 es
 precision mediump float;
+precision mediump int;
+precision mediump sampler2DArray;
+
 out vec4 FragColor;
 
 in VS_OUT {
@@ -61,19 +64,19 @@ float ShadowCalculation(vec3 fragPosWorldSpace)
     // calculate bias (based on depth map resolution and slope)
     vec3 normal = normalize(fs_in.Normal);
     float bias = max(0.05 * (1.0 - dot(normal, lightDir)), 0.005);
-    const float biasModifier = 0.5f;
+    const float biasModifier = 0.5;
     if (layer == cascadeCount)
     {
-        bias *= 1 / (farPlane * biasModifier);
+        bias *= 1.0 / (farPlane * biasModifier);
     }
     else
     {
-        bias *= 1 / (cascadePlaneDistances[layer] * biasModifier);
+        bias *= 1.0 / (cascadePlaneDistances[layer] * biasModifier);
     }
 
     // PCF
     float shadow = 0.0;
-    vec2 texelSize = 1.0 / vec2(textureSize(shadowMap, 0));
+    vec2 texelSize = 1.0 / vec2(textureSize(shadowMap, 0).xy);
     for(int x = -1; x <= 1; ++x)
     {
         for(int y = -1; y <= 1; ++y)
