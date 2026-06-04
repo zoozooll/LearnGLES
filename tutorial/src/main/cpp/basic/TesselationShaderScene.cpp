@@ -13,13 +13,16 @@ TesselationShaderScene::TesselationShaderScene() {
 }
 
 void TesselationShaderScene::init() {
-    m_camera = new TargetCamera;
+    auto* targetCamera = new TargetCamera;
+    targetCamera->setRadius(45.0f);
+    m_camera = targetCamera;
     GLint maxTessLevel;
     glGetIntegerv(GL_MAX_TESS_GEN_LEVEL, &maxTessLevel);
     LOGI(__FILE_NAME__, "Max available tess level: %d", maxTessLevel);
 
     // configure global opengl state
     // -----------------------------
+    glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
 
     // build and compile our shader program
@@ -47,32 +50,37 @@ void TesselationShaderScene::resize(int width, int height) {
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
+    float terrainSize = 64.0f;
     std::vector<float> vertices;
     for (unsigned i = 0; i <= rez - 1; i++) {
         for (unsigned j = 0; j <= rez - 1; j++) {
-            vertices.push_back(-width / 2.0f + width * i / (float) rez); // v.x
+            // 0: (i, j)
+            vertices.push_back(-terrainSize / 2.0f + terrainSize * (float)i / (float) rez); // v.x
             vertices.push_back(0.0f); // v.y
-            vertices.push_back(-height / 2.0f + height * j / (float) rez); // v.z
-            vertices.push_back(i / (float) rez); // u
-            vertices.push_back(j / (float) rez); // v
+            vertices.push_back(-terrainSize / 2.0f + terrainSize * (float)j / (float) rez); // v.z
+            vertices.push_back((float)i / (float) rez); // u
+            vertices.push_back((float)j / (float) rez); // v
 
-            vertices.push_back(-width / 2.0f + width * (i + 1) / (float) rez); // v.x
+            // 1: (i+1, j)
+            vertices.push_back(-terrainSize / 2.0f + terrainSize * (float)(i + 1) / (float) rez); // v.x
             vertices.push_back(0.0f); // v.y
-            vertices.push_back(-height / 2.0f + height * j / (float) rez); // v.z
-            vertices.push_back((i + 1) / (float) rez); // u
-            vertices.push_back(j / (float) rez); // v
+            vertices.push_back(-terrainSize / 2.0f + terrainSize * (float)j / (float) rez); // v.z
+            vertices.push_back((float)(i + 1) / (float) rez); // u
+            vertices.push_back((float)j / (float) rez); // v
 
-            vertices.push_back(-width / 2.0f + width * i / (float) rez); // v.x
+            // 2: (i+1, j+1)
+            vertices.push_back(-terrainSize / 2.0f + terrainSize * (float)(i + 1) / (float) rez); // v.x
             vertices.push_back(0.0f); // v.y
-            vertices.push_back(-height / 2.0f + height * (j + 1) / (float) rez); // v.z
-            vertices.push_back(i / (float) rez); // u
-            vertices.push_back((j + 1) / (float) rez); // v
+            vertices.push_back(-terrainSize / 2.0f + terrainSize * (float)(j + 1) / (float) rez); // v.z
+            vertices.push_back((float)(i + 1) / (float) rez); // u
+            vertices.push_back((float)(j + 1) / (float) rez); // v
 
-            vertices.push_back(-width / 2.0f + width * (i + 1) / (float) rez); // v.x
+            // 3: (i, j+1)
+            vertices.push_back(-terrainSize / 2.0f + terrainSize * (float)i / (float) rez); // v.x
             vertices.push_back(0.0f); // v.y
-            vertices.push_back(-height / 2.0f + height * (j + 1) / (float) rez); // v.z
-            vertices.push_back((i + 1) / (float) rez); // u
-            vertices.push_back((j + 1) / (float) rez); // v
+            vertices.push_back(-terrainSize / 2.0f + terrainSize * (float)(j + 1) / (float) rez); // v.z
+            vertices.push_back((float)i / (float) rez); // u
+            vertices.push_back((float)(j + 1) / (float) rez); // v
         }
     }
 
@@ -91,7 +99,7 @@ void TesselationShaderScene::resize(int width, int height) {
 
 void TesselationShaderScene::draw() {
     m_camera->update();
-    glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, .0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     if (tessHeightMapShader) {
