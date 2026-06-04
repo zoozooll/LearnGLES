@@ -1,11 +1,13 @@
 #ifndef LEARNGLES_FRUSTUMCULLINGSCENE_H
 #define LEARNGLES_FRUSTUMCULLINGSCENE_H
 
+#include <memory>
 #include "TutorialScene.h"
 
 class Shader;
 class Camera;
 class Entity;
+class Model;
 
 class FrustumCullingScene : public TutorialScene {
 public :
@@ -26,8 +28,9 @@ public :
 private:
     Camera* m_camera = nullptr;
     Camera* m_cameraSpy = nullptr;
-    Shader* ourShader = nullptr;;
-    Entity* ourEntity = nullptr;;
+    Shader* ourShader = nullptr;
+    Entity* ourEntity = nullptr;
+    std::unique_ptr<Model> m_model;
 
     int m_width = 0;
     int m_height = 0;

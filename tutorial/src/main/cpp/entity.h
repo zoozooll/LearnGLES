@@ -68,7 +68,7 @@ public:
 		m_isDirty = true;
 	}
 
-	const glm::vec3& getGlobalPosition() const
+	const glm::vec3 getGlobalPosition() const
 	{
 		return m_modelMatrix[3];
 	}
@@ -434,9 +434,9 @@ public:
 
 	//Add child. Argument input is argument of any constructor that you create. By default you can use the default constructor and don't put argument input.
 	template<typename... TArgs>
-	void addChild(TArgs&... args)
+	void addChild(TArgs&&... args)
 	{
-		children.emplace_back(std::make_unique<Entity>(args...));
+		children.emplace_back(std::make_unique<Entity>(std::forward<TArgs>(args)...));
 		children.back()->parent = this;
 	}
 

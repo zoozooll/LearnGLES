@@ -17,7 +17,7 @@ void ModelScene::init() {
 
     // build and compile our shader zprogram
     // ------------------------------------
-    m_pShader = new Shader("shaders/model/1.model_loading.vert", "shaders/model/1.model_loading.frag");
+    m_pShader = new Shader("shaders/model/model_loading.vert", "shaders/model/model_loading.frag");
 
     // load models
     // -----------

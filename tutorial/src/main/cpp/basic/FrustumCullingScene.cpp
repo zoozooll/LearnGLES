@@ -11,7 +11,9 @@ FrustumCullingScene::FrustumCullingScene() {
 
 void FrustumCullingScene::init() {
     m_camera = new TargetCamera;
+    m_camera->reset();
     m_cameraSpy = new TargetCamera;
+    m_cameraSpy->reset();
     // tell stb_image.h to flip loaded texture's on the y-axis (before loading model).
     stbi_set_flip_vertically_on_load(true);
 
@@ -21,12 +23,13 @@ void FrustumCullingScene::init() {
 
     // build and compile shaders
     // -------------------------
-    ourShader = new Shader("shaders/frustum_culling/1.model_loading.vert", "1.model_loading.frag");
+    ourShader = new Shader("shaders/frustum_culling/model_loading.vert",
+            "shaders/frustum_culling/model_loading.frag");
 
     // load entities
     // -----------
-    Model model("objects/planet/planet.obj");
-    ourEntity = new Entity(model);
+    m_model = std::make_unique<Model>("objects/planet/planet.obj");
+    ourEntity = new Entity(*m_model);
     ourEntity->transform.setLocalPosition({ 0, 0, 0 });
     const float scale = 1.0;
     ourEntity->transform.setLocalScale({ scale, scale, scale });
@@ -38,7 +41,7 @@ void FrustumCullingScene::init() {
         {
             for (unsigned int z = 0; z < 20; ++z)
             {
-                ourEntity->addChild(model);
+                ourEntity->addChild(*m_model);
                 lastEntity = ourEntity->children.back().get();
 
                 //Set transform values
@@ -83,7 +86,7 @@ void FrustumCullingScene::draw() {
         // draw our scene graph
         unsigned int total = 0, display = 0;
         ourEntity->drawSelfAndChild(camFrustum, *ourShader, display, total);
-        std::cout << "Total process in CPU : " << total << " / Total send to GPU : " << display << std::endl;
+        LOGI("FrustumCullingScene", "Total process in CPU : %u / Total send to GPU : %u", total, display);
 
         ourEntity->updateSelfAndChild();
     }
@@ -94,6 +97,7 @@ void FrustumCullingScene::destroy() {
     if (ourEntity) delete ourEntity;
     if (m_camera) delete m_camera;
     if (m_cameraSpy) delete m_cameraSpy;
+    m_model.reset();
 }
 
 FrustumCullingScene::~FrustumCullingScene() {
