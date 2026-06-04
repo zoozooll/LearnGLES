@@ -23,8 +23,10 @@ void BloomScene::init() {
 
     // load textures
     // -------------
-    m_woodTexture      = loadTexture("textures/wood.png", true); // note that we're loading the texture as an SRGB texture
-    m_containerTexture = loadTexture("textures/container2.png", true); // note that we're loading the texture as an SRGB texture
+    // note that we're loading the texture as an SRGB texture
+    m_woodTexture      = loadTexture("textures/wood.png", true);
+    // note that we're loading the texture as an SRGB texture
+    m_containerTexture = loadTexture("textures/container2.png", true);
 
     // configure (floating point) framebuffers
     // ---------------------------------------
@@ -275,7 +277,6 @@ void BloomScene::destroy() {
 }
 
 BloomScene::~BloomScene() {
-
 }
 
 std::map<std::string, std::any> BloomScene::propertyEvent(std::map<std::string, std::any> &map) {
