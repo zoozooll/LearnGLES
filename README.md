@@ -1,6 +1,6 @@
 # LearnGLES
 
-An Android application demonstrating various OpenGL ES 3.0+ techniques, from basic rendering to advanced physically based rendering (PBR) and post-processing effects. This project is inspired by [LearnOpenGL](https://learnopengl.com/) but tailored for the Android platform using Kotlin for the UI and C++ for the high-performance rendering logic.
+An Android application demonstrating various OpenGL ES 3.0+ techniques, from basic rendering to advanced physically based rendering (PBR) and post-processing effects. This project is inspired by [L[...]
 
 ## 🚀 Features
 
@@ -71,4 +71,12 @@ The project is organized into several categories, each containing multiple tutor
 
 ## 📜 License
 
-This project is for educational purposes. Please refer to the licenses of included third-party libraries (Assimp, GLM, stb_image) for their respective terms.
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+This means you're free to use, modify, and distribute this project, as long as you include the original license and copyright notice.
+
+Please also refer to the licenses of included third-party libraries for their respective terms:
+- [Assimp](https://github.com/assimp/assimp): BSD 3-Clause License
+- [GLM](https://github.com/g-truc/glm): Happy Bunny License (Modified MIT)
+- [stb_image](https://github.com/nothings/stb): Public Domain or MIT License
+- [FreeType](https://gitlab.freedesktop.org/freetype/freetype): FreeType License (BSD-like)
