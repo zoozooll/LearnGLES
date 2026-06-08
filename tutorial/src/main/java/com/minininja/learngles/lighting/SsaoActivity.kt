@@ -65,6 +65,7 @@ class SsaoActivity : GLActivity() {
                     "reset" to 1)
                 NativeHelper.sendCommands(event)
                 Log.d("SsaoActivity", "Custom DoubleClick at: $event")
+                glSurfaceView?.requestRender()
             }
 
             override fun onActionUp(event: Offset) {

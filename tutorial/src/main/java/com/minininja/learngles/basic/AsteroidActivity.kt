@@ -65,6 +65,7 @@ class AsteroidActivity : GLActivity() {
                     "reset" to 1)
                 NativeHelper.sendCommands(event)
                 Log.d("AsteroidActivity", "Custom DoubleClick at: $event")
+                glSurfaceView?.requestRender()
             }
 
             override fun onActionUp(event: Offset) {

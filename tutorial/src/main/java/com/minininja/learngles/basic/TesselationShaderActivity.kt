@@ -65,6 +65,7 @@ class TesselationShaderActivity : GLActivity() {
                     "reset" to 1)
                 NativeHelper.sendCommands(event)
                 Log.d("TesselationShaderActivity", "Custom DoubleClick at: $event")
+                glSurfaceView?.requestRender()
             }
 
             override fun onActionUp(event: Offset) {

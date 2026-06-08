@@ -72,6 +72,7 @@ class BasicLightingActivity : GLActivity() {
                     "reset" to 1)
                 NativeHelper.sendCommands(event)
                 Log.d("BasicLightingActivity", "Custom DoubleClick at: $event")
+                glSurfaceView?.requestRender()
             }
 
             override fun onActionUp(event: Offset) {

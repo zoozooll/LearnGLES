@@ -65,6 +65,7 @@ class SceneActivity : GLActivity() {
                     "reset" to 1)
                 NativeHelper.sendCommands(event)
                 Log.d("SceneActivity", "Custom DoubleClick at: $event")
+                glSurfaceView?.requestRender()
             }
 
             override fun onActionUp(event: Offset) {
