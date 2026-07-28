@@ -25,13 +25,13 @@ After completing these tutorials, you will be able to:
 
 | Tutorial | Description |
 |----------|-------------|
-| [Basic Lighting](/docs/lighting/basic-lighting) | Phong and Blinn-Phong models |
-| [Light Caster](/docs/lighting/light-caster) | Different light types |
-| [Phong vs Blinn](/docs/lighting/phong-vs-blinn) | Comparing lighting models |
-| [Gamma Correction](/docs/lighting/gamma-correction) | Color accuracy |
-| [Multiple Lights](/docs/lighting/multi-lights) | Handling multiple light sources |
-| [Shadow Mapping](/docs/lighting/shadow-mapping) | Real-time shadow generation |
-| [HDR](/docs/lighting/hdr) | High dynamic range rendering |
-| [Bloom](/docs/lighting/bloom) | Glow effect for bright lights |
-| [SSAO](/docs/lighting/ssao) | Screen-space ambient occlusion |
-| [Area Lights](/docs/lighting/area-lights) | Rectangular light sources |
+| [Basic Lighting](/lighting/basic-lighting) | Phong and Blinn-Phong models |
+| [Light Caster](/lighting/light-caster) | Different light types |
+| [Phong vs Blinn](/lighting/phong-vs-blinn) | Comparing lighting models |
+| [Gamma Correction](/lighting/gamma-correction) | Color accuracy |
+| [Multiple Lights](/lighting/multi-lights) | Handling multiple light sources |
+| [Shadow Mapping](/lighting/shadow-mapping) | Real-time shadow generation |
+| [HDR](/lighting/hdr) | High dynamic range rendering |
+| [Bloom](/lighting/bloom) | Glow effect for bright lights |
+| [SSAO](/lighting/ssao) | Screen-space ambient occlusion |
+| [Area Lights](/lighting/area-lights) | Rectangular light sources |

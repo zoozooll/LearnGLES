@@ -6,7 +6,8 @@ const config = {
   baseUrl: '/LearnGLES/',
   organizationName: 'zoozooll',
   projectName: 'LearnGLES',
-  onBrokenLinks: 'throw',
+  trailingSlash: false,
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   i18n: {
     defaultLocale: 'en',
@@ -19,6 +20,7 @@ const config = {
       {
         docs: {
           sidebarPath: './sidebars.js',
+          routeBasePath: '/',
           editUrl:
             'https://github.com/zoozooll/LearnGLES/tree/main/',
         },
@@ -41,7 +43,7 @@ const config = {
       logo: {
         alt: 'LearnGLES Logo',
         src: 'img/logo.svg',
-        href: '/docs/',
+        href: '/',
       },
       items: [
         {

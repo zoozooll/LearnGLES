@@ -25,8 +25,8 @@ After completing these tutorials, you will be able to:
 
 | Tutorial | Description |
 |----------|-------------|
-| [Normal Mapping](/docs/pbr/normal-mapping) | Adding surface detail without more polygons |
-| [Parallax Mapping](/docs/pbr/parallax-mapping) | Simulating depth in textures |
-| [PBR Theory](/docs/pbr/pbr-theory) | Cook-Torrance BRDF implementation |
-| [PBR Textures](/docs/pbr/pbr-textures) | Using PBR texture maps |
-| [IBL](/docs/pbr/ibl) | Image-based lighting with HDR maps |
+| [Normal Mapping](/pbr/normal-mapping) | Adding surface detail without more polygons |
+| [Parallax Mapping](/pbr/parallax-mapping) | Simulating depth in textures |
+| [PBR Theory](/pbr/pbr-theory) | Cook-Torrance BRDF implementation |
+| [PBR Textures](/pbr/pbr-textures) | Using PBR texture maps |
+| [IBL](/pbr/ibl) | Image-based lighting with HDR maps |

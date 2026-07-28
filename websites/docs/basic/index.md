@@ -29,18 +29,18 @@ After completing these tutorials, you will be able to:
 
 | Tutorial | Description |
 |----------|-------------|
-| [Basic GLES](/docs/basic/basic-gles) | Introduction to shaders, textures, and transformations |
-| [Depth Testing](/docs/basic/depth-testing) | Correctly ordering rendered objects |
-| [Stencil Testing](/docs/basic/stencil-testing) | Creating complex visual effects |
-| [Blending](/docs/basic/blending) | Handling transparency |
-| [Cubemap](/docs/basic/cubemap) | Skyboxes and environment mapping |
-| [Geometry Shader](/docs/basic/geometry-shader) | Dynamic mesh modification on the GPU |
-| [Tessellation Shader](/docs/basic/tesselation-shader) | Level of detail on the GPU |
-| [Compute Shader](/docs/basic/compute-shader) | General purpose GPU computing |
-| [Instancing](/docs/basic/instancing) | Efficiently rendering many objects |
-| [Asteroid](/docs/basic/asteroid) | Practical instancing demo |
-| [Model Loading](/docs/basic/model-loading) | Loading 3D models with Assimp |
-| [Skeletal Animation](/docs/basic/skeletal-animation) | Bone-based character animation |
-| [Debugging](/docs/basic/debugging) | Debugging OpenGL applications |
-| [Text Rendering](/docs/basic/text-rendering) | Rendering text with FreeType |
-| [Frustum Culling](/docs/basic/frustum-culling) | Optimizing by skipping invisible objects |
+| [Basic GLES](/basic/basic-gles) | Introduction to shaders, textures, and transformations |
+| [Depth Testing](/basic/depth-testing) | Correctly ordering rendered objects |
+| [Stencil Testing](/basic/stencil-testing) | Creating complex visual effects |
+| [Blending](/basic/blending) | Handling transparency |
+| [Cubemap](/basic/cubemap) | Skyboxes and environment mapping |
+| [Geometry Shader](/basic/geometry-shader) | Dynamic mesh modification on the GPU |
+| [Tessellation Shader](/basic/tesselation-shader) | Level of detail on the GPU |
+| [Compute Shader](/basic/compute-shader) | General purpose GPU computing |
+| [Instancing](/basic/instancing) | Efficiently rendering many objects |
+| [Asteroid](/basic/asteroid) | Practical instancing demo |
+| [Model Loading](/basic/model-loading) | Loading 3D models with Assimp |
+| [Skeletal Animation](/basic/skeletal-animation) | Bone-based character animation |
+| [Debugging](/basic/debugging) | Debugging OpenGL applications |
+| [Text Rendering](/basic/text-rendering) | Rendering text with FreeType |
+| [Frustum Culling](/basic/frustum-culling) | Optimizing by skipping invisible objects |

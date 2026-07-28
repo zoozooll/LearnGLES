@@ -23,6 +23,6 @@ After completing these tutorials, you will be able to:
 
 | Tutorial | Description |
 |----------|-------------|
-| [CSM](/docs/advanced/csm) | Cascaded Shadow Maps for high-quality shadows |
-| [OIT](/docs/advanced/oit) | Order Independent Transparency |
-| [DSA](/docs/advanced/dsa) | Direct State Access |
+| [CSM](/advanced/csm) | Cascaded Shadow Maps for high-quality shadows |
+| [OIT](/advanced/oit) | Order Independent Transparency |
+| [DSA](/advanced/dsa) | Direct State Access |
