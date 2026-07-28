@@ -6,12 +6,14 @@
   "scripts": {
     "start": "docusaurus start",
     "build": "docusaurus build",
-    "deploy": "docusaurus deploy",
+    "predeploy": "npm run build",
+    "deploy": "docusaurus deploy --branch gh-pages",
     "swizzle": "docusaurus swizzle @docusaurus/theme-classic",
     "write-translations": "docusaurus write-translations"
   },
   "dependencies": {
     "@docusaurus/core": "latest",
-    "@docusaurus/preset-classic": "latest"
+    "@docusaurus/preset-classic": "latest",
+    "gh-pages": "^5.0.0"
   }
 }
