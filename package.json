@@ -1,0 +1,17 @@
+{
+  "name": "learngles-docs",
+  "private": true,
+  "version": "0.0.0",
+  "engines": { "node": ">=16" },
+  "scripts": {
+    "start": "docusaurus start",
+    "build": "docusaurus build",
+    "deploy": "docusaurus deploy",
+    "swizzle": "docusaurus swizzle @docusaurus/theme-classic",
+    "write-translations": "docusaurus write-translations"
+  },
+  "dependencies": {
+    "@docusaurus/core": "latest",
+    "@docusaurus/preset-classic": "latest"
+  }
+}

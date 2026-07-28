@@ -1,16 +1,4 @@
-*.iml
-.gradle
-/local.properties
-/.idea
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
-local.properties
-
-# Docusaurus
-.docusaurus/
 node_modules/
-.cache/
-websites/build/
+build/
+.DS_Store
+.env
