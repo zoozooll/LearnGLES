@@ -1,0 +1,30 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Basic Techniques": {
+    "message": "Basic Techniques",
+    "description": "The label for category 'Basic Techniques' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Lighting & Post-Processing": {
+    "message": "Lighting & Post-Processing",
+    "description": "The label for category 'Lighting & Post-Processing' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Physically Based Rendering": {
+    "message": "Physically Based Rendering",
+    "description": "The label for category 'Physically Based Rendering' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Advanced Techniques": {
+    "message": "Advanced Techniques",
+    "description": "The label for category 'Advanced Techniques' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.doc.Home": {
+    "message": "Home",
+    "description": "The label for the doc item 'Home' in sidebar 'tutorialSidebar', linking to the doc index"
+  },
+  "sidebar.tutorialSidebar.doc.Introduction": {
+    "message": "Introduction",
+    "description": "The label for the doc item 'Introduction' in sidebar 'tutorialSidebar', linking to the doc intro"
+  }
+}

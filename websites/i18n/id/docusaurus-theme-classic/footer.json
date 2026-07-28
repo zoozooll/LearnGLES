@@ -1,0 +1,34 @@
+{
+  "link.title.Tutorials": {
+    "message": "Tutorial",
+    "description": "The title of the footer links column with title=Tutorials in the footer"
+  },
+  "link.title.Community": {
+    "message": "Komunitas",
+    "description": "The title of the footer links column with title=Community in the footer"
+  },
+  "link.item.label.Basic Techniques": {
+    "message": "Teknik Dasar",
+    "description": "The label of footer link with label=Basic Techniques linking to /docs/basic/"
+  },
+  "link.item.label.Lighting & Post-Processing": {
+    "message": "Pencahayaan & Pemrosesan Akhir",
+    "description": "The label of footer link with label=Lighting & Post-Processing linking to /docs/lighting/"
+  },
+  "link.item.label.PBR": {
+    "message": "PBR",
+    "description": "The label of footer link with label=PBR linking to /docs/pbr/"
+  },
+  "link.item.label.Advanced": {
+    "message": "Lanjutan",
+    "description": "The label of footer link with label=Advanced linking to /docs/advanced/"
+  },
+  "link.item.label.GitHub": {
+    "message": "GitHub",
+    "description": "The label of footer link with label=GitHub linking to https://github.com/minininja/LearnGLES"
+  },
+  "copyright": {
+    "message": "Hak Cipta © 2026 LearnGLES. Dibangun dengan Docusaurus.",
+    "description": "The footer copyright"
+  }
+}

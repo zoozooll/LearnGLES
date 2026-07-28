@@ -1,0 +1,26 @@
+{
+  "title": {
+    "message": "LearnGLES",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "LearnGLES Logo",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Home": {
+    "message": "首頁",
+    "description": "Navbar item with label Home"
+  },
+  "item.label.Tutorials": {
+    "message": "教程",
+    "description": "Navbar item with label Tutorials"
+  },
+  "item.label.Blog": {
+    "message": "博客",
+    "description": "Navbar item with label Blog"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  }
+}

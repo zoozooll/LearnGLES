@@ -8,3 +8,9 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Docusaurus
+.docusaurus/
+node_modules/
+.cache/
+websites/build/
