@@ -2,9 +2,9 @@ const config = {
   title: 'LearnGLES',
   tagline: 'Learn OpenGL ES 3.0+ for Android',
   favicon: 'img/favicon.ico',
-  url: 'https://your-docusaurus-site.example.com',
-  baseUrl: '/',
-  organizationName: 'minininja',
+  url: 'https://zoozooll.github.io',
+  baseUrl: '/LearnGLES/',
+  organizationName: 'zoozooll',
   projectName: 'LearnGLES',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -20,12 +20,12 @@ const config = {
         docs: {
           sidebarPath: './sidebars.js',
           editUrl:
-            'https://github.com/minininja/LearnGLES/tree/main/',
+            'https://github.com/zoozooll/LearnGLES/tree/main/',
         },
         blog: {
           showReadingTime: true,
           editUrl:
-            'https://github.com/minininja/LearnGLES/tree/main/',
+            'https://github.com/zoozooll/LearnGLES/tree/main/',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -58,7 +58,7 @@ const config = {
         },
         {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/minininja/LearnGLES',
+          href: 'https://github.com/zoozooll/LearnGLES',
           label: 'GitHub',
           position: 'right',
         },
@@ -97,7 +97,7 @@ const config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/minininja/LearnGLES',
+              href: 'https://github.com/zoozooll/LearnGLES',
             },
           ],
         },
